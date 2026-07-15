@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5" />
+    <title>SAR Dewatering - Fiori Style</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px;
+        }
+
+        .app {
+            max-width: 1280px;
+            width: 100%;
+        }
+
+        /* ===== HEADER SAP FIORI ===== */
+        .fiori-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #ffffff;
+            padding: 10px 24px;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+            margin-bottom: 24px;
+            border-bottom: 2px solid #e5e8ec;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .fiori-header .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fiori-header .brand i {
+            font-size: 1.6rem;
+            color: #0b6e9c;
+        }
+
+        .fiori-header .brand h1 {
+            font-size: 1.2rem;
+            font-weight: 400;
+            color: #1d2d3e;
+            letter-spacing: 0.3px;
+        }
+
+        .fiori-header .brand h1 span {
+            font-weight: 300;
+            color: #6a7a8a;
+        }
+
+        .fiori-header .brand .sub {
+            font-size: 0.75rem;
+            color: #6a7a8a;
+            font-weight: 300;
+            margin-left: 4px;
+        }
+
+        .fiori-header .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            color: #5a6a7a;
+            font-size: 1.1rem;
+        }
+
+        .fiori-header .header-actions i {
+            cursor: default;
+            transition: 0.15s;
+        }
+
+        .fiori-header .header-actions i:hover {
+            color: #0b6e9c;
+        }
+
+        .fiori-header .user-area {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f0f3f7;
+            padding: 4px 14px 4px 10px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            color: #1d2d3e;
+        }
+
+        .fiori-header .user-area i {
+            font-size: 1.2rem;
+            color: #0b6e9c;
+        }
+
+        /* ===== TITLE SECTION ===== */
+        .page-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            padding: 0 4px;
+        }
+
+        .page-title i {
+            font-size: 1.6rem;
+            color: #0b6e9c;
+        }
+
+        .page-title h2 {
+            font-weight: 400;
+            font-size: 1.3rem;
+            color: #1d2d3e;
+        }
+
+        .page-title .badge-count {
+            background: #e5e8ec;
+            color: #3a4a5a;
+            font-size: 0.7rem;
+            padding: 2px 12px;
+            border-radius: 30px;
+            font-weight: 400;
+            margin-left: 6px;
+        }
+
+        /* ===== GRID CARDS ===== */
+        .grid-fiori {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .card-fiori {
+            background: #ffffff;
+            border-radius: 4px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+            border: 1px solid #e5e8ec;
+            transition: 0.15s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-fiori:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            border-color: #c5cdd6;
+        }
+
+        .card-fiori .card-head {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 18px 10px 18px;
+            border-bottom: 1px solid #edf0f4;
+        }
+
+        .card-fiori .card-head i {
+            font-size: 1.4rem;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f0f3f7;
+            border-radius: 4px;
+            color: #0b6e9c;
+        }
+
+        .card-fiori .card-head h3 {
+            font-weight: 400;
+            font-size: 1rem;
+            color: #1d2d3e;
+            letter-spacing: 0.2px;
+        }
+
+        .card-fiori .card-head .status {
+            margin-left: auto;
+            font-size: 0.65rem;
+            background: #e5e8ec;
+            padding: 2px 12px;
+            border-radius: 30px;
+            color: #3a4a5a;
+            font-weight: 400;
+        }
+
+        .card-fiori .card-body {
+            padding: 16px 18px 18px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Tombol form style Fiori */
+        .fiori-btn-link {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #f7f9fc;
+            border: 1px solid #e5e8ec;
+            border-radius: 4px;
+            padding: 14px 16px;
+            text-decoration: none;
+            color: #1d2d3e;
+            transition: 0.15s;
+            margin-bottom: 6px;
+        }
+
+        .fiori-btn-link:hover {
+            background: #eef3f9;
+            border-color: #0b6e9c;
+        }
+
+        .fiori-btn-link .left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .fiori-btn-link .left i {
+            font-size: 1.2rem;
+            color: #0b6e9c;
+            width: 28px;
+            text-align: center;
+        }
+
+        .fiori-btn-link .left .label {
+            font-weight: 400;
+            font-size: 0.95rem;
+        }
+
+        .fiori-btn-link .left .desc {
+            font-size: 0.7rem;
+            color: #6a7a8a;
+        }
+
+        .fiori-btn-link .arrow {
+            color: #6a7a8a;
+            font-size: 0.9rem;
+        }
+
+        .fiori-btn-link:hover .arrow {
+            color: #0b6e9c;
+        }
+
+        .card-actions-fiori {
+            display: flex;
+            justify-content: flex-end;
+            gap: 8px;
+            margin-top: 14px;
+            padding-top: 12px;
+            border-top: 1px solid #edf0f4;
+        }
+
+        .card-actions-fiori a {
+            font-size: 0.75rem;
+            color: #0b6e9c;
+            text-decoration: none;
+            background: transparent;
+            padding: 4px 14px;
+            border-radius: 30px;
+            border: 1px solid transparent;
+            transition: 0.15s;
+            font-weight: 400;
+        }
+
+        .card-actions-fiori a:hover {
+            background: #eef3f9;
+            border-color: #d0d9e3;
+        }
+
+        /* ===== SPREADSHEET CARD ===== */
+        .card-fiori-spreadsheet .iframe-wrap {
+            padding: 0 18px 18px 18px;
+        }
+
+        .card-fiori-spreadsheet .iframe-wrap iframe {
+            width: 100%;
+            height: 420px;
+            border: 1px solid #e5e8ec;
+            border-radius: 4px;
+            background: #fafbfc;
+        }
+
+        /* ===== FOOTER FIORI ===== */
+        .fiori-footer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            background: #ffffff;
+            padding: 12px 20px;
+            border-radius: 4px;
+            border: 1px solid #e5e8ec;
+            margin-top: 12px;
+            font-size: 0.8rem;
+            color: #5a6a7a;
+            gap: 12px;
+        }
+
+        .fiori-footer .left span {
+            margin-right: 18px;
+        }
+
+        .fiori-footer .left i {
+            color: #0b6e9c;
+            margin-right: 4px;
+        }
+
+        .fiori-footer .right {
+            display: flex;
+            gap: 14px;
+        }
+
+        .fiori-footer .right i {
+            font-size: 1.1rem;
+            color: #6a7a8a;
+            transition: 0.15s;
+        }
+
+        .fiori-footer .right i:hover {
+            color: #0b6e9c;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 720px) {
+            body { padding: 10px; }
+            .fiori-header {
+                padding: 10px 16px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .fiori-header .brand h1 { font-size: 1rem; }
+            .fiori-header .header-actions { justify-content: flex-start; gap: 14px; font-size: 1rem; }
+            .fiori-header .user-area { font-size: 0.75rem; padding: 2px 12px 2px 8px; }
+            .grid-fiori { grid-template-columns: 1fr; gap: 14px; }
+            .card-fiori-spreadsheet .iframe-wrap iframe { height: 320px; }
+            .fiori-footer { flex-direction: column; align-items: flex-start; }
+            .fiori-footer .left span { display: inline-block; margin-right: 12px; }
+        }
+
+        @media (max-width: 480px) {
+            .card-fiori .card-head h3 { font-size: 0.9rem; }
+            .fiori-btn-link { padding: 12px 14px; }
+            .fiori-btn-link .left .label { font-size: 0.85rem; }
+            .card-fiori-spreadsheet .iframe-wrap iframe { height: 260px; }
+            .page-title h2 { font-size: 1.1rem; }
+        }
+
+        @media (min-width: 1100px) {
+            .grid-fiori { grid-template-columns: repeat(3, 1fr); }
+            .card-fiori-spreadsheet .iframe-wrap iframe { height: 480px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <!-- HEADER SAP FIORI SEDERHANA -->
+        <header class="fiori-header">
+
+            <div class="header-actions">
+                <i class="fas fa-search" title="Cari"></i>
+                <i class="fas fa-bell" title="Notifikasi"></i>
+                <i class="fas fa-question-circle" title="Bantuan"></i>
+                <div class="user-area">
+                    <i class="fas fa-user-circle"></i>
+                    <span>Operator</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- TITLE -->
+
+
+        <!-- GRID 3 FORM (tanpa iframe) -->
+        <div class="grid-fiori">
+            <!-- SUMP -->
+            <div class="card-fiori">
+                <div class="card-head">
+                    <i class="fas fa-sink"></i>
+                    <h3>SAR SUMP</h3>
+                    <span class="status">Aktif</span>
+                </div>
+                <div class="card-body">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLdPfzPfx_jVUmIitmFBPUSHnfbcUBB9oViKmKIxkWi46GEg/viewform" target="_blank" rel="noopener" class="fiori-btn-link">
+                        <span class="left">
+                            <i class="fas fa-pen"></i>
+                            <span>
+                                <span class="label">Isi Form SUMP</span>
+                                <br><span class="desc">kondisi &amp; monitoring</span>
+                            </span>
+                        </span>
+                        <span class="arrow"><i class="fas fa-chevron-right"></i></span>
+                    </a>
+                    <div class="card-actions-fiori">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSdLdPfzPfx_jVUmIitmFBPUSHnfbcUBB9oViKmKIxkWi46GEg/viewform" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Buka</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booster -->
+            <div class="card-fiori">
+                <div class="card-head">
+                    <i class="fas fa-water-pump"></i>
+                    <h3>SAR Booster</h3>
+                    <span class="status">Aktif</span>
+                </div>
+                <div class="card-body">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSd05rHHJkW9l1I2ARNYMg1ayxeVoiIdyLf022PUihQcmhUxGg/viewform" target="_blank" rel="noopener" class="fiori-btn-link">
+                        <span class="left">
+                            <i class="fas fa-pen"></i>
+                            <span>
+                                <span class="label">Isi Form Booster</span>
+                                <br><span class="desc">kondisi &amp; monitoring</span>
+                            </span>
+                        </span>
+                        <span class="arrow"><i class="fas fa-chevron-right"></i></span>
+                    </a>
+                    <div class="card-actions-fiori">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSd05rHHJkW9l1I2ARNYMg1ayxeVoiIdyLf022PUihQcmhUxGg/viewform" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Buka</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Outlet -->
+            <div class="card-fiori">
+                <div class="card-head">
+                    <i class="fas fa-drain"></i>
+                    <h3>SAR Outlet</h3>
+                    <span class="status">Aktif</span>
+                </div>
+                <div class="card-body">
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSe8XtS3nTxN5AXKPvlzcOfou9wHKGr0rNHDspltSHX2yywrQg/viewform" target="_blank" rel="noopener" class="fiori-btn-link">
+                        <span class="left">
+                            <i class="fas fa-pen"></i>
+                            <span>
+                                <span class="label">Isi Form Outlet</span>
+                                <br><span class="desc">kondisi &amp; monitoring</span>
+                            </span>
+                        </span>
+                        <span class="arrow"><i class="fas fa-chevron-right"></i></span>
+                    </a>
+                    <div class="card-actions-fiori">
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLSe8XtS3nTxN5AXKPvlzcOfou9wHKGr0rNHDspltSHX2yywrQg/viewform" target="_blank" rel="noopener"><i class="fas fa-external-link-alt"></i> Buka</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SPREADSHEET CARD (masih pakai iframe) -->
+        <div class="card-fiori card-fiori-spreadsheet" style="margin-top: 8px;">
+            <div class="card-head">
+                <i class="fas fa-table"></i>
+                <h3>Review Data SAR</h3>
+                <span class="status" style="background:#dceaf5; color:#0b6e9c;">Spreadsheet</span>
+            </div>
+            <div class="iframe-wrap">
+                <iframe src="https://docs.google.com/spreadsheets/d/1AHCF44YMg2w_0Jy_H4pPESuxIJjCwi3Zq8vCW--nywg/edit?resourcekey=&gid=1905489045&embedded=true" 
+                        title="Review Data SAR Dewatering"
+                        loading="lazy"
+                        allow="geolocation; microphone; camera"></iframe>
+            </div>
+            <div style="padding: 0 18px 16px 18px; display: flex; justify-content: flex-end; gap: 10px; border-top: 1px solid #edf0f4; padding-top: 14px;">
+                <a href="https://docs.google.com/spreadsheets/d/1AHCF44YMg2w_0Jy_H4pPESuxIJjCwi3Zq8vCW--nywg/edit?resourcekey=&gid=1905489045#gid=1905489045" target="_blank" rel="noopener" style="font-size:0.75rem; color:#0b6e9c; text-decoration:none; background:transparent; padding:4px 14px; border-radius:30px; border:1px solid transparent; transition:0.15s;">
+                    <i class="fas fa-external-link-alt"></i> Buka Spreadsheet
+                </a>
+                <a href="#" style="font-size:0.75rem; color:#0b6e9c; text-decoration:none; background:transparent; padding:4px 14px; border-radius:30px; border:1px solid transparent; transition:0.15s;" onclick="alert('Data terintegrasi dari form SAR'); return false;">
+                    <i class="fas fa-rotate-right"></i> Refresh
+                </a>
+            </div>
+        </div>
+
+        <!-- FOOTER FIORI -->
+
+    </div>
+
+    <script>
+        // Notifikasi jika iframe spreadsheet error
+        document.querySelectorAll('iframe').forEach(iframe => {
+            iframe.addEventListener('error', function() {
+                console.warn('Gagal memuat iframe spreadsheet, periksa koneksi atau login Google.');
+            });
+        });
+        console.log('SAR Dewatering — gaya SAP Fiori sederhana, form tanpa iframe.');
+    </script>
+</body>
+</html>

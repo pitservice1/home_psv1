@@ -1,0 +1,2256 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="theme-color" content="#4CAF50">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="mobile-web-app-capable" content="yes">
+<title>Dashboard PIT Service Air</title>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="apple-touch-icon" href="/icon.png">
+<style>
+  :root {
+    --bg-light: #f0f9ff;
+    --card-bg: #ffffff;
+    --ocean-blue: #0ea5e9;
+    --ocean-blue-light: #e0f2fe;
+    --deep-blue: #0369a1;
+    --teal: #0d9488;
+    --teal-light: #ccfbf1;
+    --seafoam: #2dd4bf;
+    --seafoam-light: #ccfbf1;
+    --emerald: #10b981;
+    --emerald-light: #d1fae5;
+    --navy: #1e40af;
+    --navy-light: #dbeafe;
+    --sky-blue: #38bdf8;
+    --sky-blue-light: #e0f2fe;
+    --aqua: #06b6d4;
+    --aqua-light: #cffafe;
+    --marine: #0891b2;
+    --marine-light: #cffafe;
+    --forest-green: #15803d;
+    --forest-green-light: #dcfce7;
+    --lime: #65a30d;
+    --lime-light: #ecfccb;
+    --text-dark: #1e293b;
+    --text-medium: #475569;
+    --text-light: #64748b;
+    --gap: 16px;
+    --card-radius: 12px;
+    --card-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    --card-shadow-hover: 0 8px 24px rgba(0, 0, 0, 0.1);
+    --sap-primary: #0a6ed1;
+    --sap-primary-light: #e5f0fa;
+    --sap-primary-dark: #0854a0;
+    --sap-bg: #f7f9fb;
+    --sap-card-bg: #ffffff;
+    --sap-text: #1d2d3e;
+    --sap-text-secondary: #556b82;
+    --sap-border: #d9e0e8;
+    --sap-hover: #f0f5fa;
+    --sap-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    --sap-shadow-hover: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --sap-radius: 12px;
+    --sap-transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  * { 
+    box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+  }
+  
+  html, body { 
+    height: 100% !important;
+    min-height: 100% !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: 'Google Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: var(--text-dark);
+    line-height: 1.5;
+    overflow-x: hidden;
+  }
+
+  /* ===== BACKGROUND GAMBAR PEGUNUNGAN ===== */
+  html, body { 
+    background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1920&q=80') no-repeat center center fixed !important;
+    background-size: cover !important;
+  }
+
+  /* ===== OVERLAY TIPIS UNTUK KETERBACAAN ===== */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  .pit-dashboard-container {
+    position: relative;
+    z-index: 1;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* ===== HEADER SAP FIORI STYLE ===== */
+  .header-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 24px;
+    box-sizing: border-box;
+    width: 100%;
+    position: relative;
+    z-index: 30;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  }
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .app-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--sap-primary), var(--sap-primary-dark));
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 700;
+    box-shadow: 0 2px 8px rgba(10, 110, 209, 0.3);
+  }
+
+  .app-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--sap-text);
+    letter-spacing: -0.3px;
+  }
+  .app-title span {
+    color: var(--sap-primary);
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .header-btn {
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--sap-text-secondary);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--sap-transition);
+    position: relative;
+  }
+
+  .header-btn:hover {
+    background: var(--sap-hover);
+    color: var(--sap-primary);
+  }
+
+  .header-btn .badge {
+    position: absolute;
+    top: 4px;
+    right: 4px;
+    width: 18px;
+    height: 18px;
+    background: #e74c3c;
+    color: white;
+    font-size: 0.55rem;
+    font-weight: 600;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid white;
+  }
+
+  .account-icon-header {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--sap-primary), var(--sap-primary-dark));
+    color: white;
+    font-size: 1.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--sap-transition);
+    box-shadow: 0 2px 8px rgba(10, 110, 209, 0.2);
+  }
+
+  .account-icon-header:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 16px rgba(10, 110, 209, 0.3);
+  }
+
+  /* ===== SEARCH BAR ===== */
+  .search-container {
+    position: relative;
+    flex: 1;
+    max-width: 480px;
+    margin: 0 16px;
+    z-index: 30;
+  }
+
+  .search-box {
+    width: 100%;
+    padding: 10px 16px 10px 44px;
+    border: 1.5px solid var(--sap-border);
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-family: 'Google Sans', sans-serif;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(8px);
+    color: var(--sap-text);
+    transition: var(--sap-transition);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+  }
+
+  .search-box:focus {
+    background: #ffffff;
+    border-color: var(--sap-primary);
+    box-shadow: 0 4px 20px rgba(10, 110, 209, 0.12);
+    outline: none;
+  }
+
+  .search-box::placeholder {
+    color: var(--sap-text-secondary);
+    font-weight: 400;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--sap-text-secondary);
+    font-size: 0.95rem;
+    z-index: 31;
+    pointer-events: none;
+  }
+
+  /* ===== CAROUSEL SECTION ===== */
+  .carousel-section {
+    position: relative;
+    width: 100%;
+    margin: 16px auto 0;
+    border-radius: 16px;
+    overflow: hidden;
+    background: rgba(0, 0, 0, 0.2);
+    height: 40vh;
+    z-index: 10;
+    transition: all 0.5s ease;
+    max-width: 1400px;
+    padding: 0 16px;
+  }
+
+  .carousel-section.hidden {
+    opacity: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    transition: all 0.5s ease;
+  }
+
+  .carousel-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .carousel-slide {
+    width: 100%;
+    height: 100%;
+    display: none;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .carousel-slide.active {
+    display: block;
+  }
+
+  .carousel-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 2;
+  }
+
+  .carousel-slide .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 3;
+  }
+
+  .carousel-nav {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    z-index: 4;
+  }
+
+  .carousel-arrow {
+    display: none !important;
+  }
+
+  .carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .carousel-dot.active {
+    background-color: #ffffff;
+    transform: scale(1.2);
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+  }
+
+  .carousel-loading, .carousel-error {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 1.1rem;
+    color: white;
+    background: rgba(0, 0, 0, 0.3);
+  }
+
+  /* ===== RADIO PLAYER ===== */
+  .radio-player-section {
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    padding: 12px 20px;
+    margin: 12px auto 16px;
+    border-radius: 50px;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    max-width: 900px;
+    width: fit-content;
+    color: var(--sap-text);
+    transition: all 0.5s ease;
+  }
+
+  .radio-player-section.hidden {
+    opacity: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    transform: scale(0.8);
+    transition: all 0.5s ease;
+  }
+
+  .radio-player-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .radio-select-wrapper {
+    position: relative;
+    min-width: 200px;
+  }
+
+  .radio-select-wrapper i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--sap-primary);
+    font-size: 0.9rem;
+    z-index: 1;
+  }
+
+  #audioSelect {
+    width: 100%;
+    padding: 8px 14px 8px 38px;
+    border: 1.5px solid var(--sap-border);
+    border-radius: 40px;
+    font-family: 'Google Sans', sans-serif;
+    font-size: 0.85rem;
+    background: white;
+    color: var(--sap-text);
+    cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%230a6ed1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 14px;
+    transition: var(--sap-transition);
+  }
+
+  #audioSelect:hover {
+    border-color: var(--sap-primary);
+    box-shadow: 0 2px 8px rgba(10, 110, 209, 0.1);
+  }
+
+  #audioSelect:focus {
+    outline: none;
+    border-color: var(--sap-primary);
+    box-shadow: 0 4px 12px rgba(10, 110, 209, 0.15);
+  }
+
+  .radio-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .volume-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    padding: 4px 12px;
+    border-radius: 40px;
+    min-width: 110px;
+    border: 1.5px solid var(--sap-border);
+  }
+
+  .volume-control i {
+    color: var(--sap-text-secondary);
+    font-size: 0.85rem;
+    width: 16px;
+  }
+
+  .volume-control input[type="range"] {
+    flex: 1;
+    height: 4px;
+    -webkit-appearance: none;
+    background: linear-gradient(90deg, var(--sap-primary) 0%, var(--sap-primary) 70%, #e2e8f0 70%);
+    border-radius: 10px;
+    outline: none;
+  }
+
+  .volume-control input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    background: var(--sap-primary);
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(10, 110, 209, 0.3);
+    border: 2px solid white;
+    transition: var(--sap-transition);
+  }
+
+  .volume-control input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+  }
+
+  .radio-buttons {
+    display: flex;
+    gap: 4px;
+  }
+
+  .radio-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: none;
+    background: white;
+    color: var(--sap-text-secondary);
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--sap-transition);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1.5px solid var(--sap-border);
+  }
+
+  .radio-btn:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(10, 110, 209, 0.2);
+    border-color: var(--sap-primary);
+    color: var(--sap-primary);
+  }
+
+  .radio-btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  .radio-btn.play-btn.active {
+    background: var(--emerald);
+    color: white;
+    border-color: var(--emerald);
+    box-shadow: 0 2px 12px rgba(16, 185, 129, 0.3);
+  }
+
+  .radio-btn.stop-btn.active {
+    background: #ef4444;
+    color: white;
+    border-color: #ef4444;
+    box-shadow: 0 2px 12px rgba(239, 68, 68, 0.3);
+  }
+
+  .now-playing {
+    font-size: 0.78rem;
+    color: var(--sap-text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 4px 14px;
+    border-radius: 40px;
+    border: 1px solid var(--sap-border);
+    white-space: nowrap;
+  }
+
+  .now-playing i {
+    color: var(--sap-primary);
+    font-size: 0.7rem;
+  }
+
+  .station-name {
+    font-weight: 600;
+    color: var(--sap-text);
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.8rem;
+  }
+
+  /* ===== GRID MENU CARD - TANPA LATAR BELAKANG, DENGAN TEXT-SHADOW ===== */
+  .grid {
+    display: grid;
+    gap: var(--gap);
+    margin: 20px auto;
+    padding: 0 16px;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 1400px;
+    transition: all 0.3s ease;
+  }
+
+  /* ===== CARD BARU: TANPA LATAR BELAKANG, DENGAN TEXT SHADOW ===== */
+  .card {
+    background: transparent !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 18px 20px;
+    border-radius: var(--sap-radius);
+    box-shadow: none !important;
+    transition: var(--sap-transition);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    position: relative;
+    border: none !important;
+    min-height: 80px;
+  }
+
+  .card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: var(--sap-radius);
+    opacity: 0;
+    transition: var(--sap-transition);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .card:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: none !important;
+    border-color: transparent !important;
+    background: transparent !important;
+  }
+
+  .card:hover::before {
+    opacity: 1;
+  }
+
+  .card:active {
+    transform: scale(0.97);
+    transition-duration: 0.1s;
+  }
+
+  /* ===== ICON DI POJOK KIRI ATAS ===== */
+  .card-icon-wrapper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 48px;
+    padding-top: 2px;
+  }
+
+  .card-icon {
+    font-size: 28px;
+    transition: var(--sap-transition);
+    line-height: 1;
+    /* Text shadow untuk ikon agar terlihat jelas di background gelap */
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 0, 0, 0.3);
+  }
+
+  .card:hover .card-icon {
+    transform: scale(1.15);
+  }
+
+  /* Warna icon berdasarkan urutan - lebih terang untuk kontras */
+  .card:nth-child(8n+1) .card-icon { color: #60a5fa; }
+  .card:nth-child(8n+2) .card-icon { color: #34d399; }
+  .card:nth-child(8n+3) .card-icon { color: #34d399; }
+  .card:nth-child(8n+4) .card-icon { color: #818cf8; }
+  .card:nth-child(8n+5) .card-icon { color: #22d3ee; }
+  .card:nth-child(8n+6) .card-icon { color: #34d399; }
+  .card:nth-child(8n+7) .card-icon { color: #60a5fa; }
+  .card:nth-child(8n+8) .card-icon { color: #a78bfa; }
+
+  /* Special Cards - Icon Colors dengan text-shadow lebih kuat */
+  .admin-card .card-icon { 
+    color: #818cf8 !important;
+    text-shadow: 0 2px 12px rgba(129, 140, 248, 0.4), 0 0 30px rgba(129, 140, 248, 0.2) !important;
+  }
+  .report-ss-card .card-icon { 
+    color: #fbbf24 !important;
+    text-shadow: 0 2px 12px rgba(251, 191, 36, 0.4), 0 0 30px rgba(251, 191, 36, 0.2) !important;
+  }
+  .Breakdown-card .card-icon { 
+    color: #f87171 !important;
+    text-shadow: 0 2px 12px rgba(248, 113, 113, 0.4), 0 0 30px rgba(248, 113, 113, 0.2) !important;
+  }
+
+  /* ===== LABEL DI KANAN DENGAN TEXT-SHADOW ===== */
+  .card-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  .card h3 {
+    margin: 0;
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #ffffff;
+    line-height: 1.3;
+    transition: var(--sap-transition);
+    /* TEXT SHADOW untuk keterbacaan di background apapun */
+    text-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.8),
+      0 4px 8px rgba(0, 0, 0, 0.5),
+      0 8px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .card:hover h3 {
+    color: #ffffff;
+    text-shadow: 
+      0 2px 4px rgba(0, 0, 0, 0.9),
+      0 4px 12px rgba(0, 0, 0, 0.6),
+      0 8px 24px rgba(0, 0, 0, 0.4);
+    transform: scale(1.02);
+  }
+
+  .card p {
+    margin: 2px 0 0 0;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.75rem;
+    line-height: 1.3;
+    font-weight: 400;
+    /* TEXT SHADOW untuk deskripsi */
+    text-shadow: 
+      0 1px 3px rgba(0, 0, 0, 0.8),
+      0 2px 6px rgba(0, 0, 0, 0.5);
+  }
+
+  .card:hover p {
+    color: rgba(255, 255, 255, 1);
+    text-shadow: 
+      0 1px 4px rgba(0, 0, 0, 0.9),
+      0 2px 8px rgba(0, 0, 0, 0.6);
+  }
+
+  .card.hidden {
+    display: none !important;
+  }
+
+  /* ===== MODAL ===== */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    animation: modalFadeIn 0.25s ease;
+  }
+
+  @keyframes modalFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .modal-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 28px 32px;
+    border-radius: 16px;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 440px;
+    max-height: 80vh;
+    overflow-y: auto;
+    animation: modalSlideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @keyframes modalSlideUp {
+    from { 
+      opacity: 0;
+      transform: translate(-50%, -40%);
+    }
+    to { 
+      opacity: 1;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 2px solid var(--sap-primary-light);
+  }
+
+  .modal-header h2 {
+    color: var(--sap-primary);
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .close-modal {
+    background: none;
+    border: none;
+    font-size: 1.4rem;
+    color: var(--sap-text-secondary);
+    cursor: pointer;
+    padding: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--sap-transition);
+  }
+
+  .close-modal:hover {
+    background: var(--sap-hover);
+    color: var(--sap-primary);
+  }
+
+  .modal-links {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .modal-link {
+    display: flex;
+    align-items: center;
+    padding: 16px 18px;
+    background: var(--sap-bg);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--sap-text);
+    transition: var(--sap-transition);
+    border: 1px solid transparent;
+  }
+
+  .modal-link:hover {
+    background: var(--sap-primary-light);
+    border-color: var(--sap-primary);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(10, 110, 209, 0.1);
+  }
+
+  .modal-link-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--sap-primary), var(--sap-primary-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1rem;
+    margin-right: 14px;
+    flex-shrink: 0;
+  }
+
+  .modal-link-text {
+    flex: 1;
+  }
+
+  .modal-link-text h4 {
+    margin: 0 0 2px 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--sap-text);
+  }
+
+  .modal-link-text p {
+    margin: 0;
+    font-size: 0.78rem;
+    color: var(--sap-text-secondary);
+  }
+
+  /* ===== FOOTER ===== */
+  .page-footer {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-align: center;
+    padding: 20px 0 16px;
+    font-weight: 400;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 10px 16px 0;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    max-width: 1400px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  /* ===== NO RESULT ===== */
+  #noResultMsg {
+    text-align: center;
+    padding: 40px 20px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 1.1rem;
+    grid-column: 1 / -1;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    backdrop-filter: blur(8px);
+  }
+
+  #noResultMsg i {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 12px;
+    opacity: 0.7;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (min-width: 1025px) {
+    .carousel-section { height: 45vh; margin-top: 12px; }
+    .grid { grid-template-columns: repeat(4, 1fr); gap: 20px; padding: 0 24px; }
+    .card { padding: 20px 24px; min-height: 90px; }
+    .card-icon { font-size: 32px; }
+    .card-icon-wrapper { width: 56px; }
+    .card h3 { font-size: 1rem; }
+    .card p { font-size: 0.78rem; }
+  }
+
+  @media (max-width: 1024px) and (min-width: 768px) {
+    .carousel-section { height: 35vh; }
+    .grid { grid-template-columns: repeat(3, 1fr); gap: 16px; padding: 0 20px; }
+    .card { padding: 16px 18px; min-height: 80px; }
+    .card-icon { font-size: 28px; }
+    .card-icon-wrapper { width: 48px; }
+    .card h3 { font-size: 0.9rem; }
+    .card p { font-size: 0.72rem; }
+  }
+
+@media (max-width: 768px) and (min-width: 485px) {
+    .carousel-section { height: 30vh; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 14px; padding: 0 16px; }
+    .card { padding: 14px 16px; min-height: 72px; }
+    .card-icon { font-size: 24px; }
+    .card-icon-wrapper { width: 40px; }
+    .card h3 { font-size: 0.85rem; }
+    .card p { font-size: 0.68rem; }
+    .header-section { padding: 10px 16px; flex-wrap: wrap; gap: 8px; }
+    .search-container { max-width: 100%; margin: 4px 0; order: 3; flex: 1 1 100%; }
+    .account-icon-header,
+    .header-btn {
+        display: none !important;
+    }
+    /* ===== RADIO PLAYER MOBILE COMPACT ===== */
+    .radio-player-section {
+        padding: 6px 12px !important;
+        border-radius: 30px !important;
+        max-width: 95% !important;
+        margin: 8px auto !important;
+    }
+    .radio-player-container {
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 6px !important;
+        flex-wrap: nowrap !important;
+        justify-content: center !important;
+    }
+    .radio-select-wrapper {
+        min-width: 120px !important;
+        width: auto !important;
+    }
+    .radio-select-wrapper i {
+        font-size: 0.7rem !important;
+        left: 8px !important;
+    }
+    #audioSelect {
+        padding: 4px 8px 4px 28px !important;
+        font-size: 0.7rem !important;
+        min-width: 100px !important;
+        width: auto !important;
+    }
+    .radio-controls {
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 4px !important;
+        flex-wrap: nowrap !important;
+        justify-content: center !important;
+    }
+    .volume-control {
+        display: none !important;
+    }
+    .now-playing {
+        display: none !important;
+    }
+    .radio-buttons {
+        display: flex !important;
+        gap: 4px !important;
+    }
+    .radio-btn {
+        width: 26px !important;
+        height: 26px !important;
+        font-size: 0.65rem !important;
+        min-width: unset !important;
+    }
+}
+
+@media (max-width: 485px) {
+    .carousel-section { height: 25vh; padding: 0 8px; }
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 0 12px; }
+    .card { padding: 12px 14px; min-height: 64px; gap: 12px; }
+    .card-icon { font-size: 20px; }
+    .card-icon-wrapper { width: 32px; }
+    .card h3 { font-size: 0.78rem; }
+    .card p { font-size: 0.62rem; }
+    .header-section { padding: 8px 12px; flex-wrap: wrap; gap: 6px; }
+    .search-container { max-width: 100%; margin: 2px 0; order: 3; flex: 1 1 100%; }
+    .search-box { padding: 8px 12px 8px 36px; font-size: 0.8rem; }
+    .search-icon { left: 12px; font-size: 0.8rem; }
+    .app-title { font-size: 0.85rem; }
+    .app-icon { width: 32px; height: 32px; font-size: 0.9rem; }
+    .account-icon-header, .header-btn { 
+        width: 32px; height: 32px; font-size: 0.9rem; 
+        display: none !important;
+    }
+    .modal-content { padding: 20px; max-width: 95%; }
+    /* ===== RADIO PLAYER MOBILE COMPACT ===== */
+    .radio-player-section { 
+        max-width: 98%; 
+        padding: 6px 10px !important;
+        border-radius: 25px !important;
+        margin: 6px auto !important;
+    }
+    .radio-player-container { 
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 4px !important;
+        flex-wrap: nowrap !important;
+        justify-content: center !important;
+    }
+    .radio-select-wrapper { 
+        width: auto !important;
+        min-width: 100px !important;
+    }
+    .radio-select-wrapper i {
+        font-size: 0.65rem !important;
+        left: 6px !important;
+    }
+    #audioSelect { 
+        padding: 3px 6px 3px 24px !important;
+        font-size: 0.65rem !important;
+        min-width: 80px !important;
+        width: auto !important;
+    }
+    .radio-controls { 
+        justify-content: center; 
+        flex-wrap: nowrap !important;
+        gap: 3px !important;
+    }
+    .volume-control {
+        display: none !important;
+    }
+    .now-playing {
+        display: none !important;
+    }
+    .radio-btn {
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 0.6rem !important;
+        min-width: unset !important;
+    }
+    .station-name { max-width: 100px; font-size: 0.7rem; }
+}
+
+  @media (max-width: 360px) {
+    .grid { grid-template-columns: 1fr 1fr; gap: 8px; padding: 0 8px; }
+    .card { padding: 10px 12px; min-height: 56px; gap: 10px; }
+    .card-icon { font-size: 18px; }
+    .card-icon-wrapper { width: 28px; }
+    .card h3 { font-size: 0.72rem; }
+    .card p { font-size: 0.55rem; }
+    .carousel-section { height: 20vh; }
+    .header-section { padding: 6px 8px; }
+    .app-title { font-size: 0.75rem; }
+    .app-icon { width: 28px; height: 28px; font-size: 0.8rem; }
+  }
+
+  @media (min-width: 1600px) {
+    .carousel-section { height: 50vh; }
+    .grid { grid-template-columns: repeat(5, 1fr); gap: 24px; padding: 0 32px; }
+    .card { padding: 24px 28px; min-height: 100px; }
+    .card-icon { font-size: 36px; }
+    .card-icon-wrapper { width: 64px; }
+    .card h3 { font-size: 1.05rem; }
+    .card p { font-size: 0.82rem; }
+  }
+
+  /* Hide Google Sites Header */
+  header[role="banner"],
+  div[data-is-header="true"],
+  #sites-chrome-header-wrapper,
+  #sites-chrome-header,
+  .oh-menu-sticky-header,
+  .site-header,
+  header.ns-background-hide,
+  .APP-SITE-HEADER {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    min-height: 0 !important;
+    max-height: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    position: absolute !important;
+    top: -9999px !important;
+    left: -9999px !important;
+  }
+
+  body { padding-top: 0 !important; margin-top: 0 !important; }
+  .pit-dashboard-container { margin-top: 0 !important; padding-top: 0 !important; }
+/* ===== CAROUSEL MODAL FULL WIDTH ===== */
+.carousel-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 9999;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    animation: modalFadeIn 0.3s ease;
+    cursor: pointer;
+}
+
+.carousel-modal.active {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-modal-content {
+    position: relative;
+    width: 95%;
+    max-width: 1200px;
+    max-height: 95vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: modalSlideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: default;
+}
+
+.carousel-modal-image {
+    width: 100%;
+    height: auto;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+}
+
+.carousel-modal-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.15);
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.carousel-modal-close:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: rotate(90deg);
+}
+
+.carousel-modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.carousel-modal-nav:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.carousel-modal-nav.prev {
+    left: 20px;
+}
+
+.carousel-modal-nav.next {
+    right: 20px;
+}
+
+.carousel-modal-counter {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 6px 16px;
+    border-radius: 30px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+@media (max-width: 768px) {
+    .carousel-modal-close {
+        top: 12px;
+        right: 12px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+    }
+    .carousel-modal-nav {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+    .carousel-modal-nav.prev {
+        left: 10px;
+    }
+    .carousel-modal-nav.next {
+        right: 10px;
+    }
+    .carousel-modal-counter {
+        font-size: 0.75rem;
+        padding: 4px 12px;
+        bottom: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-modal-nav {
+        width: 32px;
+        height: 32px;
+        font-size: 0.8rem;
+    }
+    .carousel-modal-close {
+        width: 36px;
+        height: 36px;
+        font-size: 1rem;
+        top: 10px;
+        right: 10px;
+    }
+}
+
+</style>
+</head>
+<body>
+<div class="pit-dashboard-container">
+  <main>
+    <!-- Header SAP Fiori Style -->
+    <section class="header-section">
+      <div class="header-left">
+        <div class="account-icon-header" title="Profil">
+          <i class="fas fa-user"></i>
+        </div>
+      </div>
+      
+      <div class="search-container">
+        <i class="fas fa-search search-icon"></i>
+        <input type="text" class="search-box" placeholder="Cari menu atau fitur..." id="searchInput">
+      </div>
+      
+      <div class="header-right">
+        <button class="header-btn" title="Notifikasi">
+          <i class="fas fa-bell"></i>
+          <span class="badge">3</span>
+        </button>
+
+        <button class="header-btn" title="Keluar" id="powerBtn">
+          <i class="fas fa-power-off"></i>
+        </button>
+      </div>
+    </section>
+
+    <!-- Carousel -->
+    <div class="carousel-section" id="carouselSection">
+      <div class="carousel-container" id="carousel"></div>
+    </div>
+
+    <!-- Radio Player -->
+    <div class="radio-player-section" id="radioSection">
+      <div class="radio-player-container">
+        <div class="radio-select-wrapper">
+          <i class="fas fa-radio"></i>
+          <select id="audioSelect">
+            <option value="" disabled selected>Pilih Stasiun Radio</option>
+            <option value="https://storage.googleapis.com/infompkpcs/audio/Dzikir%20dan%20Doa%20-%20Dzikir%20Pagi%20dan%20Petang-%20Dzikir%20Pagi.mp3">Dzikir Pagi</option>
+            <option value="https://storage.googleapis.com/infompkpcs/audio/Dzikir%20dan%20Doa%20-%20Dzikir%20Pagi%20dan%20Petang-%20Dzikir%20Petang.mp3">Dzikir Petang</option>
+            <option value="https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/18.mp3">Surah Al Kahfi</option>
+            <option value="https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/1.mp3">Mishari Rashid al-`Afasy</option>
+            <option value="http://10.2.168.249:8000/bahana">Bahana FM Sangatta</option>
+            <option disabled>─────────News─────────</option>
+            <option value="https://stream.live.vc.bbcmedia.co.uk/bbc_world_service">BBC World Service</option>
+            <option value="https://stream-ssl.arenastreaming.com:8000/jakarta">Elshinta Jakarta</option>
+            <option value="https://pu.klikhost.com/proxy/kbr/kbr">KBR 68H Jakarta</option>
+            <option value="https://stream-node0.rri.co.id/streaming/14/9014/kbrn.mp3">RRI Pro3 Jakarta</option>
+            <option value="https://stream-node0.rri.co.id/streaming/22/9022/rrimakasarpro3.mp3">RRI Pro3 Makassar</option>
+            <option value="https://stream-node1.rri.co.id/streaming/16/9116/rrisamarindapro3.mp3">RRI Pro3 Samarinda</option>
+            <option value="https://stream-node1.rri.co.id/streaming/19/9219/rrisurakartapro3.mp3">RRI Pro3 Surakarta</option>
+            <option disabled>─────────Musik─────────</option>
+            <option value="https://kpfmstreaming.kaltimpost.co.id">KP FM Balikpapan</option>
+            <option value="https://pu.klikhost.com/proxy/kpfm/stream?1741745242165">KP FM Samarinda</option>
+            <option value="https://103.123.98.58/listen/1027_mtb_fm_surabaya/radio.mp3">MTB Surabaya</option>
+            <option value="https://srv1.streamcast.my.id/listen/metta_solo_fm/radio.mp3">Metta FM Solo</option>
+            <option value="https://i.klikhost.com/8010/stream">Suara Mahakam Samarinda</option>
+            <option value="https://c5.siar.us/proxy/ssfm/stream">Suara Surabaya</option>
+            <option value="https://a1.siar.us/radio/8440/radio.mp3?1605496428">Sun Banjarmasin</option>
+            <option value="https://s5.alhastream.com/listen/22/radio">Utari Cilacap</option>
+            <option value="https://svara-stream.radioddns.net/jakarta_z999fm_aac.m3u">Z99 Jakarta</option>
+            <option disabled>─────────Religi─────────</option>
+            <option value="https://streaming.radiomuslim.com/;stream/1">Radio Muslim Yogyakarta</option>
+            <option value="https://radioislamindonesia.com/mutiaraquran.mp3">Radio Mutiara Quran Semarang</option>
+            <option value="https://radioislamindonesia.com/rodja.mp3">Radio Rodja</option>
+            <option value="https://radioislamindonesia.com/rodjatv.mp3">Rodja TV</option>
+            <option disabled>─────────RRI Pro 1 & 2─────────</option>
+            <option value="https://stream-node0.rri.co.id/streaming/19/9019/rribanjarmasinpro2.mp3">RRI Pro 2 Banjarmasin</option>
+            <option value="https://stream-node0.rri.co.id/streaming/19/9019/rribanjarmasinpro4.mp3">RRI Pro 4 Banjarmasin</option>
+            <option value="https://stream-node1.rri.co.id/streaming/25/9025/rrijakartapro1.mp3">RRI Pro1 Jakarta</option>
+            <option value="https://stream-node1.rri.co.id/streaming/25/9025/rrijakartapro2.mp3">RRI Pro2 Jakarta</option>
+            <option value="https://stream-node0.rri.co.id/streaming/22/9022/rrimakasarpro1.mp3">RRI Pro1 Makassar</option>
+            <option value="https://stream-node0.rri.co.id/streaming/22/9022/rrimakasarpro2.mp3">RRI Pro2 Makassar</option>
+            <option value="https://stream-node0.rri.co.id/streaming/19/9119/rripurwokertopro1.mp3">RRI Pro1 Purwokerto</option>
+            <option value="https://stream-node0.rri.co.id/streaming/19/9119/rripurwokertopro2.mp3">RRI Pro2 Purwokerto</option>
+            <option value="https://stream-node1.rri.co.id/streaming/16/9116/rrisamarindapro1.mp3">RRI Pro1 Samarinda</option>
+            <option value="https://stream-node1.rri.co.id/streaming/16/9116/rrisamarindapro2.mp3">RRI Pro2 Samarinda</option>
+            <option value="https://stream-node1.rri.co.id/streaming/19/9219/rrisurakartapro1.mp3">RRI Pro1 Surakarta</option>
+            <option value="https://stream-node1.rri.co.id/streaming/19/9219/rrisurakartapro2.mp3">RRI Pro2 Surakarta</option>
+          </select>
+        </div>
+
+        <div class="radio-controls">
+          <div class="volume-control">
+            <i class="fas fa-volume-down" id="volume-icon"></i>
+            <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.7">
+            <i class="fas fa-volume-up"></i>
+          </div>
+          <div class="radio-buttons">
+            <button class="radio-btn play-btn" id="playBtn" title="Play" disabled>
+              <i class="fas fa-play"></i>
+            </button>
+            <button class="radio-btn stop-btn" id="stopBtn" title="Stop" disabled>
+              <i class="fas fa-stop"></i>
+            </button>
+          </div>
+          <div class="now-playing">
+            <i class="fas fa-signal"></i>
+            <span id="station-name" class="station-name">Pilih station...</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Carousel Modal Full Width -->
+    <div class="carousel-modal" id="carouselModal" onclick="closeCarouselModalGlobal()">
+        <div class="carousel-modal-content" onclick="event.stopPropagation()">
+           <button class="carousel-modal-close" onclick="closeCarouselModalGlobal()">
+                <i class="fas fa-times"></i>
+            </button>
+            <button class="carousel-modal-nav prev" onclick="changeCarouselSlideGlobal(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <img class="carousel-modal-image" id="modalCarouselImage" src="" alt="Carousel Image">
+            <button class="carousel-modal-nav next" onclick="changeCarouselSlideGlobal(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="carousel-modal-counter" id="modalCounter">1 / 1</div>
+        </div>
+    </div>
+    <!-- Grid Cards -->
+    <section class="grid" id="cardGrid">
+      <a class="card" href="gudang.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-warehouse card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>Gudang</h3>
+          <p>Stok & Transaksi</p>
+        </div>
+      </a>
+      <a class="card" href="forms.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-file-pen card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>Forms</h3>
+          <p>Lampiran segala Form</p>
+        </div>
+      </a>
+      <a class="card" href="daily.html">
+        <div class="card-icon-wrapper">
+          <span class="card-icon" style="font-weight:700;font-size:24px;">PKH</span>
+        </div>
+        <div class="card-content">
+          <h3>PKH&HO</h3>
+          <p>Perintah Kerja Harian dan Handover</p>
+        </div>
+      </a>
+      <a class="card" href="reservasi.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-cart-shopping card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>Reservation</h3>
+          <p>Data Orderan</p>
+        </div>
+      </a>
+      <a class="card" href="debit.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-gauge-high card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>Debit Pompa</h3>
+          <p>Hitung Performa</p>
+        </div>
+      </a>
+      <a class="card" href="jsa.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-file-shield card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>Master JSA</h3>
+          <p>Job Safety File</p>
+        </div>
+      </a>
+      <a class="card" href="cuti.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-calendar-check card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>Cuti</h3>
+          <p>Pengajuan & Status</p>
+        </div>
+      </a>
+      <a class="card" href="apd.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-vest card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>APD</h3>
+          <p>Permintaan APD</p>
+        </div>
+      </a>
+      <a class="card" href="sar.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-sharp fa-solid fa-camera-retro card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>SAR Dewatering</h3>
+          <p>Update keadaan Sump</p>
+        </div>
+      </a>
+      <a class="card" href="downloadsar.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-sharp fa-solid fa-camera-retro card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>Foto SAR Downloader</h3>
+          <p>Download Foto SAR</p>
+        </div>
+      </a>
+      <a class="card" href="inspeksi.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-clipboard-list card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>Inspeksi</h3>
+          <p>Inspeksi Kondisi Kolam</p>
+        </div>
+      </a>
+      <a class="card" href="https://drive.google.com/drive/folders/1QisyStEwCOgmQbExRdGsZUiIBxeGANZ_">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-book-open card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>Knowledge</h3>
+          <p>Dokumen SOP</p>
+        </div>
+      </a>
+      <a class="card" href="trainingshe.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-chalkboard-user card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>Training</h3>
+          <p>Refresh Kimper & Materi</p>
+        </div>
+      </a>
+      <a class="card" href="spipsap.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-chart-line card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>SAP dan SPIP</h3>
+          <p>Indikator</p>
+        </div>
+      </a>
+      <a class="card" href="counseling.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-comments card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>C&C</h3>
+          <p>Coaching and Counseling</p>
+        </div>
+      </a>
+      <a class="card" href="enampas.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-handshake card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>6 PAS</h3>
+          <p>Safety Believe dan Ikrar kesalamatan</p>
+        </div>
+      </a>
+
+      <a class="card" href="http://flor.apps.pamapersada.net/Login">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-f card-icon" style="font-weight:700;"></i>
+        </div>
+        <div class="card-content">
+          <h3>Flor</h3>
+          <p>Penilaian</p>
+        </div>
+      </a>
+      <a class="card" href="manpower.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-computer card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>Manpower Kpcs</h3>
+          <p>System Management <bold>Manpower</bold></p>
+        </div>
+      </a>
+      <a class="card" href="sop.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-file-lines card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>SOP</h3>
+          <p>SOP Pit Service</p>
+        </div>
+      </a>
+      <a class="card" href="https://docs.google.com/spreadsheets/d/1dEitpzr5VeVDqWjpUBFpLL3-HNQkEYYLTFC9M4iC3tg/edit?gid=1143666632#gid=1143666632">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-scroll card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>Data HDPE</h3>
+          <p>Inventory & Tracking</p>
+        </div>
+      </a>
+      <a class="card" href="mwt.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-chart-simple card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>MWT</h3>
+          <p>Laporan ke Engineering</p>
+        </div>
+      </a>
+      <a class="card" href="mio.html">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-database card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>Data Mio</h3>
+          <p>SQL Data Dewatering</p>
+        </div>
+      </a>
+      <a class="card report-ss-card" href="#">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-lightbulb card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>Report SS</h3>
+          <p>Suggestion System</p>
+        </div>
+      </a>
+      <a class="card admin-card" href="https://sites.google.com/view/pit-service-air/data-manpower">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-user-shield card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>PSV1 Manpower</h3>
+          <p>All Link Manpower</p>
+        </div>
+      </a>
+      <a class="card Breakdown-card" href="http://kpcssqrp401/reports/report/xxx_EWACS/BREAK%20DOWN-Daily%20Breakdown">
+        <div class="card-icon-wrapper">
+          <i class="fa-solid fa-gear card-icon"></i>
+        </div>
+        <div class="card-content">
+          <h3>Breakdown Unit</h3>
+          <p>Check unit BD</p>
+        </div>
+      </a>
+    </section>
+
+    <!-- Modal Report SS -->
+    <div id="reportSSModal" class="modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Report SS - Suggestion System</h2>
+          <button class="close-modal" onclick="closeReportSSModal()">&times;</button>
+        </div>
+        <div class="modal-links">
+          <a href="https://pamapersada-my.sharepoint.com/:x:/r/personal/p61250617_pamapersada_net/_layouts/15/doc2.aspx?sourcedoc=%7BB0C5144E-D7BA-4B99-8A86-8F2F28E7DB8B%7D&file=MONITORING%20SS%20-%202026%20Dipakai%20(1).xlsx&action=default&mobileredirect=true&DefaultItemOpen=1" class="modal-link">
+            <div class="modal-link-icon"><i class="fa-solid fa-lightbulb"></i></div>
+            <div class="modal-link-text">
+              <h4>Report SS by MD</h4>
+              <p>Akses laporan Suggestion System oleh Management</p>
+            </div>
+          </a>
+          <a href="http://newpoins.apps.pamapersada.net/Login/Profiles" class="modal-link">
+            <div class="modal-link-icon"><i class="fa-solid fa-lightbulb"></i></div>
+            <div class="modal-link-text">
+              <h4>Tarikan Data dari Section Management</h4>
+              <p>Akses data dari sistem Section Management</p>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="page-footer">
+      © PIT SERVICE AIR 2025 22220568 MSA
+    </div>
+  </main>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.getElementById('carousel');
+    let currentSlide = 0;
+    let slideInterval;
+    let carouselData = [];
+    const GS_URL = 'https://script.google.com/macros/s/AKfycbws5jPbl1FcTdb2F_P2AkvH1g9TeMytHpG-0u5OU5rnx_HcAnlTiCON_3053qX7cHkQ/exec';
+
+    // ===== CAROUSEL =====
+    function preloadImages(urls) {
+      urls.forEach(url => {
+        const img = new Image();
+        img.src = url;
+      });
+    }
+
+    function createCarouselWithImages(images) {
+      carousel.innerHTML = '';
+      
+      if (images.length === 0) {
+        carousel.innerHTML = '<div class="carousel-error"><i class="fas fa-exclamation-triangle"></i><br>Tidak ada gambar</div>';
+        return;
+      }
+
+      const slidesContainer = document.createElement('div');
+      slidesContainer.style.position = 'relative';
+      slidesContainer.style.width = '100%';
+      slidesContainer.style.height = '100%';
+
+      images.forEach((item, index) => {
+        const slide = document.createElement('div');
+        slide.className = 'carousel-slide';
+        if (index === 0) slide.classList.add('active');
+        
+        slide.style.backgroundImage = `url('${item.image}')`;
+        
+        const imageElement = document.createElement('div');
+        imageElement.className = 'carousel-image';
+        imageElement.style.backgroundImage = `url('${item.image}')`;
+        slide.appendChild(imageElement);
+        
+        const overlay = document.createElement('div');
+        overlay.className = 'overlay';
+        slide.appendChild(overlay);
+        
+        slidesContainer.appendChild(slide);
+      });
+
+      carousel.appendChild(slidesContainer);
+
+      const navContainer = document.createElement('div');
+      navContainer.className = 'carousel-nav';
+      images.forEach((_, i) => {
+        const dot = document.createElement('div');
+        dot.className = `carousel-dot ${i === 0 ? 'active' : ''}`;
+        dot.dataset.index = i;
+        navContainer.appendChild(dot);
+      });
+      carousel.appendChild(navContainer);
+
+      const slides = carousel.querySelectorAll('.carousel-slide');
+      const dots = carousel.querySelectorAll('.carousel-dot');
+
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.toggle('active', i === index);
+        });
+        dots.forEach((dot, i) => {
+          dot.classList.toggle('active', i === index);
+        });
+        currentSlide = index;
+      }
+
+      function nextSlide() { 
+        showSlide((currentSlide + 1) % slides.length); 
+      }
+
+      dots.forEach(dot => {
+        dot.addEventListener('click', () => {
+          clearInterval(slideInterval);
+          showSlide(parseInt(dot.dataset.index));
+          startSlideShow();
+        });
+      });
+
+      function startSlideShow() {
+        slideInterval = setInterval(nextSlide, 5000);
+      }
+      startSlideShow();
+    }
+
+    async function fetchCarouselData() {
+      try {
+        carousel.innerHTML = '<div class="carousel-loading"><i class="fas fa-spinner fa-spin"></i></div>';
+        
+        const response = await fetch(GS_URL);
+        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+        const data = await response.json();
+
+        if (data.success && data.images && data.images.length > 0) {
+          carouselData = data.images.map(img => ({ image: img.url }));
+          preloadImages(carouselData.map(i => i.image));
+          createCarouselWithImages(carouselData);
+        } else {
+          throw new Error('Tidak ada gambar yang ditemukan');
+        }
+      } catch (error) {
+        console.error('Error fetching carousel data:', error);
+        const fallbackImages = [
+          { image: 'https://placehold.co/1200x675/0a6ed1/ffffff?text=PIT+SERVICE+AIR&font=google-sans' },
+          { image: 'https://placehold.co/1200x675/008a7a/ffffff?text=Monitoring+Real-time&font=google-sans' },
+          { image: 'https://placehold.co/1200x675/10b981/ffffff?text=Safety+First&font=google-sans' }
+        ];
+        carouselData = fallbackImages;
+        createCarouselWithImages(carouselData);
+      }
+    }
+
+    fetchCarouselData();
+
+    // ===== SEARCH FUNCTION =====
+    const searchInput = document.getElementById('searchInput');
+    const cards = document.querySelectorAll('.card');
+    const carouselSection = document.getElementById('carouselSection');
+    const radioSection = document.getElementById('radioSection');
+
+    if (searchInput) {
+      searchInput.addEventListener('input', function() {
+        const term = this.value.toLowerCase().trim();
+        let hasResults = false;
+
+        cards.forEach(card => {
+          const title = card.querySelector('h3').textContent.toLowerCase();
+          const desc = card.querySelector('p').textContent.toLowerCase();
+          const isMatch = title.includes(term) || desc.includes(term);
+          
+          if (isMatch) {
+            card.classList.remove('hidden');
+            hasResults = true;
+          } else {
+            card.classList.add('hidden');
+          }
+        });
+
+        if (term.length > 0) {
+          carouselSection.classList.add('hidden');
+          radioSection.classList.add('hidden');
+        } else {
+          carouselSection.classList.remove('hidden');
+          radioSection.classList.remove('hidden');
+        }
+
+        let noResultMsg = document.getElementById('noResultMsg');
+        if (term.length > 0 && !hasResults) {
+          if (!noResultMsg) {
+            noResultMsg = document.createElement('div');
+            noResultMsg.id = 'noResultMsg';
+            document.getElementById('cardGrid').appendChild(noResultMsg);
+          }
+          noResultMsg.innerHTML = '<i class="fas fa-search"></i> Tidak ada menu yang ditemukan untuk "' + term + '"';
+        } else if (noResultMsg) {
+          noResultMsg.remove();
+        }
+      });
+    }
+
+    // ===== RADIO PLAYER =====
+    const audioElement = document.createElement('audio');
+    audioElement.preload = 'none';
+    document.body.appendChild(audioElement);
+
+    const audioSelect = document.getElementById('audioSelect');
+    const playBtn = document.getElementById('playBtn');
+    const stopBtn = document.getElementById('stopBtn');
+    const volumeSlider = document.getElementById('volume-slider');
+    const stationNameSpan = document.getElementById('station-name');
+
+    let isPlaying = false;
+
+    audioElement.volume = volumeSlider.value;
+
+    function updateVolumeIcon(value) {
+      const icon = document.getElementById('volume-icon');
+      if (value == 0) {
+        icon.className = 'fas fa-volume-mute';
+      } else if (value < 0.5) {
+        icon.className = 'fas fa-volume-down';
+      } else {
+        icon.className = 'fas fa-volume-up';
+      }
+    }
+
+    function updatePlayState(playing) {
+      if (playing) {
+        playBtn.classList.add('active');
+        stopBtn.classList.remove('active');
+      } else {
+        playBtn.classList.remove('active');
+        stopBtn.classList.add('active');
+      }
+      playBtn.disabled = false;
+      stopBtn.disabled = false;
+    }
+
+    function resetPlayer() {
+      audioElement.pause();
+      audioElement.src = '';
+      isPlaying = false;
+      updatePlayState(false);
+      stationNameSpan.textContent = 'Pilih station...';
+    }
+
+    audioSelect.addEventListener('change', function() {
+      const selectedOption = this.options[this.selectedIndex];
+      const stationUrl = this.value;
+      const stationName = selectedOption.textContent;
+
+      if (stationUrl) {
+        stationNameSpan.textContent = stationName;
+        audioElement.src = stationUrl;
+        audioElement.load();
+        playBtn.disabled = false;
+        stopBtn.disabled = false;
+        
+        audioElement.play().then(() => {
+          isPlaying = true;
+          updatePlayState(true);
+        }).catch(() => {
+          isPlaying = false;
+          updatePlayState(false);
+        });
+      } else {
+        resetPlayer();
+      }
+    });
+
+    playBtn.addEventListener('click', function() {
+      if (!audioElement.src) {
+        alert('Pilih stasiun radio terlebih dahulu');
+        return;
+      }
+
+      audioElement.play().then(() => {
+        isPlaying = true;
+        updatePlayState(true);
+      }).catch(() => {
+        alert('Tidak dapat memutar audio. Coba station lain.');
+      });
+    });
+
+    stopBtn.addEventListener('click', function() {
+      audioElement.pause();
+      audioElement.currentTime = 0;
+      isPlaying = false;
+      updatePlayState(false);
+    });
+
+    volumeSlider.addEventListener('input', function() {
+      const volume = parseFloat(this.value);
+      audioElement.volume = volume;
+      updateVolumeIcon(volume);
+      
+      const percentage = volume * 100;
+      this.style.background = `linear-gradient(90deg, #0a6ed1 0%, #0a6ed1 ${percentage}%, #e2e8f0 ${percentage}%)`;
+    });
+
+    audioElement.addEventListener('error', function() {
+      isPlaying = false;
+      updatePlayState(false);
+    });
+
+    audioElement.addEventListener('ended', function() {
+      isPlaying = false;
+      updatePlayState(false);
+    });
+
+    volumeSlider.dispatchEvent(new Event('input'));
+    playBtn.disabled = true;
+    stopBtn.disabled = true;
+
+     // ============================================================
+    // ===== REPORT SS MODAL - PERBAIKAN DENGAN REPLACE =====
+    // ============================================================
+    
+    // 🔥 FUNGSI MODAL - DEFINISIKAN DI WINDOW (GLOBAL)
+    window.openReportSSModal = function() {
+      console.log('🔵 openReportSSModal dipanggil!');
+      const modal = document.getElementById('reportSSModal');
+      if (modal) {
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+        console.log('✅ Modal dibuka');
+      } else {
+        console.error('❌ Modal reportSSModal tidak ditemukan!');
+        alert('Modal tidak ditemukan. Silakan refresh halaman.');
+      }
+    };
+
+    window.closeReportSSModal = function() {
+      console.log('🔴 closeReportSSModal dipanggil!');
+      const modal = document.getElementById('reportSSModal');
+      if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = '';
+        console.log('✅ Modal ditutup');
+      }
+    };
+
+    // 🔥 FUNGSI INIT REPORT SS CARD - DENGAN REPLACE
+    function initReportSSCard() {
+      console.log('🔍 Mencari card Report SS...');
+      
+      // Cari dengan selector class
+      let reportCard = document.querySelector('.report-ss-card');
+      
+      // Jika tidak ditemukan, cari berdasarkan teks h3
+      if (!reportCard) {
+        console.log('🔍 Mencari berdasarkan teks...');
+        const allCards = document.querySelectorAll('.card');
+        allCards.forEach(card => {
+          const title = card.querySelector('h3');
+          if (title && title.textContent.trim() === 'Report SS') {
+            reportCard = card;
+            console.log('✅ Ditemukan berdasarkan teks');
+          }
+        });
+      }
+      
+      if (reportCard) {
+        console.log('✅ Card Report SS ditemukan!');
+        
+        // 🔥 REPLACE: Clone & replace untuk menghapus event listener lama
+        const newCard = reportCard.cloneNode(true);
+        reportCard.parentNode.replaceChild(newCard, reportCard);
+        console.log('🔄 Card telah di-replace');
+        
+        // Tambahkan event listener baru
+        newCard.addEventListener('click', function(e) {
+          e.preventDefault();
+          e.stopPropagation();
+          console.log('🖱️ Card Report SS diklik!');
+          window.openReportSSModal();
+        });
+        
+        // Set href agar tidak navigasi
+        newCard.setAttribute('href', 'javascript:void(0)');
+        newCard.style.cursor = 'pointer';
+        console.log('✅ Report SS card siap digunakan!');
+        
+        // Tambahkan juga secara langsung dengan onclick
+        newCard.setAttribute('onclick', 'window.openReportSSModal(); return false;');
+        
+      } else {
+        console.error('❌ Report SS card tidak ditemukan!');
+        
+        // 🔥 FALLBACK: Buat card baru jika tidak ditemukan
+        const grid = document.getElementById('cardGrid');
+        if (grid) {
+          const fallbackCard = document.createElement('a');
+          fallbackCard.className = 'card report-ss-card';
+          fallbackCard.href = 'javascript:void(0)';
+          fallbackCard.onclick = function(e) {
+            e.preventDefault();
+            window.openReportSSModal();
+          };
+          fallbackCard.innerHTML = `
+            <div class="card-icon-wrapper">
+              <i class="fa-solid fa-lightbulb card-icon"></i>
+            </div>
+            <div class="card-content">
+              <h3>Report SS</h3>
+              <p>Suggestion System</p>
+            </div>
+          `;
+          grid.appendChild(fallbackCard);
+          console.log('✅ Fallback card Report SS dibuat');
+        }
+      }
+    }
+
+    // 🔥 TUTUP MODAL SAAT KLIK DI LUAR
+    document.addEventListener('click', function(e) {
+      const modal = document.getElementById('reportSSModal');
+      if (modal && modal.style.display === 'block') {
+        const content = modal.querySelector('.modal-content');
+        if (content && !content.contains(e.target) && e.target !== modal) {
+          window.closeReportSSModal();
+        }
+      }
+    });
+
+    // 🔥 TUTUP MODAL DENGAN ESCAPE
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        window.closeReportSSModal();
+      }
+    });
+
+    // 🔥 PANGGIL INIT DENGAN DELAY
+    setTimeout(function() {
+      initReportSSCard();
+      console.log('✅ initReportSSCard() dipanggil');
+    }, 300);
+
+    // ===== POWER BUTTON =====
+    const powerBtn = document.getElementById('powerBtn');
+    if (powerBtn) {
+      powerBtn.addEventListener('click', function() {
+        if (confirm('Apakah Anda yakin ingin keluar?')) {
+          alert('Fungsi logout diaktifkan');
+        }
+      });
+    }
+
+  
+    const accountIcon = document.querySelector('.account-icon-header');
+    if (accountIcon) {
+      accountIcon.addEventListener('click', function() {
+        alert('Menu profil akan ditampilkan di sini');
+      });
+    }
+
+    // ===== CAROUSEL MODAL =====
+    let modalImages = [];
+    let currentModalIndex = 0;
+    const carouselModal = document.getElementById('carouselModal');
+    const modalImage = document.getElementById('modalCarouselImage');
+    const modalCounter = document.getElementById('modalCounter');
+
+    // Fungsi untuk membuka modal carousel
+    function openCarouselModal(index) {
+        if (!modalImages.length) return;
+        
+        currentModalIndex = index;
+        updateModalImage();
+        carouselModal.classList.add('active');
+        carouselModal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        
+        // Hentikan slideshow saat modal terbuka
+        if (slideInterval) {
+            clearInterval(slideInterval);
+        }
+    }
+
+    // Fungsi untuk menutup modal carousel
+    function closeCarouselModal() {
+        carouselModal.classList.remove('active');
+        carouselModal.style.display = 'none';
+        document.body.style.overflow = '';
+        
+        // Mulai slideshow lagi
+        if (typeof startSlideShow === 'function') {
+            startSlideShow();
+        }
+    }
+
+    // Fungsi untuk update gambar di modal
+    function updateModalImage() {
+        if (modalImages.length > 0 && modalImages[currentModalIndex]) {
+            modalImage.src = modalImages[currentModalIndex];
+            modalImage.alt = 'Slide ' + (currentModalIndex + 1);
+            modalCounter.textContent = (currentModalIndex + 1) + ' / ' + modalImages.length;
+        }
+    }
+
+    // Fungsi untuk navigasi slide di modal
+    function changeCarouselSlide(direction) {
+        if (!modalImages.length) return;
+        
+        currentModalIndex = (currentModalIndex + direction + modalImages.length) % modalImages.length;
+        updateModalImage();
+        
+        // Update carousel utama juga
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        if (slides.length && currentModalIndex < slides.length) {
+            slides.forEach(function(slide, i) {
+                if (i === currentModalIndex) {
+                    slide.classList.add('active');
+                } else {
+                    slide.classList.remove('active');
+                }
+            });
+            dots.forEach(function(dot, i) {
+                if (i === currentModalIndex) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+            currentSlide = currentModalIndex;
+        }
+    }
+
+    // ===== MODIFIKASI FUNGSI createCarouselWithImages =====
+    // Simpan referensi ke fungsi asli
+    var originalCreateCarousel = createCarouselWithImages;
+    
+    // Override fungsi createCarouselWithImages
+    var newCreateCarousel = function(images) {
+        modalImages = images.map(function(item) { return item.image; });
+        
+        // Panggil fungsi asli
+        if (typeof originalCreateCarousel === 'function') {
+            originalCreateCarousel(images);
+        }
+        
+        // Tambahkan event listener klik pada carousel
+        setTimeout(function() {
+            var container = document.querySelector('.carousel-container');
+            
+            if (container) {
+                container.style.cursor = 'pointer';
+                container.addEventListener('click', function(e) {
+                    if (e.target.closest('.carousel-nav')) return;
+                    openCarouselModal(currentSlide);
+                });
+            }
+        }, 100);
+    };
+    
+    // Assign fungsi baru
+    createCarouselWithImages = newCreateCarousel;
+
+    // ===== FUNGSI GLOBAL UNTUK ONCLICK HTML =====
+    // Definisikan di window agar bisa dipanggil dari onclick HTML
+    window.openCarouselModalGlobal = function(index) {
+        openCarouselModal(index);
+    };
+    window.closeCarouselModalGlobal = function() {
+        closeCarouselModal();
+    };
+    window.changeCarouselSlideGlobal = function(direction) {
+        changeCarouselSlide(direction);
+    };
+
+    // Event listener untuk keyboard di modal
+    document.addEventListener('keydown', function(e) {
+        if (carouselModal.style.display === 'flex') {
+            if (e.key === 'Escape') {
+                closeCarouselModal();
+            } else if (e.key === 'ArrowLeft') {
+                changeCarouselSlide(-1);
+            } else if (e.key === 'ArrowRight') {
+                changeCarouselSlide(1);
+            }
+        }
+    });
+
+  }); // <-- Penutup DOMContentLoaded
+console.log('✅ Report SS Modal siap digunakan!');
+ 
+  // ===== SERVICE WORKER REGISTRATION =====
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('service-worker.js')
+        .then(function(registration) {
+          console.log('✅ Service Worker registered:', registration);
+        })
+        .catch(function(error) {
+          console.log('❌ Service Worker failed:', error);
+        });
+    });
+  }
+
+  // ===== PWA INSTALLATION =====
+  let deferredPrompt;
+  const installBtn = document.getElementById('installBtn');
+
+  window.addEventListener('beforeinstallprompt', function(e) {
+    e.preventDefault();
+    deferredPrompt = e;
+    if (installBtn) {
+      installBtn.style.display = 'block';
+      installBtn.addEventListener('click', function() {
+        installBtn.style.display = 'none';
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(function(choiceResult) {
+          if (choiceResult.outcome === 'accepted') {
+            console.log('✅ User installed PWA');
+          } else {
+            console.log('❌ User dismissed install');
+          }
+          deferredPrompt = null;
+        });
+      });
+    }
+  });
+
+  window.addEventListener('appinstalled', function() {
+    console.log('✅ App installed successfully');
+  });
+</script>
+<!-- Install Button -->
+<button id="installBtn" style="display:none; position:fixed; bottom:20px; right:20px; background:#0a6ed1; color:white; border:none; padding:12px 24px; border-radius:50px; font-size:1rem; cursor:pointer; z-index:999; box-shadow:0 4px 16px rgba(10,110,209,0.3);">
+    📲 Install Aplikasi
+</button>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Refresh Kimper High Risk & Power Tools - SHE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f7ff;        /* biru muda lembut */
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%232197f3' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E");
+            color: #0d3c5c;                  /* biru tua */
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(33, 150, 243, 0.15);
+            overflow: hidden;
+            margin-top: 30px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #0d47a1, #1976d2); /* biru gradasi */
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+        }
+
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+            font-weight: 300;
+            letter-spacing: 0.3px;
+        }
+
+        .gear-icon {
+            width: 70px;
+            height: 70px;
+            margin: 0 auto 15px;
+            animation: rotate 10s linear infinite;
+        }
+
+        .gear-icon svg {
+            width: 100%;
+            height: 100%;
+            fill: white;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.15));
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .content {
+            padding: 30px;
+        }
+
+        .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .card {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 30px 25px;
+            width: 100%;
+            max-width: 340px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(25, 118, 210, 0.08);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 1px solid #e3f2fd;      /* biru sangat muda */
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 30px rgba(33, 150, 243, 0.15);
+            border-color: #bbdefb;
+        }
+
+        .card h3 {
+            color: #0d47a1;                  /* biru tua */
+            margin-bottom: 15px;
+            font-size: 22px;
+            font-weight: 600;
+        }
+
+        .card p {
+            color: #2c3e50;                   /* abu-abu kebiruan */
+            margin-bottom: 25px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #1976d2;               /* biru solid */
+            color: white;
+            padding: 12px 30px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 10px rgba(25, 118, 210, 0.3);
+            border: none;
+            font-size: 15px;
+        }
+
+        .btn:hover {
+            background: #0d47a1;               /* biru lebih gelap */
+            box-shadow: 0 8px 18px rgba(13, 71, 161, 0.35);
+        }
+
+        .info-section {
+            margin-top: 45px;
+            padding: 25px;
+            background: #f5faff;               /* putih kebiruan */
+            border-radius: 16px;
+            border-left: 5px solid #1976d2;
+        }
+
+        .info-section h3 {
+            color: #0d47a1;
+            margin-bottom: 20px;
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .info-section ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .info-section li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #bbdefb;
+            position: relative;
+            padding-left: 28px;
+            color: #1a3a4f;
+        }
+
+        .info-section li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #1976d2;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .info-section li:last-child {
+            border-bottom: none;
+        }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #546e7a;                    /* biru abu-abu */
+            font-size: 14px;
+            padding: 20px;
+            border-top: 1px solid #e3f2fd;
+            width: 100%;
+            background-color: white;
+        }
+
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .card-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="gear-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12,15.5A3.5,3.5 0 0,1 8.5,12A3.5,3.5 0 0,1 12,8.5A3.5,3.5 0 0,1 15.5,12A3.5,3.5 0 0,1 12,15.5M19.43,12.97C19.47,12.65 19.5,12.33 19.5,12C19.5,11.67 19.47,11.34 19.43,11L21.54,9.37C21.73,9.22 21.78,8.95 21.66,8.73L19.66,5.27C19.54,5.05 19.27,4.96 19.05,5.05L16.56,6.05C16.04,5.66 15.5,5.32 14.87,5.07L14.5,2.42C14.46,2.18 14.25,2 14,2H10C9.75,2 9.54,2.18 9.5,2.42L9.13,5.07C8.5,5.32 7.96,5.66 7.44,6.05L4.95,5.05C4.73,4.96 4.46,5.05 4.34,5.27L2.34,8.73C2.22,8.95 2.27,9.22 2.46,9.37L4.57,11C4.53,11.34 4.5,11.67 4.5,12C4.5,12.33 4.53,12.65 4.57,12.97L2.46,14.63C2.27,14.78 2.22,15.05 2.34,15.27L4.34,18.73C4.46,18.95 4.73,19.03 4.95,18.95L7.44,17.94C7.96,18.34 8.5,18.68 9.13,18.93L9.5,21.58C9.54,21.82 9.75,22 10,22H14C14.25,22 14.46,21.82 14.5,21.58L14.87,18.93C15.5,18.68 16.04,18.34 16.56,17.94L19.05,18.95C19.27,19.03 19.54,18.95 19.66,18.73L21.66,15.27C21.78,15.05 21.73,14.78 21.54,14.63L19.43,12.97Z" />
+                </svg>
+            </div>
+            <h1>Refresh Kimper High Risk & Power Tools</h1>
+            <p>Program Keselamatan, Kesehatan Kerja dan Lingkungan Hidup (K3LH)</p>
+        </div>
+
+        <div class="content">
+            <div class="card-container">
+                <div class="card">
+                    <h3>Refresh Kimper HR</h3>
+                    <p>Terdapat Menu Refresh, Dumping High risk, Loading High risk, Bekerja dekat tebing, Bekerja dekat air, Bekerja di ketinggian, Lean Clearing, Rigger, Juru las, PowerTools.</p>
+                    <a href="https://sites.google.com/view/trainingk3lhpamakpcs/permit" class="btn" target="_blank">Refresh Kimper HR</a>
+                </div>
+
+                <div class="card">
+                    <h3>Kirim Bukti Refresh</h3>
+                    <p>Setelah menyelesaikan refresh training, kirim bukti penyelesaian melalui form berikut untuk pencatatan dan verifikasi.</p>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLSfV65ajFLg7OooGnMneSPQ1XbxDJ3VSG5R13RqyAUlNZKvFGA/viewform?usp=send_form" class="btn" target="_blank">Kirim Bukti Refresh</a>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h3>Pentingnya Refresh Training K3LH</h3>
+                <ul>
+                    <li>Memperbarui pengetahuan tentang prosedur keselamatan terkini</li>
+                    <li>Mengurangi risiko kecelakaan kerja dan cedera</li>
+                    <li>Meningkatkan kesadaran akan bahaya pekerjaan high risk</li>
+                    <li>Memastikan kepatuhan terhadap regulasi K3LH</li>
+                    <li>Melindungi diri sendiri dan rekan kerja</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>Safety First! Selalu utamakan keselamatan dalam setiap pekerjaan.</p>
+            <p>© 2025 Program K3LH - High Risk & Power Tools</p>
+        </div>
+    </div>
+</body>
+</html>

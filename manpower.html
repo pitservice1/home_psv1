@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pit Service 1 KPCS</title>
+    <style>
+/* RESET & BASE */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+body {
+    background: #f4f7fc;
+    color: #1e2a3a;
+    line-height: 1.5;
+}
+
+/* HEADER with RADIO - MODIFIED FOR CENTER POSITION */
+.top-header {
+    background: linear-gradient(145deg, #1e3c5c, #0f2b40);
+    color: white;
+    padding: 12px 24px;
+    box-shadow: 0 6px 14px rgba(0,20,40,0.3);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    border-bottom: 3px solid #FFC300;
+}
+
+.header-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center; /* CHANGED: from space-between to center */
+    gap: 15px;
+}
+
+/* HIDE LOGO AREA COMPLETELY - UNCOMMENT IF YOU WANT TO HIDE LOGO
+.logo-area {
+    display: none;
+}
+*/
+
+/* IF YOU WANT TO KEEP LOGO BUT RADIO CENTERED, USE THIS INSTEAD:
+.header-container {
+    justify-content: space-between;
+    position: relative;
+}
+
+.radio-header-player {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: auto;
+    min-width: 400px;
+}
+
+@media (max-width: 767px) {
+    .radio-header-player {
+        position: static;
+        transform: none;
+        width: 100%;
+        min-width: auto;
+    }
+    
+    .header-container {
+        justify-content: center;
+        flex-direction: column;
+    }
+}
+*/
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon {
+    background: #FFC300;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 24px;
+    color: #0f2b40;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.logo-text {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+.logo-text span { color: #FFC300; }
+
+/* RADIO PLAYER MODERN - CENTERED IN HEADER */
+.radio-header-player {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 60px;
+    padding: 5px 15px 5px 20px;
+    border: 1px solid rgba(255,255,255,0.25);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    margin: 0 auto; /* ENSURE CENTERING */
+}
+
+.live-badge {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #c92a2a;
+    padding: 4px 12px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+.pulse-dot {
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border-radius: 50%;
+    animation: pulse 1.4s infinite;
+}
+@keyframes pulse { 
+    0% { opacity: 1; transform: scale(1); } 
+    50% { opacity: 0.4; transform: scale(1.2); } 
+    100% { opacity: 1; transform: scale(1); } 
+}
+
+.header-radio-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center; /* ADDED: center controls */
+}
+.header-radio-controls select {
+    background: white;
+    border: none;
+    padding: 8px 28px 8px 16px;
+    border-radius: 40px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #1e2a3a;
+    cursor: pointer;
+    appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23333" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>');
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    min-width: 200px;
+}
+.radio-btn {
+    background: #FFC300;
+    border: none;
+    color: #0f2b40;
+    font-weight: bold;
+    padding: 8px 18px;
+    border-radius: 40px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: 0.2s;
+    box-shadow: 0 2px 6px rgba(255,195,0,0.4);
+}
+.radio-btn:hover { background: #ffd633; transform: scale(1.02); }
+.vol-stop {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.3);
+    padding: 4px 10px;
+    border-radius: 40px;
+}
+.vol-stop input[type=range] { width: 70px; cursor: pointer; accent-color: #FFC300; }
+.vol-stop button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    padding: 0 4px;
+}
+#audioFrameHeader { display: none; }
+
+/* SEARCH BAR PROFESIONAL DI ATAS GRID */
+.search-section {
+    max-width: 1440px;
+    margin: 20px auto 10px;
+    padding: 0 20px;
+}
+.search-wrapper {
+    background: white;
+    border-radius: 60px;
+    padding: 6px 6px 6px 20px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.04);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+.search-wrapper:focus-within {
+    box-shadow: 0 8px 25px rgba(255,195,0,0.15);
+    border-color: #FFC300;
+}
+.search-icon {
+    color: #718096;
+    font-size: 1.2rem;
+}
+#searchInput {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    padding: 14px 0;
+    font-size: 1rem;
+    color: #1e293b;
+}
+#searchInput::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+}
+.search-clear {
+    background: #f1f5f9;
+    border: none;
+    border-radius: 40px;
+    padding: 8px 18px;
+    font-weight: 600;
+    color: #334155;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-right: 4px;
+    font-size: 0.9rem;
+}
+.search-clear:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+}
+
+/* GRID LINK CARD */
+.link-grid-section {
+    max-width: 1440px;
+    margin: 20px auto 20px;
+    padding: 0 20px;
+}
+
+.grid-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+    border-left: 6px solid #FFC300;
+    padding-left: 16px;
+    color: #0f2b40;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.result-count {
+    background: #e9edf2;
+    font-size: 0.9rem;
+    font-weight: normal;
+    padding: 4px 12px;
+    border-radius: 40px;
+    color: #2d3c53;
+    margin-left: 12px;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    transition: 0.3s;
+}
+
+.nav-card {
+    background: white;
+    border-radius: 20px;
+    padding: 18px 8px 12px;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 20, 40, 0.08);
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    border: 1px solid #eef2f6;
+}
+
+.nav-card:hover {
+    transform: translateY(-5px);
+    border-color: #FFC300;
+    box-shadow: 0 14px 24px rgba(0,35,70,0.1);
+}
+
+.card-icon {
+    width: 48px;
+    height: 48px;
+    background: #eef4fa;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 12px;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1e3c5c;
+}
+
+.nav-card a {
+    font-weight: 600;
+    color: #1e3c5c;
+    text-decoration: none;
+    font-size: 1rem;
+    word-break: break-word;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.nav-card a:hover { color: #FFC300; text-decoration: underline; }
+
+.card-caption {
+    font-size: 0.7rem;
+    color: #5f6c80;
+    margin-top: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* FOOTER Pit Service 1 KPCS */
+footer {
+    background: #121e2c;
+    color: #ddd;
+    margin-top: 50px;
+    padding: 30px 20px 20px;
+    border-top: 4px solid #FFC300;
+}
+
+.footer-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 25px;
+}
+
+.footer-logo-large {
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    line-height: 1.2;
+}
+.footer-logo-large span { color: #FFC300; }
+
+.footer-service {
+    background: #1d3142;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: #FFC300;
+    border: 1px solid #FFC300;
+    box-shadow: 0 0 12px rgba(255,195,0,0.3);
+    text-transform: uppercase;
+}
+
+.footer-copyright {
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 18px;
+    border-top: 1px solid #2e3e4e;
+    color: #8899aa;
+    font-size: 0.9rem;
+}
+
+/* tambahan kecil */
+.btn-stop {
+    background: transparent;
+    border: 1px solid #fff6;
+    border-radius: 30px;
+    color: white;
+    padding: 4px 12px;
+    font-weight: 500;
+}
+.btn-stop:hover { background: #ffffff22; }
+
+/* SEMBUNYIKAN ELEMEN LAMA */
+.old-body-area, .todo, .radio-card, .body-container, .body-area, nav, .logo-section, header:not(.top-header) {
+    display: none;
+}
+
+/* ========== RESPONSIVE BREAKPOINTS ========== */
+
+/* MOBILE (max-width: 767px) - 3 GRID DENGAN ICON LEBIH KECIL */
+@media (max-width: 767px) {
+    /* Header - radio di tengah */
+    .top-header {
+        padding: 8px 12px;
+    }
+    
+    .header-container {
+        flex-direction: column;
+        align-items: center; /* CHANGED: center alignment */
+        gap: 8px;
+        justify-content: center;
+    }
+    
+    .logo-area {
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .logo-text {
+        font-size: 1.2rem;
+    }
+    
+    .logo-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1.2rem;
+    }
+    
+    .radio-header-player {
+        padding: 6px 12px;
+        width: 100%;
+        justify-content: center;
+        margin: 0 auto;
+    }
+    
+    .live-badge {
+        padding: 2px 8px;
+        font-size: 0.7rem;
+    }
+    
+    .header-radio-controls {
+        flex: 1;
+        justify-content: center;
+        width: 100%;
+    }
+    
+    .header-radio-controls select {
+        min-width: 140px;
+        padding: 6px 24px 6px 12px;
+        font-size: 0.8rem;
+        background-size: 16px;
+    }
+    
+    .radio-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    
+    .vol-stop {
+        padding: 2px 6px;
+    }
+    
+    .vol-stop input[type=range] {
+        width: 50px;
+    }
+    
+    /* SEARCH SECTION - TETAP TAMPIL DI MOBILE */
+    .search-section {
+        display: block;
+        padding: 0 12px;
+        margin: 12px auto 8px;
+    }
+    
+    .search-wrapper {
+        padding: 3px 3px 3px 12px;
+    }
+    
+    .search-icon {
+        font-size: 1rem;
+    }
+    
+    #searchInput {
+        padding: 10px 0;
+        font-size: 0.9rem;
+    }
+    
+    .search-clear {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+    
+    /* LINK GRID - 3 KOLOM DENGAN ICON LEBIH KECIL */
+    .link-grid-section {
+        display: block;
+        padding: 0 10px;
+        margin: 10px auto;
+    }
+    
+    .grid-title {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+        padding-left: 10px;
+    }
+    
+    .result-count {
+        font-size: 0.8rem;
+        padding: 3px 8px;
+    }
+    
+    .card-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 8px;
+    }
+    
+    .nav-card {
+        padding: 10px 4px 8px;
+        border-radius: 16px;
+    }
+    
+    .card-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 1.3rem;
+        margin-bottom: 6px;
+        border-radius: 20px;
+    }
+    
+    .nav-card a {
+        font-size: 0.8rem;
+        line-height: 1.2;
+        -webkit-line-clamp: 2;
+        max-height: 2.4em;
+    }
+    
+    .card-caption {
+        font-size: 0.6rem;
+        margin-top: 4px;
+        letter-spacing: 0.2px;
+        white-space: nowrap;
+        max-width: 100%;
+    }
+    
+    /* FOOTER - TETAP TAMPIL DI MOBILE */
+    footer {
+        display: block;
+        margin-top: 30px;
+        padding: 20px 15px 15px;
+    }
+    
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+    
+    .footer-logo-large {
+        font-size: 1.5rem;
+    }
+    
+    .footer-service {
+        font-size: 1.2rem;
+        padding: 8px 20px;
+    }
+    
+    .footer-copyright {
+        margin-top: 20px;
+        padding-top: 15px;
+        font-size: 0.8rem;
+    }
+}
+
+/* SMALL MOBILE (max-width: 380px) - PENYESUAIAN EKSTRA */
+@media (max-width: 380px) {
+    .card-grid {
+        gap: 5px;
+    }
+    
+    .nav-card {
+        padding: 8px 3px 6px;
+    }
+    
+    .card-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1.1rem;
+        margin-bottom: 4px;
+    }
+    
+    .nav-card a {
+        font-size: 0.7rem;
+    }
+    
+    .card-caption {
+        font-size: 0.55rem;
+        margin-top: 3px;
+    }
+    
+    .grid-title {
+        font-size: 1.1rem;
+    }
+    
+    .search-wrapper {
+        padding: 2px 2px 2px 10px;
+    }
+    
+    #searchInput {
+        font-size: 0.85rem;
+        padding: 8px 0;
+    }
+    
+    .search-clear {
+        padding: 4px 8px;
+        font-size: 0.7rem;
+    }
+    
+    /* Extra small mobile adjustments for radio */
+    .header-radio-controls {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .vol-stop {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+/* TABLET (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+    .card-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 12px;
+    }
+    
+    .nav-card {
+        padding: 16px 6px 10px;
+    }
+    
+    .card-icon {
+        width: 42px;
+        height: 42px;
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+    }
+    
+    .nav-card a {
+        font-size: 0.85rem;
+    }
+    
+    .card-caption {
+        font-size: 0.65rem;
+        margin-top: 4px;
+    }
+    
+    .search-wrapper {
+        padding: 4px 4px 4px 16px;
+    }
+    
+    #searchInput {
+        padding: 10px 0;
+        font-size: 0.9rem;
+    }
+    
+    .search-clear {
+        padding: 6px 14px;
+        font-size: 0.8rem;
+    }
+    
+    /* Tablet radio centering */
+    .header-container {
+        justify-content: center;
+    }
+}
+
+/* DESKTOP (min-width: 1024px) */
+@media (min-width: 1024px) {
+    .card-grid {
+        grid-template-columns: repeat(7, 1fr);
+        gap: 16px;
+    }
+    
+    .nav-card {
+        padding: 18px 8px 12px;
+    }
+    
+    .card-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.8rem;
+        margin-bottom: 12px;
+    }
+    
+    .nav-card a {
+        font-size: 1rem;
+    }
+    
+    .card-caption {
+        display: block;
+        font-size: 0.7rem;
+        margin-top: 6px;
+    }
+    
+    /* Desktop radio centering */
+    .header-container {
+        justify-content: center;
+    }
+}
+
+/* ULTRA WIDE SCREENS - maintain centering */
+@media (min-width: 1600px) {
+    .header-container {
+        justify-content: center;
+    }
+}
+    </style>
+</head>
+<body>
+
+<!-- HEADER (radio di dalamnya) -->
+<header class="top-header">
+    <div class="header-container">
+
+
+        <!-- RADIO PLAYER (volume, stop, play) -->
+        <div class="radio-header-player">
+            <div class="live-badge">
+                <span class="pulse-dot"></span> LIVE
+            </div>
+            <div class="header-radio-controls">
+                <select id="headerAudioSelect">
+                    <option value="" disabled selected>Pilih Stasiun Radio</option>
+                    <option value="https://storage.googleapis.com/infompkpcs/audio/Dzikir%20dan%20Doa%20-%20Dzikir%20Pagi%20dan%20Petang-%20Dzikir%20Pagi.mp3">Dzikir Pagi</option>
+                    <option value="https://storage.googleapis.com/infompkpcs/audio/Dzikir%20dan%20Doa%20-%20Dzikir%20Pagi%20dan%20Petang-%20Dzikir%20Petang.mp3">Dzikir Petang</option>
+                    <option value="https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/18.mp3">Surah Al Kahfi</option>
+                    <option value="https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/1.mp3">Mishari Rashid al-`Afasy</option>
+                    <option value="http://10.2.168.249:8000/bahana">Bahana FM Sangatta</option>
+                    <option disabled>─────────News─────────</option>
+                    <option value="https://stream.live.vc.bbcmedia.co.uk/bbc_world_service">BBC World Service</option>
+                    <option value="https://stream-ssl.arenastreaming.com:8000/jakarta">Elshinta Jakarta</option>
+                    <option value="https://pu.klikhost.com/proxy/kbr/kbr">KBR 68H Jakarta</option>
+                    <option value="https://stream-node0.rri.co.id/streaming/14/9014/kbrn.mp3">RRI Pro3 Jakarta</option>
+                    <option value="https://stream-node0.rri.co.id/streaming/22/9022/rrimakasarpro3.mp3">RRI Pro3 Makassar</option>
+                    <option value="https://stream-node1.rri.co.id/streaming/16/9116/rrisamarindapro3.mp3">RRI Pro3 Samarinda</option>
+                    <option value="https://stream-node1.rri.co.id/streaming/19/9219/rrisurakartapro3.mp3">RRI Pro3 Surakarta</option>
+                    <option disabled>─────────Musik─────────</option>
+                    <option value="https://kpfmstreaming.kaltimpost.co.id">KP FM Balikpapan</option>
+                    <option value="https://pu.klikhost.com/proxy/kpfm/stream?1741745242165">KP FM Samarinda</option>
+                    <option value="https://103.123.98.58/listen/1027_mtb_fm_surabaya/radio.mp3">MTB Surabaya</option>
+                    <option value="https://srv1.streamcast.my.id/listen/metta_solo_fm/radio.mp3">Metta FM Solo</option>
+                    <option value="https://i.klikhost.com/8010/stream">Suara Mahakam Samarinda</option>
+                    <option value="https://c5.siar.us/proxy/ssfm/stream">Suara Surabaya</option>
+                    <option value="https://a1.siar.us/radio/8440/radio.mp3?1605496428">Sun Banjarmasin</option>
+                    <option value="https://s5.alhastream.com/listen/22/radio">Utari Cilacap</option>
+                    <option value="https://svara-stream.radioddns.net/jakarta_z999fm_aac.m3u">Z99 Jakarta</option>
+                    <option disabled>─────────Religi─────────</option>
+                    <option value="https://streaming.radiomuslim.com/;stream/1">Radio Muslim Yogyakarta</option>
+                    <option value="https://radioislamindonesia.com/mutiaraquran.mp3">Radio Mutiara Quran Semarang</option>
+                    <option value="https://radioislamindonesia.com/rodja.mp3">Radio Rodja</option>
+                    <option value="https://radioislamindonesia.com/rodjatv.mp3">Rodja TV</option>
+                    <option disabled>─────────RRI Pro 1 & 2─────────</option>
+                    <option value="https://stream-node1.rri.co.id/streaming/25/9025/rrijakartapro1.mp3">RRI Pro1 Jakarta</option>
+                    <option value="https://stream-node1.rri.co.id/streaming/25/9025/rrijakartapro2.mp3">RRI Pro2 Jakarta</option>
+                    <option value="https://stream-node0.rri.co.id/streaming/22/9022/rrimakasarpro1.mp3">RRI Pro1 Makassar</option>
+                    <option value="https://stream-node0.rri.co.id/streaming/22/9022/rrimakasarpro2.mp3">RRI Pro2 Makassar</option>
+                    <option value="https://stream-node0.rri.co.id/streaming/19/9119/rripurwokertopro1.mp3">RRI Pro1 Purwokerto</option>
+                    <option value="https://stream-node0.rri.co.id/streaming/19/9119/rripurwokertopro2.mp3">RRI Pro2 Purwokerto</option>
+                    <option value="https://stream-node1.rri.co.id/streaming/16/9116/rrisamarindapro1.mp3">RRI Pro1 Samarinda</option>
+                    <option value="https://stream-node1.rri.co.id/streaming/16/9116/rrisamarindapro2.mp3">RRI Pro2 Samarinda</option>
+                    <option value="https://stream-node1.rri.co.id/streaming/19/9219/rrisurakartapro1.mp3">RRI Pro1 Surakarta</option>
+                    <option value="https://stream-node1.rri.co.id/streaming/19/9219/rrisurakartapro2.mp3">RRI Pro2 Surakarta</option>
+                </select>
+
+                <button class="radio-btn" id="playBtnHeader">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+                
+                <div class="vol-stop">
+                    <button id="stopBtnHeader" class="btn-stop" title="Stop">⏹️</button>
+                    <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.7">
+                </div>
+            </div>
+        </div>
+    </div>
+    <audio id="headerAudioPlayer" style="display: none;"></audio>
+</header>
+
+<!-- SEARCH CEPAT (di atas grid) -->
+<section class="search-section">
+    <div class="search-wrapper">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="searchInput" placeholder="Cari layanan atau aplikasi... (nama / caption)" autocomplete="off">
+        <button class="search-clear" id="clearSearch">✖ Clear</button>
+    </div>
+</section>
+
+<!-- GRID KARTU LINK (dengan ikon emoji profesional) -->
+<section class="link-grid-section">
+    <div class="grid-title">
+         Layanan & Akses Cepat
+        <span class="result-count" id="resultCount">137 item</span>
+    </div>
+    <div class="card-grid" id="linkCardGrid"></div>
+</section>
+
+<!-- FOOTER PIT SERVICE 1 KPCS -->
+<footer>
+
+    <div class="footer-copyright">
+        © 2026 Pit Service 1 KPCS — All tools and links maintained internally.
+    </div>
+</footer>
+
+<script>
+    (function() {
+        // --------------------------------------------------------------
+        // 1. DATA LINK (lengkap 137 item, dengan emoji unik per kategori)
+        // --------------------------------------------------------------
+        const linksData = [
+            // Kategori dengan emoji yang mewakili
+            { category: "PAMAWEB", name: "PAMAWEB", url: "http://pamawebprod/portal/NewPamaWeb/tabid/1065/ctl/Login/Default.aspx?returnurl=%2fportal%2fNewPamaWeb%2ftabid%2f1065%2flogon%2fwindows%2fDefault.aspx", caption: "PAMAWEB", emoji: "🌐" },
+            { category: "PAMAWEB", name: "New PAMAWEB", url: "http://1pamaweb/", caption: "New PAMAWEB", emoji: "🌐" },
+            { category: "INFOMP", name: "WEBSITE", url: "https://storage.googleapis.com/infompkpcs/index.html", caption: "INFOMP", emoji: "📰" },
+            { category: "INFOMP", name: "FILE SHARING", url: "https://drive.google.com/drive/folders/1il9UwB-xcGRePhLJ3imtegv_rlgv6alq", caption: "FILE SHARING", emoji: "📁" },
+            { category: "OCR", name: "CCTV Soulmate", url: "http://10.168.106.246/doc/page/preview.asp", caption: "CCTV", emoji: "📹" },
+            { category: "OCR", name: "CCTV Supernova", url: "http://10.168.106.246/doc/page/preview.asp", caption: "CCTV", emoji: "📹" },
+            { category: "OCR", name: "CCTV Stockpile", url: "http://10.168.168.130/doc/page/preview.asp", caption: "CCTV", emoji: "📹" },
+            { category: "OCR", name: "CCTV Tyre", url: "http://10.168.106.242/doc/page/preview.asp", caption: "CCTV", emoji: "📹" },
+            { category: "OCR", name: "Dashboard OCR", url: "https://docs.google.com/spreadsheets/d/12oHfEOEDzXJAOKFmOSa5HTokjQMqn81gSawhYBlS8OE/edit#gid=1167434580", caption: "DASHBOARD", emoji: "📊" },
+            { category: "SAP", name: "SAP FIORI", url: "https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#Shell-home", caption: "FIORI", emoji: "💼" },
+            { category: "SAP", name: "SAP SUCCESS", url: "https://hcm44.sapsf.com/sf/home?", caption: "SUCCESS", emoji: "💼" },
+            { category: "SAP", name: "CiCo per Nrp", url: "http://pamametabase:3000/public/question/65f45675-2bb1-49f9-8b1c-8d86ad2297d7?NRP=&ta_date=&dstrct_code=&dept_code=&TerminalId=", caption: "CiCo", emoji: "💼" },
+            { category: "SAP", name: "Roster", url: "https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_PersonalWorkSchedule-manage", caption: "ROSTER", emoji: "📅" },
+            { category: "SAP", name: "Travel Report", url: "https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_EmployeeTravelReport-manage", caption: "TRAVEL", emoji: "✈️" },
+            { category: "SAP", name: "Upload Roster", url: "https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_UploadSubstitutions-manage", caption: "UPLOAD", emoji: "📤" },
+            { category: "SAP", name: "Time Statement", url: "https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_LaporanTimeStatement-manage", caption: "TIMESTMT", emoji: "⏳" },
+            { category: "SAP", name: "Sisa tahunan", url: "https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_AbsenceQuotaInformation-manage", caption: "SISA CUTI", emoji: "🗓️" },
+            { category: "SAP", name: "HRGA", url: "http://kpcswspu403/hrgaolweb/login.aspx", caption: "HRGA", emoji: "🧑‍💼" },
+            { category: "SAP", name: "Work readiness", url: "http://kpcswspu403:8080/absent_wr/absent_wr", caption: "WR", emoji: "✅" },
+            { category: "SAP", name: "Operator Tracking", url: "http://kpcswspu403:8080/optrack/jkp0/data_jkp", caption: "OPTRACK", emoji: "📍" },
+            { category: "SAP", name: "Pack Meal", url: "http://kpcswspu403/packmeal", caption: "PACKMEAL", emoji: "🍱" },
+            { category: "FORM", name: "Penyerahan Operator", url: "https://forms.office.com/r/1GBn6by2GX", caption: "PENYERAHAN", emoji: "📝" },
+            { category: "FORM", name: "Terlambat Induksi", url: "https://forms.gle/V5yBpjHtzZP9orpK9", caption: "INDUKSI", emoji: "📝" },
+            { category: "FORM", name: "Absen Training Highrisk", url: "https://forms.gle/NgkZtMHTJJb7JhM68", caption: "TRAINING HR", emoji: "📝" },
+            { category: "FORM", name: "Rute Sheet", url: "https://docs.google.com/spreadsheets/d/1XXBSW1DsNq3hOloTt-D9Lf2D5WIQothJ0IcMRpT71FY/edit?resourcekey=&gid=1106615704#gid=1106615704", caption: "RUTE", emoji: "🗺️" },
+            { category: "FORM", name: "CNC PKWT", url: "https://forms.gle/2eetHBA8BsPmQqL46", caption: "CNC PKWT", emoji: "📄" },
+            { category: "FORM", name: "TTD PKWT", url: "https://forms.office.com/r/G8fUHaFbaA", caption: "TTD PKWT", emoji: "✍️" },
+            { category: "FORM", name: "INFOMP KPCS", url: "https://sites.google.com/view/infomp", caption: "INFOMP", emoji: "ℹ️" },
+            { category: "FORM", name: "Lapor JKP", url: "https://docs.google.com/spreadsheets/d/13PIrWf8cNt75v-MFuPpE7uf0SDUjJz5BWrcZsTqMrmE/edit?resourcekey=&gid=38477354#gid=38477354", caption: "JKP", emoji: "📢" },
+            { category: "FORM", name: "MOR", url: "https://drive.google.com/drive/folders/11JCzhtJBjMq6H76K1Yti9PSbQ0W5La3R", caption: "MOR", emoji: "📂" },
+            { category: "FORM", name: "Absensi Blasting", url: "https://drive.google.com/drive/folders/1tWTsSyV_dCmcEEXLpF8Wa3MC3wCbb8tT?usp=sharing", caption: "BLASTING", emoji: "💥" },
+            { category: "FORM", name: "Setting Alat", url: "https://drive.google.com/drive/folders/1s1w-8K4KlzLD0jtfOyFyhAE46PpeGZYW?usp=sharing", caption: "SETTING", emoji: "⚙️" },
+            { category: "FORM", name: "Absensi WR", url: "https://docs.google.com/spreadsheets/d/1y7ktyx3LuiSxHYKdO3aurRwaWz10YwAw_8-AJq16M3w/edit?usp=sharing", caption: "ABS WR", emoji: "📋" },
+            { category: "FORM", name: "Absensi Dev Fatigue", url: "https://docs.google.com/spreadsheets/d/1kna3K22DRphAZ8zDic2bd-Pl6XwYn6Sq8uzMdRHQT-Q/edit?usp=sharing", caption: "FATIGUE", emoji: "😴" },
+            { category: "BANDARA", name: "New Bandara", url: "http://pama-kpcs:8081/Login", caption: "NEW BANDARA", emoji: "🛬" },
+            { category: "BANDARA", name: "Old Bandara", url: "http://10.2.168.90/Login", caption: "OLD BANDARA", emoji: "🛫" },
+            { category: "BANDARA", name: "Bandara Manpower", url: "http://kpcswspu403/bandaramanpower/login.aspx", caption: "MANPOWER", emoji: "🧑‍✈️" },
+            { category: "BANDARA", name: "Bandara Enhancement", url: "http://kpcswspu403:8080/bandara_enh/login", caption: "ENHANCE", emoji: "⚡" },
+            { category: "BANDARA", name: "Bandara Report", url: "http://kpcswspu403/bandaraportal", caption: "REPORT", emoji: "📑" },
+            { category: "BANDARA", name: "Bandara 24/7", url: "http://kpcswspu403/dispatch/DispSettingFleet", caption: "24/7", emoji: "🕒" },
+            { category: "BANDARA", name: "Persiapan Change Shift", url: "http://kpcssqrp402/ReportS/report/EWACS/PSV%20Darat/Test%20Code/New%20Share%20GL%20PIT%20LAIN", caption: "CHSHIFT", emoji: "🔄" },
+            { category: "BANDARA", name: "Setting Unit", url: "http://pama-kpcs:8081/ScheduleUnit", caption: "SET UNIT", emoji: "⚙️" },
+            { category: "BANDARA", name: "Setting Manpower", url: "http://pama-kpcs:8081/Schedule/ScheduleNew", caption: "SET MP", emoji: "👥" },
+            { category: "BANDARA", name: "Absen In", url: "http://kpcssqbd401/ReportServer/Pages/ReportViewer.aspx?%2fBANDARA%2fNew+Bandara%2frpt_monitoring_status_operator&rs:Command=Render", caption: "ABSEN IN", emoji: "📥" },
+            { category: "BANDARA", name: "Fatigue", url: "http://kpcssqbd401/ReportServer/Pages/ReportViewer.aspx?%2fBANDARA%2fDisplay+Report%2frpt_display_optFatigue_NEW&rs:Command=Render", caption: "FATIGUE", emoji: "💤" },
+            { category: "EWACS", name: "Ewacs", url: "http://kpcswspu403/ewacs", caption: "EWACS", emoji: "📡" },
+            { category: "EWACS", name: "Login Ewacs", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2fDashboard+Login+Opt&rs:Command=Render", caption: "LOGIN", emoji: "🔑" },
+            { category: "EWACS", name: "Login Ewacs Tidak Sesuai", url: "http://kpcssqrp402/ReportS/report/EWACSPRO/DASHBOARD/Mancal%20Gak%20Sesuai%20Setting", caption: "TIDAK SESUAI", emoji: "⚠️" },
+            { category: "EWACS", name: "Record Login Ewacs", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2fMIO%2fRealtime+10+Login+Terakhir+Share&rs:Command=Render", caption: "REC LOGIN", emoji: "📼" },
+            { category: "EWACS", name: "Resume Login", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACSPRO%2fREALTIME%2fRealtime+Record+Login+Logout+Operator&rs:Command=Render", caption: "RESUME", emoji: "📊" },
+            { category: "EWACS", name: "Timesheet Digital", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2fMIO%2f010.+DIGITAL+TIMESHEET+HISTORICAL+SHARE&rs:Command=Render", caption: "TIMESHEET", emoji: "⏲️" },
+            { category: "EWACS", name: "Report Timesheet", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f2023_01_02_Monitoring+Operator+By+TS&rs:Command=Render", caption: "REPORT TS", emoji: "📈" },
+            { category: "EWACS", name: "Cek HM Area 2", url: "http://kpctsqrs401/reports/report/EWACS_KPCT/TO%20PRODUCTION/HM%20OPERATOR%20PAMA", caption: "HM AREA2", emoji: "📏" },
+            { category: "EWACS", name: "Timesheet Area 2", url: "http://kpctsqrs401/reports/report/EWACS_KPCT/Review%20Timesheet%20%5BMerger%5D", caption: "TS AREA2", emoji: "📋" },
+            { category: "EWACS", name: "JKP 0", url: "https://docs.google.com/spreadsheets/d/1r4dRgpsb5JjxRcMINjIbqylhzBShy8OV_-_S6uSoX_I/edit?gid=0#gid=0", caption: "JKP 0", emoji: "🟢" },
+            { category: "EWACS", name: "Dashboard MIO", url: "http://kpcssqrp402/ReportS/report/EWACSPRO/REALTIME/Realtime%20Report%20Setting%20Fleet", caption: "MIO", emoji: "📉" },
+            { category: "EWACS", name: "SQL MIO", url: "http://kpcssqrp402/reports/browse/EWACS/MIO", caption: "SQL MIO", emoji: "🗄️" },
+            { category: "EWACS", name: "SQL Delay", url: "http://kpcssqrp402/ReportS/report/EWACS/Performance%20Project/Delay%20KPCS", caption: "DELAY", emoji: "⏱️" },
+            { category: "EWACS", name: "SQL CS Loader", url: "http://kpcssqrp402/reports/report/EWACSPRO/PERIODICAL/KPCS%20Periodic%20Change%20Shift%20Loader", caption: "CS LOADER", emoji: "🔄" },
+            { category: "MIFORCE", name: "New MiForce", url: "http://kpcssqrp402/ReportS/report/EWACS/KPCS/List%20Unit%20by%20PIT", caption: "NEW MIFORCE", emoji: "🆕" },
+            { category: "MIFORCE", name: "MiForce", url: "http://kpcssqrp401/ReportS/report/OCR/OCR%20Report%20Setting%20Bandara", caption: "MIFORCE", emoji: "💪" },
+            { category: "MIFORCE", name: "Set Fleet SPE", url: "http://kpctsqrs402/reports/report/EWACSPRO/DISPATCHING/KPCT%20Realtime%20Report%20Setting%20Fleet", caption: "SPE", emoji: "🚛" },
+            { category: "MIFORCE", name: "Check Bugar", url: "http://kpcssqbd401/reports/report/BANDARA/New%20Bandara/Report%20GL%20Check%20Bugar", caption: "BUGAR", emoji: "🏋️" },
+            { category: "OPA", name: "OPA DashBoard", url: "https://opa.pamapersada.com/login", caption: "OPA", emoji: "📊" },
+            { category: "OPA", name: "OPA CNC Sheet", url: "https://docs.google.com/spreadsheets/d/1bf6eXp7H93l0YlHpXSiMlPUkUVV_BeASzJF5iczecMo/edit#gid=0", caption: "CNC SHEET", emoji: "📄" },
+            { category: "OPA", name: "Upload CNC OPA", url: "https://docs.google.com/forms/d/e/1FAIpQLSd9Vx_h_d9PVEqKCK4CMgRka2PzKmhZQMFkSDSIc8UZLN6g7w/viewform", caption: "UPLOAD CNC", emoji: "☁️" },
+            { category: "OPA", name: "CCTV pembuktian", url: "http://10.168.106.250/doc/page/playback.asp", caption: "CCTV", emoji: "📹" },
+            { category: "OPA", name: "Mobile Check Fatigue", url: "http://kpcssqrp401/ReportServer/Pages/ReportViewer.aspx?%2fBANDARA%2frpt_mobile_check_fatigue&rs:Command=Render", caption: "MOBILE FATIGUE", emoji: "📱" },
+            { category: "OPA", name: "TFT Expert", url: "https://bit.ly/DASHBOARDTRAININGEXPERT", caption: "TFT", emoji: "📺" },
+            { category: "OPA", name: "Kimper Highrisk", url: "https://docs.google.com/spreadsheets/d/1e328Vf-QbdG57BCPkyiW7xdvg5JVJxR2LArwUUn9QQA/edit?pli=1#gid=0", caption: "KIMPER HR", emoji: "⚠️" },
+            { category: "MOR", name: "MOR", url: "http://morsuko.apps.pamapersada.net/Home", caption: "MOR", emoji: "📁" },
+            { category: "MOR", name: "SAP Online", url: "http://sap1pama.apps.pamapersada.net/Login", caption: "SAP ONLINE", emoji: "💻" },
+            { category: "MOR", name: "OCA Sheet", url: "https://docs.google.com/spreadsheets/d/1C-YEgCNE-IvuCh2YqB6kG54wf4g22WMgCOQh1IVzVLo/edit?resourcekey=&gid=1200264687#gid=1200264687", caption: "OCA", emoji: "📊" },
+            { category: "ID KIMPER", name: "KIMPER", url: "http://kpcswspu403:8080/SHE/login", caption: "KIMPER", emoji: "🛡️" },
+            { category: "ID KIMPER", name: "Rekonsil ID", url: "https://pamapersada-my.sharepoint.com/personal/p61060290_pamapersada_net/_layouts/15/guestaccess.aspx?share=EiCrUWYszQ5EnTepd8CrgIIB3iWjiPBtT-1W9IpFrjnUPw&e=ed6fZC", caption: "REKON ID", emoji: "🆔" },
+            { category: "ID KIMPER", name: "MCU Cahaya", url: "https://bit.ly/DATABASE-MCU-CAHAYA", caption: "MCU CAHAYA", emoji: "🩺" },
+            { category: "ID KIMPER", name: "MCU Meloy", url: "https://bit.ly/DATABASE-MCU-MELOY", caption: "MCU MELOY", emoji: "🩺" },
+            { category: "ID KIMPER", name: "MCU RSPKT", url: "https://docs.google.com/spreadsheets/d/11-r6nLOBl6OfVBsoo-7I1dSq9NH3XBz-hzhoE3OTUtE/edit?gid=1278333579#gid=1278333579", caption: "MCU RSPKT", emoji: "🏥" },
+            { category: "ID KIMPER", name: "Database Kimper HR", url: "https://docs.google.com/spreadsheets/d/1e328Vf-QbdG57BCPkyiW7xdvg5JVJxR2LArwUUn9QQA/edit#gid=0", caption: "DB KIMPER", emoji: "🗃️" },
+            { category: "IPO", name: "IPO", url: "http://iposinergi.apps.pamapersada.net/", caption: "IPO", emoji: "📈" },
+            { category: "SISTEM", name: "EMAIL", url: "https://outlook.office365.com/mail/", caption: "OUTLOOK", emoji: "📧" },
+            { category: "SISTEM", name: "FLOR", url: "http://kpcswspu403/glgradingv3/Home", caption: "FLOR", emoji: "🌸" },
+            { category: "SISTEM", name: "FL SHE Coord", url: "http://spol/login", caption: "FL SHE", emoji: "📌" },
+            { category: "SISTEM", name: "SPOL", url: "http://spol.apps.pamapersada.net/Login", caption: "SPOL", emoji: "🔧" },
+            { category: "SISTEM", name: "CDO", url: "http://jiepwspu403/APPS/culture/login", caption: "CDO", emoji: "🎯" },
+            { category: "SISTEM", name: "New Poins", url: "http://jiepwspu420/APPS/newpoins/login", caption: "NEW POINS", emoji: "💰" },
+            { category: "SISTEM", name: "SMI SME", url: "http://jiepwspu420/APPS/CPMD_SMISME/Login", caption: "SMI SME", emoji: "🏭" },
+            { category: "SISTEM", name: "Moving", url: "http://moving/Login", caption: "MOVING", emoji: "🚚" },
+            { category: "SISTEM", name: "IDP", url: "http://kpcswspu403:8080/HC/login", caption: "IDP", emoji: "📘" },
+            { category: "SISTEM", name: "Jarvis", url: "http://jarvisweb", caption: "JARVIS", emoji: "🤖" },
+            { category: "SISTEM", name: "Tablue", url: "http://satupamabi/#/signin", caption: "TABLUE", emoji: "📊" },
+            { category: "PRODTI", name: "NewPoins", url: "http://jiepwspu420/APPS/newpoins", caption: "NEWPOINS", emoji: "💰" },
+            { category: "PRODTI", name: "HelpDesk", url: "https://pamaitsm.service-now.com/escpro?id=kpmg_of_ec_dashboard", caption: "HELPDESK", emoji: "🆘" },
+            { category: "PRODTI", name: "Prodty loader hauler PerDept PerPit", url: "http://kpcssqrp402/reports/report/EWACS/1.%20Performance%20Project/PRODUCTIVITY/Productivity%20Loader%20and%20Hauler", caption: "PRODTY L/H", emoji: "📊" },
+            { category: "PRODTI", name: "Prodty loader per Hari", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f0.+Priority+Report%2f2.+Productivity+Loader&rs:Command=Render", caption: "PRODTY L", emoji: "📆" },
+            { category: "PRODTI", name: "Prodty loader per Day per shift", url: "http://kpcssqrp402/reports/report/EWACSPRO/REPORT%20DEVELOPMENT/Productivity%20Loader%20Per%20Shift%20By%20HM", caption: "PRODTY L/SHIFT", emoji: "🔄" },
+            { category: "PRODTI", name: "Prodty loader per Operator", url: "http://kpcssqrp402/ReportS/report/EWACS/KPCS/DETAIL%20LOADER%20PERFORMANCE", caption: "PRODTY L/OP", emoji: "👤" },
+            { category: "PRODTI", name: "Trend prodty hauler", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f0.+Priority+Report%2f1.+Trend+Productivity+Hauler+Per+Dept&rs:Command=Render", caption: "TREND H", emoji: "📈" },
+            { category: "PRODTI", name: "Ach.Prodty ≥231 bcm/hour.km Hauler", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f0.+Priority+Report%2f3.+Achievement+Productivity+231+bcm+hour.km+Hauler&rs:Command=Render", caption: "ACH 231", emoji: "🏆" },
+            { category: "PRODTI", name: "Prodty hauler per Operator", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f0.+Priority+Report%2f5.+Productivity+Hauler+Per+CN&rs:Command=Render", caption: "PRODTY H/OP", emoji: "🚛" },
+            { category: "PRODTI", name: "Prodty Hauler Per CN", url: "http://kpcssqrp402/reports/report/EWACS/0.%20Priority%20Report/5.%20Productivity%20Hauler%20Per%20CN", caption: "H/CN", emoji: "🚜" },
+            { category: "PRODTI", name: "Prodty Hauler CN Old", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f0.+Priority+Report%2f%5bOLD%5d+5.+Productivity+Hauler+Per+CN&rs:Command=Render", caption: "H/CN OLD", emoji: "📦" },
+            { category: "SOSIAL", name: "Whatsapp", url: "https://web.whatsapp.com/", caption: "WA", emoji: "💬" },
+            { category: "SOSIAL", name: "Telegram", url: "https://web.telegram.org/k/", caption: "TG", emoji: "✈️" },
+            { category: "SOSIAL", name: "SMS", url: "https://messages.google.com/web/authentication", caption: "SMS", emoji: "📱" },
+            { category: "SOSIAL", name: "Ms.Teams", url: "https://teams.microsoft.com/_#/conversations/Umum?threadId=19:XnruFufRmxBfYe0zJ102D4vScUVimAX97HvbGG3O1LI1@thread.tacv2&ctx=channel", caption: "TEAMS", emoji: "👥" },
+            { category: "SOSIAL", name: "Info MP", url: "https://linktr.ee/infomanpower", caption: "INFO MP", emoji: "ℹ️" },
+            { category: "SOSIAL", name: "Info GLS", url: "https://linktr.ee/glspama", caption: "GLS", emoji: "📢" },
+            { category: "SOSIAL", name: "Linktree", url: "https://linktr.ee/admin", caption: "LINKTREE", emoji: "🌳" },
+            { category: "SOSIAL", name: "Form", url: "https://docs.google.com/forms/d/e/1FAIpQLSd9Vx_h_d9PVEqKCK4CMgRka2PzKmhZQMFkSDSIc8UZLN6g7w/viewform", caption: "FORM", emoji: "📋" },
+            { category: "FORMULIR", name: "FORM OBAT", url: "https://forms.gle/KacVpv2tNqwo8rEV6", caption: "OBAT", emoji: "💊" },
+            { category: "FORMULIR", name: "FORM OPA", url: "https://docs.google.com/forms/d/e/1FAIpQLSd9Vx_h_d9PVEqKCK4CMgRka2PzKmhZQMFkSDSIc8UZLN6g7w/viewform", caption: "OPA", emoji: "📝" },
+            { category: "FORMULIR", name: "SHEET OBAT", url: "https://docs.google.com/spreadsheets/d/1PT-i9QjR1EXaHy1pThNpG1SbxTFNq35fVDipaziBPNo/edit?resourcekey=&gid=503159177#gid=503159177", caption: "SHEET OBAT", emoji: "💊" },
+        ];
+
+        const grid = document.getElementById('linkCardGrid');
+        const searchInput = document.getElementById('searchInput');
+        const clearBtn = document.getElementById('clearSearch');
+        const resultSpan = document.getElementById('resultCount');
+
+        // Fungsi render kartu berdasarkan data
+        function renderCards(filteredData) {
+            grid.innerHTML = '';
+            filteredData.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'nav-card';
+                // Gunakan emoji yang sudah ditentukan, fallback ke huruf pertama jika tidak ada
+                const iconEmoji = item.emoji || item.category.charAt(0);
+                card.innerHTML = `
+                    <div class="card-icon">${iconEmoji}</div>
+                    <a href="${item.url}" target="_blank" title="${item.name}">${item.name}</a>
+                    <div class="card-caption">${item.caption}</div>
+                `;
+                grid.appendChild(card);
+            });
+            resultSpan.innerText = filteredData.length + ' item';
+        }
+
+        // Filter function (pencarian case-insensitive di name & caption)
+        function filterCards() {
+            const keyword = searchInput.value.trim().toLowerCase();
+            if (keyword === '') {
+                renderCards(linksData);
+            } else {
+                const filtered = linksData.filter(item => 
+                    item.name.toLowerCase().includes(keyword) || 
+                    item.caption.toLowerCase().includes(keyword) ||
+                    (item.category && item.category.toLowerCase().includes(keyword))
+                );
+                renderCards(filtered);
+            }
+        }
+
+        // Inisialisasi semua kartu
+        renderCards(linksData);
+
+        // Event listener search
+        searchInput.addEventListener('input', filterCards);
+        clearBtn.addEventListener('click', function() {
+            searchInput.value = '';
+            renderCards(linksData);
+            searchInput.focus();
+        });
+
+        // RADIO HEADER CONTROLS (sama seperti sebelumnya)
+        const audioPlayer = document.getElementById('headerAudioPlayer');
+        const select = document.getElementById('headerAudioSelect');
+        const playBtn = document.getElementById('playBtnHeader');
+        const stopBtn = document.getElementById('stopBtnHeader');
+        const volumeSlider = document.getElementById('volumeSlider');
+
+        playBtn.addEventListener('click', () => {
+            if (select.value) {
+                audioPlayer.src = select.value;
+                audioPlayer.volume = volumeSlider.value;
+                audioPlayer.play().catch(e => alert('Gagal memutar: ' + e));
+            } else {
+                alert('Pilih stasiun radio dahulu');
+            }
+        });
+
+        stopBtn.addEventListener('click', () => {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+        });
+
+        volumeSlider.addEventListener('input', (e) => {
+            audioPlayer.volume = e.target.value;
+        });
+
+    })();
+</script>
+
+<!-- tidak ada catatan / job pending -->
+</body>
+</html>

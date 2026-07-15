@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard SPIP, SAP & Fiori</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #ffffff;
+            color: #2c3e50;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .main-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex !important; /* ← PERBAIKAN 1 */
+            flex-direction: column;
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: #1e3c72;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.8;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        
+        .dashboard-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            background: #f8fafd;
+            border-radius: 20px;
+            padding: 24px 20px;
+            width: 260px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 20px -5px rgba(0,30,60,0.1);
+            backdrop-filter: blur(2px);
+            color: #1e293b;
+            text-decoration: none;
+            display: block;
+        }
+        
+        .tab:hover {
+            transform: translateY(-8px);
+            background: #ffffff;
+            border-color: #cbd5e1;
+            box-shadow: 0 20px 25px -8px rgba(0,50,100,0.2);
+        }
+        
+        .tab.active {
+            background: #e6f0ff;
+            border: 2px solid #2563eb;
+            box-shadow: 0 12px 20px -8px rgba(37,99,235,0.3);
+        }
+        
+        .tab-icon {
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+            height: 85px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .spip-icon {
+            color: #d97706;
+        }
+        
+        .sap-icon {
+            color: #2563eb;
+        }
+        
+        .fiori-icon {
+            color: #16a34a;
+        }
+        
+        .tab-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            letter-spacing: -0.3px;
+        }
+        
+        .tab-caption {
+            font-size: 0.9rem;
+            color: #5f6b7a;
+            margin-top: 5px;
+            font-style: italic;
+            border-top: 1px dashed #d1d9e6;
+            padding-top: 8px;
+        }
+        
+        .no-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            text-align: center;
+            background: #f1f5f9;
+            border-radius: 24px;
+            padding: 40px 20px;
+            margin-top: 20px;
+            color: #334155;
+            border: 1px solid #dde3ed;
+        }
+        
+        .no-content i {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            color: #94a3b8;
+        }
+        
+        .no-content h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #0f2b4b;
+        }
+        
+        .no-content p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            opacity: 0.9;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9rem;
+            color: #6b7a8f;
+            border-top: 1px solid #dee6f0;
+        }
+        
+        /* Halaman SPIP fullscreen (iframe) */
+        .spip-fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+        }
+        
+        .spip-fullscreen.active {
+            display: flex;
+        }
+        
+        .spip-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            background: #1e3c72;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,20,40,0.3);
+        }
+        
+        .spip-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .back-button {
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 40px;
+            color: white;
+            padding: 8px 20px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+        }
+        
+        .back-button:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: white;
+        }
+        
+        .spip-iframe-container {
+            flex: 1;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .spip-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* Halaman Fiori fullscreen (mirip dengan spip, dengan header berbeda) */
+        .fiori-fullscreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 1000;
+            display: none;
+            flex-direction: column;
+        }
+        
+        .fiori-fullscreen.active {
+            display: flex;
+        }
+        
+        .fiori-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            background: #0f3b2c;
+            color: white;
+            box-shadow: 0 4px 12px rgba(0,40,20,0.3);
+        }
+        
+        .fiori-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        .fiori-iframe-container {
+            flex: 1;
+            width: 100%;
+            overflow: hidden;
+        }
+        
+        .fiori-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        /* ============================================
+           RESPONSIVE UNIFIED (max-width: 797px)
+           ============================================ */
+        @media (max-width: 797px) {
+            /* Header lebih kecil */
+            h1 {
+                font-size: 1.6rem;
+            }
+            
+            .subtitle {
+                font-size: 0.95rem;
+            }
+            
+            /* Tab lebih kompak */
+            .dashboard-tabs {
+                gap: 12px;
+                padding: 0 8px;
+            }
+            
+            .tab {
+                width: 100%;
+                max-width: 100%;
+                padding: 16px 14px;
+                border-radius: 14px;
+                display: flex;
+                align-items: center;
+                gap: 16px;
+                text-align: left;
+            }
+            
+            .tab-icon {
+                font-size: 2rem;
+                height: 50px;
+                min-width: 50px;
+                margin-bottom: 0;
+            }
+            
+            .tab-title {
+                font-size: 1.1rem;
+                margin-bottom: 2px;
+            }
+            
+            .tab-caption {
+                font-size: 0.75rem;
+                border-top: none;
+                padding-top: 0;
+                margin-top: 0;
+            }
+            
+            /* Konten tengah (no-content) lebih compact */
+            .no-content {
+                padding: 24px 16px;
+                margin-top: 12px;
+                border-radius: 16px;
+            }
+            
+            .no-content i {
+                font-size: 3rem;
+                margin-bottom: 12px;
+            }
+            
+            .no-content h2 {
+                font-size: 1.3rem;
+            }
+            
+            .no-content p {
+                font-size: 0.9rem;
+            }
+            
+            /* Header SPIP & Fiori compact */
+            .spip-header, .fiori-header {
+                padding: 10px 16px;
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 8px;
+                justify-content: space-between;
+            }
+            
+            .spip-title, .fiori-title {
+                font-size: 0.95rem;
+                gap: 8px;
+            }
+            
+            .back-button {
+                padding: 6px 14px;
+                font-size: 0.8rem;
+            }
+            
+            /* Main container padding lebih kecil */
+            .main-container {
+                padding: 12px;
+            }
+            
+            /* Footer lebih kecil */
+            footer {
+                padding: 12px;
+                font-size: 0.75rem;
+                margin-top: 20px;
+            }
+        }
+
+        /* ============================================
+           RESPONSIVE SANGAT KECIL (max-width: 400px)
+           ============================================ */
+        @media (max-width: 400px) {
+            h1 {
+                font-size: 1.3rem;
+            }
+            
+            .subtitle {
+                font-size: 0.8rem;
+            }
+            
+            .tab {
+                padding: 12px 12px;
+                gap: 12px;
+            }
+            
+            .tab-icon {
+                font-size: 1.6rem;
+                height: 40px;
+                min-width: 40px;
+            }
+            
+            .tab-title {
+                font-size: 0.95rem;
+            }
+            
+            .tab-caption {
+                font-size: 0.65rem;
+            }
+            
+            .no-content h2 {
+                font-size: 1.1rem;
+            }
+            
+            .no-content p {
+                font-size: 0.8rem;
+            }
+            
+            .spip-header, .fiori-header {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 12px;
+            }
+            
+            .spip-title, .fiori-title {
+                font-size: 0.8rem;
+            }
+            
+            .back-button {
+                font-size: 0.7rem;
+                padding: 4px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== FALLBACK UNTUK JIKA JAVASCRIPT MATI ===== -->
+    <noscript>
+        <div style="padding: 20px; text-align: center; background: #fef3c7; border: 2px solid #f59e0b; border-radius: 8px; margin: 20px;">
+            <p style="color: #92400e; font-weight: bold;">⚠️ JavaScript tidak aktif. Silakan aktifkan JavaScript untuk mengakses dashboard.</p>
+        </div>
+    </noscript>
+
+    <!-- Halaman Utama -->
+    <div class="main-container" id="main-page">
+        <header>
+            <h1>Dashboard SPIP, SAP & Fiori</h1>
+            <p class="subtitle">Akses cepat ke sistem Perusahaan, SAP, dan Absensi Fiori</p>
+        </header>
+        
+        <div class="dashboard-tabs">
+            <!-- Tab SPIP -->
+            <div class="tab" data-target="spip" id="spip-tab" data-url="https://docs.google.com/spreadsheets/d/1VuAnrre0CMy6eeKNPllmHZqtDB_VrQOuGaxv9gVz8S4/edit?gid=1224753716#gid=1224753716">
+                <div class="tab-icon">
+                    <i class="fas fa-cogs"></i>
+                </div>
+                <div class="tab-title">SPIP</div>
+                <div class="tab-caption">Sistem Perencanaan & Informasi</div>
+            </div>
+            
+            <!-- Tab SAP Dashboard -->
+            <div class="tab" data-target="sap" id="sap-tab">
+                <div class="tab-icon">
+                    <i class="fas fa-chart-line sap-icon"></i>
+                </div>
+                <div class="tab-title">SAP Dashboard</div>
+                <div class="tab-caption">Dashboard Analitik SAP</div>
+            </div>
+
+            <!-- Tab View Absensi Fiori - LINK TAB BARU -->
+            <a href="https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_LaporanTimeStatement-manage" 
+               class="tab" 
+               target="_blank" 
+               rel="noopener noreferrer" 
+               id="fiori-link-tab">
+                <div class="tab-icon">
+                    <i class="fas fa-calendar-check fiori-icon"></i>
+                </div>
+                <div class="tab-title">Review Absensi</div>
+                <div class="tab-caption">Laporan Time Statement (SAP Fiori)</div>
+            </a>
+        </div>
+        
+
+        <footer>
+            <p>SPIP & Dashboard web by MSA 2026</p>
+        </footer>
+    </div>
+
+    <!-- Halaman SPIP Full Layar -->
+    <div class="spip-fullscreen" id="spip-page">
+        <div class="spip-header">
+            <div class="spip-title">
+                <i class="fas fa-cogs"></i>
+                SPIP
+            </div>
+            <button class="back-button" id="back-to-main-from-spip">
+                <i class="fas fa-arrow-left"></i>
+                Kembali
+            </button>
+        </div>
+        <div class="spip-iframe-container">
+            <iframe class="spip-iframe" id="spipIframe" src="https://docs.google.com/spreadsheets/d/1VuAnrre0CMy6eeKNPllmHZqtDB_VrQOuGaxv9gVz8S4/edit?gid=1224753716#gid=1224753716"></iframe>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // ============================================
+            // DETEKSI LAYAR MOBILE (lebar <= 797px)
+            // ============================================
+            const isMobile = window.innerWidth <= 797;
+            console.log('📱 Mode Mobile:', isMobile);
+            
+            // Elemen halaman
+            const mainPage = document.getElementById('main-page');
+            const spipPage = document.getElementById('spip-page');
+            const backFromSpip = document.getElementById('back-to-main-from-spip');
+            
+            const spipTab = document.getElementById('spip-tab');
+            const sapTab = document.getElementById('sap-tab');
+            const fioriLinkTab = document.getElementById('fiori-link-tab');
+            
+            // ============================================
+            // FUNGSI: TAMPILKAN HALAMAN UTAMA
+            // ============================================
+            function showMainPage() {
+                spipPage.classList.remove('active');
+                mainPage.style.display = 'flex';
+                mainPage.style.visibility = 'visible';
+                mainPage.style.opacity = '1';
+                document.body.style.overflow = 'auto';
+            }
+            
+            // ============================================
+            // FUNGSI: BUKA SPIP FULLSCREEN (DESKTOP)
+            // ============================================
+            function openSpipFullscreen() {
+                mainPage.style.display = 'none';
+                document.body.style.overflow = 'hidden';
+                spipPage.classList.add('active');
+            }
+            
+            // ============================================
+            // EVENT LISTENER: TAB SPIP
+            // ============================================
+            if (spipTab) {
+                spipTab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const spipUrl = 'https://docs.google.com/spreadsheets/d/1VuAnrre0CMy6eeKNPllmHZqtDB_VrQOuGaxv9gVz8S4/edit?gid=1224753716#gid=1224753716';
+                    
+                    if (isMobile) {
+                        // 🔥 MOBILE: Buka di tab baru
+                        window.open(spipUrl, '_blank', 'noopener,noreferrer');
+                    } else {
+                        // 💻 DESKTOP: Buka di iframe fullscreen
+                        openSpipFullscreen();
+                    }
+                });
+            }
+            
+            // ============================================
+            // EVENT LISTENER: TAB SAP
+            // ============================================
+            if (sapTab) {
+                sapTab.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const sapUrl = 'http://sap1pama.apps.pamapersada.net/login';
+                    
+                    // 🔥 SEMUA DEVICE: Buka di tab baru (konsisten)
+                    window.open(sapUrl, '_blank', 'noopener,noreferrer');
+                });
+            }
+            
+            // ============================================
+            // EVENT LISTENER: TAB FIORI (Review Absensi)
+            // ============================================
+            if (fioriLinkTab) {
+                fioriLinkTab.addEventListener('click', function(e) {
+                    // 🔥 FIORI: Sudah pakai target="_blank" di HTML
+                    console.log('📋 Fiori: Membuka di tab baru (default)');
+                });
+            }
+            
+            // ============================================
+            // TOMBOL KEMBALI DARI SPIP (DESKTOP)
+            // ============================================
+            if (backFromSpip) {
+                backFromSpip.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    showMainPage();
+                });
+            }
+            
+            // ============================================
+            // TAMPILKAN HALAMAN UTAMA (DENGAN DELAY AGAR PASTI)
+            // ============================================
+            setTimeout(function() {
+                showMainPage();
+                console.log('✅ Halaman utama ditampilkan');
+            }, 100);
+            
+            // ============================================
+            // RESIZE: Update status mobile saat window berubah
+            // ============================================
+            let resizeTimeout;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimeout);
+                resizeTimeout = setTimeout(function() {
+                    const newIsMobile = window.innerWidth <= 797;
+                    if (newIsMobile !== isMobile) {
+                        console.log('📱 Mode berubah:', newIsMobile ? 'Mobile' : 'Desktop');
+                        location.reload(); // Refresh untuk update mode
+                    }
+                }, 500);
+            });
+            
+        });
+    </script>
+</body>
+</html>

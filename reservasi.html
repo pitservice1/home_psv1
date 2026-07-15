@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>Dashboard Reservasi — PIT Service Air</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root {
+  --bg-light: #f5f6fa;
+  --bg-white: #ffffff;
+  --blue: #0a6ed1;
+  --blue-light: #e1f0ff;
+  --blue-dark: #0854a0;
+  --blue-hover: #095caf;
+  --text-dark: #1d2b3f;
+  --text-medium: #475e75;
+  --text-light: #6a7a8e;
+  --border-light: #d9e0e8;
+  --shadow-sm: 0 2px 8px rgba(0,0,0,.06);
+  --shadow-md: 0 4px 16px rgba(10,110,209,.12);
+  --shadow-lg: 0 8px 24px rgba(10,110,209,.15);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  --general-color: #7c3aed;
+  --chemical-color: #059669;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: 'Google Sans', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  background: var(--bg-light);
+  color: var(--text-dark);
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ===== BACKGROUND ===== */
+.water-background {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: 
+    radial-gradient(ellipse at 20% 50%, rgba(10,110,209,.04) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 80%, rgba(10,110,209,.03) 0%, transparent 50%);
+}
+
+/* ===== HEADER ===== */
+header {
+  height: 64px;
+  background: var(--bg-white);
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  flex-shrink: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.header-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+/* ===== NAVIGATION MENU ===== */
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  padding: 4px 0;
+  flex: 1;
+}
+
+.nav-menu::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 24px;
+  background: transparent;
+  border: 1px solid transparent;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-medium);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: var(--transition);
+  position: relative;
+}
+
+.nav-item i {
+  font-size: 16px;
+  color: var(--text-medium);
+  transition: var(--transition);
+}
+
+.nav-item .nav-label {
+  display: inline;
+}
+
+.nav-item:hover {
+  background: var(--blue-light);
+  border-color: var(--border-light);
+  color: var(--blue);
+}
+
+.nav-item:hover i {
+  color: var(--blue);
+}
+
+.nav-item.active {
+  background: var(--blue);
+  color: white;
+  border-color: var(--blue);
+  box-shadow: var(--shadow-md);
+}
+
+.nav-item.active i {
+  color: white;
+}
+
+.nav-item.active:hover {
+  background: var(--blue-hover);
+  box-shadow: var(--shadow-lg);
+}
+
+/* ===== BACK BUTTON ===== */
+.back-btn {
+  display: none;
+  padding: 8px 18px;
+  font-size: 13px;
+  background: var(--bg-white);
+  color: var(--blue);
+  border: 1px solid var(--border-light);
+  border-radius: 24px;
+  cursor: pointer;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  font-weight: 500;
+  transition: var(--transition);
+}
+
+.back-btn:hover {
+  background: var(--blue-light);
+  border-color: var(--blue);
+}
+
+.back-btn i {
+  font-size: 14px;
+}
+
+/* ===== MAIN ===== */
+.main-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0;
+  position: relative;
+}
+
+/* ===== WELCOME ===== */
+.welcome-section {
+  padding: 32px 24px 24px;
+  text-align: center;
+  background: var(--bg-white);
+  border-bottom: 1px solid var(--border-light);
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  max-height: 200px;
+  opacity: 1;
+  overflow: hidden;
+  transform: scaleY(1);
+  transform-origin: top center;
+}
+
+.welcome-section.hide {
+  max-height: 0;
+  opacity: 0;
+  padding: 0 24px;
+  margin: 0;
+  border-bottom: none;
+  transform: scaleY(0);
+  pointer-events: none;
+}
+
+.welcome-title {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.welcome-subtitle {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.6;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ===== DASHBOARD GRID ===== */
+.dashboard-cards {
+  padding: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  transition: margin-top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dashboard-cards.shifted {
+  margin-top: 0;
+}
+
+/* ===== CARD ===== */
+.card {
+  background: var(--bg-white);
+  border-radius: var(--radius-lg);
+  padding: 24px 20px;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--border-light);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition);
+  user-select: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--blue);
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--blue);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card:active {
+  transform: scale(0.97);
+}
+
+.card-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.card-icon i {
+  font-size: 28px;
+  color: var(--blue);
+  transition: var(--transition);
+}
+
+.card:hover .card-icon i {
+  transform: scale(1.1);
+}
+
+.card-icon.chemical i {
+  color: var(--chemical-color);
+}
+
+.card-icon.general i {
+  color: var(--general-color);
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--text-dark);
+}
+
+.card-caption {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--text-light);
+}
+
+/* ===== IFRAME ===== */
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: none;
+  background: var(--bg-white);
+}
+
+/* ===== LOADER ===== */
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 4px solid var(--border-light);
+  border-top-color: var(--blue);
+  transform: translate(-50%, -50%);
+  animation: spin 0.8s linear infinite;
+  display: none;
+}
+
+@keyframes spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* ===== FLOATING HOME ===== */
+.floating-home-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  background: var(--blue);
+  color: white;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  box-shadow: var(--shadow-lg);
+  cursor: pointer;
+  transition: var(--transition);
+  font-size: 20px;
+}
+
+.floating-home-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 32px rgba(10,110,209,.3);
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  padding: 16px;
+  font-size: 12px;
+  text-align: center;
+  border-top: 1px solid var(--border-light);
+  color: var(--text-light);
+  background: var(--bg-white);
+  flex-shrink: 0;
+}
+
+/* ===== WARNING MESSAGE ===== */
+.warning-message {
+  display: none;
+  background: #fef3c7;
+  border: 1px solid #fbbf24;
+  border-radius: var(--radius-sm);
+  padding: 14px 20px;
+  margin: 16px 24px;
+  color: #92400e;
+  text-align: center;
+  font-size: 13px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.warning-message i {
+  font-size: 18px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  header {
+    height: 56px;
+    padding: 0 12px;
+  }
+  
+  .nav-item {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+  
+  .nav-item .nav-label {
+    display: none;
+  }
+  
+  .nav-item i {
+    font-size: 18px;
+  }
+  
+  .nav-item.active {
+    background: var(--blue);
+  }
+  
+  .nav-menu {
+    gap: 6px;
+  }
+  
+  .dashboard-cards {
+    padding: 16px;
+    gap: 14px;
+    grid-template-columns: 1fr;
+  }
+  
+  .welcome-section {
+    padding: 24px 16px 16px;
+  }
+  
+  .welcome-title {
+    font-size: 20px;
+  }
+  
+  .card {
+    padding: 20px 16px;
+  }
+  
+  .card-icon i {
+    font-size: 24px;
+  }
+  
+  .floating-home-btn {
+    width: 48px;
+    height: 48px;
+    bottom: 16px;
+    right: 16px;
+    font-size: 18px;
+  }
+  
+  .warning-message {
+    margin: 12px 16px;
+    padding: 12px 16px;
+    font-size: 12px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .dashboard-cards {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 20px;
+  }
+}
+
+@media (min-width: 1025px) {
+  .dashboard-cards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .nav-item {
+    padding: 8px 20px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="water-background"></div>
+
+<!-- HEADER -->
+<header id="mainHeader">
+  <div class="header-content">
+    <nav class="nav-menu" id="navMenu">
+      <div class="nav-item active" data-title="Dashboard" data-url="" onclick="handleNavClick(this, 'dashboard')">
+        <i class="fa-solid fa-house"></i>
+        <span class="nav-label">Dashboard</span>
+      </div>
+      <div class="nav-item" data-title="Reservasi" data-url="https://docs.google.com/spreadsheets/d/1QQPlhPZ0FcCBwGV_jMqyn5uObDWKNFb4iOadEKAdCX4/edit?pli=1&gid=0#gid=0" onclick="handleNavClick(this, 'url')">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="nav-label">Reservasi</span>
+      </div>
+      <div class="nav-item" data-title="PR ke SM" data-url="https://docs.google.com/spreadsheets/d/1QQPlhPZ0FcCBwGV_jMqyn5uObDWKNFb4iOadEKAdCX4/edit?pli=1&gid=550880208#gid=550880208" onclick="handleNavClick(this, 'url')">
+        <i class="fa-solid fa-file-signature"></i>
+        <span class="nav-label">PR ke SM</span>
+      </div>
+      <div class="nav-item" data-title="FPPK & PR" data-url="https://docs.google.com/spreadsheets/d/1QQPlhPZ0FcCBwGV_jMqyn5uObDWKNFb4iOadEKAdCX4/edit?pli=1&gid=550880208#gid=550880208" onclick="handleNavClick(this, 'url')">
+        <i class="fa-solid fa-boxes-stacked"></i>
+        <span class="nav-label">FPPK & PR</span>
+      </div>
+      <div class="nav-item" data-title="General" data-url="https://docs.google.com/spreadsheets/d/1QQPlhPZ0FcCBwGV_jMqyn5uObDWKNFb4iOadEKAdCX4/edit?pli=1&gid=1466667055#gid=1466667055" onclick="handleNavClick(this, 'url')">
+        <i class="fa-solid fa-file-lines"></i>
+        <span class="nav-label">General</span>
+      </div>
+      <div class="nav-item" data-title="Reservasi Chemical" data-url="https://docs.google.com/spreadsheets/d/1QQPlhPZ0FcCBwGV_jMqyn5uObDWKNFb4iOadEKAdCX4/edit?pli=1&gid=1717739842#gid=1717739842" onclick="handleNavClick(this, 'url')">
+        <i class="fa-solid fa-flask"></i>
+        <span class="nav-label">Chemical</span>
+      </div>
+      <div class="nav-item" data-title="Creat Reservasi" data-url="https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#Shell-home" onclick="handleNavClick(this, 'url')">
+        <i class="fa-solid fa-pen"></i>
+        <span class="nav-label">Creat Reservasi</span>
+      </div>
+    </nav>
+    
+    <button class="back-btn" id="backBtn" onclick="showDashboard()">
+      <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+    </button>
+  </div>
+</header>
+
+<!-- Floating Home Button -->
+<button class="floating-home-btn" id="floatingHomeBtn" onclick="showDashboard()" title="Kembali ke Dashboard">
+  <i class="fa-solid fa-house"></i>
+</button>
+
+<div class="main-container">
+  <!-- Warning Message -->
+  <div class="warning-message" id="warningMessage">
+    <i class="fa-solid fa-circle-info"></i>
+    <span>Jika halaman tidak muncul, pastikan Anda sudah login ke akun Google yang sesuai</span>
+  </div>
+  
+  <!-- Welcome Section -->
+  <div class="welcome-section" id="welcomeSection">
+    <div class="welcome-title">Selamat Datang di PIT Service Air</div>
+    <div class="welcome-subtitle">Kelola reservasi, purchase request, dan data dengan mudah melalui dashboard terintegrasi</div>
+  </div>
+
+  <!-- Dashboard Cards -->
+  <div class="dashboard-cards" id="dashboardCards">
+    <div class="card" onclick="bukaCard('Reservasi', 'https://docs.google.com/spreadsheets/d/1QQPlhPZ0FcCBwGV_jMqyn5uObDWKNFb4iOadEKAdCX4/edit?pli=1&gid=0#gid=0')">
+      <div class="card-icon">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+      <span class="card-title">Reservasi</span>
+      <div class="card-caption">Kelola pemesanan dan reservasi barang untuk kebutuhan operasional</div>
+    </div>
+
+    <div class="card" onclick="bukaCard('PR ke SM', 'https://docs.google.com/spreadsheets/d/1QQPlhPZ0FcCBwGV_jMqyn5uObDWKNFb4iOadEKAdCX4/edit?pli=1&gid=872099485#gid=872099485')">
+      <div class="card-icon">
+        <i class="fa-solid fa-file-signature"></i>
+      </div>
+      <span class="card-title">PR ke SM</span>
+      <div class="card-caption">Buat dan kelola Purchase Request untuk pengajuan pembelian</div>
+    </div>
+
+    <div class="card" onclick="bukaCard('FPPK & PR', 'https://docs.google.com/spreadsheets/d/1QQPlhPZ0FcCBwGV_jMqyn5uObDWKNFb4iOadEKAdCX4/edit?pli=1&gid=550880208#gid=550880208')">
+      <div class="card-icon">
+        <i class="fa-solid fa-boxes-stacked"></i>
+      </div>
+      <span class="card-title">FPPK & PR</span>
+      <div class="card-caption">Kelola Form Permintaan dan Pengeluaran Barang serta Purchase Request</div>
+    </div>
+
+    <a href="https://docs.google.com/spreadsheets/d/1QQPlhPZ0FcCBwGV_jMqyn5uObDWKNFb4iOadEKAdCX4/edit?gid=0" style="text-decoration:none; color:inherit;">
+      <div class="card">
+        <div class="card-icon">
+          <i class="fa-solid fa-database"></i>
+        </div>
+        <span class="card-title">Database</span>
+        <div class="card-caption">Akses database lengkap untuk melihat dan mengelola semua data</div>
+      </div>
+    </a>
+
+    <div class="card" onclick="bukaCard('General', 'https://docs.google.com/spreadsheets/d/1QQPlhPZ0FcCBwGV_jMqyn5uObDWKNFb4iOadEKAdCX4/edit?pli=1&gid=1466667055#gid=1466667055')">
+      <div class="card-icon general">
+        <i class="fa-solid fa-file-lines"></i>
+      </div>
+      <span class="card-title">General</span>
+      <div class="card-caption">Periksa data Orderan yang sudah direservasi</div>
+    </div>
+
+    <div class="card" onclick="bukaCard('Reservasi Chemical', 'https://docs.google.com/spreadsheets/d/1QQPlhPZ0FcCBwGV_jMqyn5uObDWKNFb4iOadEKAdCX4/edit?pli=1&gid=1717739842#gid=1717739842')">
+      <div class="card-icon chemical">
+        <i class="fa-solid fa-flask"></i>
+      </div>
+      <span class="card-title">Reservasi Chemical</span>
+      <div class="card-caption">Data Rekapan Reservasi Chemical Open dan Close</div>
+    </div>
+
+    <a href="https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#Shell-home" 
+       style="text-decoration:none; color:inherit;" 
+       target="_blank" 
+       rel="noopener noreferrer">
+      <div class="card">
+        <div class="card-icon">
+          <i class="fa-solid fa-pen"></i>
+        </div>
+        <span class="card-title">Creat Reservasi</span>
+        <div class="card-caption">Buat reservasi baru melalui SAP Fiori Launchpad</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="loader" id="loader"></div>
+  <iframe id="konten" title="Konten Dashboard"></iframe>
+</div>
+
+<!-- Footer -->
+<div class="footer">
+  <p><i class="fa-regular fa-copyright"></i> 2026 PIT Service Air - Sistem Manajemen Reservation</p>
+</div>
+
+<script>
+const frame = document.getElementById('konten');
+const loader = document.getElementById('loader');
+const backBtn = document.getElementById('backBtn');
+const navItems = document.querySelectorAll('.nav-item');
+const welcomeSection = document.getElementById('welcomeSection');
+const dashboardCards = document.getElementById('dashboardCards');
+const mainHeader = document.getElementById('mainHeader');
+const floatingHomeBtn = document.getElementById('floatingHomeBtn');
+const warningMessage = document.getElementById('warningMessage');
+
+// Auto-hide welcome section after 3 seconds
+function autoHideWelcome() {
+  setTimeout(() => {
+    if (welcomeSection && !welcomeSection.classList.contains('hide')) {
+      welcomeSection.classList.add('hide');
+      // Optional: tambahkan efek shifting pada cards
+      dashboardCards.style.marginTop = '0';
+    }
+  }, 3000);
+}
+
+// Reset welcome section (tampilkan kembali)
+function resetWelcome() {
+  if (welcomeSection) {
+    welcomeSection.classList.remove('hide');
+    // Reset auto-hide timer
+    clearTimeout(window.welcomeTimeout);
+    window.welcomeTimeout = setTimeout(() => {
+      if (welcomeSection && !welcomeSection.classList.contains('hide')) {
+        welcomeSection.classList.add('hide');
+      }
+    }, 3000);
+  }
+}
+
+function handleNavClick(element, type) {
+  if (type === 'dashboard' || element.dataset.url === '') {
+    showDashboard();
+    return;
+  }
+  
+  const url = element.dataset.url;
+  const title = element.dataset.title;
+  
+  navItems.forEach(item => item.classList.remove('active'));
+  element.classList.add('active');
+  
+  welcomeSection.style.display = 'none';
+  dashboardCards.style.display = 'none';
+  frame.style.display = 'block';
+  
+  loader.style.display = 'block';
+  backBtn.style.display = 'flex';
+  warningMessage.style.display = 'flex';
+  
+  if (title === 'Database') {
+    mainHeader.style.display = 'none';
+    floatingHomeBtn.style.display = 'flex';
+  } else {
+    mainHeader.style.display = 'flex';
+    floatingHomeBtn.style.display = 'none';
+  }
+  
+  setTimeout(() => {
+    frame.src = url;
+  }, 300);
+  
+  frame.onload = function() {
+    loader.style.display = 'none';
+    warningMessage.style.display = 'none';
+  };
+  
+  frame.onerror = function() {
+    loader.style.display = 'none';
+    warningMessage.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Gagal memuat halaman. Periksa akses Anda.';
+    warningMessage.style.display = 'flex';
+    warningMessage.style.background = '#fee2e2';
+    warningMessage.style.borderColor = '#f87171';
+    warningMessage.style.color = '#991b1b';
+  };
+}
+
+function bukaCard(judul, url) {
+  welcomeSection.style.display = 'none';
+  dashboardCards.style.display = 'none';
+  frame.style.display = 'block';
+  
+  navItems.forEach(item => item.classList.remove('active'));
+  navItems.forEach(item => {
+    if (item.dataset.title === judul || 
+        (judul === 'Reservasi Chemical' && item.dataset.title === 'Reservasi Chemical')) {
+      item.classList.add('active');
+    }
+  });
+  
+  loader.style.display = 'block';
+  backBtn.style.display = 'flex';
+  warningMessage.style.display = 'flex';
+  
+  if (judul === 'Database') {
+    mainHeader.style.display = 'none';
+    floatingHomeBtn.style.display = 'flex';
+  } else {
+    mainHeader.style.display = 'flex';
+    floatingHomeBtn.style.display = 'none';
+  }
+  
+  setTimeout(() => {
+    frame.src = url;
+  }, 300);
+  
+  frame.onload = function() {
+    loader.style.display = 'none';
+    warningMessage.style.display = 'none';
+  };
+  
+  frame.onerror = function() {
+    loader.style.display = 'none';
+    warningMessage.innerHTML = '<i class="fa-solid fa-circle-exclamation"></i> Gagal memuat halaman. Pastikan Anda memiliki akses.';
+    warningMessage.style.display = 'flex';
+    warningMessage.style.background = '#fee2e2';
+    warningMessage.style.borderColor = '#f87171';
+    warningMessage.style.color = '#991b1b';
+  };
+}
+
+function showDashboard() {
+  // Tampilkan welcome section dengan animasi
+  welcomeSection.style.display = 'block';
+  welcomeSection.classList.remove('hide');
+  dashboardCards.style.display = 'grid';
+  frame.style.display = 'none';
+  warningMessage.style.display = 'none';
+  
+  navItems.forEach(item => item.classList.remove('active'));
+  const homeItem = Array.from(navItems).find(item => item.dataset.title === 'Dashboard');
+  if (homeItem) homeItem.classList.add('active');
+  
+  mainHeader.style.display = 'flex';
+  floatingHomeBtn.style.display = 'none';
+  backBtn.style.display = 'none';
+  
+  frame.src = 'about:blank';
+  window.scrollTo(0, 0);
+  
+  // Reset auto-hide timer
+  clearTimeout(window.welcomeTimeout);
+  window.welcomeTimeout = setTimeout(() => {
+    if (welcomeSection && !welcomeSection.classList.contains('hide')) {
+      welcomeSection.classList.add('hide');
+    }
+  }, 3000);
+}
+
+function initCardEvents() {
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('touchstart', function() {
+      this.style.transform = 'scale(0.97)';
+    }, { passive: true });
+    card.addEventListener('touchend', function() {
+      this.style.transform = '';
+    }, { passive: true });
+    card.addEventListener('mousedown', function() {
+      this.style.transform = 'scale(0.97)';
+    });
+    card.addEventListener('mouseup', function() {
+      this.style.transform = '';
+    });
+    card.addEventListener('mouseleave', function() {
+      this.style.transform = '';
+    });
+  });
+}
+
+window.addEventListener('DOMContentLoaded', function() {
+  initCardEvents();
+  showDashboard();
+  
+  document.querySelectorAll('.card').forEach(card => {
+    card.addEventListener('contextmenu', e => e.preventDefault());
+  });
+  
+  // Auto-hide welcome setelah 3 detik
+  autoHideWelcome();
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+
+
+<style>
+  /* SEMBUNYIKAN HEADER GOOGLE SITES */
+  header, 
+  .sites-header, 
+  .navbar, 
+  [role="banner"],
+  .sites-embed-site-header,
+  .site-header-container {
+    display: none !important;
+    height: 0 !important;
+    visibility: hidden !important;
+    opacity: 0 !important;
+    position: absolute !important;
+  }
+  
+  /* ATUR TAMPILAN IFRAME */
+  iframe {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    border: none !important;
+    z-index: 999999 !important;
+  }
+  
+  /* ATUR BODY */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+</style>
+
+<iframe src="https://script.google.com/macros/s/AKfycbxCBtg5p8vrK_ceWbgToErMq-h8IZePKIVeVZ7Sq7Dgr-NSK_zkyDZuKLLJ3m8q54g5/exec">
+</iframe>
+
+<script>
+  // Force hide Google Sites UI
+  setTimeout(() => {
+    const elements = document.querySelectorAll('div');
+    elements.forEach(el => {
+      const style = window.getComputedStyle(el);
+      if (style.position === 'fixed' || style.top === '0px') {
+        el.style.display = 'none !important';
+      }
+    });
+  }, 1000);
+</script>

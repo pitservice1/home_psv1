@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<style>
+    html, body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+    }
+</style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+<!-- DASHBOARD SECTION -->
+<div id="dashboardSection">
+    <header class="bg-white shadow-sm">
+        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+            <!-- Kosong sesuai desain awal -->
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-6">
+        <div class="grid md:grid-cols-2 gap-6">
+            <!-- Menu 1 -->
+            <div class="bg-white shadow-md rounded-2xl p-6 border hover:shadow-xl transition">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-database text-blue-600 text-xl mr-3"></i>
+                    <h2 class="text-lg font-semibold text-gray-700">Data SQL MIO</h2>
+                </div>
+                <p class="text-sm text-gray-500 mb-4">
+                    Akses report database MIO EWACS.
+                </p>
+                <a href="http://kpcssqrp401/ReportS/browse/xxx_EWACS/MIO"
+                   target="_blank"
+                   class="inline-block bg-blue-600 text-white px-4 py-2 rounded-xl text-sm hover:bg-blue-700 transition">
+                   Buka Data SQL
+                </a>
+            </div>
+
+            <!-- Menu 2 - Equipment Dewatering -->
+            <div class="bg-white shadow-md rounded-2xl p-6 border hover:shadow-xl transition">
+                <div class="flex items-center mb-4">
+                    <i class="fas fa-water text-green-600 text-xl mr-3"></i>
+                    <h2 class="text-lg font-semibold text-gray-700">Equipment Dewatering 2026</h2>
+                </div>
+                <p class="text-sm text-gray-500 mb-4">
+                    Monitoring equipment dewatering tahun 2026.
+                </p>
+                <div class="flex flex-col gap-3">
+                    <!-- Link LANGSUNG ke Google Spreadsheet (NEW TAB) -->
+                    <a href="https://docs.google.com/spreadsheets/d/1aOxszDTRpDuX8Mtc2jQrptB2V64y6So6cz0b3uzF1_w/edit?gid=472873705#gid=472873705"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       class="bg-green-600 text-white px-4 py-2 rounded-xl text-sm hover:bg-green-700 transition inline-block text-center">
+                        Buka Data Equipment
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<!-- CATATAN: Bagian iframe & spreadsheetSection TIDAK digunakan lagi,
+     tetapi saya sisakan komentar agar Anda tahu bahwa semua sudah new tab.
+     Jika ingin benar-benar menghapus, bisa dihapus. Saya biarkan agar tidak merusak
+     kemungkinan referensi, namun tidak akan muncul karena hidden dan tidak dipanggil. -->
+<div id="spreadsheetSection" class="hidden h-screen w-full flex flex-col">
+    <div class="bg-white shadow px-4 py-3 flex justify-between items-center">
+        <h2 class="text-sm font-semibold text-gray-700">Equipment Dewatering 2026</h2>
+        <div class="flex gap-2">
+            <button onclick="closeSpreadsheet()" class="text-sm bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-red-600 transition">Kembali</button>
+            <a href="https://docs.google.com/spreadsheets/d/1aOxszDTRpDuX8Mtc2jQrptB2V64y6So6cz0b3uzF1_w/export?format=xlsx" target="_blank" class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm text-center hover:bg-green-700 transition inline-flex items-center gap-1"><i class="fa-solid fa-download"></i></a>
+        </div>
+    </div>
+    <a href="https://docs.google.com/spreadsheets/d/1aOxszDTRpDuX8Mtc2jQrptB2V64y6So6cz0b3uzF1_w/edit?gid=472873705#gid=472873705" target="_blank" class="flex-1 w-full p-4 bg-blue-500 text-white rounded-xl text-center block">Buka Data</a>
+</div>
+
+<script>
+// Fungsi openSpreadsheet dan closeSpreadsheet tidak lagi diperlukan karena langsung new tab.
+// Namun agar tidak error jika ada sisa panggilan, kita kosongkan atau biarkan saja.
+function openSpreadsheet() {
+    // Tidak digunakan lagi, karena tombol sudah berubah menjadi link new tab.
+    // Jika ingin tetap mempertahankan agar tidak error, cukup redirect ke URL yang sama.
+    window.open("https://docs.google.com/spreadsheets/d/1aOxszDTRpDuX8Mtc2jQrptB2V64y6So6cz0b3uzF1_w/edit?gid=472873705#gid=472873705", "_blank");
+}
+
+function closeSpreadsheet() {
+    document.getElementById('spreadsheetSection').classList.add('hidden');
+    document.getElementById('dashboardSection').classList.remove('hidden');
+    document.body.classList.add('bg-gray-100');
+}
+</script>
+</body>
+</html>

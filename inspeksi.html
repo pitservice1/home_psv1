@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Menu Monitoring Kolam</title>
+
+<!-- Font Awesome Icon -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+    background: #f0f2f5;
+    min-height: 100vh;
+}
+
+/* Header / Navbar */
+.navbar {
+    background: linear-gradient(135deg, #1a3c34 0%, #0f2c25 100%);
+    color: white;
+    padding: 15px 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar h1 {
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.navbar h1 i {
+    font-size: 24px;
+}
+
+.navbar p {
+    font-size: 12px;
+    opacity: 0.8;
+    margin-top: 5px;
+}
+
+/* Tab Menu */
+.tab-menu {
+    display: flex;
+    background: white;
+    border-bottom: 1px solid #ddd;
+    padding: 0 20px;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 14px 24px;
+    font-size: 14px;
+    font-weight: 600;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #555;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px 8px 0 0;
+}
+
+.tab-btn i {
+    font-size: 16px;
+}
+
+.tab-btn:hover {
+    background: #e8f0fe;
+    color: #1a3c34;
+}
+
+.tab-btn.active {
+    color: #1a3c34;
+    border-bottom: 3px solid #1a3c34;
+    background: #f0f7f5;
+}
+
+/* Konten Container */
+.content-container {
+    padding: 20px;
+    min-height: calc(100vh - 120px);
+}
+
+/* Tab Content */
+.tab-content {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Card Menu Grid (untuk menu awal) */
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.card {
+    text-decoration: none;
+    background: white;
+    border-radius: 20px;
+    padding: 30px 20px;
+    text-align: center;
+    color: #333;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+    display: block;
+    border: 1px solid #eef2ff;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 16px 30px rgba(0,0,0,0.12);
+}
+
+.icon {
+    font-size: 48px;
+    margin-bottom: 15px;
+}
+
+.form-icon {
+    color: #1f6feb;
+}
+
+.report-icon {
+    color: #e5533d;
+}
+
+.card-title {
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+.card-desc {
+    font-size: 13px;
+    color: #666;
+}
+
+/* Iframe Wrapper */
+.iframe-wrapper {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    height: calc(100vh - 180px);
+    min-height: 550px;
+}
+
+.iframe-wrapper iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* Loading State */
+.loading-iframe {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 400px;
+    background: white;
+    border-radius: 20px;
+    flex-direction: column;
+    gap: 15px;
+    color: #1a3c34;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #e0e0e0;
+    border-top: 4px solid #1a3c34;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Info Banner */
+.info-banner {
+    background: #e8f0fe;
+    border-radius: 16px;
+    padding: 15px 20px;
+    margin-bottom: 25px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.info-banner span {
+    font-size: 14px;
+    color: #1a3c34;
+}
+
+.info-banner i {
+    font-size: 20px;
+    color: #1a3c34;
+}
+
+
+
+/* Responsive */
+@media (max-width: 600px) {
+    .tab-btn {
+        padding: 10px 16px;
+        font-size: 12px;
+    }
+    
+    .content-container {
+        padding: 15px;
+    }
+    
+    .iframe-wrapper {
+        height: calc(100vh - 200px);
+        min-height: 450px;
+    }
+    
+    .menu-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Header -->
+
+<!-- Tab Navigation -->
+<div class="tab-menu">
+    <button class="tab-btn active" onclick="switchTab('menu')">
+        <i class="fas fa-home"></i> Menu Utama
+    </button>
+    <button class="tab-btn" onclick="switchTab('printpdf')">
+        <i class="fas fa-print"></i> Print PDF Kolam
+    </button>
+</div>
+
+<!-- Konten -->
+<div class="content-container">
+
+    <!-- Tab 1: Menu Utama -->
+    <div id="menuTab" class="tab-content active">
+
+        <div class="menu-grid">
+            <a class="card" href="https://forms.gle/PkzdD5kxEYWqj6M29" target="_blank">
+                <div class="icon form-icon">
+                    <i class="fa-solid fa-file-lines"></i>
+                </div>
+                <div class="card-title">Form Periksa Kondisi Kolam</div>
+                <div class="card-desc">Isi laporan harian kondisi kolam</div>
+            </a>
+
+            <a class="card" href="https://docs.google.com/spreadsheets/d/1S3AFToaEwd0WsrRkQI_x1NKhr0lBfS4s8SJSdRFDA4M/edit?resourcekey=&gid=614303348#gid=614303348" target="_blank">
+                <div class="icon report-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div class="card-title">Review dan Report</div>
+                <div class="card-desc">Lihat data & laporan keseluruhan</div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Tab 2: Print PDF Kolam (IFrame dari Apps Script) -->
+    <div id="printpdfTab" class="tab-content">
+
+
+        <div class="iframe-wrapper" id="iframeWrapper">
+            <div class="loading-iframe" id="loadingIframe">
+                <div class="spinner"></div>
+                <span>Memuat Print PDF Kolam...</span>
+            </div>
+            <iframe id="printFrame" src="about:blank" style="display: none;" onload="iframeLoaded()"></iframe>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// URL Apps Script Anda
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwXUHqAONyfgY4sEdFiXrojPX79nkl4y7X2gMBCPrsFxmklHfpxEM84rMbJmGo7F6h6Eg/exec';
+
+// Variabel untuk tracking iframe
+let iframeLoadedFlag = false;
+
+// Fungsi ganti tab
+function switchTab(tabName) {
+    // Update tombol aktif
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+    });
+    event.target.classList.add('active');
+    
+    // Sembunyikan semua konten
+    document.getElementById('menuTab').classList.remove('active');
+    document.getElementById('printpdfTab').classList.remove('active');
+    
+    // Tampilkan konten sesuai tab
+    if (tabName === 'menu') {
+        document.getElementById('menuTab').classList.add('active');
+    } else if (tabName === 'printpdf') {
+        document.getElementById('printpdfTab').classList.add('active');
+        
+        // Load iframe jika belum dimuat
+        loadIframe();
+    }
+}
+
+// Fungsi load iframe
+function loadIframe() {
+    const iframe = document.getElementById('printFrame');
+    const loadingDiv = document.getElementById('loadingIframe');
+    
+    // Jika iframe masih kosong atau error, muat ulang
+    if (!iframeLoadedFlag || iframe.src === 'about:blank') {
+        loadingDiv.style.display = 'flex';
+        iframe.style.display = 'none';
+        iframeLoadedFlag = false;
+        
+        // Set src iframe ke URL Apps Script
+        iframe.src = APPS_SCRIPT_URL;
+    }
+}
+
+// Fungsi ketika iframe selesai loading
+function iframeLoaded() {
+    const iframe = document.getElementById('printFrame');
+    const loadingDiv = document.getElementById('loadingIframe');
+    
+    // Sembunyikan loading, tampilkan iframe
+    loadingDiv.style.display = 'none';
+    iframe.style.display = 'block';
+    iframeLoadedFlag = true;
+}
+
+// Fungsi refresh iframe
+function refreshIframe() {
+    const iframe = document.getElementById('printFrame');
+    const loadingDiv = document.getElementById('loadingIframe');
+    
+    // Tampilkan loading
+    loadingDiv.style.display = 'flex';
+    iframe.style.display = 'none';
+    iframeLoadedFlag = false;
+    
+    // Refresh iframe dengan sedikit delay
+    setTimeout(() => {
+        iframe.src = 'about:blank';
+        setTimeout(() => {
+            iframe.src = APPS_SCRIPT_URL;
+        }, 100);
+    }, 100);
+}
+
+// Jika iframe error, coba lagi
+function iframeError() {
+    const loadingDiv = document.getElementById('loadingIframe');
+    loadingDiv.innerHTML = `
+        <div style="text-align:center; color:#e5533d;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 40px;"></i>
+            <p style="margin-top: 10px;">Gagal memuat halaman</p>
+
+        </div>
+    `;
+}
+
+// Event listener untuk error iframe
+window.addEventListener('load', function() {
+    const iframe = document.getElementById('printFrame');
+    iframe.onerror = iframeError;
+});
+</script>
+
+</body>
+</html>
