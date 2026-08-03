@@ -3,259 +3,209 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAP Fiori · Spreadsheet Download</title>
-    <!-- Font Awesome 6 (gratis) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Spreadsheet · Download Sheet Aktif (Header fix) </title>
     <style>
-        /* ----- reset & base ----- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: '72', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
         }
 
         body, html {
             height: 100%;
             width: 100%;
-            background: #f5f7fa;
             overflow: hidden;
+            background: #f0f2f5;
         }
 
-        /* ----- app wrapper (gaya SAP Fiori) ----- */
         .app-wrapper {
             display: flex;
             flex-direction: column;
             height: 100vh;
             width: 100%;
-            background: #f5f7fa;
         }
 
-        /* HEADER – SAP Fiori (blue gradient, flat) */
-        .fiori-header {
-            background: linear-gradient(135deg, #0a2b4b 0%, #1a5a7a 100%);
-            padding: 0 28px;
-            height: 64px;
+        /* HEADER */
+        .header {
+            background: linear-gradient(145deg, #0b1c3a 0%, #1d4e6f 100%);
+            padding: 0 24px;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 12px rgba(0, 20, 40, 0.25);
-            border-bottom: 2px solid #4da1b0;
-            flex-shrink: 0;
+            height: 70px;
+            box-shadow: 0 4px 12px rgba(0,20,40,0.3);
+            border-bottom: 2px solid #3fa7a4;
         }
 
-        .fiori-header .brand {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-
-        .fiori-header .brand i {
-            color: #b6e6ff;
-            font-size: 1.9rem;
-            text-shadow: 0 2px 3px rgba(0,0,0,0.1);
-        }
-
-        .fiori-header .brand h1 {
+        .header h1 {
             color: white;
-            font-weight: 400;
             font-size: 1.5rem;
-            letter-spacing: 0.3px;
-        }
-
-        .fiori-header .brand h1 span {
-            font-weight: 300;
-            color: #b0d9ee;
-            margin-left: 8px;
-        }
-
-        /* user / avatar kecil (SAP style) */
-        .header-actions {
+            font-weight: 500;
             display: flex;
-            align-items: center;
-            gap: 18px;
-        }
-
-        .header-actions .icon-btn {
-            background: transparent;
-            border: none;
-            color: #c8e2f0;
-            font-size: 1.3rem;
-            cursor: pointer;
-            transition: 0.15s;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .header-actions .icon-btn:hover {
-            color: white;
-            transform: scale(1.05);
-        }
-
-        .avatar {
-            background: #2f7896;
-            border-radius: 50%;
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            font-size: 1.1rem;
-            border: 2px solid #8ac4d9;
-            cursor: default;
-        }
-
-        /* NAVIGATION BAR (SAP Fiori - shell bar) */
-        .fiori-navbar {
-            background: #ffffff;
-            padding: 6px 24px;
-            display: none;   /* default hidden, muncul saat iframe aktif */
             align-items: center;
             gap: 12px;
-            border-bottom: 1px solid #d0dce8;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.02);
-            flex-shrink: 0;
-            flex-wrap: wrap;
         }
 
-        .fiori-navbar.visible {
+        .header h1 i {
+            color: #a4e0ff;
+            font-size: 1.8rem;
+        }
+
+        /* NAVIGASI BAR (dengan tombol download di kanan) */
+        .navigation-bar {
+            background: white;
+            padding: 10px 24px;
             display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid #cbd5e0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
         }
 
-        .nav-back {
+        .nav-left {
             display: flex;
             align-items: center;
             gap: 10px;
-            background: #eaf1f9;
-            padding: 6px 18px 6px 14px;
-            border-radius: 30px;
+            flex-wrap: wrap;
+            flex: 1;
+        }
+
+        .back-btn {
+            background: #f0f7fc;
+            border: 1px solid #cbd5e0;
+            border-radius: 40px;
+            padding: 8px 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
             cursor: pointer;
-            font-weight: 500;
-            color: #1b4c6b;
-            transition: 0.15s;
-            border: 1px solid transparent;
+            font-weight: 600;
+            color: #0b2d4b;
+            transition: 0.2s;
             white-space: nowrap;
         }
 
-        .nav-back i {
-            font-size: 0.9rem;
-            color: #2f7b9e;
-        }
-
-        .nav-back:hover {
-            background: #d6e6f5;
-            border-color: #a1c6dd;
+        .back-btn:hover {
+            background: #e1eef9;
             transform: translateX(-3px);
         }
 
-        .nav-breadcrumb {
+        .breadcrumb {
             display: flex;
             align-items: center;
-            gap: 6px;
             flex-wrap: wrap;
-            color: #335e7a;
-            font-size: 0.95rem;
-        }
-
-        .nav-breadcrumb .sep {
-            color: #9eb6cc;
-            margin: 0 4px;
-        }
-
-        .nav-breadcrumb .active {
-            font-weight: 600;
-            color: #0a2e47;
-        }
-
-        .nav-spacer {
-            flex: 1;
-        }
-
-        /* quick tabs (SAP Fiori chip) */
-        .quick-tabs {
-            display: flex;
-            gap: 6px;
-            overflow-x: auto;
-            padding: 4px 0;
-            max-width: 45%;
-            flex-wrap: nowrap;
-        }
-
-        .quick-tab {
-            background: #edf3f9;
-            border: 1px solid transparent;
-            padding: 6px 16px;
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            color: #1f4d6a;
-            cursor: pointer;
-            white-space: nowrap;
-            transition: 0.1s;
-            display: flex;
-            align-items: center;
             gap: 8px;
         }
 
-        .quick-tab i {
-            color: #3a7d9e;
-            font-size: 0.8rem;
-        }
-
-        .quick-tab.active {
-            background: #d4e6fa;
-            border-color: #2f88ae;
-            color: #06324b;
-            font-weight: 600;
-        }
-
-        .quick-tab:hover {
-            background: #d1e0ef;
-            transform: translateY(-1px);
-        }
-
-        /* tombol download di navbar (SAP Fiori primary) */
-        .btn-download-primary {
-            background: #197a9e;
-            border: none;
-            padding: 7px 22px 7px 18px;
-            border-radius: 30px;
-            color: white;
-            font-weight: 600;
-            font-size: 0.9rem;
+        .breadcrumb-item {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            color: #4a6f8c;
+            font-size: 0.95rem;
+        }
+
+        .breadcrumb-item i {
+            color: #2c7da0;
+            font-size: 1rem;
+        }
+
+        .breadcrumb-item .separator {
+            color: #a0b8cc;
+            margin-left: 8px;
+        }
+
+        .breadcrumb-item.active {
+            color: #0b2d4b;
+            font-weight: 600;
+        }
+
+        .quick-nav {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-left: auto;
+            overflow-x: auto;
+            padding: 5px 0;
+            max-width: 40%;
+        }
+
+        .nav-tab {
+            background: #eef2f6;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #2d4e6e;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(15, 80, 110, 0.3);
-            transition: 0.15s;
-            border: 1px solid #74bcd6;
             white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+            border: 1px solid transparent;
         }
 
-        .btn-download-primary i {
-            font-size: 1.1rem;
+        .nav-tab i {
+            font-size: 0.9rem;
+            color: #4f7a9e;
         }
 
-        .btn-download-primary:hover {
-            background: #218db5;
+        .nav-tab:hover {
+            background: #dbe9f5;
+            transform: translateY(-2px);
+        }
+
+        .nav-tab.active {
+            background: #c2e0ff;
+            border-color: #2c7da0;
+            color: #0a3147;
+            font-weight: 600;
+        }
+
+        /* TOMBOL DOWNLOAD DI HEADER NAV (pojok kanan atas) */
+        .download-header-btn {
+            background: linear-gradient(145deg, #176b87, #0a4b66);
+            border: none;
+            color: white;
+            border-radius: 40px;
+            padding: 8px 22px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            box-shadow: 0 5px 12px rgba(11, 65, 85, 0.4);
+            transition: 0.15s;
+            white-space: nowrap;
+            border: 1px solid #8ad0e3;
+            margin-left: 10px;
+        }
+
+        .download-header-btn i {
+            font-size: 1.2rem;
+        }
+
+        .download-header-btn:hover {
+            background: linear-gradient(145deg, #1d8bb0, #116382);
             transform: scale(1.02) translateY(-2px);
-            box-shadow: 0 8px 16px #0b4b66;
+            box-shadow: 0 10px 16px #094354;
         }
 
-        .btn-download-primary:active {
-            transform: scale(0.97);
+        .download-header-btn:active {
+            transform: scale(0.98);
         }
 
-        /* ----- MENU UTAMA (kartu) SAP Fiori Cards ----- */
+        /* MENU UTAMA — GRID 3 KOLOM */
         .menu-container {
             flex: 1;
-            padding: 32px 28px;
+            display: flex;
+            flex-direction: column;
+            padding: 30px 24px;
+            transition: 0.3s;
             overflow-y: auto;
-            background: #f5f7fa;
         }
 
         .menu-container.hidden {
@@ -263,85 +213,91 @@
         }
 
         .menu-title {
-            font-size: 1.4rem;
-            font-weight: 400;
-            color: #0b334a;
             display: flex;
             align-items: center;
-            gap: 14px;
-            margin-bottom: 28px;
-            letter-spacing: 0.2px;
+            gap: 8px;
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0b2d4b;
+            margin-bottom: 30px;
         }
 
         .menu-title i {
-            color: #1f7296;
-            font-size: 2rem;
+            color: #1e6f9f;
+            font-size: 1.8rem;
         }
 
+        /* GRID 3 KOLOM responsif */
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 28px;
+            grid-template-columns: repeat(3, minmax(240px, 1fr));
+            gap: 24px;
+            align-items: stretch;
         }
 
-        /* kartu SAP Fiori (object card) */
-        .fiori-card {
+        /* card dengan caption (tambahan <p>) */
+        .sheet-card {
             background: white;
-            border-radius: 20px;
-            padding: 28px 18px 20px;
-            box-shadow: 0 6px 18px rgba(0, 30, 55, 0.08);
+            border-radius: 24px;
+            padding: 28px 20px;
+            box-shadow: 0 10px 20px -8px rgba(0, 32, 64, 0.2);
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
             gap: 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            border: 1px solid #e6edf5;
+            transition: 0.25s;
+            border: 1px solid transparent;
+            background: rgba(255,255,255,0.95);
         }
 
-        .fiori-card:hover {
-            border-color: #3f98bb;
-            box-shadow: 0 18px 30px -8px #1d4b66;
-            transform: translateY(-6px);
+        .sheet-card:hover {
+            border-color: #2c7da0;
+            transform: scale(1.02) translateY(-6px);
+            box-shadow: 0 25px 30px -12px #1e3f5f;
         }
 
-        .fiori-card .card-icon {
-            width: 76px;
-            height: 76px;
-            background: #e8f2fa;
+        .card-icon {
+            width: 80px;
+            height: 80px;
             border-radius: 30px;
+            background: linear-gradient(145deg, #d7ecff, #b7d9f0);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.5rem;
-            color: #135e7e;
+            font-size: 2.8rem;
+            color: #0a3147;
         }
 
-        .fiori-card .card-title {
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: #0d3a54;
-            letter-spacing: 0.2px;
+        .card-info h3 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #0d3e5c;
+            margin: 0 0 8px 0;
+            line-height: 1.3;
         }
 
-        .fiori-card .card-caption {
-            background: #eff6fd;
-            padding: 10px 14px;
+        /* CAPTION baru */
+        .card-caption {
+            font-size: 0.9rem;
+            color: #2f5777;
+            background: #e8f0fe;
+            padding: 8px 12px;
             border-radius: 40px;
-            font-size: 0.85rem;
-            color: #265c7a;
-            border: 1px solid #d6e4f0;
             width: 100%;
-            font-weight: 400;
-            line-height: 1.4;
+            text-align: center;
+            font-weight: 500;
+            border: 1px solid #bed9f0;
+            margin-top: 4px;
         }
 
-        /* IFRAME (SAP Fiori clean) */
+        /* IFRAME */
         .iframe-container {
             flex: 1;
             display: none;
-            background: #eef2f7;
+            flex-direction: column;
+            background: #d9e2eb;
             position: relative;
         }
 
@@ -351,393 +307,519 @@
 
         #sheetFrame {
             width: 100%;
-            height: 100%;
+            flex: 1;
             border: none;
             background: white;
-            box-shadow: inset 0 1px 4px rgba(0,0,0,0.02);
         }
 
-        /* LOADING (SAP Fiori) */
-        .loading-fiori {
+        /* EXPORT FAB (opsional, tetap dipertahankan) */
+        .export-fab {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #fffffffa;
-            padding: 28px 40px;
-            border-radius: 40px;
-            box-shadow: 0 30px 50px rgba(0, 20, 40, 0.4);
-            display: none;
-            text-align: center;
-            border: 1px solid #b5d6e8;
-            backdrop-filter: blur(3px);
-            z-index: 500;
+            bottom: 28px;
+            right: 28px;
+            z-index: 200;
         }
 
-        .loading-fiori .spinner {
-            width: 44px;
-            height: 44px;
-            border: 5px solid #d8e5f0;
-            border-top-color: #1b749b;
+        .fab-main {
+            width: 62px;
+            height: 62px;
             border-radius: 50%;
-            animation: spin 0.8s infinite linear;
-            margin: 0 auto 14px;
-        }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        .loading-fiori p {
-            color: #13506e;
-            font-weight: 500;
-        }
-
-        /* NOTIF (SAP Fiori - success) */
-        .notif-fiori {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            background: #1d7c6b;
+            background: linear-gradient(135deg, #123456, #1d6f8c);
+            border: 2px solid #b3eef7;
             color: white;
-            padding: 14px 28px;
-            border-radius: 60px;
-            box-shadow: 0 8px 20px #125a4b;
-            display: none;
-            align-items: center;
-            gap: 14px;
-            font-weight: 500;
-            z-index: 600;
-            font-size: 0.95rem;
-            border: 1px solid #8cd4c2;
-        }
-
-        /* dropdown download (SAP Fiori popover) */
-        .fiori-dropdown {
-            position: absolute;
-            background: white;
-            border-radius: 24px;
-            box-shadow: 0 12px 30px rgba(0, 30, 60, 0.35);
-            padding: 12px;
-            min-width: 190px;
-            display: none;
-            flex-direction: column;
-            gap: 6px;
-            border: 1px solid #bfd8ec;
-            z-index: 400;
-        }
-
-        .fiori-dropdown button {
+            font-size: 26px;
             display: flex;
             align-items: center;
-            gap: 16px;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 20px #0b3550;
+            transition: 0.2s;
+        }
+
+        .fab-main:hover {
+            transform: scale(1.08) rotate(5deg);
+        }
+
+        .export-options {
+            position: absolute;
+            bottom: 80px;
+            right: 8px;
+            background: white;
+            border-radius: 24px;
+            padding: 12px;
+            min-width: 210px;
+            box-shadow: 0 15px 35px rgba(0, 25, 60, 0.5);
+            display: none;
+            flex-direction: column;
+            gap: 8px;
+            border: 1px solid #bedcf3;
+        }
+
+        .export-options button {
+            display: flex;
+            align-items: center;
+            gap: 14px;
             padding: 12px 18px;
             border: none;
-            background: #f3f8ff;
-            border-radius: 40px;
-            font-weight: 500;
-            color: #174f6d;
+            background: #f2f7fd;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #1d405b;
             cursor: pointer;
-            transition: 0.1s;
-            font-size: 0.9rem;
-            width: 100%;
+            transition: 0.15s;
+            text-align: left;
+            font-size: 0.95rem;
         }
 
-        .fiori-dropdown button i {
-            font-size: 1.2rem;
-            width: 28px;
-            color: #2d7b9e;
-        }
+        .export-options button i { font-size: 1.4rem; width: 30px; }
+        .export-options button:hover { background: #d5e9ff; transform: translateX(-5px); }
 
-        .fiori-dropdown button:hover {
-            background: #dcecfa;
-            transform: translateX(4px);
-        }
-
-        /* Overlay untuk menutup dropdown */
-        .dropdown-overlay {
+        .export-overlay {
             position: fixed;
             inset: 0;
             background: transparent;
-            z-index: 399;
+            z-index: 199;
             display: none;
         }
 
-        /* Responsif */
-        @media (max-width: 900px) {
-            .card-grid { grid-template-columns: repeat(2, 1fr); }
+        /* LOADING & NOTIF */
+        .loading, .notification {
+            position: fixed;
+            z-index: 400;
+        }
+        
+        .loading {
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ffffffea;
+            padding: 24px 32px;
+            border-radius: 40px;
+            box-shadow: 0 30px 50px #00000050;
+            display: none;
+            text-align: center;
+            backdrop-filter: blur(4px);
+            border: 2px solid #2793b6;
+        }
+        
+        .spinner {
+            width: 48px;
+            height: 48px;
+            border: 6px solid #e4ecf5;
+            border-top-color: #146b9e;
+            border-radius: 50%;
+            animation: spin 0.9s infinite linear;
+            margin: 0 auto 12px;
+        }
+        
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .notification {
+            bottom: 30px;
+            left: 30px;
+            background: #208a6e;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 60px;
+            font-weight: 500;
+            box-shadow: 0 8px 18px #195a47;
+            display: none;
+            align-items: center;
+            gap: 12px;
+            font-size: 1rem;
         }
 
-        @media (max-width: 600px) {
-            .card-grid { grid-template-columns: 1fr; }
-            .fiori-header .brand h1 { font-size: 1.1rem; }
-            .fiori-header .brand h1 span { display: none; }
-            .quick-tabs { max-width: 100%; }
-            .btn-download-primary span { display: none; }
-            .btn-download-primary { padding: 7px 16px; }
+        /* Responsif: jika layar terlalu kecil, grid menyesuaikan */
+        @media (max-width: 900px) {
+            .card-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 550px) {
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            .download-header-btn span { display: none; } /* sembunyikan teks, hanya ikon */
+            .download-header-btn { padding: 8px 15px; }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-
 <div class="app-wrapper">
+    <!-- HEADER -->
+    <div class="header">
+        <h1>
+            <i class="fas fa-table"></i> 
+            Dashboard Spreadsheet
+        </h1>
+    </div>
 
-    <!-- HEADER SAP FIORI -->
-    <header class="fiori-header">
-        <div class="brand">
-            <i class="fas fa-table"></i>
-            <h1>Report data MWT</h1>
+    <!-- NAVIGASI BAR (saat iframe tampil) + TOMBOL DOWNLOAD KANAN ATAS -->
+    <div class="navigation-bar" id="navigationBar" style="display: none;">
+        <div class="nav-left">
+            <div class="back-btn" id="navBackBtn">
+                <i class="fas fa-arrow-left"></i> 
+                Menu Utama
+            </div>
+            <div class="breadcrumb" id="breadcrumb"></div>
         </div>
-        <div class="header-actions">
-            <button class="icon-btn" title="Notifikasi"><i class="fas fa-bell"></i></button>
-            <button class="icon-btn" title="Bantuan"><i class="fas fa-question-circle"></i></button>
-            <div class="avatar">PSV</div>
-        </div>
-    </header>
-
-    <!-- NAVBAR (muncul saat sheet terbuka) -->
-    <div class="fiori-navbar" id="fioriNavbar">
-        <div class="nav-back" id="navBackBtn">
-            <i class="fas fa-arrow-left"></i> Kembali
-        </div>
-        <div class="nav-breadcrumb" id="breadcrumb">
-            <span>Spreadsheet</span>
-            <span class="sep"><i class="fas fa-chevron-right"></i></span>
-            <span class="active" id="activeSheetName">Laporan</span>
-        </div>
-        <div class="nav-spacer"></div>
-
-        <!-- Quick Tabs (sheet lain) -->
-        <div class="quick-tabs" id="quickTabs"></div>
-
-        <!-- Tombol Download (primary) -->
-        <button class="btn-download-primary" id="headerDownloadBtn">
+        <div class="quick-nav" id="quickNav"></div>
+        
+        <!-- TOMBOL DOWNLOAD HEADER (POJOK KANAN ATAS) -->
+        <button class="download-header-btn" id="headerDownloadBtn">
             <i class="fas fa-download"></i>
-            <span>Download</span>
+            <span>Download Sheet</span>
         </button>
     </div>
 
-    <!-- MENU UTAMA (Kartu) -->
+    <!-- MENU UTAMA (grid 3 kolom) dengan CAPTION pada tiap kartu -->
     <div class="menu-container" id="menuContainer">
         <div class="menu-title">
-                        Pilih Laporan
+            <i class="fas fa-th-large"></i> 
+            Pilih Laporan
         </div>
-        <div class="card-grid" id="cardGrid"></div>
+        <div class="card-grid" id="cardContainer">
+            <!-- card akan diisi js, kini dengan caption -->
+        </div>
     </div>
 
-    <!-- IFRAME -->
+    <!-- IFRAME CONTAINER -->
     <div class="iframe-container" id="iframeContainer">
         <iframe id="sheetFrame" src="about:blank"></iframe>
     </div>
 </div>
 
-<!-- LOADING -->
-<div class="loading-fiori" id="loadingFiori">
-    <div class="spinner"></div>
-    <p>Mempersiapkan unduhan...</p>
-</div>
-
-<!-- NOTIFIKASI -->
-<div class="notif-fiori" id="notifFiori">
-    <i class="fas fa-check-circle"></i>
-    <span id="notifMsg">Berhasil</span>
-</div>
-
-<!-- DROPDOWN (untuk tombol download) -->
-<div class="fiori-dropdown" id="downloadDropdown">
-    <button class="dd-excel"><i class="fas fa-file-excel"></i> Excel (XLSX)</button>
-    <button class="dd-pdf"><i class="fas fa-file-pdf"></i> PDF</button>
-    <button class="dd-ods"><i class="fas fa-file"></i> ODS</button>
-</div>
-<div class="dropdown-overlay" id="dropdownOverlay"></div>
+<!-- LOADING & NOTIF -->
+<div class="loading" id="loading"><div class="spinner"></div> Menyiapkan unduhan...</div>
+<div class="notification" id="notification"><i class="fas fa-check-circle"></i> <span></span></div>
 
 <script>
     (function() {
-        // ---- KONFIGURASI SHEET (dengan gid) ----
+        // KONFIGURASI SHEET — masing-masing punya gid unik
         const sheets = {
             sheet1: { id: "1Q2th3OirVj1PWRcl70fgJgmUuji03gBmP9Kvrj3ad1E", gid: "1101821162", name: "Sampel TSS Kelayang" },
             sheet2: { id: "1_QEw0cPXGLu5xar7YJq6IuIu9Lkfb8xMLl4o0osdGe0", gid: "99887734", name: "Report TSS" },
             sheet3: { id: "1HhUmariaHQiJ1AJU_zWcSO_-mBrJjznHzdhXGOyinwY", gid: "0", name: "Level & Debit" },
             sheet4: { id: "1HhUmariaHQiJ1AJU_zWcSO_-mBrJjznHzdhXGOyinwY", gid: "351995083", name: "Weekly KPC" },
-            sheet5: { id: "1_QEw0cPXGLu5xar7YJq6IuIu9Lkfb8xMLl4o0osdGe0", gid: "744388565", name: "TSS Perjam" }
+            sheet5: { id: "1_QEw0cPXGLu5xar7YJq6IuIu9Lkfb8xMLl4o0osdGe0", gid: "744388565", name: "TSS & PH Perjam" }
         };
 
-        const captions = {
-            sheet1: "Sampel TSS Kelayang 1 & 2 per 2 hari",
-            sheet2: "Rekapitulasi TSS Average in & out",
+        // Tambahkan caption untuk setiap kartu
+        const sheetCaptions = {
+            sheet1: "Data sampel TSS di Kelayang 1 dan 2 Per 2 hari sekali",
+            sheet2: "Rekapitulasi laporan TSS Average in dan out",
             sheet3: "Tinggi muka air dan debit all pond",
-            sheet4: "Pemakaian Chemical ke KPC",
+            sheet4: "Laporan Pemakaian Chemical ke KPC",
             sheet5: "Data TSS Perjam"
         };
 
-        // ---- DOM refs ----
+        let currentSheet = 'sheet1';  // sheet aktif (default)
+        
+        // DOM elements
         const menuContainer = document.getElementById('menuContainer');
         const iframeContainer = document.getElementById('iframeContainer');
-        const fioriNavbar = document.getElementById('fioriNavbar');
+        const navigationBar = document.getElementById('navigationBar');
         const navBackBtn = document.getElementById('navBackBtn');
         const breadcrumb = document.getElementById('breadcrumb');
-        const quickTabs = document.getElementById('quickTabs');
+        const quickNav = document.getElementById('quickNav');
         const sheetFrame = document.getElementById('sheetFrame');
-        const loadingFiori = document.getElementById('loadingFiori');
-        const notifFiori = document.getElementById('notifFiori');
-        const notifMsg = document.getElementById('notifMsg');
+        const loadingEl = document.getElementById('loading');
+        const notif = document.getElementById('notification');
+        const notifMsg = notif.querySelector('span');
         const headerDownloadBtn = document.getElementById('headerDownloadBtn');
-        const downloadDropdown = document.getElementById('downloadDropdown');
-        const dropdownOverlay = document.getElementById('dropdownOverlay');
-        const activeSheetName = document.getElementById('activeSheetName');
 
-        let currentSheetKey = 'sheet1';
-
-        // ---- Helper notif ----
+        // ===== HELPER FUNGSI =====
         function showNotif(msg) {
             notifMsg.innerText = msg;
-            notifFiori.style.display = 'flex';
-            clearTimeout(window.notifTimer);
-            window.notifTimer = setTimeout(() => {
-                notifFiori.style.display = 'none';
-            }, 2800);
+            notif.style.display = 'flex';
+            setTimeout(() => { notif.style.display = 'none'; }, 2800);
         }
 
-        // ---- Render kartu ----
-        function renderCards() {
-            const grid = document.getElementById('cardGrid');
-            grid.innerHTML = '';
-            const icons = ['fa-water', 'fa-chart-line', 'fa-tachometer-alt', 'fa-flask', 'fa-clock'];
-            Object.entries(sheets).forEach(([key, val], idx) => {
-                const card = document.createElement('div');
-                card.className = 'fiori-card';
-                card.dataset.sheet = key;
-                card.innerHTML = `
-                    <div class="card-icon"><i class="fas ${icons[idx % icons.length]}"></i></div>
-                    <div class="card-title">${val.name}</div>
-                    <div class="card-caption">${captions[key] || 'Tidak ada deskripsi'}</div>
-                `;
-                card.addEventListener('click', () => loadSheet(key));
-                grid.appendChild(card);
-            });
-        }
-        renderCards();
-
-        // ---- Navigasi / Tab ----
-        function updateNav(sheetKey) {
+        // Update breadcrumb & quick navigation
+        function updateNavigation(sheetKey) {
             const s = sheets[sheetKey];
             if (!s) return;
-            activeSheetName.innerText = s.name;
-            // quick tabs
-            quickTabs.innerHTML = '';
-            Object.entries(sheets).forEach(([key, val]) => {
-                const tab = document.createElement('span');
-                tab.className = `quick-tab ${key === sheetKey ? 'active' : ''}`;
-                tab.innerHTML = `<i class="fas fa-file-excel"></i> ${val.name}`;
+
+            breadcrumb.innerHTML = `
+                <div class="breadcrumb-item">
+                    <i class="fas fa-table"></i>
+                    <span>Spreadsheet</span>
+                    <span class="separator"><i class="fas fa-chevron-right"></i></span>
+                </div>
+                <div class="breadcrumb-item active">
+                    <i class="fas fa-file-excel"></i>
+                    <span>${s.name}</span>
+                </div>
+            `;
+
+            quickNav.innerHTML = '';
+            Object.entries(sheets).forEach(([key, sheet]) => {
+                const tab = document.createElement('button');
+                tab.className = `nav-tab ${key === sheetKey ? 'active' : ''}`;
+                tab.innerHTML = `<i class="fas fa-file-excel"></i> ${sheet.name}`;
                 tab.addEventListener('click', () => loadSheet(key));
-                quickTabs.appendChild(tab);
+                quickNav.appendChild(tab);
             });
         }
 
         function showMenu() {
             menuContainer.classList.remove('hidden');
             iframeContainer.classList.remove('visible');
-            fioriNavbar.classList.remove('visible');
-            downloadDropdown.style.display = 'none';
-            dropdownOverlay.style.display = 'none';
+            navigationBar.style.display = 'none';
+            // sembunyikan juga dropdown header jika terbuka
+            headerDropdown.style.display = 'none';
         }
 
         function showIframe() {
             menuContainer.classList.add('hidden');
             iframeContainer.classList.add('visible');
-            fioriNavbar.classList.add('visible');
+            navigationBar.style.display = 'flex';
         }
 
-        // ---- Load sheet ke iframe ----
         function loadSheet(sheetKey) {
             const s = sheets[sheetKey];
             if (!s) return;
-            currentSheetKey = sheetKey;
-            loadingFiori.style.display = 'block';
+            
+            // Tampilkan loading ketika membuka sheet
+            loadingEl.style.display = 'block';
             sheetFrame.src = `https://docs.google.com/spreadsheets/d/${s.id}/edit?hl=id&gid=${s.gid}`;
-            updateNav(sheetKey);
+            currentSheet = sheetKey;
+            
+            updateNavigation(sheetKey);
+            
             sheetFrame.onload = () => {
-                loadingFiori.style.display = 'none';
+                loadingEl.style.display = 'none';
                 showNotif(`Memuat ${s.name}`);
             };
+            
             showIframe();
         }
 
         navBackBtn.addEventListener('click', showMenu);
 
-        // ---- Download aktif (dengan GID) ----
-        function getCurrentSheet() {
-            return sheets[currentSheetKey];
+        // Render kartu dengan GRID 3 KOLOM (dengan CAPTION)
+        function renderCards() {
+            const container = document.getElementById('cardContainer');
+            container.innerHTML = '';
+            const sheetEntries = Object.entries(sheets);
+            const icons = [
+                'fas fa-water', 'fas fa-chart-line', 'fas fa-tachometer-alt', 
+                'fas fa-flask', 'fa-regular fa-clock'
+            ];
+            
+            sheetEntries.forEach(([key, val], idx) => {
+                const card = document.createElement('div');
+                card.className = 'sheet-card';
+                card.dataset.sheet = key;
+                const caption = sheetCaptions[key] || 'Tidak ada deskripsi';
+                card.innerHTML = `
+                    <div class="card-icon"><i class="${icons[idx % icons.length]}"></i></div>
+                    <div class="card-info">
+                        <h3>${val.name}</h3>
+                    </div>
+                    <div class="card-caption">${caption}</div>
+                `;
+                card.addEventListener('click', () => loadSheet(key));
+                container.appendChild(card);
+            });
+        }
+        renderCards();
+
+        // ========== FUNGSI DOWNLOAD SHEET AKTIF (PERBAIKAN UTAMA) ==========
+        function getCurrentSheet() { 
+            return sheets[currentSheet]; 
         }
 
+        // Fungsi download yang benar-benar memicu unduh sheet aktif (dengan GID)
         function triggerDownload(format) {
             const sheet = getCurrentSheet();
             if (!sheet) {
-                showNotif('Tidak ada sheet aktif');
+                showNotif('Tidak ada sheet yang dipilih');
                 return;
             }
-            loadingFiori.style.display = 'block';
-            downloadDropdown.style.display = 'none';
-            dropdownOverlay.style.display = 'none';
+            
+            loadingEl.style.display = 'block';
+            closeExport();   // tutup fab jika terbuka
+            headerDropdown.style.display = 'none'; // tutup dropdown header
 
+            // Gunakan timeout agar loading terlihat & tidak blocking
             setTimeout(() => {
-                let url = `https://docs.google.com/spreadsheets/d/${sheet.id}/export?gid=${sheet.gid}`;
+                // Bangun URL export dengan parameter gid (hanya sheet aktif)
+                let exportUrl = `https://docs.google.com/spreadsheets/d/${sheet.id}/export?`;
                 let ext = 'xlsx';
-                if (format === 'excel') { url += '&format=xlsx'; ext = 'xlsx'; }
-                else if (format === 'pdf') { url += '&format=pdf&portrait=false&fitw=true&gridlines=false&size=A4'; ext = 'pdf'; }
-                else if (format === 'ods') { url += '&format=ods'; ext = 'ods'; }
+                
+                if (format === 'excel') { 
+                    exportUrl += 'format=xlsx'; 
+                    ext = 'xlsx'; 
+                }
+                else if (format === 'pdf') { 
+                    // PDF: beberapa opsi default (landscape, fit lebar)
+                    exportUrl += 'format=pdf&portrait=false&fitw=true&gridlines=false&size=A4'; 
+                    ext = 'pdf'; 
+                }
+                else if (format === 'ods') { 
+                    exportUrl += 'format=ods'; 
+                    ext = 'ods'; 
+                }
+                
+                // TAMBAHKAN GID — memastikan hanya sheet aktif yang didownload
+                exportUrl += `&gid=${sheet.gid}`;
 
+                // Buat elemen <a> untuk mendownload
                 const a = document.createElement('a');
-                a.href = url;
+                a.href = exportUrl;
                 a.download = `${sheet.name.replace(/\s/g,'_')}.${ext}`;
-                a.target = '_blank';
+                a.target = '_blank'; // fallback jika tidak bisa download otomatis
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
-
-                loadingFiori.style.display = 'none';
+                
+                loadingEl.style.display = 'none';
                 showNotif(`Mengunduh ${sheet.name} (${format.toUpperCase()})`);
-            }, 500);
+            }, 600);
         }
 
-        // ---- Dropdown download (tombol header) ----
-        function toggleDropdown(e) {
+        // ========== DROPDOWN HEADER UNTUK DOWNLOAD ==========
+        const headerDropdown = document.createElement('div');
+        headerDropdown.id = 'headerDropdown';
+        headerDropdown.style.position = 'absolute';
+        headerDropdown.style.background = 'white';
+        headerDropdown.style.borderRadius = '20px';
+        headerDropdown.style.boxShadow = '0 10px 25px rgba(0,30,60,0.4)';
+        headerDropdown.style.padding = '10px';
+        headerDropdown.style.zIndex = '300';
+        headerDropdown.style.display = 'none';
+        headerDropdown.style.flexDirection = 'column';
+        headerDropdown.style.gap = '8px';
+        headerDropdown.style.minWidth = '180px';
+        headerDropdown.style.border = '1px solid #b7d9f0';
+        headerDropdown.innerHTML = `
+            <button class="export-excel-header" style="display:flex; align-items:center; gap:12px; padding:12px 16px; border:none; background:#f2f7fd; border-radius:30px; font-weight:600; color:#1d405b; cursor:pointer; width:100%;"><i class="fas fa-file-excel" style="font-size:1.3rem;"></i> Excel (XLSX)</button>
+            <button class="export-pdf-header" style="display:flex; align-items:center; gap:12px; padding:12px 16px; border:none; background:#f2f7fd; border-radius:30px; font-weight:600; color:#1d405b; cursor:pointer; width:100%;"><i class="fas fa-file-pdf" style="font-size:1.3rem;"></i> PDF</button>
+            <button class="export-ods-header" style="display:flex; align-items:center; gap:12px; padding:12px 16px; border:none; background:#f2f7fd; border-radius:30px; font-weight:600; color:#1d405b; cursor:pointer; width:100%;"><i class="fas fa-file" style="font-size:1.3rem;"></i> ODS</button>
+        `;
+        document.querySelector('.app-wrapper').appendChild(headerDropdown);
+
+        // Posisikan dropdown di bawah tombol header
+        function positionDropdown() {
+            const rect = headerDownloadBtn.getBoundingClientRect();
+            headerDropdown.style.top = (rect.bottom + window.scrollY + 8) + 'px';
+            headerDropdown.style.left = (rect.left + window.scrollX - 100 + rect.width/2) + 'px';
+            headerDropdown.style.transform = 'translateX(-20%)';
+        }
+
+        headerDownloadBtn.addEventListener('click', (e) => {
             e.stopPropagation();
-            const isOpen = downloadDropdown.style.display === 'flex';
-            if (isOpen) {
-                downloadDropdown.style.display = 'none';
-                dropdownOverlay.style.display = 'none';
+            if (headerDropdown.style.display === 'flex') {
+                headerDropdown.style.display = 'none';
             } else {
-                // posisikan di bawah tombol
-                const rect = headerDownloadBtn.getBoundingClientRect();
-                downloadDropdown.style.top = (rect.bottom + window.scrollY + 8) + 'px';
-                downloadDropdown.style.left = (rect.left + window.scrollX - 30) + 'px';
-                downloadDropdown.style.display = 'flex';
-                dropdownOverlay.style.display = 'block';
+                positionDropdown();
+                headerDropdown.style.display = 'flex';
+                closeExport(); // tutup fab dropdown
             }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!headerDropdown.contains(e.target) && e.target !== headerDownloadBtn && !headerDownloadBtn.contains(e.target)) {
+                headerDropdown.style.display = 'none';
+            }
+        });
+
+        // Pasang event listener untuk tombol di dropdown header
+        headerDropdown.querySelector('.export-excel-header').addEventListener('click', () => {
+            triggerDownload('excel');
+            headerDropdown.style.display = 'none';
+        });
+        headerDropdown.querySelector('.export-pdf-header').addEventListener('click', () => {
+            triggerDownload('pdf');
+            headerDropdown.style.display = 'none';
+        });
+        headerDropdown.querySelector('.export-ods-header').addEventListener('click', () => {
+            triggerDownload('ods');
+            headerDropdown.style.display = 'none';
+        });
+
+        // ========== FAB (tombol melayang) ==========
+        const fabMain = document.querySelector('.fab-main');
+        const exportOptions = document.querySelector('.export-options');
+        const exportOverlay = document.querySelector('.export-overlay');
+        
+        // Jika elemen FAB tidak ada di HTML (karena tidak didefinisikan di body), buat secara dinamis
+        // Ternyata di HTML tidak ada elemen .fab-main, jadi kita buat dan sisipkan
+        if (!document.querySelector('.export-fab')) {
+            const fabHTML = `
+                <div class="export-fab">
+                    <div class="fab-main" id="fabMain"><i class="fas fa-download"></i></div>
+                    <div class="export-options" id="exportOptions">
+                        <button class="export-excel"><i class="fas fa-file-excel"></i> Excel (XLSX)</button>
+                        <button class="export-pdf"><i class="fas fa-file-pdf"></i> PDF</button>
+                        <button class="export-ods"><i class="fas fa-file"></i> ODS</button>
+                    </div>
+                </div>
+                <div class="export-overlay" id="exportOverlay"></div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', fabHTML);
         }
 
-        headerDownloadBtn.addEventListener('click', toggleDropdown);
-        dropdownOverlay.addEventListener('click', () => {
-            downloadDropdown.style.display = 'none';
-            dropdownOverlay.style.display = 'none';
+        // Re-assign setelah membuat FAB
+        const fabMain2 = document.getElementById('fabMain');
+        const exportOptions2 = document.getElementById('exportOptions');
+        const exportOverlay2 = document.getElementById('exportOverlay');
+
+        function closeExport() { 
+            if (exportOptions2) exportOptions2.style.display = 'none'; 
+            if (exportOverlay2) exportOverlay2.style.display = 'none'; 
+        }
+
+        if (fabMain2) {
+            fabMain2.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const isOpen = exportOptions2.style.display === 'flex';
+                if (isOpen) { 
+                    closeExport(); 
+                } else { 
+                    exportOptions2.style.display = 'flex'; 
+                    exportOverlay2.style.display = 'block';
+                    headerDropdown.style.display = 'none'; // tutup dropdown header
+                }
+            });
+        }
+
+        if (exportOverlay2) {
+            exportOverlay2.addEventListener('click', closeExport);
+        }
+
+        // Event listener untuk tombol di FAB (gunakan event delegation atau select)
+        document.querySelectorAll('.export-excel').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                triggerDownload('excel');
+            });
+        });
+        document.querySelectorAll('.export-pdf').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                triggerDownload('pdf');
+            });
+        });
+        document.querySelectorAll('.export-ods').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                triggerDownload('ods');
+            });
         });
 
-        // event tombol dropdown
-        document.querySelector('.dd-excel').addEventListener('click', (e) => { e.stopPropagation(); triggerDownload('excel'); });
-        document.querySelector('.dd-pdf').addEventListener('click', (e) => { e.stopPropagation(); triggerDownload('pdf'); });
-        document.querySelector('.dd-ods').addEventListener('click', (e) => { e.stopPropagation(); triggerDownload('ods'); });
-
-        // tekan Escape tutup dropdown
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') {
-                downloadDropdown.style.display = 'none';
-                dropdownOverlay.style.display = 'none';
-            }
+        document.addEventListener('keydown', (e) => { 
+            if(e.key === 'Escape') { 
+                closeExport(); 
+                headerDropdown.style.display = 'none'; 
+            } 
         });
 
-        // ---- inisialisasi: menu tampil ----
-        showMenu();
-        // set default sheet name di breadcrumb
-        activeSheetName.innerText = sheets.sheet1.name;
+        // Set default sheet (sheet1) dan muat tampilan menu
+        currentSheet = 'sheet1';
+        // Jangan langsung load sheet, biarkan menu tampil.
     })();
 </script>
 </body>
