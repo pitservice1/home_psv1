@@ -115,7 +115,7 @@
     padding: 0 !important;
   }
 
-  /* ===== HEADER SAP FIORI STYLE ===== */
+/* ===== HEADER SAP FIORI STYLE ===== */
   .header-section {
     display: flex;
     align-items: center;
@@ -123,8 +123,13 @@
     padding: 12px 24px;
     box-sizing: border-box;
     width: 100%;
-    position: relative;
-    z-index: 30;
+    
+    /* === PERUBAHAN DI SINI UNTUK MEMBUAT HEADER TETAP DI ATAS SAAT SCROLL === */
+    position: sticky; /* Membuat header menempel di atas */
+    top: 0;           /* Jarak dari atas layar adalah 0 */
+    /* ======================================================================== */
+    
+    z-index: 50; /* Naikkan z-index dari 30 ke 50 agar selalu di atas elemen lain (seperti carousel) saat di scroll */
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
