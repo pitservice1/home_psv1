@@ -3,20 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spreadsheet · Download Sheet Aktif (Header fix) </title>
+    <title>Spreadsheet · Fiori Style Dashboard</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            font-family: 'Segoe UI', '72', 'Helvetica Neue', Helvetica, Arial, sans-serif;
         }
 
         body, html {
             height: 100%;
             width: 100%;
             overflow: hidden;
-            background: #f0f2f5;
+            background: #f5f6f7;
         }
 
         .app-wrapper {
@@ -26,800 +26,621 @@
             width: 100%;
         }
 
-        /* HEADER */
+        /* ========== HEADER SAP FIORI STYLE ========== */
         .header {
-            background: linear-gradient(145deg, #0b1c3a 0%, #1d4e6f 100%);
+            background: #354a5f;
             padding: 0 24px;
             display: flex;
             align-items: center;
-            height: 70px;
-            box-shadow: 0 4px 12px rgba(0,20,40,0.3);
-            border-bottom: 2px solid #3fa7a4;
+            justify-content: space-between;
+            height: 60px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 10;
+            position: relative;
+            border-bottom: 2px solid #8fb4c7;
         }
 
-        .header h1 {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: 500;
+        .header-left {
             display: flex;
             align-items: center;
             gap: 12px;
-        }
-
-        .header h1 i {
-            color: #a4e0ff;
-            font-size: 1.8rem;
-        }
-
-        /* NAVIGASI BAR (dengan tombol download di kanan) */
-        .navigation-bar {
-            background: white;
-            padding: 10px 24px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            border-bottom: 1px solid #cbd5e0;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.03);
-        }
-
-        .nav-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
             flex: 1;
         }
 
-        .back-btn {
-            background: #f0f7fc;
-            border: 1px solid #cbd5e0;
-            border-radius: 40px;
-            padding: 8px 18px;
-            display: inline-flex;
+        /* Tombol Back & Dashboard */
+        .nav-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            width: 36px;
+            height: 36px;
+            border-radius: 4px;
+            display: flex;
             align-items: center;
-            gap: 10px;
+            justify-content: center;
             cursor: pointer;
-            font-weight: 600;
-            color: #0b2d4b;
-            transition: 0.2s;
-            white-space: nowrap;
-        }
-
-        .back-btn:hover {
-            background: #e1eef9;
-            transform: translateX(-3px);
-        }
-
-        .breadcrumb {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .breadcrumb-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #4a6f8c;
-            font-size: 0.95rem;
-        }
-
-        .breadcrumb-item i {
-            color: #2c7da0;
+            color: rgba(255,255,255,0.7);
             font-size: 1rem;
+            transition: 0.2s;
+            flex-shrink: 0;
         }
 
-        .breadcrumb-item .separator {
-            color: #a0b8cc;
-            margin-left: 8px;
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.3);
+            color: #ffffff;
         }
 
-        .breadcrumb-item.active {
-            color: #0b2d4b;
-            font-weight: 600;
-        }
-
-        .quick-nav {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin-left: auto;
-            overflow-x: auto;
-            padding: 5px 0;
-            max-width: 40%;
-        }
-
-        .nav-tab {
-            background: #eef2f6;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            color: #2d4e6e;
-            cursor: pointer;
-            white-space: nowrap;
+        .nav-btn-text {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            height: 36px;
+            border-radius: 4px;
             display: flex;
             align-items: center;
             gap: 8px;
+            cursor: pointer;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.85rem;
             transition: 0.2s;
-            border: 1px solid transparent;
+            flex-shrink: 0;
+            font-weight: 500;
         }
 
-        .nav-tab i {
+        .nav-btn-text:hover, .nav-btn-text.active {
+            background: rgba(255,255,255,0.12);
+            border-color: #8fb4c7;
+            color: #ffffff;
+        }
+
+        .nav-btn-text i { font-size: 0.9rem; }
+        #navBackBtn { display: none; }
+        #navBackBtn.visible { display: flex; }
+
+        /* Search Bar */
+        .search-container {
+            flex: 0 0 320px;
+            margin: 0 16px;
+            position: relative;
+        }
+
+        .search-container input {
+            width: 100%;
+            padding: 8px 16px 8px 40px;
+            border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 4px;
+            background: rgba(255,255,255,0.08);
+            color: #ffffff;
             font-size: 0.9rem;
-            color: #4f7a9e;
+            transition: all 0.3s ease;
+            outline: none;
+            height: 36px;
         }
 
-        .nav-tab:hover {
-            background: #dbe9f5;
-            transform: translateY(-2px);
+        .search-container input::placeholder { color: rgba(255,255,255,0.5); }
+        .search-container input:focus {
+            background: rgba(255,255,255,0.15);
+            border-color: #8fb4c7;
+            box-shadow: 0 0 0 3px rgba(143, 180, 199, 0.2);
         }
 
-        .nav-tab.active {
-            background: #c2e0ff;
-            border-color: #2c7da0;
-            color: #0a3147;
-            font-weight: 600;
+        .search-container i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
         }
 
-        /* TOMBOL DOWNLOAD DI HEADER NAV (pojok kanan atas) */
-        .download-header-btn {
-            background: linear-gradient(145deg, #176b87, #0a4b66);
-            border: none;
-            color: white;
-            border-radius: 40px;
-            padding: 8px 22px;
-            font-weight: 600;
-            font-size: 0.95rem;
+        .search-container .search-clear {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255,255,255,0.3);
+            cursor: pointer;
+            font-size: 0.8rem;
+            display: none;
+        }
+        .search-container .search-clear:hover { color: #ffffff; }
+
+        /* Header Right */
+        .header-right {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: #5f7d94;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 0.9rem;
             cursor: pointer;
-            box-shadow: 0 5px 12px rgba(11, 65, 85, 0.4);
-            transition: 0.15s;
-            white-space: nowrap;
-            border: 1px solid #8ad0e3;
-            margin-left: 10px;
+            border: 2px solid rgba(255,255,255,0.1);
+            transition: 0.2s;
+        }
+        .user-avatar:hover {
+            border-color: rgba(255,255,255,0.3);
+            background: #6d8ba2;
         }
 
-        .download-header-btn i {
-            font-size: 1.2rem;
+        .user-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            margin-right: 8px;
         }
+        .user-name { color: #ffffff; font-size: 0.8rem; font-weight: 500; }
 
-        .download-header-btn:hover {
-            background: linear-gradient(145deg, #1d8bb0, #116382);
-            transform: scale(1.02) translateY(-2px);
-            box-shadow: 0 10px 16px #094354;
+        /* ========== BREADCRUMB ========== */
+        .breadcrumb {
+            background: #f5f6f7;
+            padding: 8px 24px;
+            border-bottom: 1px solid #e0e4e8;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: #666;
+            min-height: 36px;
         }
+        .breadcrumb i { font-size: 0.7rem; color: #999; }
+        .breadcrumb .active { color: #354a5f; font-weight: 500; }
+        .breadcrumb .separator { color: #ccc; }
 
-        .download-header-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* MENU UTAMA — GRID 3 KOLOM */
+        /* ========== MENU CONTAINER ========== */
         .menu-container {
             flex: 1;
             display: flex;
             flex-direction: column;
-            padding: 30px 24px;
+            padding: 24px 32px 32px 32px;
             transition: 0.3s;
             overflow-y: auto;
+            background: #f5f6f7;
         }
+        .menu-container.hidden { display: none; }
 
-        .menu-container.hidden {
-            display: none;
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
         }
 
         .menu-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #354a5f;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 1.3rem;
-            font-weight: 600;
-            color: #0b2d4b;
-            margin-bottom: 30px;
+            gap: 12px;
         }
+        .menu-title i { color: #8fb4c7; font-size: 1.4rem; }
+        .menu-count { font-size: 0.8rem; color: #999; font-weight: 400; }
 
-        .menu-title i {
-            color: #1e6f9f;
-            font-size: 1.8rem;
-        }
-
-        /* GRID 3 KOLOM responsif */
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(3, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
             gap: 24px;
-            align-items: stretch;
         }
 
-        /* card dengan caption (tambahan <p>) */
+        /* ========== CARD OPTIMIZATION ========== */
         .sheet-card {
             background: white;
-            border-radius: 24px;
-            padding: 28px 20px;
-            box-shadow: 0 10px 20px -8px rgba(0, 32, 64, 0.2);
+            border-radius: 4px;
+            border: 1px solid #e0e4e8;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 12px;
+            overflow: hidden;
             cursor: pointer;
-            transition: 0.25s;
-            border: 1px solid transparent;
-            background: rgba(255,255,255,0.95);
+            transition: all 0.25s ease;
+            position: relative;
         }
 
         .sheet-card:hover {
-            border-color: #2c7da0;
-            transform: scale(1.02) translateY(-6px);
-            box-shadow: 0 25px 30px -12px #1e3f5f;
+            border-color: #8fb4c7;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 32, 64, 0.08);
         }
 
-        .card-icon {
-            width: 80px;
-            height: 80px;
-            border-radius: 30px;
-            background: linear-gradient(145deg, #d7ecff, #b7d9f0);
+        /* Fokus stat untuk Aksesibilitas (a11y) */
+        .sheet-card:focus {
+            outline: 2px solid #8fb4c7;
+            outline-offset: 2px;
+        }
+
+        .sheet-card .card-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #354a5f;
+            color: white;
+            font-size: 0.6rem;
+            padding: 2px 10px;
+            border-radius: 10px;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            z-index: 2;
+        }
+
+        /* Wrapper gambar agar animasi scale tidak merusak border-radius card */
+        .card-img-wrapper {
+            width: 100%;
+            height: 120px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #eaebec;
+            overflow: hidden; /* Menyembunyikan gambar yang ter-zoom */
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.8rem;
-            color: #0a3147;
         }
 
-        .card-info h3 {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #0d3e5c;
-            margin: 0 0 8px 0;
+        .card-img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 6px;
+            transition: transform 0.3s ease; /* Transisi halus untuk efek hover */
+        }
+
+        /* Efek Zoom in ringan saat card dihover */
+        .sheet-card:hover .card-img {
+            transform: scale(1.05);
+        }
+
+        .card-body {
+            padding: 16px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            text-align: left;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .card-body h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #354a5f;
+            margin: 0;
             line-height: 1.3;
         }
 
-        /* CAPTION baru */
         .card-caption {
-            font-size: 0.9rem;
-            color: #2f5777;
-            background: #e8f0fe;
-            padding: 8px 12px;
-            border-radius: 40px;
-            width: 100%;
-            text-align: center;
-            font-weight: 500;
-            border: 1px solid #bed9f0;
-            margin-top: 4px;
+            font-size: 0.8rem;
+            color: #888;
+            line-height: 1.4;
+            margin-top: 2px;
         }
 
-        /* IFRAME */
+        .card-footer {
+            width: 100%;
+            padding: 10px 20px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.7rem;
+            color: #999;
+        }
+
+        .card-footer i { color: #8fb4c7; margin-right: 4px; }
+
+        /* ========== IFRAME CONTAINER ========== */
         .iframe-container {
             flex: 1;
             display: none;
             flex-direction: column;
-            background: #d9e2eb;
+            background: #f5f6f7;
             position: relative;
         }
+        .iframe-container.visible { display: flex; }
+        #sheetFrame { width: 100%; flex: 1; border: none; background: white; }
 
-        .iframe-container.visible {
-            display: flex;
-        }
-
-        #sheetFrame {
-            width: 100%;
-            flex: 1;
-            border: none;
-            background: white;
-        }
-
-        /* EXPORT FAB (opsional, tetap dipertahankan) */
-        .export-fab {
-            position: fixed;
-            bottom: 28px;
-            right: 28px;
-            z-index: 200;
-        }
-
-        .fab-main {
-            width: 62px;
-            height: 62px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #123456, #1d6f8c);
-            border: 2px solid #b3eef7;
-            color: white;
-            font-size: 26px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            box-shadow: 0 8px 20px #0b3550;
-            transition: 0.2s;
-        }
-
-        .fab-main:hover {
-            transform: scale(1.08) rotate(5deg);
-        }
-
-        .export-options {
-            position: absolute;
-            bottom: 80px;
-            right: 8px;
-            background: white;
-            border-radius: 24px;
-            padding: 12px;
-            min-width: 210px;
-            box-shadow: 0 15px 35px rgba(0, 25, 60, 0.5);
-            display: none;
-            flex-direction: column;
-            gap: 8px;
-            border: 1px solid #bedcf3;
-        }
-
-        .export-options button {
-            display: flex;
-            align-items: center;
-            gap: 14px;
-            padding: 12px 18px;
-            border: none;
-            background: #f2f7fd;
-            border-radius: 30px;
-            font-weight: 600;
-            color: #1d405b;
-            cursor: pointer;
-            transition: 0.15s;
-            text-align: left;
-            font-size: 0.95rem;
-        }
-
-        .export-options button i { font-size: 1.4rem; width: 30px; }
-        .export-options button:hover { background: #d5e9ff; transform: translateX(-5px); }
-
-        .export-overlay {
-            position: fixed;
-            inset: 0;
-            background: transparent;
-            z-index: 199;
-            display: none;
-        }
-
-        /* LOADING & NOTIF */
-        .loading, .notification {
-            position: fixed;
-            z-index: 400;
-        }
+        /* ========== LOADING & NOTIFICATION ========== */
+        .loading, .notification { position: fixed; z-index: 400; }
         
         .loading {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #ffffffea;
-            padding: 24px 32px;
-            border-radius: 40px;
-            box-shadow: 0 30px 50px #00000050;
-            display: none;
-            text-align: center;
-            backdrop-filter: blur(4px);
-            border: 2px solid #2793b6;
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.97);
+            padding: 32px 48px; border-radius: 8px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            display: none; text-align: center;
+            border: 1px solid #e0e4e8; color: #354a5f;
         }
         
         .spinner {
-            width: 48px;
-            height: 48px;
-            border: 6px solid #e4ecf5;
-            border-top-color: #146b9e;
-            border-radius: 50%;
-            animation: spin 0.9s infinite linear;
-            margin: 0 auto 12px;
+            width: 40px; height: 40px; border: 3px solid #e0e4e8;
+            border-top-color: #8fb4c7; border-radius: 50%;
+            animation: spin 0.8s infinite linear; margin: 0 auto 12px;
         }
-        
         @keyframes spin { to { transform: rotate(360deg); } }
 
         .notification {
-            bottom: 30px;
-            left: 30px;
-            background: #208a6e;
-            color: white;
-            padding: 14px 28px;
-            border-radius: 60px;
-            font-weight: 500;
-            box-shadow: 0 8px 18px #195a47;
-            display: none;
-            align-items: center;
-            gap: 12px;
-            font-size: 1rem;
+            bottom: 30px; left: 50%; transform: translateX(-50%);
+            background: #354a5f; color: white; padding: 12px 24px;
+            border-radius: 4px; box-shadow: 0 4px 16px rgba(53, 74, 95, 0.3);
+            display: none; align-items: center; gap: 12px; z-index: 500;
         }
 
-        /* Responsif: jika layar terlalu kecil, grid menyesuaikan */
-        @media (max-width: 900px) {
-            .card-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 1024px) {
+            .search-container { flex: 0 0 240px; }
+            .user-info { display: none; }
         }
-        @media (max-width: 550px) {
-            .card-grid {
-                grid-template-columns: 1fr;
-            }
-            .download-header-btn span { display: none; } /* sembunyikan teks, hanya ikon */
-            .download-header-btn { padding: 8px 15px; }
+
+        @media (max-width: 768px) {
+            .header { padding: 0 16px; height: 52px; flex-wrap: wrap; }
+            .search-container { flex: 1; margin: 0 8px; }
+            .search-container input { font-size: 0.8rem; height: 32px; }
+            .nav-btn-text span { display: none; }
+            .menu-container { padding: 16px; }
+            .card-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+        }
+
+        @media (max-width: 480px) {
+            .header { height: 48px; padding: 0 12px; }
+            .search-container { margin: 0 4px; }
+            .search-container input { height: 28px; }
+            .menu-container { padding: 12px; }
+            
+            /* Menggunakan minmax agar lebih adaptif di layar HP kecil */
+            .card-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+            
+            .card-body h3 { font-size: 0.85rem; }
+            .card-caption { font-size: 0.7rem; }
+            .card-footer { font-size: 0.6rem; padding: 6px 12px; }
+            .card-img-wrapper { height: 90px; }
         }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 <div class="app-wrapper">
-    <!-- HEADER -->
+    
     <div class="header">
-        <h1>
-            <i class="fas fa-table"></i> 
-            Dashboard Spreadsheet
-        </h1>
-    </div>
-
-    <!-- NAVIGASI BAR (saat iframe tampil) + TOMBOL DOWNLOAD KANAN ATAS -->
-    <div class="navigation-bar" id="navigationBar" style="display: none;">
-        <div class="nav-left">
-            <div class="back-btn" id="navBackBtn">
-                <i class="fas fa-arrow-left"></i> 
-                Menu Utama
+        <div class="header-left">
+            <button class="nav-btn" id="navBackBtn" title="Kembali"><i class="fas fa-arrow-left"></i></button>
+            <button class="nav-btn-text active" id="navDashboardBtn" title="Ke Dashboard">
+                <i class="fas fa-th-large"></i><span>Home</span>
+            </button>
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Cari laporan..." />
+                <span class="search-clear" id="searchClear"><i class="fas fa-times-circle"></i></span>
             </div>
-            <div class="breadcrumb" id="breadcrumb"></div>
         </div>
-        <div class="quick-nav" id="quickNav"></div>
-        
-        <!-- TOMBOL DOWNLOAD HEADER (POJOK KANAN ATAS) -->
-        <button class="download-header-btn" id="headerDownloadBtn">
-            <i class="fas fa-download"></i>
-            <span>Download Sheet</span>
-        </button>
+        <div class="header-right">
+            <div class="user-info"><span class="user-name">Admin</span></div>
+            <div class="user-avatar" title="User Profile"><i class="fas fa-user"></i></div>
+        </div>
     </div>
 
-    <!-- MENU UTAMA (grid 3 kolom) dengan CAPTION pada tiap kartu -->
+    <div class="breadcrumb" id="breadcrumb">
+        <i class="fas fa-home"></i><span>Home</span><span class="separator"> / </span><span class="active">Dashboard Spreadsheet</span>
+    </div>
+
     <div class="menu-container" id="menuContainer">
-        <div class="menu-title">
-            <i class="fas fa-th-large"></i> 
-            Pilih Laporan
+        <div class="menu-header">
+            <div class="menu-title">
+                <i class="fas fa-folder-open"></i> Laporan Tersedia <span class="menu-count" id="menuCount"></span>
+            </div>
         </div>
         <div class="card-grid" id="cardContainer">
-            <!-- card akan diisi js, kini dengan caption -->
+            <!-- Cards Rendered Here -->
         </div>
     </div>
 
-    <!-- IFRAME CONTAINER -->
     <div class="iframe-container" id="iframeContainer">
         <iframe id="sheetFrame" src="about:blank"></iframe>
     </div>
 </div>
 
-<!-- LOADING & NOTIF -->
-<div class="loading" id="loading"><div class="spinner"></div> Menyiapkan unduhan...</div>
+<div class="loading" id="loading">
+    <div class="spinner"></div> 
+    <div><strong>Memuat Spreadsheet...</strong></div>
+    <div style="font-size:0.8rem; color:#999; margin-top:4px;">Mohon tunggu sebentar</div>
+</div>
 <div class="notification" id="notification"><i class="fas fa-check-circle"></i> <span></span></div>
 
 <script>
     (function() {
-        // KONFIGURASI SHEET — masing-masing punya gid unik
         const sheets = {
-            sheet1: { id: "1Q2th3OirVj1PWRcl70fgJgmUuji03gBmP9Kvrj3ad1E", gid: "1101821162", name: "Sampel TSS Kelayang" },
-            sheet2: { id: "1_QEw0cPXGLu5xar7YJq6IuIu9Lkfb8xMLl4o0osdGe0", gid: "99887734", name: "Report TSS" },
-            sheet3: { id: "1HhUmariaHQiJ1AJU_zWcSO_-mBrJjznHzdhXGOyinwY", gid: "0", name: "Level & Debit" },
-            sheet4: { id: "1HhUmariaHQiJ1AJU_zWcSO_-mBrJjznHzdhXGOyinwY", gid: "351995083", name: "Weekly KPC" },
-            sheet5: { id: "1_QEw0cPXGLu5xar7YJq6IuIu9Lkfb8xMLl4o0osdGe0", gid: "744388565", name: "TSS & PH Perjam" }
+            sheet1: { 
+                id: "1Q2th3OirVj1PWRcl70fgJgmUuji03gBmP9Kvrj3ad1E", gid: "1101821162", 
+                name: "Sampel TSS Kelayang", caption: "Data sampel TSS di Kelayang 1 dan 2 Per 2 hari",
+                image: "https://cdn.phototourl.com/free/2026-08-11-0205864b-aa2b-454b-80ca-575007b874a6.jpg", badge: "TSS"
+            },
+            sheet2: { 
+                id: "1_QEw0cPXGLu5xar7YJq6IuIu9Lkfb8xMLl4o0osdGe0", gid: "99887734", 
+                name: "Report TSS", caption: "Report Average TSS MTD",
+                image: "https://cdn.phototourl.com/free/2026-08-11-bfd954c4-b87d-4b81-8ad1-7f65137ad7bc.png", badge: "Report"
+            },
+            sheet3: { 
+                id: "1HhUmariaHQiJ1AJU_zWcSO_-mBrJjznHzdhXGOyinwY", gid: "0", 
+                name: "Level & Debit", caption: "Tinggi muka air dan debit all pond",
+                image: "https://cdn.phototourl.com/free/2026-08-11-8a8d66fa-dd1c-49c9-8f63-49254d4cf9cc.png", badge: "Monitoring"
+            },
+            sheet4: { 
+                id: "1HhUmariaHQiJ1AJU_zWcSO_-mBrJjznHzdhXGOyinwY", gid: "351995083", 
+                name: "Weekly KPC", caption: "Laporan Pemakaian Chemical ke KPC Update tiap hari",
+                image: "https://cdn.phototourl.com/free/2026-08-11-2e1bad52-b69a-45e6-919b-0bd9781b1c88.png", badge: "KPC"
+            },
+            sheet5: { 
+                id: "1_QEw0cPXGLu5xar7YJq6IuIu9Lkfb8xMLl4o0osdGe0", gid: "744388565", 
+                name: "TSS & PH Perjam", caption: "Data TSS & PH Perjam cukup di Report Timesheet",
+                image: "https://cdn.phototourl.com/free/2026-08-11-b5b9d1ba-e545-4cbf-96b5-40165f54d913.png", badge: "Real-time"
+            },
+            sheet6: { 
+                id: "1_QEw0cPXGLu5xar7YJq6IuIu9Lkfb8xMLl4o0osdGe0", gid: "690433105", 
+                name: "Report Timesheet", caption: "Upload hasil Timesheet MWT disini",
+                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=500&q=80", badge: "Timesheet"
+            }
         };
 
-        // Tambahkan caption untuk setiap kartu
-        const sheetCaptions = {
-            sheet1: "Data sampel TSS di Kelayang 1 dan 2 Per 2 hari sekali",
-            sheet2: "Rekapitulasi laporan TSS Average in dan out",
-            sheet3: "Tinggi muka air dan debit all pond",
-            sheet4: "Laporan Pemakaian Chemical ke KPC",
-            sheet5: "Data TSS & PH Perjam"
-        };
-
-        let currentSheet = 'sheet1';  // sheet aktif (default)
-        
-        // DOM elements
         const menuContainer = document.getElementById('menuContainer');
         const iframeContainer = document.getElementById('iframeContainer');
-        const navigationBar = document.getElementById('navigationBar');
         const navBackBtn = document.getElementById('navBackBtn');
-        const breadcrumb = document.getElementById('breadcrumb');
-        const quickNav = document.getElementById('quickNav');
+        const navDashboardBtn = document.getElementById('navDashboardBtn');
         const sheetFrame = document.getElementById('sheetFrame');
         const loadingEl = document.getElementById('loading');
         const notif = document.getElementById('notification');
         const notifMsg = notif.querySelector('span');
-        const headerDownloadBtn = document.getElementById('headerDownloadBtn');
+        const searchInput = document.getElementById('searchInput');
+        const searchClear = document.getElementById('searchClear');
+        const breadcrumb = document.getElementById('breadcrumb');
+        const menuCount = document.getElementById('menuCount');
 
-        // ===== HELPER FUNGSI =====
         function showNotif(msg) {
             notifMsg.innerText = msg;
             notif.style.display = 'flex';
             setTimeout(() => { notif.style.display = 'none'; }, 2800);
         }
 
-        // Update breadcrumb & quick navigation
-        function updateNavigation(sheetKey) {
-            const s = sheets[sheetKey];
-            if (!s) return;
-
-            breadcrumb.innerHTML = `
-                <div class="breadcrumb-item">
-                    <i class="fas fa-table"></i>
-                    <span>Spreadsheet</span>
-                    <span class="separator"><i class="fas fa-chevron-right"></i></span>
-                </div>
-                <div class="breadcrumb-item active">
-                    <i class="fas fa-file-excel"></i>
-                    <span>${s.name}</span>
-                </div>
-            `;
-
-            quickNav.innerHTML = '';
-            Object.entries(sheets).forEach(([key, sheet]) => {
-                const tab = document.createElement('button');
-                tab.className = `nav-tab ${key === sheetKey ? 'active' : ''}`;
-                tab.innerHTML = `<i class="fas fa-file-excel"></i> ${sheet.name}`;
-                tab.addEventListener('click', () => loadSheet(key));
-                quickNav.appendChild(tab);
-            });
+        function updateBreadcrumb(path) {
+            const parts = path.split(' / ');
+            breadcrumb.innerHTML = `<i class="fas fa-home"></i><span>Home</span><span class="separator"> / </span><span class="active">${parts.join(' / ')}</span>`;
         }
 
         function showMenu() {
             menuContainer.classList.remove('hidden');
             iframeContainer.classList.remove('visible');
-            navigationBar.style.display = 'none';
-            // sembunyikan juga dropdown header jika terbuka
-            headerDropdown.style.display = 'none';
+            navBackBtn.classList.remove('visible');
+            navDashboardBtn.classList.add('active');
+            updateBreadcrumb('Dashboard Spreadsheet');
+            searchInput.value = '';
+            filterCards('');
+            searchClear.style.display = 'none';
         }
 
-        function showIframe() {
+        function showIframe(sheetName) {
             menuContainer.classList.add('hidden');
             iframeContainer.classList.add('visible');
-            navigationBar.style.display = 'flex';
+            navBackBtn.classList.add('visible');
+            navDashboardBtn.classList.remove('active');
+            updateBreadcrumb(`Dashboard Spreadsheet / ${sheetName}`);
         }
 
         function loadSheet(sheetKey) {
             const s = sheets[sheetKey];
             if (!s) return;
             
-            // Tampilkan loading ketika membuka sheet
             loadingEl.style.display = 'block';
             sheetFrame.src = `https://docs.google.com/spreadsheets/d/${s.id}/edit?hl=id&gid=${s.gid}`;
-            currentSheet = sheetKey;
-            
-            updateNavigation(sheetKey);
             
             sheetFrame.onload = () => {
                 loadingEl.style.display = 'none';
                 showNotif(`Memuat ${s.name}`);
             };
             
-            showIframe();
+            setTimeout(() => {
+                if (loadingEl.style.display !== 'none') {
+                    loadingEl.style.display = 'none';
+                    showNotif(`Gagal memuat ${s.name}, coba refresh`);
+                }
+            }, 15000);
+            
+            showIframe(s.name);
         }
 
         navBackBtn.addEventListener('click', showMenu);
+        navDashboardBtn.addEventListener('click', showMenu);
 
-        // Render kartu dengan GRID 3 KOLOM (dengan CAPTION)
+        // ===== SEARCH FUNCTION =====
+        function filterCards(query) {
+            const cards = document.querySelectorAll('.sheet-card');
+            let visibleCount = 0;
+            
+            cards.forEach(card => {
+                const searchString = `${card.dataset.name} ${card.dataset.caption} ${card.dataset.badge}`.toLowerCase();
+                const isMatch = searchString.includes(query.toLowerCase().trim());
+                
+                card.style.display = isMatch ? 'flex' : 'none';
+                if (isMatch) visibleCount++;
+            });
+            
+            menuCount.textContent = `(${visibleCount})`;
+            searchClear.style.display = query.length > 0 ? 'block' : 'none';
+        }
+
+        searchInput.addEventListener('input', (e) => filterCards(e.target.value));
+        searchClear.addEventListener('click', () => {
+            searchInput.value = '';
+            filterCards('');
+            searchInput.focus();
+        });
+
+        // ===== RENDER CARDS (OPTIMIZED) =====
         function renderCards() {
             const container = document.getElementById('cardContainer');
             container.innerHTML = '';
-            const sheetEntries = Object.entries(sheets);
-            const icons = [
-                'fas fa-water', 'fas fa-chart-line', 'fas fa-tachometer-alt', 
-                'fas fa-flask', 'fa-regular fa-clock'
-            ];
             
-            sheetEntries.forEach(([key, val], idx) => {
+            Object.entries(sheets).forEach(([key, val]) => {
                 const card = document.createElement('div');
                 card.className = 'sheet-card';
                 card.dataset.sheet = key;
-                const caption = sheetCaptions[key] || 'Tidak ada deskripsi';
+                card.dataset.name = val.name;
+                card.dataset.caption = val.caption;
+                card.dataset.badge = val.badge || '';
+                
+                // Menambahkan atribut aksesibilitas
+                card.setAttribute('role', 'button');
+                card.setAttribute('tabindex', '0');
+                card.setAttribute('aria-label', `Buka laporan ${val.name}`);
+                
+                // HTML render dengan lazy loading pada gambar dan wrapper untuk animasi
                 card.innerHTML = `
-                    <div class="card-icon"><i class="${icons[idx % icons.length]}"></i></div>
-                    <div class="card-info">
-                        <h3>${val.name}</h3>
+                    <span class="card-badge">${val.badge || 'Sheet'}</span>
+                    <div class="card-img-wrapper">
+                        <img src="${val.image}" alt="${val.name}" class="card-img" loading="lazy" decoding="async" />
                     </div>
-                    <div class="card-caption">${caption}</div>
+                    <div class="card-body">
+                        <h3>${val.name}</h3>
+                        <div class="card-caption">${val.caption}</div>
+                    </div>
+                    <div class="card-footer">
+                        <span><i class="fas fa-file-excel"></i> Google Sheets</span>
+                        <span><i class="fas fa-arrow-right"></i> Buka</span>
+                    </div>
                 `;
+                
+                // Click event
                 card.addEventListener('click', () => loadSheet(key));
+                
+                // Keyboard navigasi event (Enter atau Spasi)
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        loadSheet(key);
+                    }
+                });
+
                 container.appendChild(card);
             });
+            
+            menuCount.textContent = `(${Object.keys(sheets).length})`;
         }
+        
         renderCards();
 
-        // ========== FUNGSI DOWNLOAD SHEET AKTIF (PERBAIKAN UTAMA) ==========
-        function getCurrentSheet() { 
-            return sheets[currentSheet]; 
-        }
-
-        // Fungsi download yang benar-benar memicu unduh sheet aktif (dengan GID)
-        function triggerDownload(format) {
-            const sheet = getCurrentSheet();
-            if (!sheet) {
-                showNotif('Tidak ada sheet yang dipilih');
-                return;
-            }
-            
-            loadingEl.style.display = 'block';
-            closeExport();   // tutup fab jika terbuka
-            headerDropdown.style.display = 'none'; // tutup dropdown header
-
-            // Gunakan timeout agar loading terlihat & tidak blocking
-            setTimeout(() => {
-                // Bangun URL export dengan parameter gid (hanya sheet aktif)
-                let exportUrl = `https://docs.google.com/spreadsheets/d/${sheet.id}/export?`;
-                let ext = 'xlsx';
-                
-                if (format === 'excel') { 
-                    exportUrl += 'format=xlsx'; 
-                    ext = 'xlsx'; 
-                }
-                else if (format === 'pdf') { 
-                    // PDF: beberapa opsi default (landscape, fit lebar)
-                    exportUrl += 'format=pdf&portrait=false&fitw=true&gridlines=false&size=A4'; 
-                    ext = 'pdf'; 
-                }
-                else if (format === 'ods') { 
-                    exportUrl += 'format=ods'; 
-                    ext = 'ods'; 
-                }
-                
-                // TAMBAHKAN GID — memastikan hanya sheet aktif yang didownload
-                exportUrl += `&gid=${sheet.gid}`;
-
-                // Buat elemen <a> untuk mendownload
-                const a = document.createElement('a');
-                a.href = exportUrl;
-                a.download = `${sheet.name.replace(/\s/g,'_')}.${ext}`;
-                a.target = '_blank'; // fallback jika tidak bisa download otomatis
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                
-                loadingEl.style.display = 'none';
-                showNotif(`Mengunduh ${sheet.name} (${format.toUpperCase()})`);
-            }, 600);
-        }
-
-        // ========== DROPDOWN HEADER UNTUK DOWNLOAD ==========
-        const headerDropdown = document.createElement('div');
-        headerDropdown.id = 'headerDropdown';
-        headerDropdown.style.position = 'absolute';
-        headerDropdown.style.background = 'white';
-        headerDropdown.style.borderRadius = '20px';
-        headerDropdown.style.boxShadow = '0 10px 25px rgba(0,30,60,0.4)';
-        headerDropdown.style.padding = '10px';
-        headerDropdown.style.zIndex = '300';
-        headerDropdown.style.display = 'none';
-        headerDropdown.style.flexDirection = 'column';
-        headerDropdown.style.gap = '8px';
-        headerDropdown.style.minWidth = '180px';
-        headerDropdown.style.border = '1px solid #b7d9f0';
-        headerDropdown.innerHTML = `
-            <button class="export-excel-header" style="display:flex; align-items:center; gap:12px; padding:12px 16px; border:none; background:#f2f7fd; border-radius:30px; font-weight:600; color:#1d405b; cursor:pointer; width:100%;"><i class="fas fa-file-excel" style="font-size:1.3rem;"></i> Excel (XLSX)</button>
-            <button class="export-pdf-header" style="display:flex; align-items:center; gap:12px; padding:12px 16px; border:none; background:#f2f7fd; border-radius:30px; font-weight:600; color:#1d405b; cursor:pointer; width:100%;"><i class="fas fa-file-pdf" style="font-size:1.3rem;"></i> PDF</button>
-            <button class="export-ods-header" style="display:flex; align-items:center; gap:12px; padding:12px 16px; border:none; background:#f2f7fd; border-radius:30px; font-weight:600; color:#1d405b; cursor:pointer; width:100%;"><i class="fas fa-file" style="font-size:1.3rem;"></i> ODS</button>
-        `;
-        document.querySelector('.app-wrapper').appendChild(headerDropdown);
-
-        // Posisikan dropdown di bawah tombol header
-        function positionDropdown() {
-            const rect = headerDownloadBtn.getBoundingClientRect();
-            headerDropdown.style.top = (rect.bottom + window.scrollY + 8) + 'px';
-            headerDropdown.style.left = (rect.left + window.scrollX - 100 + rect.width/2) + 'px';
-            headerDropdown.style.transform = 'translateX(-20%)';
-        }
-
-        headerDownloadBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            if (headerDropdown.style.display === 'flex') {
-                headerDropdown.style.display = 'none';
-            } else {
-                positionDropdown();
-                headerDropdown.style.display = 'flex';
-                closeExport(); // tutup fab dropdown
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+                searchInput.select();
             }
         });
 
-        document.addEventListener('click', (e) => {
-            if (!headerDropdown.contains(e.target) && e.target !== headerDownloadBtn && !headerDownloadBtn.contains(e.target)) {
-                headerDropdown.style.display = 'none';
-            }
-        });
-
-        // Pasang event listener untuk tombol di dropdown header
-        headerDropdown.querySelector('.export-excel-header').addEventListener('click', () => {
-            triggerDownload('excel');
-            headerDropdown.style.display = 'none';
-        });
-        headerDropdown.querySelector('.export-pdf-header').addEventListener('click', () => {
-            triggerDownload('pdf');
-            headerDropdown.style.display = 'none';
-        });
-        headerDropdown.querySelector('.export-ods-header').addEventListener('click', () => {
-            triggerDownload('ods');
-            headerDropdown.style.display = 'none';
-        });
-
-        // ========== FAB (tombol melayang) ==========
-        const fabMain = document.querySelector('.fab-main');
-        const exportOptions = document.querySelector('.export-options');
-        const exportOverlay = document.querySelector('.export-overlay');
-        
-        // Jika elemen FAB tidak ada di HTML (karena tidak didefinisikan di body), buat secara dinamis
-        // Ternyata di HTML tidak ada elemen .fab-main, jadi kita buat dan sisipkan
-        if (!document.querySelector('.export-fab')) {
-            const fabHTML = `
-                <div class="export-fab">
-                    <div class="fab-main" id="fabMain"><i class="fas fa-download"></i></div>
-                    <div class="export-options" id="exportOptions">
-                        <button class="export-excel"><i class="fas fa-file-excel"></i> Excel (XLSX)</button>
-                        <button class="export-pdf"><i class="fas fa-file-pdf"></i> PDF</button>
-                        <button class="export-ods"><i class="fas fa-file"></i> ODS</button>
-                    </div>
-                </div>
-                <div class="export-overlay" id="exportOverlay"></div>
-            `;
-            document.body.insertAdjacentHTML('beforeend', fabHTML);
-        }
-
-        // Re-assign setelah membuat FAB
-        const fabMain2 = document.getElementById('fabMain');
-        const exportOptions2 = document.getElementById('exportOptions');
-        const exportOverlay2 = document.getElementById('exportOverlay');
-
-        function closeExport() { 
-            if (exportOptions2) exportOptions2.style.display = 'none'; 
-            if (exportOverlay2) exportOverlay2.style.display = 'none'; 
-        }
-
-        if (fabMain2) {
-            fabMain2.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const isOpen = exportOptions2.style.display === 'flex';
-                if (isOpen) { 
-                    closeExport(); 
-                } else { 
-                    exportOptions2.style.display = 'flex'; 
-                    exportOverlay2.style.display = 'block';
-                    headerDropdown.style.display = 'none'; // tutup dropdown header
-                }
-            });
-        }
-
-        if (exportOverlay2) {
-            exportOverlay2.addEventListener('click', closeExport);
-        }
-
-        // Event listener untuk tombol di FAB (gunakan event delegation atau select)
-        document.querySelectorAll('.export-excel').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                triggerDownload('excel');
-            });
-        });
-        document.querySelectorAll('.export-pdf').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                triggerDownload('pdf');
-            });
-        });
-        document.querySelectorAll('.export-ods').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                triggerDownload('ods');
-            });
-        });
-
-        document.addEventListener('keydown', (e) => { 
-            if(e.key === 'Escape') { 
-                closeExport(); 
-                headerDropdown.style.display = 'none'; 
-            } 
-        });
-
-        // Set default sheet (sheet1) dan muat tampilan menu
-        currentSheet = 'sheet1';
-        // Jangan langsung load sheet, biarkan menu tampil.
     })();
 </script>
 </body>
