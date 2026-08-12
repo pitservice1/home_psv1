@@ -32,75 +32,66 @@
       border-radius: 0 0 32px 32px;
       overflow: hidden;
       flex: 1;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* HEADER – SAP FIORI style : biru gradasi halus, full width, top 0 */
+    /* ===== HEADER FIORI – BIRU ===== */
     .header-fiori {
       background: linear-gradient(145deg, #1b6f8c 0%, #2b8cac 100%);
       color: white;
-      padding: 28px 28px 22px 30px;
+      padding: 14px 28px 12px 30px;
       width: 100%;
       border-bottom: 2px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 6px 14px rgba(21, 79, 102, 0.18);
-    }/* ===== HEADER FIORI – LEBIH RAMIPING ===== */
-.header-fiori {
-    background: linear-gradient(145deg, #1b6f8c 0%, #2b8cac 100%);
-    color: white;
-    padding: 14px 28px 12px 30px;  /* dikurangi dari 28px 28px 22px 30px */
-    width: 100%;
-    border-bottom: 2px solid rgba(255, 255, 255, 0.15);
-    box-shadow: 0 4px 10px rgba(21, 79, 102, 0.14); /* lebih ringan */
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 8px 16px;
-}
-
-/* teks header – tanpa H1, pakai span atau div */
-.header-fiori .title {
-    font-size: 1.2rem;
-    font-weight: 600;
-    letter-spacing: -0.2px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.header-fiori .title i {
-    font-size: 1.3rem;
-    color: #ffd966;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
-}
-
-.header-fiori .sub {
-    font-size: 0.8rem;
-    font-weight: 400;
-    opacity: 0.9;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    border-left: 2px solid #ffd966;
-    padding-left: 14px;
-}
-
-/* responsive – agar tidak pecah */
-@media (max-width: 600px) {
-    .header-fiori {
-        padding: 12px 18px 10px 18px;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 4px;
+      box-shadow: 0 4px 10px rgba(21, 79, 102, 0.14);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px 16px;
     }
-    .header-fiori .title {
-        font-size: 1rem;
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
     }
-    .header-fiori .sub {
-        font-size: 0.7rem;
-        padding-left: 10px;
-        border-left-width: 2px;
+
+    /* Tombol Back */
+    .btn-back {
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: white;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background 0.2s;
     }
-}
+
+    .btn-back:hover {
+      background: rgba(255, 255, 255, 0.35);
+    }
+
+    .header-fiori .header-sub {
+      font-size: 0.95rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* ===== MAIN CONTAINER & VIEW SWITCHER ===== */
+    .view-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
     /* ===== CONTENT GRID 3 ===== */
     .content-grid {
       padding: 28px 24px 20px 24px;
@@ -109,7 +100,7 @@
       gap: 20px;
     }
 
-    /* menu card – fiori flat dengan sentuhan */
+    /* menu card */
     .menu-card {
       background: #ffffff;
       border-radius: 20px;
@@ -136,14 +127,13 @@
       min-height: 120px;
     }
 
-    /* bagian atas: icon + teks */
     .menu-top {
       display: flex;
       align-items: flex-start;
       gap: 14px;
     }
 
-    /* icon – warna solid, beragam (SAP Fiori suka warna jenuh) */
+    /* icon */
     .icon {
       width: 50px;
       height: 50px;
@@ -155,22 +145,15 @@
       flex-shrink: 0;
       color: white;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
-      transition: 0.1s;
     }
 
-    /* warna-warna icon (fiori palette) */
-    .icon-pkh { background: #1e7a8f; }        /* teal */
-    .icon-download { background: #2d7d9e; }    /* biru tua */
-    .icon-ho { background: #b4683b; }          /* coklat sap */
-    .icon-download-ho { background: #3f7e8c; } /* hijau kebiruan */
-    .icon-search { background: #7a6f9c; }      /* ungu */
-    .icon-report { background: #bf7b3a; }      /* oranye */
-    .icon-database { background: #357a7a; }    /* hijau gelap */
-    .icon-pond { background: #5b7e8c; }        /* abu biru */
-
-    .menu-info {
-      flex: 1;
-    }
+    .icon-pkh { background: #1e7a8f; }
+    .icon-download { background: #2d7d9e; }
+    .icon-ho { background: #b4683b; }
+    .icon-download-ho { background: #3f7e8c; }
+    .icon-search { background: #7a6f9c; }
+    .icon-report { background: #bf7b3a; }
+    .icon-database { background: #357a7a; }
 
     .menu-info h3 {
       font-size: 1rem;
@@ -186,7 +169,6 @@
       line-height: 1.4;
     }
 
-    /* badge akses khusus */
     .badge-akses {
       display: inline-block;
       background: #f3e3cc;
@@ -200,18 +182,10 @@
       border: 1px solid #e2cdb4;
     }
 
-    .badge-akses i {
-      margin-right: 4px;
-      font-size: 0.5rem;
-      color: #b0794a;
-    }
-
-    /* arrow di bawah */
     .menu-footer {
       display: flex;
       justify-content: flex-end;
       margin-top: 6px;
-      padding-top: 2px;
     }
 
     .arrow {
@@ -225,6 +199,21 @@
       transform: translateX(4px);
     }
 
+    /* ===== IFRAME CONTAINER ===== */
+    .iframe-container {
+      flex: 1;
+      width: 100%;
+      display: none; /* Default tersembunyi */
+      flex-direction: column;
+    }
+
+    .iframe-container iframe {
+      width: 100%;
+      flex: 1;
+      border: none;
+      min-height: calc(100vh - 120px);
+    }
+
     /* footer global */
     .footer-app {
       text-align: center;
@@ -232,20 +221,17 @@
       color: #62808f;
       padding: 22px 12px 18px 12px;
       border-top: 1px solid #e4edf3;
-      margin-top: 6px;
+      margin-top: auto;
       background: #f9fcfe;
       letter-spacing: 0.4px;
     }
 
-    /* ===== RESPONSIVE ===== */
+    /* Responsive */
     @media (max-width: 820px) {
       .content-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
         padding: 20px 16px;
-      }
-      .header-fiori h1 {
-        font-size: 1.5rem;
       }
     }
 
@@ -255,42 +241,6 @@
         gap: 14px;
         padding: 16px 14px;
       }
-      .header-fiori {
-        padding: 22px 18px 18px 18px;
-      }
-      .header-fiori h1 {
-        font-size: 1.3rem;
-        gap: 10px;
-      }
-      .header-fiori h1 i {
-        font-size: 1.5rem;
-      }
-      .menu-link {
-        min-height: 90px;
-        padding: 14px 12px;
-      }
-      .icon {
-        width: 44px;
-        height: 44px;
-        font-size: 18px;
-      }
-    }
-
-    /* efek sentuhan */
-    .menu-card:active {
-      transform: scale(0.97);
-      transition: 0.04s;
-    }
-
-    /* ikon fa yang di dalam icon biar putih */
-    .icon i {
-      color: white;
-      filter: drop-shadow(0 1px 3px rgba(0,0,0,0.05));
-    }
-
-    /* SAP style : header selalu di atas */
-    .app-wrapper {
-      margin-top: 0;
     }
   </style>
 </head>
@@ -300,132 +250,133 @@
 
   <!-- HEADER FULL WIDTH, TOP 0, WARNA BIRU FIORI -->
   <header class="header-fiori">
-    <div class="header-sub">
-      <i class="fas fa-calendar-alt" style="margin-right: 8px; opacity:0.7;"></i> 
-      Daily Activity Pit Service 1
+    <div class="header-left">
+      <!-- Tombol Back (Hanya muncul saat iframe aktif) -->
+      <button id="btnBack" class="btn-back" style="display: none;" onclick="goHome()" title="Kembali ke Menu">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <div class="header-sub">
+        <i class="fas fa-calendar-alt" style="margin-right: 8px; opacity:0.7;"></i> 
+        <span id="headerTitle">Daily Activity Pit Service 1</span>
+      </div>
     </div>
   </header>
 
-  <!-- GRID 3 KOLOM -->
-  <div class="content-grid">
+  <!-- VIEW CONTAINER (Menu & Iframe) -->
+  <div class="view-container">
 
-    <!-- 1. Input PKH -->
-    <div class="menu-card">
-      <a href="inputpkh.html" class="menu-link">
-        <div class="menu-top">
-          <div class="icon icon-pkh"><i class="fas fa-pen-fancy"></i></div>
-          <div class="menu-info">
-            <h3>Input PKH</h3>
-            <p>Isi Perintah Kerja Harian</p>
+    <!-- GRID 3 KOLOM (MENU UTAMA) -->
+    <div id="menuView" class="content-grid">
+
+      <!-- 1. Input PKH (Ganti data-target="blank" jika ingin membuka di tab baru) -->
+      <div class="menu-card">
+        <a href="https://script.google.com/macros/s/AKfycbxRI-TBIWMjaZcsoDRWQYefET8rnyNh-B93ABh_plQEjffh-CbrVTQ9b3YjOcAQIewL/exec?page=index" class="menu-link" data-target="iframe">
+          <div class="menu-top">
+            <div class="icon icon-pkh"><i class="fas fa-pen-fancy"></i></div>
+            <div class="menu-info">
+              <h3>Input PKH</h3>
+              <p>Isi Perintah Kerja Harian</p>
+            </div>
           </div>
-        </div>
-        <div class="menu-footer">
-          <span class="arrow"><i class="fas fa-chevron-right"></i></span>
-        </div>
-      </a>
+          <div class="menu-footer"><span class="arrow"><i class="fas fa-chevron-right"></i></span></div>
+        </a>
+      </div>
+
+      <!-- 2. Download PKH PDF -->
+      <div class="menu-card">
+        <a href="https://sites.google.com/view/pit-service-air/pkh/DOWNLOAD-PKH" class="menu-link" data-target="iframe">
+          <div class="menu-top">
+            <div class="icon icon-download"><i class="fas fa-file-pdf"></i></div>
+            <div class="menu-info">
+              <h3>Download PKH</h3>
+              <p>Lihat / unduh data PKH</p>
+            </div>
+          </div>
+          <div class="menu-footer"><span class="arrow"><i class="fas fa-chevron-right"></i></span></div>
+        </a>
+      </div>
+
+      <!-- 3. Form Handover (HO) -->
+      <div class="menu-card">
+        <a href="https://script.google.com/macros/s/AKfycbxRI-TBIWMjaZcsoDRWQYefET8rnyNh-B93ABh_plQEjffh-CbrVTQ9b3YjOcAQIewL/exec?page=handover" class="menu-link" data-target="iframe">
+          <div class="menu-top">
+            <div class="icon icon-ho"><i class="fas fa-handshake"></i></div>
+            <div class="menu-info">
+              <h3>Form Handover</h3>
+              <p>Isi serah terima shift</p>
+            </div>
+          </div>
+          <div class="menu-footer"><span class="arrow"><i class="fas fa-chevron-right"></i></span></div>
+        </a>
+      </div>
+
+      <!-- 4. Download HO PDF -->
+      <div class="menu-card">
+        <a href="https://script.google.com/macros/s/AKfycbxRI-TBIWMjaZcsoDRWQYefET8rnyNh-B93ABh_plQEjffh-CbrVTQ9b3YjOcAQIewL/exec?page=handover" class="menu-link" data-target="iframe">
+          <div class="menu-top">
+            <div class="icon icon-download-ho"><i class="fas fa-file-pdf"></i></div>
+            <div class="menu-info">
+              <h3>Download HO</h3>
+              <p>Lihat / unduh data HO</p>
+            </div>
+          </div>
+          <div class="menu-footer"><span class="arrow"><i class="fas fa-chevron-right"></i></span></div>
+        </a>
+      </div>
+
+      <!-- 5. Form Periksa Kolam (CMD) -->
+      <div class="menu-card">
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLScnRophnpCnB4CDIvPs0NUT4QvzK_so6PevPUqR51wlo6BxUA/viewform" class="menu-link" data-target="blank">
+          <div class="menu-top">
+            <div class="icon icon-search"><i class="fas fa-water"></i></div>
+            <div class="menu-info">
+              <h3>Periksa Kolam</h3>
+              <p>Kondisi kolam (CMD)</p>
+            </div>
+          </div>
+          <div class="menu-footer"><span class="arrow"><i class="fas fa-chevron-right"></i></span></div>
+        </a>
+      </div>
+
+      <!-- 6. Report Inspeksi -->
+      <div class="menu-card">
+        <a href="https://docs.google.com/spreadsheets/d/1S3AFToaEwd0WsrRkQI_x1NKhr0lBfS4s8SJSdRFDA4M/edit?resourcekey=&gid=614303348#gid=614303348" class="menu-link" data-target="iframe">
+          <div class="menu-top">
+            <div class="icon icon-report"><i class="fas fa-chart-bar"></i></div>
+            <div class="menu-info">
+              <h3>Report Inspeksi</h3>
+              <p>Review kondisi kolam</p>
+            </div>
+          </div>
+          <div class="menu-footer"><span class="arrow"><i class="fas fa-chevron-right"></i></span></div>
+        </a>
+      </div>
+
+      <!-- 7. DATABASE PKH -->
+      <div class="menu-card">
+        <a href="https://docs.google.com/spreadsheets/d/1euowXp3mIp18ZBNRE-WaWcS6iDYIhp_Wk3v3E7Q05Rg/edit?gid=349853861#gid=349853861" class="menu-link" data-target="blank">
+          <div class="menu-top">
+            <div class="icon icon-database"><i class="fas fa-database"></i></div>
+            <div class="menu-info">
+              <h3>Database PKH</h3>
+              <p>
+                Data terpusat PKH
+                <span class="badge-akses"><i class="fas fa-key"></i> akses khusus</span>
+              </p>
+            </div>
+          </div>
+          <div class="menu-footer"><span class="arrow"><i class="fas fa-chevron-right"></i></span></div>
+        </a>
+      </div>
+
+    </div> <!-- end menuView -->
+
+    <!-- IFRAME VIEW (Tersembunyi Awalnya) -->
+    <div id="iframeView" class="iframe-container">
+      <iframe id="contentIframe" src=""></iframe>
     </div>
 
-    <!-- 2. Download PKH PDF -->
-    <div class="menu-card">
-      <a href="downloadpkh.html" class="menu-link">
-        <div class="menu-top">
-          <div class="icon icon-download"><i class="fas fa-file-pdf"></i></div>
-          <div class="menu-info">
-            <h3>Download PKH</h3>
-            <p>Lihat / unduh data PKH</p>
-          </div>
-        </div>
-        <div class="menu-footer">
-          <span class="arrow"><i class="fas fa-chevron-right"></i></span>
-        </div>
-      </a>
-    </div>
-
-    <!-- 3. Form Handover (HO) -->
-    <div class="menu-card">
-      <a href="https://forms.gle/Vyj2QhFK7ZRSTmnF9" class="menu-link">
-        <div class="menu-top">
-          <div class="icon icon-ho"><i class="fas fa-handshake"></i></div>
-          <div class="menu-info">
-            <h3>Form Handover</h3>
-            <p>Isi serah terima shift</p>
-          </div>
-        </div>
-        <div class="menu-footer">
-          <span class="arrow"><i class="fas fa-chevron-right"></i></span>
-        </div>
-      </a>
-    </div>
-
-    <!-- 4. Download HO PDF -->
-    <div class="menu-card">
-      <a href="downloadho.html" class="menu-link">
-        <div class="menu-top">
-          <div class="icon icon-download-ho"><i class="fas fa-file-pdf"></i></div>
-          <div class="menu-info">
-            <h3>Download HO</h3>
-            <p>Lihat / unduh data HO</p>
-          </div>
-        </div>
-        <div class="menu-footer">
-          <span class="arrow"><i class="fas fa-chevron-right"></i></span>
-        </div>
-      </a>
-    </div>
-
-    <!-- 5. Form Periksa Kolam (CMD) -->
-    <div class="menu-card">
-      <a href="https://docs.google.com/forms/d/e/1FAIpQLScnRophnpCnB4CDIvPs0NUT4QvzK_so6PevPUqR51wlo6BxUA/viewform" class="menu-link">
-        <div class="menu-top">
-          <div class="icon icon-search"><i class="fas fa-water"></i></div>
-          <div class="menu-info">
-            <h3>Periksa Kolam</h3>
-            <p>Kondisi kolam (CMD)</p>
-          </div>
-        </div>
-        <div class="menu-footer">
-          <span class="arrow"><i class="fas fa-chevron-right"></i></span>
-        </div>
-      </a>
-    </div>
-
-    <!-- 6. Report Inspeksi -->
-    <div class="menu-card">
-      <a href="https://docs.google.com/spreadsheets/d/1S3AFToaEwd0WsrRkQI_x1NKhr0lBfS4s8SJSdRFDA4M/edit?resourcekey=&gid=614303348#gid=614303348" class="menu-link">
-        <div class="menu-top">
-          <div class="icon icon-report"><i class="fas fa-chart-bar"></i></div>
-          <div class="menu-info">
-            <h3>Report Inspeksi</h3>
-            <p>Review kondisi kolam</p>
-          </div>
-        </div>
-        <div class="menu-footer">
-          <span class="arrow"><i class="fas fa-chevron-right"></i></span>
-        </div>
-      </a>
-    </div>
-
-    <!-- 7. DATABASE PKH (AKSES KHUSUS) sesuai link -->
-    <div class="menu-card">
-      <a href="https://docs.google.com/spreadsheets/d/1euowXp3mIp18ZBNRE-WaWcS6iDYIhp_Wk3v3E7Q05Rg/edit?gid=349853861#gid=349853861" class="menu-link">
-        <div class="menu-top">
-          <div class="icon icon-database"><i class="fas fa-database"></i></div>
-          <div class="menu-info">
-            <h3>Database PKH</h3>
-            <p>
-              Data terpusat PKH
-              <span class="badge-akses"><i class="fas fa-key"></i> akses khusus</span>
-            </p>
-          </div>
-        </div>
-        <div class="menu-footer">
-          <span class="arrow"><i class="fas fa-chevron-right"></i></span>
-        </div>
-      </a>
-    </div>
-
-    <!-- 8. Inspeksi Pond (pelengkap, agar grid rapi) -->
-  </div> <!-- end grid -->
+  </div> <!-- end view-container -->
 
   <!-- FOOTER -->
   <div class="footer-app">
@@ -436,5 +387,52 @@
 
 </div> <!-- end app-wrapper -->
 
+<!-- SCRIPT UNTUK MENGATUR IFRAME & TOMBOL BACK -->
+<script>
+  const menuView = document.getElementById('menuView');
+  const iframeView = document.getElementById('iframeView');
+  const contentIframe = document.getElementById('contentIframe');
+  const btnBack = document.getElementById('btnBack');
+  const headerTitle = document.getElementById('headerTitle');
+
+  // Ambil semua link menu
+  const menuLinks = document.querySelectorAll('.menu-link');
+
+  menuLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      const targetMode = this.getAttribute('data-target'); // Mendapatkan opsi 'iframe' atau 'blank'
+      const url = this.getAttribute('href');
+      const titleText = this.querySelector('h3').innerText;
+
+      // Jika diset 'blank', biarkan browser membuka tab baru secara normal
+      if (targetMode === 'blank') {
+        return; 
+      }
+
+      // Jika diset 'iframe' (default), cegah link bawaan dan muat ke iframe dalam aplikasi
+      e.preventDefault();
+      
+      // Sembunyikan menu, tampilkan iframe
+      menuView.style.display = 'none';
+      iframeView.style.display = 'flex';
+      
+      // Tampilkan tombol back dan ubah judul header sesuai menu yang diklik
+      btnBack.style.display = 'flex';
+      headerTitle.innerText = titleText;
+
+      // Muat URL ke dalam iframe
+      contentIframe.src = url;
+    });
+  });
+
+  // Fungsi untuk kembali ke menu utama
+  function goHome() {
+    iframeView.style.display = 'none';
+    menuView.style.display = 'grid';
+    btnBack.style.display = 'none';
+    headerTitle.innerText = 'Daily Activity Pit Service 1';
+    contentIframe.src = ''; // Kosongkan iframe agar berhenti memuat
+  }
+</script>
 </body>
 </html>
