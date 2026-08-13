@@ -2224,11 +2224,12 @@
 console.log('✅ Report SS Modal siap digunakan!');
  
   // ===== SERVICE WORKER REGISTRATION =====
-  if ('serviceWorker' in navigator) {
+if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-      navigator.serviceWorker.register('service-worker.js')
+      // Tambahkan slash (/) di depan agar scope berada di root aplikasi
+      navigator.serviceWorker.register('/service-worker.js')
         .then(function(registration) {
-          console.log('✅ Service Worker registered:', registration);
+          console.log('✅ Service Worker registered with scope:', registration.scope);
         })
         .catch(function(error) {
           console.log('❌ Service Worker failed:', error);
