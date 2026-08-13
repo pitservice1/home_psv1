@@ -1,7 +1,7 @@
 {
   "name": "Pit Service Air",
   "short_name": "Pit Service",
-  "description": "Dashboard PIT Service Air",
+  "description": "Dashboard Pit Service Air",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
@@ -9,19 +9,19 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "icon.png",
+      "src": "https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png",
       "sizes": "72x72",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icon.png",
+      "src": "https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "icon.png",
+      "src": "https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
