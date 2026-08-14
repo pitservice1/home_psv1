@@ -22,14 +22,13 @@
       flex-direction: column;
     }
 
-    /* ===== FULL WIDTH, HEADER TOP 0 ===== */
+    /* ===== FULL WIDTH MAIN CARD ===== */
     .app-wrapper {
       width: 100%;
-      max-width: 1400px;
-      margin: 0 auto;
+      max-width: 100%; /* Diubah agar full width */
+      margin: 0; /* Menghilangkan margin tengah */
       background: #ffffff;
-      box-shadow: 0 4px 20px rgba(0, 40, 60, 0.06);
-      border-radius: 0 0 32px 32px;
+      border-radius: 0; /* Menempel sempurna di setiap sudut layar */
       overflow: hidden;
       flex: 1;
       display: flex;
@@ -37,20 +36,11 @@
     }
 
     /* ===== HEADER FIORI – BIRU ===== */
-    /* ===== FULL WIDTH, HEADER TOP 0 ===== */
-    .app-wrapper {
-      width: 100%;
-      /* Hapus max-width dan margin */
-      background: #ffffff;
-      box-shadow: 0 4px 20px rgba(0, 40, 60, 0.06);
-      
-      /* (Opsional) Ubah border-radius menjadi 0 agar menempel sempurna di ujung bawah layar */
-      border-radius: 0; 
-      
-      overflow: hidden;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
+    .header-fiori {
+      background-color: #0070d2; /* Warna biru khas enterprise/Fiori */
+      color: #ffffff;
+      padding: 16px 24px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
     .header-left {
@@ -80,8 +70,8 @@
     }
 
     .header-fiori .header-sub {
-      font-size: 0.95rem;
-      font-weight: 500;
+      font-size: 1.1rem;
+      font-weight: 600;
       display: flex;
       align-items: center;
       gap: 6px;
@@ -92,6 +82,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
+      background: #f4f7f9; /* Memberi kontras sedikit dari card menu */
     }
 
     /* ===== CONTENT GRID 3 ===== */
@@ -213,19 +204,7 @@
       width: 100%;
       flex: 1;
       border: none;
-      min-height: calc(100vh - 120px);
-    }
-
-    /* footer global */
-    .footer-app {
-      text-align: center;
-      font-size: 0.75rem;
-      color: #62808f;
-      padding: 22px 12px 18px 12px;
-      border-top: 1px solid #e4edf3;
-      margin-top: auto;
-      background: #f9fcfe;
-      letter-spacing: 0.4px;
+      min-height: calc(100vh - 60px); /* Disesuaikan dengan tinggi header baru */
     }
 
     /* Responsive */
@@ -258,7 +237,7 @@
         <i class="fas fa-chevron-left"></i>
       </button>
       <div class="header-sub">
-        <i class="fas fa-calendar-alt" style="margin-right: 8px; opacity:0.7;"></i> 
+        <i class="fas fa-calendar-alt" style="margin-right: 8px; opacity:0.8;"></i> 
         <span id="headerTitle">Daily Activity Pit Service 1</span>
       </div>
     </div>
@@ -270,7 +249,7 @@
     <!-- GRID 3 KOLOM (MENU UTAMA) -->
     <div id="menuView" class="content-grid">
 
-      <!-- 1. Input PKH (Ganti data-target="blank" jika ingin membuka di tab baru) -->
+      <!-- 1. Input PKH -->
       <div class="menu-card">
         <a href="https://script.google.com/macros/s/AKfycbxRI-TBIWMjaZcsoDRWQYefET8rnyNh-B93ABh_plQEjffh-CbrVTQ9b3YjOcAQIewL/exec?page=index" class="menu-link" data-target="iframe">
           <div class="menu-top">
@@ -353,7 +332,19 @@
           <div class="menu-footer"><span class="arrow"><i class="fas fa-chevron-right"></i></span></div>
         </a>
       </div>
-
+<!-- 6. Download Inspeksi Kolam -->
+      <div class="menu-card">
+        <a href="https://script.google.com/macros/s/AKfycbwXUHqAONyfgY4sEdFiXrojPX79nkl4y7X2gMBCPrsFxmklHfpxEM84rMbJmGo7F6h6Eg/exec" class="menu-link" data-target="iframe">
+          <div class="menu-top">
+            <div class="icon icon-report"><i class="fas fa-print"></i></div>
+            <div class="menu-info">
+              <h3>Download Inspeksi Kolam</h3>
+              <p>pilih sesuai kolam</p>
+            </div>
+          </div>
+          <div class="menu-footer"><span class="arrow"><i class="fas fa-chevron-right"></i></span></div>
+        </a>
+      </div>
       <!-- 7. DATABASE PKH -->
       <div class="menu-card">
         <a href="https://docs.google.com/spreadsheets/d/1euowXp3mIp18ZBNRE-WaWcS6iDYIhp_Wk3v3E7Q05Rg/edit?gid=349853861#gid=349853861" class="menu-link" data-target="blank">
@@ -378,6 +369,8 @@
       <iframe id="contentIframe" src=""></iframe>
     </div>
 
+  </div> <!-- end view-container -->
+</div>
 
 <!-- SCRIPT UNTUK MENGATUR IFRAME & TOMBOL BACK -->
 <script>
