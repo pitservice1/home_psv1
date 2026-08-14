@@ -9,13 +9,13 @@
   "orientation": "any",
   "icons": [
     {
-      "src": "/icon.png",
+      "src": "https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/icon.png",
+      "src": "https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
