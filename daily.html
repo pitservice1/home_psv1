@@ -37,18 +37,20 @@
     }
 
     /* ===== HEADER FIORI – BIRU ===== */
-    .header-fiori {
-      background: linear-gradient(145deg, #1b6f8c 0%, #2b8cac 100%);
-      color: white;
-      padding: 14px 28px 12px 30px;
+    /* ===== FULL WIDTH, HEADER TOP 0 ===== */
+    .app-wrapper {
       width: 100%;
-      border-bottom: 2px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 4px 10px rgba(21, 79, 102, 0.14);
+      /* Hapus max-width dan margin */
+      background: #ffffff;
+      box-shadow: 0 4px 20px rgba(0, 40, 60, 0.06);
+      
+      /* (Opsional) Ubah border-radius menjadi 0 agar menempel sempurna di ujung bawah layar */
+      border-radius: 0; 
+      
+      overflow: hidden;
+      flex: 1;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px 16px;
+      flex-direction: column;
     }
 
     .header-left {
