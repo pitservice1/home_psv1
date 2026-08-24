@@ -1,98 +1,240 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<style>
-    html, body {
-        margin: 0;
-        padding: 0;
-        height: 100%;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Spreadsheet</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Custom Colors based on the image */
+        .bg-header-dark { background-color: #34495e; } /* Dark blue-grey header */
+        .bg-page-light { background-color: #f4f6f9; } /* Light grey background */
+        .text-header-text { color: #ecf0f1; }
+        
+        /* Utility classes for accurate styling */
+        .card-shadow { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
+        .card-hover:hover { box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); }
+        
+        /* Font setup similar to UI */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    </style>
 </head>
-<body class="bg-gray-100 min-h-screen">
+<body class="bg-page-light min-h-screen text-gray-800">
 
-<!-- DASHBOARD SECTION -->
-<div id="dashboardSection">
-    <header class="bg-white shadow-sm">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
-            <!-- Kosong sesuai desain awal -->
-        </div>
-    </header>
-
-    <main class="max-w-6xl mx-auto p-6">
-        <div class="grid md:grid-cols-2 gap-6">
-            <!-- Menu 1 -->
-            <div class="bg-white shadow-md rounded-2xl p-6 border hover:shadow-xl transition">
-                <div class="flex items-center mb-4">
-                    <i class="fas fa-database text-blue-600 text-xl mr-3"></i>
-                    <h2 class="text-lg font-semibold text-gray-700">Data SQL MIO</h2>
+    <!-- Top Navigation Bar -->
+    <nav class="bg-header-dark text-header-text flex items-center justify-between px-4 py-2 h-14">
+        <div class="flex items-center space-x-4 w-full max-w-2xl">
+            <!-- Home Button -->
+            <button class="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-md flex items-center text-sm font-medium transition-colors border border-white/20">
+                <i class="fa-solid fa-table-cells-large mr-2"></i> Home
+            </button>
+            
+            <!-- Search Bar -->
+            <div class="relative flex-grow">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <i class="fa-solid fa-magnifying-glass text-gray-400 text-sm"></i>
                 </div>
-                <p class="text-sm text-gray-500 mb-4">
-                    Akses report database MIO EWACS.
-                </p>
-                <a href="http://kpcssqrp401/ReportS/browse/xxx_EWACS/MIO"
-                   target="_blank"
-                   class="inline-block bg-blue-600 text-white px-4 py-2 rounded-xl text-sm hover:bg-blue-700 transition">
-                   Buka Data SQL
-                </a>
+                <input type="text" 
+                       class="bg-white/10 border border-white/20 text-white text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-1.5 placeholder-gray-300" 
+                       placeholder="Cari laporan...">
             </div>
+        </div>
 
-            <!-- Menu 2 - Equipment Dewatering -->
-            <div class="bg-white shadow-md rounded-2xl p-6 border hover:shadow-xl transition">
-                <div class="flex items-center mb-4">
-                    <i class="fas fa-water text-green-600 text-xl mr-3"></i>
-                    <h2 class="text-lg font-semibold text-gray-700">Equipment Dewatering 2026</h2>
+        <!-- Right Side User Info -->
+        <div class="flex items-center space-x-3">
+            <span class="text-sm font-medium">Admin</span>
+            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
+                <i class="fa-solid fa-user text-white"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white border-b px-6 py-2 flex items-center text-sm text-gray-500">
+        <i class="fa-solid fa-house mr-2 text-xs"></i>
+        <a href="#" class="hover:text-gray-700">Home</a>
+        <span class="mx-2">/</span>
+        <span class="font-medium text-gray-700">Dashboard Spreadsheet</span>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="max-w-[1600px] mx-auto px-6 py-6">
+        
+        <!-- Section Title -->
+        <div class="flex items-center mb-6">
+            <i class="fa-solid fa-folder-open text-blue-400 text-2xl mr-3"></i>
+            <h1 class="text-xl font-semibold text-gray-700">Laporan Tersedia <span class="text-sm font-normal text-gray-400 ml-1">(3)</span></h1>
+        </div>
+
+        <!-- Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5">
+            
+            <!-- Card 1: Data SQL MIO -->
+            <div class="bg-white rounded border card-shadow card-hover transition duration-200 flex flex-col overflow-hidden h-[300px]">
+                <!-- Image Header -->
+                <div class="h-[120px] bg-blue-50 relative border-b flex items-center justify-center p-2">
+                     <!-- TEMPAT GANTI GAMBAR COVER MENU 1 -->
+                    <img src="https://cdn.phototourl.com/free/2026-08-24-7c6d90d1-56c4-485c-b69e-a420751c1726.png" alt="Cover Data SQL" class="w-full h-full object-cover">
+                    <!-- Badge -->
+                    <span class="absolute top-2 right-2 bg-gray-700 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">
+                        Report
+                    </span>
                 </div>
-                <p class="text-sm text-gray-500 mb-4">
-                    Monitoring equipment dewatering tahun 2026.
-                </p>
-                <div class="flex flex-col gap-3">
-                    <!-- Link LANGSUNG ke Google Spreadsheet (NEW TAB) -->
-                    <a href="https://docs.google.com/spreadsheets/d/1aOxszDTRpDuX8Mtc2jQrptB2V64y6So6cz0b3uzF1_w/edit?gid=472873705#gid=472873705"
-                       target="_blank"
-                       rel="noopener noreferrer"
-                       class="bg-green-600 text-white px-4 py-2 rounded-xl text-sm hover:bg-green-700 transition inline-block text-center">
-                        Buka Data Equipment
+                
+                <!-- Content -->
+                <div class="p-4 flex-grow flex flex-col">
+                    <h2 class="text-base font-semibold text-gray-800 mb-1 line-clamp-1">Data SQL MIO</h2>
+                    <p class="text-xs text-gray-500 line-clamp-3 leading-relaxed">
+                        Akses report database MIO EWACS.
+                    </p>
+                </div>
+                
+                <!-- Footer -->
+                <div class="border-t border-gray-100 p-3 bg-gray-50 flex justify-between items-center mt-auto">
+                    <div class="flex items-center text-gray-400 text-xs">
+                        <i class="fa-solid fa-database mr-1.5"></i> SQL Server
+                    </div>
+                    <a href="http://kpcssqrp401/ReportS/browse/xxx_EWACS/MIO" 
+                       target="_blank" 
+                       class="text-blue-500 hover:text-blue-700 text-xs font-medium flex items-center transition-colors">
+                        Buka <i class="fa-solid fa-arrow-right ml-1"></i>
                     </a>
                 </div>
             </div>
+
+            <!-- Card 2: Equipment Dewatering 2026 -->
+            <div class="bg-white rounded border card-shadow card-hover transition duration-200 flex flex-col overflow-hidden h-[300px]">
+                <!-- Image Header -->
+                <div class="h-[120px] bg-green-50 relative border-b flex items-center justify-center p-2">
+                    <!-- TEMPAT GANTI GAMBAR COVER MENU 2 -->
+                    <img src="https://cdn.phototourl.com/free/2026-08-24-fdc48442-fa1a-4281-b187-0cb6d5416175.png" alt="Cover Equipment" class="w-full h-full object-cover">
+                    <!-- Badge -->
+                    <span class="absolute top-2 right-2 bg-gray-700 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">
+                        Monitoring
+                    </span>
+                </div>
+                
+                <!-- Content -->
+                <div class="p-4 flex-grow flex flex-col">
+                    <h2 class="text-base font-semibold text-gray-800 mb-1 line-clamp-1">Eq. Dewatering 2026</h2>
+                    <p class="text-xs text-gray-500 line-clamp-3 leading-relaxed">
+                        Monitoring equipment dewatering tahun 2026. Data real-time dan histori.
+                    </p>
+                </div>
+                
+                <!-- Footer -->
+                <div class="border-t border-gray-100 p-3 bg-gray-50 flex justify-between items-center mt-auto">
+                    <div class="flex items-center text-gray-400 text-xs">
+                        <i class="fa-solid fa-file-excel mr-1.5 text-green-600"></i> Google Sheets
+                    </div>
+                    <a href="https://docs.google.com/spreadsheets/d/1185FuxrP9YTtDWLErXUDWtg3vu2em0xPaISGw8BHbR8/edit?gid=1560822780#gid=1560822780" 
+                       target="_blank"
+                       rel="noopener noreferrer" 
+                       class="text-blue-500 hover:text-blue-700 text-xs font-medium flex items-center transition-colors">
+                        Buka <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Card 3: Dashboard Pump Performance (Iframe) -->
+            <div class="bg-white rounded border card-shadow card-hover transition duration-200 flex flex-col overflow-hidden h-[300px]">
+                <!-- Image Header -->
+                <div class="h-[120px] bg-purple-50 relative border-b flex items-center justify-center p-2">
+                    <!-- TEMPAT GANTI GAMBAR COVER MENU 3 -->
+                    <img src="https://cdn.phototourl.com/free/2026-08-24-8dff7a87-5210-4f72-a75c-c5c917ad806a.png" alt="Cover Pump Performance" class="w-full h-full object-cover">
+                    <!-- Badge -->
+                    <span class="absolute top-2 right-2 bg-gray-700 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">
+                        Dashboard
+                    </span>
+                </div>
+                
+                <!-- Content -->
+                <div class="p-4 flex-grow flex flex-col">
+                    <h2 class="text-base font-semibold text-gray-800 mb-1 line-clamp-1">Pump Performance</h2>
+                    <p class="text-xs text-gray-500 line-clamp-3 leading-relaxed">
+                        Visualisasi interaktif performa pompa dewatering (Web App).
+                    </p>
+                </div>
+                
+                <!-- Footer (Triggers Iframe) -->
+                <div class="border-t border-gray-100 p-3 bg-gray-50 flex justify-between items-center mt-auto">
+                    <div class="flex items-center text-gray-400 text-xs">
+                        <i class="fa-brands fa-google mr-1.5 text-blue-500"></i> Web App
+                    </div>
+                    <!-- This button calls openSpreadsheet() instead of linking -->
+                    <button onclick="openSpreadsheet()" 
+                       class="text-blue-500 hover:text-blue-700 text-xs font-medium flex items-center transition-colors cursor-pointer bg-transparent border-none p-0">
+                        Buka <i class="fa-solid fa-arrow-right ml-1"></i>
+                    </button>
+                </div>
+            </div>
+
         </div>
     </main>
-</div>
 
-<!-- CATATAN: Bagian iframe & spreadsheetSection TIDAK digunakan lagi,
-     tetapi saya sisakan komentar agar Anda tahu bahwa semua sudah new tab.
-     Jika ingin benar-benar menghapus, bisa dihapus. Saya biarkan agar tidak merusak
-     kemungkinan referensi, namun tidak akan muncul karena hidden dan tidak dipanggil. -->
-<div id="spreadsheetSection" class="hidden h-screen w-full flex flex-col">
-    <div class="bg-white shadow px-4 py-3 flex justify-between items-center">
-        <h2 class="text-sm font-semibold text-gray-700">Equipment Dewatering 2026</h2>
-        <div class="flex gap-2">
-            <button onclick="closeSpreadsheet()" class="text-sm bg-blue-500 text-white px-4 py-1 rounded-lg hover:bg-red-600 transition">Kembali</button>
-            <a href="https://docs.google.com/spreadsheets/d/1aOxszDTRpDuX8Mtc2jQrptB2V64y6So6cz0b3uzF1_w/export?format=xlsx" target="_blank" class="bg-green-600 text-white px-3 py-1 rounded-lg text-sm text-center hover:bg-green-700 transition inline-flex items-center gap-1"><i class="fa-solid fa-download"></i></a>
+    <!-- IFRAME SECTION (Hidden by default) -->
+    <div id="spreadsheetSection" class="hidden fixed inset-0 z-50 bg-gray-100 flex-col h-screen w-full">
+        <!-- Iframe Header -->
+        <div class="bg-white shadow px-6 py-3 flex justify-between items-center border-b border-gray-200">
+            <div class="flex items-center">
+                <i class="fa-solid fa-chart-pie text-purple-600 mr-3"></i>
+                <h2 class="text-lg font-semibold text-gray-700">Dashboard Pump Performance Dewatering 2026</h2>
+            </div>
+            <div class="flex gap-3">
+                <a href="https://script.google.com/macros/s/AKfycbyMs2gEwJdfHC6gawXy3SE_0iEGGQGdVWxWmDQxWMHnXdHfPpZw6kbm1qhKmIbVWbg4/exec" target="_blank" class="bg-gray-100 text-gray-700 px-3 py-1.5 rounded text-sm hover:bg-gray-200 transition border border-gray-300 flex items-center" title="Buka di Tab Baru">
+                    <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> Tab Baru
+                </a>
+                <button onclick="closeSpreadsheet()" class="bg-red-50 text-red-600 border border-red-200 px-4 py-1.5 rounded text-sm hover:bg-red-100 transition flex items-center">
+                    <i class="fa-solid fa-xmark mr-1.5"></i> Tutup
+                </button>
+            </div>
+        </div>
+        
+        <!-- The actual Iframe -->
+        <div class="flex-1 w-full bg-white relative">
+            <!-- Loading indicator (optional, simple text here) -->
+            <div id="iframeLoader" class="absolute inset-0 flex items-center justify-center bg-white z-0">
+                <span class="text-gray-400 flex items-center"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Memuat Dashboard...</span>
+            </div>
+            
+            <iframe id="dataIframe" src="" class="w-full h-full border-none relative z-10" onload="document.getElementById('iframeLoader').style.display='none';"></iframe>
         </div>
     </div>
-    <a href="https://docs.google.com/spreadsheets/d/1aOxszDTRpDuX8Mtc2jQrptB2V64y6So6cz0b3uzF1_w/edit?gid=472873705#gid=472873705" target="_blank" class="flex-1 w-full p-4 bg-blue-500 text-white rounded-xl text-center block">Buka Data</a>
-</div>
 
-<script>
-// Fungsi openSpreadsheet dan closeSpreadsheet tidak lagi diperlukan karena langsung new tab.
-// Namun agar tidak error jika ada sisa panggilan, kita kosongkan atau biarkan saja.
-function openSpreadsheet() {
-    // Tidak digunakan lagi, karena tombol sudah berubah menjadi link new tab.
-    // Jika ingin tetap mempertahankan agar tidak error, cukup redirect ke URL yang sama.
-    window.open("https://docs.google.com/spreadsheets/d/1aOxszDTRpDuX8Mtc2jQrptB2V64y6So6cz0b3uzF1_w/edit?gid=472873705#gid=472873705", "_blank");
-}
+    <!-- Script to handle Iframe logic -->
+    <script>
+        function openSpreadsheet() {
+            const iframeSection = document.getElementById('spreadsheetSection');
+            const dataIframe = document.getElementById('dataIframe');
+            const loader = document.getElementById('iframeLoader');
+            
+            // Show the section
+            iframeSection.classList.remove('hidden');
+            iframeSection.classList.add('flex');
+            
+            // Reset and show loader
+            loader.style.display = 'flex';
+            
+            // Set source only when opening to save resources
+            if (!dataIframe.src || dataIframe.src === window.location.href) {
+                dataIframe.src = "https://script.google.com/macros/s/AKfycbyMs2gEwJdfHC6gawXy3SE_0iEGGQGdVWxWmDQxWMHnXdHfPpZw6kbm1qhKmIbVWbg4/exec";
+            }
+            
+            // Prevent body scrolling behind iframe
+            document.body.style.overflow = 'hidden';
+        }
 
-function closeSpreadsheet() {
-    document.getElementById('spreadsheetSection').classList.add('hidden');
-    document.getElementById('dashboardSection').classList.remove('hidden');
-    document.body.classList.add('bg-gray-100');
-}
-</script>
+        function closeSpreadsheet() {
+            const iframeSection = document.getElementById('spreadsheetSection');
+            
+            // Hide the section
+            iframeSection.classList.add('hidden');
+            iframeSection.classList.remove('flex');
+            
+            // Restore body scrolling
+            document.body.style.overflow = 'auto';
+        }
+    </script>
 </body>
 </html>
