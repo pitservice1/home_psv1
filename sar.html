@@ -8,25 +8,41 @@
   <!-- Optimasi Khusus iOS PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="WebChat">
-  <title>WebChat</title>
+  <meta name="apple-mobile-web-app-title" content="SAR PSV1">
+  <title>SAR PSV1</title>
   
-  <link rel="icon" type="image/jpeg" href="https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png"> 
+  <link rel="icon" type="image/jpeg" href="https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png">  
   <link rel="apple-touch-icon" href="https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png">
  
-  <!-- Manifest Dinamis -->
+  <!-- Manifest Dinamis PWA -->
   <link id="pwa-manifest" rel="manifest" href="">
 
   <style>
-    body {
-      margin: 0 !important;
-      padding: 0 !important;
-      overflow: hidden !important;
-      background-color: #f4f7f6;
-      touch-action: none; 
+    :root {
+      --primary-color: #3498db;
+      --primary-dark: #2980b9;
+      --bg-color: #f4f7f6;
+      --text-main: #333333;
+      --text-muted: #555555;
     }
 
-    /* Sembunyikan Header */
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden !important;
+      background-color: var(--bg-color);
+      touch-action: manipulation;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Sembunyikan Header Bawaan Google Sites */
     header, .sites-header, .navbar, [role="banner"],
     .sites-embed-site-header, .site-header-container {
       display: none !important;
@@ -34,6 +50,7 @@
       visibility: hidden !important;
       opacity: 0 !important;
       position: absolute !important;
+      pointer-events: none !important;
     }
     
     iframe {
@@ -79,18 +96,18 @@
       width: 40px;
       height: 40px;
       border: 4px solid #f3f3f3;
-      border-top: 4px solid #3498db;
+      border-top: 4px solid var(--primary-color);
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin-bottom: 15px;
     }
 
     .loading-text {
-      font-family: 'Segoe UI', Roboto, sans-serif;
-      color: #555;
+      color: var(--text-muted);
       font-size: 16px;
       font-weight: 500;
       animation: blink 1.5s infinite;
+      letter-spacing: 0.5px;
     }
 
     @keyframes pulse {
@@ -113,45 +130,45 @@
     #install-btn {
       display: none;
       position: fixed;
-      bottom: 20px;
-      right: 20px;
-      background-color: #3498db;
+      bottom: 24px;
+      right: 24px;
+      background-color: var(--primary-color);
       color: white;
       border: none;
       border-radius: 50px;
-      padding: 12px 24px;
-      font-family: 'Segoe UI', Roboto, sans-serif;
+      padding: 14px 26px;
       font-size: 14px;
       font-weight: 600;
-      box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+      box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
       cursor: pointer;
       z-index: 1000000;
       transition: all 0.3s ease;
     }
-    #install-btn:hover { background-color: #2980b9; transform: translateY(-2px); }
+    #install-btn:hover { background-color: var(--primary-dark); transform: translateY(-2px); }
 
     /* Modal Instruksi iOS */
     #ios-install-prompt {
       display: none;
       position: fixed;
-      bottom: 20px;
+      bottom: 24px;
       left: 50%;
       transform: translateX(-50%);
       background-color: white;
-      padding: 15px 20px;
-      border-radius: 12px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      padding: 18px 22px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
       z-index: 1000000;
-      font-family: 'Segoe UI', Roboto, sans-serif;
       text-align: center;
-      width: 80%;
-      max-width: 320px;
+      width: 90%;
+      max-width: 340px;
+      border: 1px solid rgba(0,0,0,0.08);
     }
-    #ios-install-prompt p { margin: 0 0 10px 0; font-size: 14px; color: #333; }
-    #ios-install-prompt span { font-size: 20px; font-weight: bold; }
+    #ios-install-prompt p { margin: 0 0 10px 0; font-size: 14px; color: var(--text-main); line-height: 1.4; }
+    #ios-install-prompt span { font-size: 20px; font-weight: bold; color: var(--primary-color); }
     #close-ios-prompt {
-      background: #eee; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;
+      background: #f1f2f6; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; color: #555; width: 100%; margin-top: 5px;
     }
+    #close-ios-prompt:hover { background: #e4e7eb; }
   </style>
 </head>
 <body>
@@ -163,37 +180,37 @@
     <div class="loading-text">Komunikasi setiap waktu</div>
   </div>
 
-  <!-- IFRAME -->
+  <!-- IFRAME APLIKASI UTAMA -->
   <iframe id="main-iframe" src="https://script.google.com/macros/s/AKfycbyxOwcPSpSee1J1M-TKovYvcJbnvL468zB6IOAXKGRKS1PaU_fH5tuMVAP7FdK8ayx3kQ/exec?page=Index"></iframe>
 
   <!-- TOMBOL INSTALL ANDROID -->
-  <button id="install-btn">Install App WebChat</button>
+  <button id="install-btn">Install SAR PSV1</button>
 
   <!-- MODAL INSTALL IOS -->
   <div id="ios-install-prompt">
-    <p>Install WebChat di iPhone Anda:</p>
-    <p>Tap icon Share <span>⍐</span> di bawah, lalu pilih<br><strong>"Add to Home Screen"</strong></p>
-    <button id="close-ios-prompt">Tutup</button>
+    <p>Install aplikasi SAR PSV1 di iPhone/iPad Anda:</p>
+    <p>Tap tombol Share <span>⍐</span> di bawah Safari, lalu pilih<br><strong>"Add to Home Screen"</strong></p>
+    <button id="close-ios-prompt">Mengerti</button>
   </div>
 
   <script>
-    // 1. Loading Screen Logic
+    // 1. Loading Screen Logic dengan Fallback Timeout yang aman
     const iframe = document.getElementById('main-iframe');
     const loadingScreen = document.getElementById('loading-screen');
-    iframe.onload = () => {
+    
+    let isLoaded = false;
+    function hideLoading() {
+      if (isLoaded) return;
+      isLoaded = true;
       loadingScreen.style.opacity = '0';
       loadingScreen.style.visibility = 'hidden';
       iframe.style.opacity = '1';
-    };
-    setTimeout(() => {
-      if (loadingScreen.style.opacity !== '0') {
-        loadingScreen.style.opacity = '0';
-        loadingScreen.style.visibility = 'hidden';
-        iframe.style.opacity = '1';
-      }
-    }, 12000);
+    }
 
-    // 2. Hide Google Sites UI
+    iframe.onload = hideLoading;
+    setTimeout(hideLoading, 10000);
+
+    // 2. Pembersihan Otomatis Elemen Pengganggu UI Google Sites
     setTimeout(() => {
       document.querySelectorAll('div').forEach(el => {
         const style = window.getComputedStyle(el);
@@ -202,62 +219,115 @@
           el.style.display = 'none !important';
         }
       });
-    }, 1000);
+    }, 1200);
 
-    // 3. PWA Manifest
+    // 3. PWA Manifest Generator secara Dinamis
     const manifestData = {
       "name": "SAR PSV1",
-      "short_name": "SAR",
+      "short_name": "SAR PSV1",
       "description": "Laporan Inspeksi Sump, Boster, dan Outlet",
-      "start_url": ".",
+      "start_url": "./",
+      "scope": "./",
       "display": "standalone",
       "background_color": "#ffffff",
       "theme_color": "#ffffff",
       "icons": [
-        {"src": "https://cdn.phototourl.com/free/2026-07-30-478ff464-9cca-4f6c-9a7d-e51450dcb75a.jpg", "sizes": "192x192", "type": "image/jpeg"},
-        {"src": "https://cdn.phototourl.com/free/2026-07-30-478ff464-9cca-4f6c-9a7d-e51450dcb75a.jpg", "sizes": "512x512", "type": "image/jpeg"}
+        {"src": "https://cdn.phototourl.com/free/2026-07-30-478ff464-9cca-4f6c-9a7d-e51450dcb75a.jpg", "sizes": "192x192", "type": "image/jpeg", "purpose": "any maskable"},
+        {"src": "https://cdn.phototourl.com/free/2026-07-30-478ff464-9cca-4f6c-9a7d-e51450dcb75a.jpg", "sizes": "512x512", "type": "image/jpeg", "purpose": "any maskable"}
       ]
     };
     const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
     document.getElementById('pwa-manifest').setAttribute('href', URL.createObjectURL(manifestBlob));
 
-    // 4. Service Worker dengan Dukungan Notifikasi (Push)
+    // 4. Service Worker Manajemen Cache & Push Notification Modern
     const swCode = `
-      self.addEventListener('install', (event) => self.skipWaiting());
-      self.addEventListener('activate', (event) => event.waitUntil(clients.claim()));
+      const CACHE_NAME = 'sar-psv1-cache-v1';
+      
+      self.addEventListener('install', (event) => {
+        self.skipWaiting();
+      });
+      
+      self.addEventListener('activate', (event) => {
+        event.waitUntil(
+          caches.keys().then((cacheNames) => {
+            return Promise.all(
+              cacheNames.map((cache) => {
+                if (cache !== CACHE_NAME) {
+                  return caches.delete(cache);
+                }
+              })
+            );
+          }).then(() => self.clients.claim())
+        );
+      });
       
       self.addEventListener('fetch', (event) => {
-        event.respondWith(fetch(event.request).catch(() => new Response('Offline.')));
+        if (event.request.method !== 'GET') return;
+        event.respondWith(
+          fetch(event.request)
+            .catch(() => {
+              return caches.match(event.request).then((response) => {
+                return response || new Response('Aplikasi sedang offline. Periksa koneksi internet Anda.', {
+                  status: 503,
+                  statusText: 'Service Unavailable',
+                  headers: {'Content-Type': 'text/plain;charset=UTF-8'}
+                });
+              });
+            })
+        );
       });
 
-      // Menerima Push Notification (Background)
+      // Handle Push Notifications
       self.addEventListener('push', function(event) {
-        let options = {
-          body: event.data ? event.data.text() : 'Pesan baru diterima!',
+        let notificationData = {
+          body: 'Pesan atau laporan baru diterima!',
           icon: 'https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png',
-          vibrate: [200, 100, 200],
-          badge: 'https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png'
+          badge: 'https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png',
+          vibrate: [200, 100, 200]
         };
-        event.waitUntil(self.registration.showNotification('WebChat', options));
+
+        if (event.data) {
+          try {
+            const payload = event.data.json();
+            notificationData.body = payload.body || notificationData.body;
+          } catch (e) {
+            notificationData.body = event.data.text();
+          }
+        }
+
+        event.waitUntil(
+          self.registration.showNotification('SAR PSV1', notificationData)
+        );
       });
 
-      // Aksi saat notifikasi di-klik
       self.addEventListener('notificationclick', function(event) {
         event.notification.close();
-        event.waitUntil(clients.openWindow('/'));
+        event.waitUntil(
+          clients.matchAll({ type: 'window', includeUncontrolled: true }).then(windowClients => {
+            for (let client of windowClients) {
+              if (client.url && 'focus' in client) {
+                return client.focus();
+              }
+            }
+            if (clients.openWindow) {
+              return clients.openWindow('./');
+            }
+          })
+        );
       });
     `;
+
     const swBlob = new Blob([swCode], { type: 'application/javascript' });
     
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register(URL.createObjectURL(swBlob)).then(() => {
-          console.log('SW PWA Registered');
-        });
+        navigator.serviceWorker.register(URL.createObjectURL(swBlob))
+          .then((reg) => console.log('PWA ServiceWorker registered successfully:', reg.scope))
+          .catch((err) => console.error('PWA ServiceWorker registration failed:', err));
       });
     }
 
-    // 5. PWA Install Prompt (Android vs iOS)
+    // 5. Cross-Platform Install Prompt Handlers (Android & iOS)
     const isIos = () => {
       const userAgent = window.navigator.userAgent.toLowerCase();
       return /iphone|ipad|ipod/.test(userAgent);
@@ -265,68 +335,73 @@
     const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
 
     if (isIos() && !isInStandaloneMode()) {
-      // Tampilkan panduan install untuk iOS (tampil setelah 3 detik)
       setTimeout(() => {
-        document.getElementById('ios-install-prompt').style.display = 'block';
-      }, 3000);
+        const iosPrompt = document.getElementById('ios-install-prompt');
+        if (iosPrompt) iosPrompt.style.display = 'block';
+      }, 3500);
       
-      document.getElementById('close-ios-prompt').addEventListener('click', () => {
-        document.getElementById('ios-install-prompt').style.display = 'none';
-      });
+      const closeBtn = document.getElementById('close-ios-prompt');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          document.getElementById('ios-install-prompt').style.display = 'none';
+        });
+      }
     } else {
-      // Android Install Prompt
       let deferredPrompt;
       const installBtn = document.getElementById('install-btn');
+      
       window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
-        installBtn.style.display = 'block';
+        if (installBtn) installBtn.style.display = 'block';
       });
-      installBtn.addEventListener('click', async () => {
-        if (deferredPrompt) {
-          deferredPrompt.prompt();
-          await deferredPrompt.userChoice;
-          deferredPrompt = null;
-          installBtn.style.display = 'none';
-        }
-      });
-      window.addEventListener('appinstalled', () => {
-        installBtn.style.display = 'none';
-      });
-    }
 
-    // 6. Request Notification Permission
-    function requestNotificationPermission() {
-      if ("Notification" in window) {
-        Notification.requestPermission().then(permission => {
-          if (permission === "granted") console.log("Notifikasi diizinkan.");
+      if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const choiceResult = await deferredPrompt.userChoice;
+            if (choiceResult.outcome === 'accepted') {
+              console.log('User accepted the install prompt');
+            }
+            deferredPrompt = null;
+            installBtn.style.display = 'none';
+          }
         });
       }
-    }
-    
-    // Minta izin notifikasi (sebaiknya dipanggil saat user berinteraksi dengan layar, misal klik body)
-    document.body.addEventListener('click', () => {
-      if (Notification.permission === 'default') requestNotificationPermission();
-    }, { once: true });
 
-    // 7. Bridge Komunikasi Iframe (Untuk memicu notifikasi dari Google Script)
+      window.addEventListener('appinstalled', () => {
+        if (installBtn) installBtn.style.display = 'none';
+        console.log('SAR PSV1 was successfully installed');
+      });
+    }
+
+    // 6. Iframe Bridge Message & Local Push Listener
     window.addEventListener('message', (event) => {
-      // Pastikan pesan berasal dari iframe Anda (Opsional: validasi event.origin)
       if (event.data && event.data.type === 'NEW_MESSAGE') {
-        if (Notification.permission === 'granted') {
-          // Kirim Notifikasi Lokal (Saat aplikasi terbuka)
-          navigator.serviceWorker.ready.then(function(registration) {
-            registration.showNotification('Pesan Baru', {
-              body: event.data.text || 'Anda menerima pesan baru',
+        if ("Notification" in window && Notification.permission === 'granted') {
+          navigator.serviceWorker.ready.then((registration) => {
+            registration.showNotification('Pesan Baru - SAR PSV1', {
+              body: event.data.text || 'Anda menerima pembaruan laporan baru.',
               icon: 'https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png',
+              badge: 'https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png',
               vibrate: [200, 100, 200]
             });
-          });
+          }).catch(err => console.error('Error triggering notification:', err));
         }
       }
     });
+
+    // Request Notification Permission on user click interaction
+    document.body.addEventListener('click', () => {
+      if ("Notification" in window && Notification.permission === 'default') {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted') {
+            console.log('Notification permission granted.');
+          }
+        });
+      }
+    }, { once: true });
   </script>
 </body>
 </html>
-
-
