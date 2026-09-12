@@ -240,7 +240,7 @@
     contentIframe.src = '';
   }
 
-  // 3. LOGIKA SMART POP-UP INSTALL & TOMBOL DOWNLOAD
+// 3. LOGIKA SMART POP-UP INSTALL & TOMBOL DOWNLOAD
   let deferredPrompt;
 
   // Tangkap sistem prompt bawaan Android/Chrome
@@ -249,12 +249,23 @@
     deferredPrompt = e;
   });
 
+  // Tangkap event jika aplikasi berhasil di-install (Trigger otomatis dari OS)
+  window.addEventListener('appinstalled', () => {
+    localStorage.setItem('psv1_app_installed', 'true');
+    document.getElementById('installModalOverlay').style.display = 'none';
+  });
+
   window.addEventListener('DOMContentLoaded', () => {
     const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
     const isAndroid = /android/.test(window.navigator.userAgent.toLowerCase());
     const isInStandaloneMode = ('standalone' in window.navigator && window.navigator.standalone) || window.matchMedia('(display-mode: standalone)').matches;
 
-    if (!isInStandaloneMode) {
+    // Cek memori browser: Apakah user sudah pernah tutup pop-up atau sudah install?
+    const isPopupClosed = localStorage.getItem('psv1_popup_closed') === 'true';
+    const isAppInstalled = localStorage.getItem('psv1_app_installed') === 'true';
+
+    // Tampilkan pop-up HANYA jika bukan mode aplikasi, belum diinstal, dan pop-up belum ditutup manual
+    if (!isInStandaloneMode && !isAppInstalled && !isPopupClosed) {
       const overlay = document.getElementById('installModalOverlay');
       overlay.style.display = 'flex';
 
@@ -269,9 +280,10 @@
       }
     }
     
-    // Tutup Modal
+    // Aksi Tutup Modal & Simpan ke memori agar tidak muncul lagi
     document.getElementById('btnCloseModal').addEventListener('click', () => {
       document.getElementById('installModalOverlay').style.display = 'none';
+      localStorage.setItem('psv1_popup_closed', 'true');
     });
 
     // Aksi Tombol Download
@@ -283,6 +295,7 @@
           const { outcome } = await deferredPrompt.userChoice;
           if (outcome === 'accepted') {
             document.getElementById('installModalOverlay').style.display = 'none';
+            localStorage.setItem('psv1_app_installed', 'true');
           }
           deferredPrompt = null;
         } else {
