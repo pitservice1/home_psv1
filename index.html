@@ -16,12 +16,7 @@
   <!-- ===== FAVICON ===== -->
 <link rel="icon" type="image/png" href="https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png">
 <link rel="apple-touch-icon" href="https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png">
-  <link rel="icon" type="image/png" href="/icon.png">
-  <!-- Icon untuk perangkat Apple (iOS) -->
-  <link rel="apple-touch-icon" href="/icon.png">
-  <!-- Link ke Web App Manifest -->
-  <link rel="manifest" href="/manifest.json">
-<!-- ===== APPLE TOUCH ICON (sudah ada, tapi perbaiki path) ===== -->
+
 <style>
   :root {
     --bg-light: #f0f9ff;
@@ -1269,19 +1264,23 @@
 }
 
 @media (max-width: 480px) {
-    .carousel-modal-nav {
-        width: 32px;
-        height: 32px;
-        font-size: 0.8rem;
-    }
-    .carousel-modal-close {
-        width: 36px;
-        height: 36px;
-        font-size: 1rem;
-        top: 10px;
-        right: 10px;
-    }
+    .carousel-modal-nav { width: 32px; height: 32px; font-size: 0.8rem; }
+    .carousel-modal-close { width: 36px; height: 36px; font-size: 1rem; top: 10px; right: 10px; }
 }
+
+/* PWA Pop-up Modal (Iklan Centered) */
+.install-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,30,50,0.6); z-index: 99999; align-items: center; justify-content: center; backdrop-filter: blur(3px); }
+.install-modal-content { background: #fff; width: 90%; max-width: 340px; border-radius: 24px; padding: 30px 24px; text-align: center; position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.25); animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+@keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+.btn-close-modal { position: absolute; top: 16px; right: 16px; background: #f0f4f8; border: none; color: #5e7e8e; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1rem; transition: 0.2s; }
+.btn-close-modal:hover { background: #e1e8ed; color: #1c3a4a; }
+.install-logo { width: 90px; height: 90px; border-radius: 20px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); margin-bottom: 16px; }
+.install-modal-content h3 { font-size: 1.25rem; color: #14323f; margin-bottom: 8px; font-weight: 700; }
+.install-modal-content p { font-size: 0.9rem; color: #5e7e8e; line-height: 1.5; margin-bottom: 22px; }
+.btn-download { background: #0a6ed1; color: #fff; border: none; width: 100%; padding: 14px; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: 0.2s; box-shadow: 0 6px 15px rgba(10, 110, 209, 0.3); }
+.btn-download:hover { background: #0854a0; transform: translateY(-2px); }
+.install-guide { background: #f4f7f9; padding: 14px; border-radius: 12px; font-size: 0.85rem; color: #1c3a4a; line-height: 1.5; margin-top: 16px; border: 1px dashed #a8c0cc; text-align: left; }
+
 
 </style>
 </head>
@@ -2223,51 +2222,111 @@
   }); // <-- Penutup DOMContentLoaded
 console.log('✅ Report SS Modal siap digunakan!');
  
-  // ===== SERVICE WORKER REGISTRATION =====
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', function() {
-      // Tambahkan slash (/) di depan agar scope berada di root aplikasi
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(function(registration) {
-          console.log('✅ Service Worker registered with scope:', registration.scope);
-        })
-        .catch(function(error) {
-          console.log('❌ Service Worker failed:', error);
-        });
-    });
-  }
+// ===== 1. INJEKSI MANIFEST PWA SECARA DINAMIS (TANPA FILE TERPISAH) =====
+  const manifestData = {
+    name: "Pit Service 1",
+    short_name: "PSV1",
+    start_url: window.location.href,
+    display: "standalone",
+    background_color: "#f0f9ff",
+    theme_color: "#0a6ed1",
+    icons: [
+      { src: "https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png", sizes: "192x192", type: "image/png" },
+      { src: "https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png", sizes: "512x512", type: "image/png" }
+    ]
+  };
+  const manifestString = JSON.stringify(manifestData);
+  const manifestLink = document.createElement('link');
+  manifestLink.rel = 'manifest';
+  manifestLink.href = 'data:application/manifest+json;charset=utf-8,' + encodeURIComponent(manifestString);
+  document.head.appendChild(manifestLink);
 
-  // ===== PWA INSTALLATION =====
+  // ===== 2. LOGIKA SMART POP-UP INSTALL & TOMBOL DOWNLOAD =====
   let deferredPrompt;
-  const installBtn = document.getElementById('installBtn');
 
-  window.addEventListener('beforeinstallprompt', function(e) {
+  window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
-    if (installBtn) {
-      installBtn.style.display = 'block';
-      installBtn.addEventListener('click', function() {
-        installBtn.style.display = 'none';
-        deferredPrompt.prompt();
-        deferredPrompt.userChoice.then(function(choiceResult) {
-          if (choiceResult.outcome === 'accepted') {
-            console.log('✅ User installed PWA');
-          } else {
-            console.log('❌ User dismissed install');
+  });
+
+  window.addEventListener('appinstalled', () => {
+    localStorage.setItem('psv_app_installed', 'true');
+    document.getElementById('installModalOverlay').style.display = 'none';
+  });
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const isIos = /iphone|ipad|ipod/.test(window.navigator.userAgent.toLowerCase());
+    const isAndroid = /android/.test(window.navigator.userAgent.toLowerCase());
+    const isInStandaloneMode = ('standalone' in window.navigator && window.navigator.standalone) || window.matchMedia('(display-mode: standalone)').matches;
+
+    // Cek memori browser
+    const isPopupClosed = localStorage.getItem('psv_popup_closed') === 'true';
+    const isAppInstalled = localStorage.getItem('psv_app_installed') === 'true';
+
+    // Tampilkan jika belum terinstall & belum di-close
+    if (!isInStandaloneMode && !isAppInstalled && !isPopupClosed) {
+      setTimeout(() => {
+        const overlay = document.getElementById('installModalOverlay');
+        overlay.style.display = 'flex';
+
+        const btnInstall = document.getElementById('btnInstallApp');
+        if (isIos) {
+          document.getElementById('iosGuide').style.display = 'block';
+        } else {
+          btnInstall.style.display = 'flex';
+        }
+      }, 1500); // Muncul setelah 1.5 detik agar elegan
+    }
+    
+    // Tombol Tutup
+    document.getElementById('btnCloseModal').addEventListener('click', () => {
+      document.getElementById('installModalOverlay').style.display = 'none';
+      localStorage.setItem('psv_popup_closed', 'true');
+    });
+
+    // Tombol Download
+    const btnInstallElem = document.getElementById('btnInstallApp');
+    if (btnInstallElem) {
+      btnInstallElem.addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          const { outcome } = await deferredPrompt.userChoice;
+          if (outcome === 'accepted') {
+            document.getElementById('installModalOverlay').style.display = 'none';
+            localStorage.setItem('psv_app_installed', 'true');
           }
           deferredPrompt = null;
-        });
+        } else {
+          // Fallback untuk GAS iframe sandbox
+          document.getElementById('androidGuide').style.display = 'block';
+          btnInstallElem.innerHTML = '<i class="fas fa-arrow-down"></i> Ikuti Petunjuk di Bawah';
+          btnInstallElem.style.background = '#5e7e8e';
+          btnInstallElem.style.boxShadow = 'none';
+        }
       });
     }
   });
-
-  window.addEventListener('appinstalled', function() {
-    console.log('✅ App installed successfully');
-  });
 </script>
-<!-- Install Button -->
-<button id="installBtn" style="display:none; position:fixed; bottom:20px; right:20px; background:#0a6ed1; color:white; border:none; padding:12px 24px; border-radius:50px; font-size:1rem; cursor:pointer; z-index:999; box-shadow:0 4px 16px rgba(10,110,209,0.3);">
-    📲 Install Aplikasi
-</button>
+
+<!-- HTML UNTUK PWA SMART INSTALL POPUP (MENGGANTIKAN BUTTON LAMA) -->
+<div id="installModalOverlay" class="install-modal-overlay">
+  <div class="install-modal-content">
+    <button id="btnCloseModal" class="btn-close-modal" title="Tutup"><i class="fas fa-times"></i></button>
+    <img src="https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png" alt="Logo PSV1" class="install-logo">
+    <h3>Akses Lebih Cepat!</h3>
+    <p>Install Pit Service 1 ke layar utama Anda. Bebas repot tanpa mencari link web lagi.</p>
+    
+    <button id="btnInstallApp" class="btn-download" style="display: none;">
+      <i class="fas fa-download"></i> Download Aplikasi
+    </button>
+    
+    <div id="androidGuide" class="install-guide" style="display:none;">
+      Klik <strong>Titik Tiga (⋮)</strong> di sudut kanan atas browser, lalu pilih <strong>"Tambahkan ke Layar Utama"</strong>.
+    </div>
+    <div id="iosGuide" class="install-guide" style="display:none;">
+      Klik icon <strong>Share <i class="fas fa-share-square"></i></strong> di menu browser, lalu pilih <strong>"Add to Home Screen" <i class="fas fa-plus-square"></i></strong>.
+    </div>
+  </div>
+</div>
 </body>
 </html>
