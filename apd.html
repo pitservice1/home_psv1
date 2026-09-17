@@ -15,9 +15,8 @@
         --fiori-bg: #f5f6f7;
         --fiori-shell-bg: #354a5f;
         --fiori-shell-text: #ffffff;
-        --fiori-card-bg: #ffffff;
-        --fiori-card-border: #d9d9d9;
-        --fiori-card-hover-border: #0a6ed1;
+        --fiori-card-bg: rgba(255, 255, 255, 0.1);
+        --fiori-card-hover: rgba(255, 255, 255, 0.2);
         --fiori-text-main: #32363a;
         --fiori-text-muted: #6a6d70;
         --fiori-accent: #0a6ed1;
@@ -30,294 +29,338 @@
         font-family: 'Inter', 'Segoe UI', sans-serif;
     }
 
-    body {
+    /* Pastikan HTML & Body mengisi penuh layar dan mencegah scroll ganda */
+    html, body {
+        height: 100vh;
+        overflow: hidden;
         background-color: var(--fiori-bg);
-        min-height: 100vh;
         color: var(--fiori-text-main);
         display: flex;
         flex-direction: column;
     }
 
-    /* SAP Fiori Shell Bar */
+    /* SAP Fiori Shell Bar / Header */
     .fiori-shell {
         background-color: var(--fiori-shell-bg);
         color: var(--fiori-shell-text);
-        padding: 14px 24px;
+        padding: 6px 16px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        flex-shrink: 0;
+        z-index: 1000;
+        gap: 15px;
     }
 
-    .fiori-shell-brand {
+    .fiori-shell-left {
         display: flex;
         align-items: center;
         gap: 12px;
-    }
-
-    .fiori-shell-brand i {
-        font-size: 20px;
-        color: #4bb1f0;
-    }
-
-    .fiori-shell-brand h2 {
-        font-size: 16px;
-        font-weight: 600;
-        letter-spacing: 0.2px;
-    }
-
-    .fiori-shell-user {
-        font-size: 13px;
-        color: #bfc9d1;
-    }
-
-    /* Main Container / Launchpad Content */
-    .container {
-        max-width: 1200px;
-        width: 100%;
-        margin: 30px auto;
-        padding: 0 20px;
-        flex: 1;
-    }
-
-    .header-section {
-        margin-bottom: 24px;
-    }
-
-    .header-section h1 {
-        font-size: 22px;
-        font-weight: 600;
-        color: var(--fiori-text-main);
-        margin-bottom: 4px;
-    }
-
-    .header-section p {
-        color: var(--fiori-text-muted);
-        font-size: 13px;
-    }
-
-    /* SAP Fiori Tile Grid Layout */
-    .menu-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-        gap: 16px;
-        margin-bottom: 30px;
-    }
-
-    /* SAP Fiori Generic Tile */
-    .card {
-        background: var(--fiori-card-bg);
-        border: 1px solid var(--fiori-card-border);
-        border-radius: 4px;
-        padding: 20px;
-        text-decoration: none;
-        color: inherit;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        position: relative;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
-        transition: all 0.2s ease-in-out;
-        cursor: pointer;
-    }
-
-    .card::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: transparent;
-        transition: background 0.2s ease-in-out;
-    }
-
-    .card:hover {
-        border-color: var(--fiori-card-hover-border);
-        box-shadow: 0 4px 12px rgba(10, 110, 209, 0.12);
-        transform: translateY(-2px);
-    }
-
-    .card:hover::before {
-        background: var(--fiori-accent);
-    }
-
-    .card-content {
-        display: flex;
-        align-items: flex-start;
-        gap: 16px;
-    }
-
-    .icon-box {
-        width: 48px;
-        height: 48px;
-        border-radius: 4px;
-        background: #ebf5fb;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         flex-shrink: 0;
     }
 
-    .icon-box i {
-        font-size: 20px;
+    .menu-toggle-btn {
+        background: transparent;
+        border: none;
+        color: var(--fiori-shell-text);
+        font-size: 16px;
+        cursor: pointer;
+        padding: 6px 10px;
+        border-radius: 4px;
+        transition: background 0.2s;
+        display: none; /* Muncul saat layar kecil / mobile */
+    }
+
+    .menu-toggle-btn:hover {
+        background: rgba(255, 255, 255, 0.1);
+    }
+
+    .fiori-shell-brand h2 {
+        font-size: 13px;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        white-space: nowrap;
+    }
+
+    /* Menu Navigasi di Header (Minimalis) */
+    .header-nav {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        overflow-x: auto;
+        padding: 4px 0;
+    }
+
+    .header-nav::-webkit-scrollbar {
+        height: 3px;
+    }
+    .header-nav::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,0.2);
+        border-radius: 2px;
+    }
+
+    .header-nav-item {
+        background: var(--fiori-card-bg);
+        color: var(--fiori-shell-text);
+        padding: 5px 10px;
+        border-radius: 4px;
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11.5px;
+        font-weight: 500;
+        white-space: nowrap;
+        transition: background 0.2s, transform 0.1s;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .header-nav-item i {
+        font-size: 12px;
+        color: #72b1ff;
+    }
+
+    .header-nav-item:hover {
+        background: var(--fiori-card-hover);
+        border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .fiori-shell-user {
+        font-size: 11px;
+        color: #bfc9d1;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    /* Mobile Drawer / Sidebar Overlay */
+    .sidebar-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.4);
+        backdrop-filter: blur(2px);
+        z-index: 1050;
+        display: none;
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .sidebar-overlay.show {
+        display: block;
+        opacity: 1;
+    }
+
+    .sidebar-drawer {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 280px;
+        height: 100%;
+        background: #ffffff;
+        z-index: 1100;
+        box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .sidebar-drawer.show {
+        left: 0;
+    }
+
+    .sidebar-header {
+        background: var(--fiori-shell-bg);
+        color: #fff;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-weight: 600;
+        font-size: 14px;
+    }
+
+    .sidebar-close-btn {
+        background: transparent;
+        border: none;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .sidebar-menu-list {
+        padding: 12px 0;
+        overflow-y: auto;
+        flex: 1;
+    }
+
+    .sidebar-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 20px;
+        text-decoration: none;
+        color: var(--fiori-text-main);
+        font-size: 13px;
+        font-weight: 500;
+        border-left: 3px solid transparent;
+        transition: all 0.2s;
+    }
+
+    .sidebar-item i {
+        font-size: 16px;
+        color: var(--fiori-accent);
+        width: 20px;
+        text-align: center;
+    }
+
+    .sidebar-item:hover {
+        background: #f0f5fb;
+        border-left-color: var(--fiori-accent);
         color: var(--fiori-accent);
     }
 
-    .text-box {
+    /* Main Container / Workspace Penuh */
+    .container {
+        flex: 1;
         display: flex;
         flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+        padding: 8px 12px;
+        overflow: hidden;
     }
 
-    .card h3 {
-        font-size: 15px;
-        font-weight: 600;
-        color: var(--fiori-text-main);
-        margin-bottom: 6px;
-    }
-
-    .card p {
-        font-size: 12px;
-        color: var(--fiori-text-muted);
-        line-height: 1.4;
-    }
-
-    /* Iframe Wrapper Container Style */
+    /* Iframe Wrapper Container Style - Memenuhi Sisa Layar */
     .iframe-container {
+        flex: 1;
         background: #ffffff;
-        border: 1px solid var(--fiori-card-border);
+        border: 1px solid #d9d9d9;
         border-radius: 6px;
         box-shadow: 0 4px 16px rgba(0,0,0,0.06);
-        overflow: hidden;
         display: flex;
         flex-direction: column;
+        overflow: hidden;
+        min-height: 0;
     }
 
     .iframe-header {
         background: #f8f9fa;
-        padding: 12px 18px;
-        border-bottom: 1px solid var(--fiori-card-border);
+        padding: 6px 12px;
+        border-bottom: 1px solid #d9d9d9;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-size: 13px;
+        font-size: 11px;
         font-weight: 600;
         color: var(--fiori-text-main);
+        flex-shrink: 0;
     }
 
     .iframe-header span i {
         color: var(--fiori-accent);
-        margin-right: 6px;
+        margin-right: 4px;
     }
 
+    /* Iframe mengisi penuh ruang ke bawah */
     iframe {
+        flex: 1;
         width: 100%;
-        height: 82vh;
+        height: 100%;
         border: none;
         background: #ffffff;
     }
 
-    /* Footer Korporat */
+    /* Footer Korporat Ringkas */
     footer {
         text-align: center;
-        padding: 20px;
-        font-size: 12px;
+        padding: 6px;
+        font-size: 10px;
         color: var(--fiori-text-muted);
         border-top: 1px solid #e5e5e5;
         background: #ffffff;
-        margin-top: 40px;
+        flex-shrink: 0;
     }
 
-    @media (max-width: 576px) {
-        .fiori-shell {
-            padding: 12px 16px;
+    /* Responsif untuk layar kecil / mobile */
+    @media (max-width: 768px) {
+        .menu-toggle-btn {
+            display: inline-block;
         }
-        .container {
-            margin: 16px auto;
-            padding: 0 12px;
+        .header-nav {
+            display: none; /* Sembunyikan menu bar di header pada layar kecil, gunakan hamburger menu */
         }
-        iframe {
-            height: 75vh;
+        .fiori-shell-user {
+            display: none;
         }
     }
 </style>
 </head>
 <body>
 
-<!-- SAP Fiori Shell Bar -->
+<!-- SAP Fiori Shell Bar / Header dengan Menu Minimalis -->
 <header class="fiori-shell">
-    <div class="fiori-shell-brand">
-        <i class="fas fa-hard-hat"></i>
-        <h2>Management — APD Pit Service 1</h2>
+    <div class="fiori-shell-left">
+        <button class="menu-toggle-btn" onclick="toggleSidebar()" title="Menu Navigasi">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="fiori-shell-brand">
+            <h2>APD Management</h2>
+        </div>
     </div>
+
+    <!-- Menu Navigasi Ringkas di Header -->
+    <nav class="header-nav">
+        <a href="https://script.google.com/macros/s/AKfycbww3SmtXHkE_BWMOsyh8nLFnmtxJKvZEhPzRszHRbdEV0wnn8UQJAygeJJ4Wil43-NUpw/exec" target="iframe" class="header-nav-item">
+            <i class="fas fa-file-signature"></i> Input Transaksi
+        </a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSemUtp5oVI1_8QkzURXLWGTijMzSajyE2MqxvLgvU_NDJRX4Q/viewform" target="iframe" class="header-nav-item">
+            <i class="fas fa-box-open"></i> Pengajuan
+        </a>
+        <a href="https://forms.gle/3idP5X7tS4r9jJHX9" target="_blank" class="header-nav-item">
+            <i class="fas fa-handshake"></i> Tanda Terima
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/1v5Xyj00qmj4pzCGoyRPydwLjDfu57nMBcOWtTognoyg/edit?gid=1245499998#gid=1245499998" target="iframe" class="header-nav-item">
+            <i class="fas fa-database"></i> Database
+        </a>
+    </nav>
+
     <div class="fiori-shell-user">
         Pit Service Air
     </div>
 </header>
 
+<!-- Sidebar Drawer & Overlay Mobile (Untuk layar HP) -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+<div class="sidebar-drawer" id="sidebarDrawer">
+    <div class="sidebar-header">
+        <span><i class="fas fa-compass me-2"></i> Navigasi Menu</span>
+        <button class="sidebar-close-btn" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="sidebar-menu-list">
+        <a href="https://script.google.com/macros/s/AKfycbww3SmtXHkE_BWMOsyh8nLFnmtxJKvZEhPzRszHRbdEV0wnn8UQJAygeJJ4Wil43-NUpw/exec" target="iframe" class="sidebar-item" onclick="toggleSidebar()">
+            <i class="fas fa-file-signature"></i> Input Transaksi
+        </a>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSemUtp5oVI1_8QkzURXLWGTijMzSajyE2MqxvLgvU_NDJRX4Q/viewform" target="_blank" class="sidebar-item">
+            <i class="fas fa-box-open"></i> Pengajuan APD
+        </a>
+        <a href="https://forms.gle/3idP5X7tS4r9jJHX9" target="_blank" class="sidebar-item">
+            <i class="fas fa-handshake"></i> Tanda Terima APD
+        </a>
+        <a href="https://docs.google.com/spreadsheets/d/1v5Xyj00qmj4pzCGoyRPydwLjDfu57nMBcOWtTognoyg/edit?gid=1245499998#gid=1245499998" target="_blank" class="sidebar-item">
+            <i class="fas fa-database"></i> Database Monitoring
+        </a>
+    </div>
+</div>
+
+<!-- Workspace Utama (Iframe Layar Penuh) -->
 <div class="container">
-    <div class="header-section">
-        <h1>Quick Access Menu</h1>
-        <p>Pilih modul operasional serah terima dan pemantauan alat pelindung diri.</p>
-    </div>
-
-    <div class="menu-grid">
-
-        <a href="https://script.google.com/macros/s/AKfycbww3SmtXHkE_BWMOsyh8nLFnmtxJKvZEhPzRszHRbdEV0wnn8UQJAygeJJ4Wil43-NUpw/exec" target="iframe" class="card">
-            <div class="card-content">
-                <div class="icon-box">
-                    <i class="fas fa-file-signature"></i>
-                </div>
-                <div class="text-box">
-                    <h3>Input Transaksi</h3>
-                    <p>Input data serah terima dan transaksi APD lapangan.</p>
-                </div>
-            </div>
-        </a>
-
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSemUtp5oVI1_8QkzURXLWGTijMzSajyE2MqxvLgvU_NDJRX4Q/viewform" target="_blank" class="card">
-            <div class="card-content">
-                <div class="icon-box">
-                    <i class="fas fa-box-open"></i>
-                </div>
-                <div class="text-box">
-                    <h3>Pengajuan</h3>
-                    <p>Form pengajuan APD baru ke bagian SHE.</p>
-                </div>
-            </div>
-        </a>
-
-        <a href="https://forms.gle/3idP5X7tS4r9jJHX9" target="_blank" class="card">
-            <div class="card-content">
-                <div class="icon-box">
-                    <i class="fas fa-handshake"></i>
-                </div>
-                <div class="text-box">
-                    <h3>Tanda Terima APD</h3>
-                    <p>Form tanda terima serah terima APD ke SHE.</p>
-                </div>
-            </div>
-        </a>
-
-        <a href="https://docs.google.com/spreadsheets/d/1v5Xyj00qmj4pzCGoyRPydwLjDfu57nMBcOWtTognoyg/edit?gid=1245499998#gid=1245499998" target="_blank" class="card">
-            <div class="card-content">
-                <div class="icon-box">
-                    <i class="fas fa-database"></i>
-                </div>
-                <div class="text-box">
-                    <h3>Database</h3>
-                    <p>Akses database monitoring dan rekapitulasi APD.</p>
-                </div>
-            </div>
-        </a>
-
-    </div>
-
-    <!-- Area Penampung Iframe Target (SAP Fiori Card Style) -->
     <div class="iframe-container">
         <div class="iframe-header">
             <span><i class="fas fa-window-maximize"></i> Workspace / Live Preview Form Input</span>
-            <span style="font-size: 11px; color: var(--fiori-text-muted);">Klik menu "Input Transaksi" di atas untuk memuat aplikasi</span>
+            <span style="font-size: 10px; color: var(--fiori-text-muted);">SAP Fiori Viewport mode</span>
         </div>
         <iframe name="iframe" src="https://script.google.com/macros/s/AKfycbww3SmtXHkE_BWMOsyh8nLFnmtxJKvZEhPzRszHRbdEV0wnn8UQJAygeJJ4Wil43-NUpw/exec"></iframe>
     </div>
@@ -326,6 +369,18 @@
 <footer>
     © 2026 Pit Service Air — Enterprise Systems
 </footer>
+
+<script>
+    // Fungsi untuk membuka / menutup Sidebar Drawer Menu (Mode Mobile)
+    function toggleSidebar() {
+        const drawer = document.getElementById('sidebarDrawer');
+        const overlay = document.getElementById('sidebarOverlay');
+        if (drawer && overlay) {
+            drawer.classList.toggle('show');
+            overlay.classList.toggle('show');
+        }
+    }
+</script>
 
 </body>
 </html>
