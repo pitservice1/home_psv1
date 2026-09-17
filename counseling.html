@@ -1,51 +1,42 @@
-
-
-<style>
-  /* SEMBUNYIKAN HEADER GOOGLE SITES */
-  header, 
-  .sites-header, 
-  .navbar, 
-  [role="banner"],
-  .sites-embed-site-header,
-  .site-header-container {
-    display: none !important;
-    height: 0 !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    position: absolute !important;
-  }
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <!-- Kunci zoom dan skala agar seperti native app -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <style>
+    /* Reset dasar untuk frame embed */
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100%;
+      height: 100%;
+      /* Mencegah efek bounce / pull-to-refresh di mobile */
+      overscroll-behavior: none !important; 
+      overflow: hidden !important;
+      background-color: #f4f7fb; /* Mencegah flash putih sebelum iframe load */
+    }
+    
+    /* ATUR TAMPILAN IFRAME SEPENUH LAYAR */
+    iframe {
+      position: absolute !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      /* Gunakan 100dvh agar tinggi presisi mengikuti address bar mobile */
+      height: 100dvh !important; 
+      border: none !important;
+      z-index: 999999 !important;
+      display: block !important;
+    }
+  </style>
+</head>
+<body>
   
-  /* ATUR TAMPILAN IFRAME */
-  iframe {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    border: none !important;
-    z-index: 999999 !important;
-  }
-  
-  /* ATUR BODY */
-  body {
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-  }
-</style>
+  <iframe 
+    src="https://script.google.com/macros/s/AKfycbxMIw9bNtWvLp7mo3Qqq85YD4LpP1R-MniVxLsFGwGcj3i_yj4XCJyKSMyEIY5tiTPj/exec"
+    allow="fullscreen; camera; microphone; clipboard-read; clipboard-write" 
+    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-downloads">
+  </iframe>
 
-<iframe src="https://script.google.com/macros/s/AKfycbxMIw9bNtWvLp7mo3Qqq85YD4LpP1R-MniVxLsFGwGcj3i_yj4XCJyKSMyEIY5tiTPj/exec">
-</iframe>
-
-<script>
-  // Force hide Google Sites UI
-  setTimeout(() => {
-    const elements = document.querySelectorAll('div');
-    elements.forEach(el => {
-      const style = window.getComputedStyle(el);
-      if (style.position === 'fixed' || style.top === '0px') {
-        el.style.display = 'none !important';
-      }
-    });
-  }, 1000);
-</script>
+</body>
+</html>
