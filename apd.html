@@ -3,153 +3,281 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Menu APD Pit Service</title>
+<title>APD Pit Service 1</title>
 
 <!-- Font Awesome Icon -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<!-- Google Fonts (Inter untuk presisi SAP Fiori feel) -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
-    *{
-        margin:0;
-        padding:0;
-        box-sizing:border-box;
-        font-family: 'Segoe UI', sans-serif;
+    :root {
+        --fiori-bg: #f5f6f7;
+        --fiori-shell-bg: #354a5f;
+        --fiori-shell-text: #ffffff;
+        --fiori-card-bg: #ffffff;
+        --fiori-card-border: #d9d9d9;
+        --fiori-card-hover-border: #0a6ed1;
+        --fiori-text-main: #32363a;
+        --fiori-text-muted: #6a6d70;
+        --fiori-accent: #0a6ed1;
     }
 
-    body{
-        background: linear-gradient(135deg, #dff6ff, #b8e8fc);
-        min-height:100vh;
-        padding:30px 20px;
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', 'Segoe UI', sans-serif;
     }
 
-    .container{
-        max-width:1100px;
-        margin:auto;
+    body {
+        background-color: var(--fiori-bg);
+        min-height: 100vh;
+        color: var(--fiori-text-main);
+        display: flex;
+        flex-direction: column;
     }
 
-    .header{
-        text-align:center;
-        margin-bottom:35px;
+    /* SAP Fiori Shell Bar */
+    .fiori-shell {
+        background-color: var(--fiori-shell-bg);
+        color: var(--fiori-shell-text);
+        padding: 14px 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
 
-    .header h1{
-        font-size:32px;
-        color:#0b4f6c;
-        margin-bottom:8px;
+    .fiori-shell-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
     }
 
-    .header p{
-        color:#355070;
-        font-size:15px;
+    .fiori-shell-brand i {
+        font-size: 20px;
+        color: #4bb1f0;
     }
 
-    .menu-grid{
-        display:grid;
-        grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-        gap:22px;
+    .fiori-shell-brand h2 {
+        font-size: 16px;
+        font-weight: 600;
+        letter-spacing: 0.2px;
     }
 
-    .card{
-        background:white;
-        border-radius:22px;
-        padding:28px 20px;
-        text-decoration:none;
-        color:#333;
-        box-shadow:0 10px 25px rgba(0,0,0,0.08);
-        transition:all 0.3s ease;
-        text-align:center;
+    .fiori-shell-user {
+        font-size: 13px;
+        color: #bfc9d1;
     }
 
-    .card:hover{
-        transform:translateY(-8px);
-        box-shadow:0 15px 30px rgba(0,0,0,0.12);
+    /* Main Container / Launchpad Content */
+    .container {
+        max-width: 1200px;
+        width: 100%;
+        margin: 30px auto;
+        padding: 0 20px;
+        flex: 1;
     }
 
-    .icon-box{
-        width:75px;
-        height:75px;
-        margin:auto;
-        border-radius:20px;
-        background:#e3f6ff;
-        display:flex;
-        align-items:center;
-        justify-content:center;
-        margin-bottom:18px;
+    .header-section {
+        margin-bottom: 24px;
     }
 
-    .icon-box i{
-        font-size:32px;
-        color:#0096c7;
+    .header-section h1 {
+        font-size: 22px;
+        font-weight: 600;
+        color: var(--fiori-text-main);
+        margin-bottom: 4px;
     }
 
-    .card h3{
-        font-size:20px;
-        margin-bottom:10px;
-        color:#023047;
+    .header-section p {
+        color: var(--fiori-text-muted);
+        font-size: 13px;
     }
 
-    .card p{
-        font-size:14px;
-        color:#666;
-        line-height:1.5;
+    /* SAP Fiori Tile Grid Layout */
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 16px;
     }
 
-    footer{
-        text-align:center;
-        margin-top:40px;
-        font-size:13px;
-        color:#4f6d7a;
+    /* SAP Fiori Generic Tile */
+    .card {
+        background: var(--fiori-card-bg);
+        border: 1px solid var(--fiori-card-border);
+        border-radius: 4px;
+        padding: 20px;
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        position: relative;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+        transition: all 0.2s ease-in-out;
+    }
+
+    .card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: transparent;
+        transition: background 0.2s ease-in-out;
+    }
+
+    .card:hover {
+        border-color: var(--fiori-card-hover-border);
+        box-shadow: 0 4px 12px rgba(10, 110, 209, 0.12);
+        transform: translateY(-2px);
+    }
+
+    .card:hover::before {
+        background: var(--fiori-accent);
+    }
+
+    .card-content {
+        display: flex;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .icon-box {
+        width: 48px;
+        height: 48px;
+        border-radius: 4px;
+        background: #ebf5fb;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .icon-box i {
+        font-size: 20px;
+        color: var(--fiori-accent);
+    }
+
+    .text-box {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .card h3 {
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--fiori-text-main);
+        margin-bottom: 6px;
+    }
+
+    .card p {
+        font-size: 12px;
+        color: var(--fiori-text-muted);
+        line-height: 1.4;
+    }
+
+    /* Footer Korporat */
+    footer {
+        text-align: center;
+        padding: 20px;
+        font-size: 12px;
+        color: var(--fiori-text-muted);
+        border-top: 1px solid #e5e5e5;
+        background: #ffffff;
+        margin-top: 40px;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 576px) {
+        .fiori-shell {
+            padding: 12px 16px;
+        }
+        .container {
+            margin: 16px auto;
+            padding: 0 12px;
+        }
     }
 </style>
 </head>
 <body>
 
+<!-- SAP Fiori Shell Bar -->
+<header class="fiori-shell">
+    <div class="fiori-shell-brand">
+        <i class="fas fa-hard-hat"></i>
+        <h2>SAP Fiori Launchpad — APD Management</h2>
+    </div>
+    <div class="fiori-shell-user">
+        Pit Service Air
+    </div>
+</header>
+
 <div class="container">
-    <div class="header">
-        <h1>APD Management</h1>
-        <p>Pit Service Air - Quick Access Menu</p>
+    <div class="header-section">
+        <h1>Quick Access Menu</h1>
+        <p>Pilih modul operasional serah terima dan pemantauan alat pelindung diri.</p>
     </div>
 
     <div class="menu-grid">
 
         <a href="https://sites.google.com/view/pit-service-air/11apd/serah-terima" target="_blank" class="card">
-            <div class="icon-box">
-                <i class="fas fa-file-signature"></i>
+            <div class="card-content">
+                <div class="icon-box">
+                    <i class="fas fa-file-signature"></i>
+                </div>
+                <div class="text-box">
+                    <h3>Input Transaksi</h3>
+                    <p>Input data serah terima dan transaksi APD lapangan.</p>
+                </div>
             </div>
-            <h3>Input Transaksi</h3>
-            <p>Input data serah terima dan transaksi APD.</p>
         </a>
 
         <a href="https://docs.google.com/forms/d/e/1FAIpQLSemUtp5oVI1_8QkzURXLWGTijMzSajyE2MqxvLgvU_NDJRX4Q/viewform" target="_blank" class="card">
-            <div class="icon-box">
-                <i class="fas fa-box-open"></i>
+            <div class="card-content">
+                <div class="icon-box">
+                    <i class="fas fa-box-open"></i>
+                </div>
+                <div class="text-box">
+                    <h3>Pengajuan</h3>
+                    <p>Form pengajuan APD baru ke bagian SHE.</p>
+                </div>
             </div>
-            <h3>Pengajuan</h3>
-            <p>Form pengajuan APD ke SHE.</p>
         </a>
 
         <a href="https://forms.gle/3idP5X7tS4r9jJHX9" target="_blank" class="card">
-            <div class="icon-box">
-                <i class="fas fa-handshake"></i>
+            <div class="card-content">
+                <div class="icon-box">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <div class="text-box">
+                    <h3>Tanda Terima APD</h3>
+                    <p>Form tanda terima serah terima APD ke SHE.</p>
+                </div>
             </div>
-            <h3>Tanda Terima APD</h3>
-            <p>Form tanda terima APD ke SHE.</p>
         </a>
 
         <a href="https://docs.google.com/spreadsheets/d/1v5Xyj00qmj4pzCGoyRPydwLjDfu57nMBcOWtTognoyg/edit?gid=1245499998#gid=1245499998" target="_blank" class="card">
-            <div class="icon-box">
-                <i class="fas fa-database"></i>
+            <div class="card-content">
+                <div class="icon-box">
+                    <i class="fas fa-database"></i>
+                </div>
+                <div class="text-box">
+                    <h3>Database</h3>
+                    <p>Akses database monitoring dan rekapitulasi APD.</p>
+                </div>
             </div>
-            <h3>Database</h3>
-            <p>Akses database monitoring dan pencatatan APD.</p>
         </a>
 
     </div>
-
-    <footer>
-        © 2026 Pit Service Air
-    </footer>
 </div>
+
+<footer>
+    © 2026 Pit Service Air — Enterprise Systems
+</footer>
 
 </body>
 </html>
