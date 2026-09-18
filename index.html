@@ -1916,11 +1916,17 @@
       });
     });
 
+    // PATCH FINAL
     stopBtn.addEventListener('click', function() {
       audioElement.pause();
-      audioElement.currentTime = 0;
+      audioElement.removeAttribute('src'); // Menghentikan total download/buffering stream di background
+      audioElement.load(); // Mereset state elemen audio
       isPlaying = false;
       updatePlayState(false);
+      
+      // Reset visual tampilan agar pengguna tahu koneksi telah diputus
+      stationNameSpan.textContent = 'Pilih station...';
+      audioSelect.selectedIndex = 0; 
     });
 
     volumeSlider.addEventListener('input', function() {
@@ -2002,11 +2008,7 @@
       handleAudioError();
     });
 
-    audioElement.addEventListener('ended', function() {
-      isPlaying = false;
-      updatePlayState(false);
-    });
-
+    // PATCH FINAL
     audioElement.addEventListener('ended', function() {
       isPlaying = false;
       updatePlayState(false);
