@@ -1935,9 +1935,18 @@
       this.style.background = `linear-gradient(90deg, #0a6ed1 0%, #0a6ed1 ${percentage}%, #e2e8f0 ${percentage}%)`;
     });
 
-    audioElement.addEventListener('error', function() {
+    audioElement.addEventListener('error', function(e) {
       isPlaying = false;
       updatePlayState(false);
+      const selectedOption = audioSelect.options[audioSelect.selectedIndex];
+      const stationName = selectedOption ? selectedOption.textContent : 'Station';
+      
+      if (audioSelect.value.includes('10.2.168.249')) {
+        alert(`⚠️ Gagal memutar "${stationName}".\n\nAlamat IP lokal (10.2.168.249) hanya dapat diakses jika perangkat Anda terhubung ke Jaringan Lokal / Intranet site (PAMA KPCS) serta diblokir browser karena kebijakan HTTPS GitHub Pages.`);
+      } else {
+        alert(`⚠️ Gagal memutar stasiun "${stationName}". Periksa koneksi internet atau status server.`);
+      }
+      stationNameSpan.textContent = 'Gagal memutar...';
     });
 
     audioElement.addEventListener('ended', function() {
