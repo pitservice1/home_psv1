@@ -1931,18 +1931,79 @@
       this.style.background = `linear-gradient(90deg, #0a6ed1 0%, #0a6ed1 ${percentage}%, #e2e8f0 ${percentage}%)`;
     });
 
-    audioElement.addEventListener('error', function(e) {
+    // PATCH FINAL - Pure Inline Player (Tanpa Tab Baru)
+    function handleAudioError() {
       isPlaying = false;
       updatePlayState(false);
       const selectedOption = audioSelect.options[audioSelect.selectedIndex];
       const stationName = selectedOption ? selectedOption.textContent : 'Station';
       
-      if (audioSelect.value.includes('10.2.168.249')) {
-        alert(`⚠️ Gagal memutar "${stationName}".\n\nAlamat IP lokal (10.2.168.249) hanya dapat diakses jika perangkat Anda terhubung ke Jaringan Lokal / Intranet site (PAMA KPCS) serta diblokir browser karena kebijakan HTTPS GitHub Pages.`);
-      } else {
-        alert(`⚠️ Gagal memutar stasiun "${stationName}". Periksa koneksi internet atau status server.`);
-      }
       stationNameSpan.textContent = 'Gagal memutar...';
+      
+      // Pesan error khusus komputer kantor
+      alert(`⚠️ "${stationName}" diblokir oleh keamanan Browser Chrome/Edge.\n\nSOLUSI KOMPUTER KANTOR:\n1. Klik ikon [Gembok / View Site Information] di pojok kiri atas (sebelah URL).\n2. Pilih "Site settings" (Setelan situs).\n3. Cari menu "Insecure content" (Konten tidak aman).\n4. Ubah dari "Block" menjadi "Allow" (Izinkan).\n5. Refresh halaman ini.\n\nSetelah itu, semua radio dan Dzikir akan berbunyi langsung di web ini.`);
+    }
+
+    audioSelect.addEventListener('change', function() {
+      const selectedOption = this.options[this.selectedIndex];
+      const stationUrl = this.value;
+      const stationName = selectedOption.textContent;
+
+      if (stationUrl) {
+        stationNameSpan.textContent = stationName;
+        audioElement.src = stationUrl;
+        audioElement.load();
+        playBtn.disabled = false;
+        stopBtn.disabled = false;
+        
+        audioElement.play().then(() => {
+          isPlaying = true;
+          updatePlayState(true);
+        }).catch((err) => {
+          handleAudioError();
+        });
+      } else {
+        resetPlayer();
+      }
+    });
+
+    playBtn.addEventListener('click', function() {
+      if (!audioElement.src) {
+        alert('Pilih stasiun radio terlebih dahulu');
+        return;
+      }
+
+      audioElement.play().then(() => {
+        isPlaying = true;
+        updatePlayState(true);
+      }).catch((err) => {
+        handleAudioError();
+      });
+    });
+
+    stopBtn.addEventListener('click', function() {
+      audioElement.pause();
+      audioElement.src = audioElement.src; // Reset buffering
+      isPlaying = false;
+      updatePlayState(false);
+    });
+
+    volumeSlider.addEventListener('input', function() {
+      const volume = parseFloat(this.value);
+      audioElement.volume = volume;
+      updateVolumeIcon(volume);
+      
+      const percentage = volume * 100;
+      this.style.background = `linear-gradient(90deg, #0a6ed1 0%, #0a6ed1 ${percentage}%, #e2e8f0 ${percentage}%)`;
+    });
+
+    audioElement.addEventListener('error', function(e) {
+      handleAudioError();
+    });
+
+    audioElement.addEventListener('ended', function() {
+      isPlaying = false;
+      updatePlayState(false);
     });
 
     audioElement.addEventListener('ended', function() {
