@@ -4,222 +4,279 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Spreadsheet</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
     <style>
-        /* Custom Colors based on the image */
-        .bg-header-dark { background-color: #34495e; } /* Dark blue-grey header */
-        .bg-page-light { background-color: #f4f6f9; } /* Light grey background */
+        /* Custom Colors */
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; }
+        .bg-header-dark { background-color: #34495e; }
         .text-header-text { color: #ecf0f1; }
         
-        /* Utility classes for accurate styling */
+        /* Card & Shadow Styles */
         .card-shadow { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-        .card-hover:hover { box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); }
+        .card-hover { transition: all 0.3s cubic-bezier(.25,.8,.25,1); }
+        .card-hover:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); transform: translateY(-3px); }
         
-        /* Font setup similar to UI */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        /* Image Header Styles (Lebih Besar & Clickable) */
+        .img-header { 
+            height: 200px; /* Diperbesar dari sebelumnya */
+            position: relative; 
+            overflow: hidden; 
+            cursor: pointer; 
+            display: block;
+        }
+        .img-header img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: transform 0.3s ease;
+        }
+        /* Efek zoom saat gambar dihover */
+        .img-header:hover img { transform: scale(1.08); } 
+        
+        .badge-custom { 
+            position: absolute; 
+            top: 10px; right: 10px; 
+            font-size: 0.65rem; 
+            letter-spacing: 0.5px; 
+            z-index: 2;
+        }
+        
+        /* Typography helpers */
+        .line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        /* Iframe overlay */
+        #spreadsheetSection { z-index: 1050; }
+        
+        /* Custom Input Search Navbar */
+        .search-input {
+            background-color: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #fff;
+        }
+        .search-input:focus {
+            background-color: rgba(255,255,255,0.2);
+            color: #fff;
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+        }
+        .search-input::placeholder { color: rgba(255,255,255,0.6); }
     </style>
 </head>
-<body class="bg-page-light min-h-screen text-gray-800">
+<body>
 
     <!-- Top Navigation Bar -->
-    <nav class="bg-header-dark text-header-text flex items-center justify-between px-4 py-2 h-14">
-        <div class="flex items-center space-x-4 w-full max-w-2xl">
-            <!-- Home Button -->
-            <button class="bg-white/10 hover:bg-white/20 text-white px-3 py-1.5 rounded-md flex items-center text-sm font-medium transition-colors border border-white/20">
-                <i class="fa-solid fa-table-cells-large mr-2"></i> Home
-            </button>
+    <nav class="navbar navbar-expand bg-header-dark text-header-text py-2">
+        <div class="container-fluid align-items-center">
             
-            <!-- Search Bar -->
-            <div class="relative flex-grow">
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                    <i class="fa-solid fa-magnifying-glass text-gray-400 text-sm"></i>
+            <div class="d-flex align-items-center w-100" style="max-width: 600px;">
+                <!-- Home Button -->
+                <button class="btn btn-outline-light btn-sm me-3 d-flex align-items-center px-3">
+                    <i class="fa-solid fa-table-cells-large me-2"></i> Home
+                </button>
+                
+                <!-- Search Bar -->
+                <div class="input-group input-group-sm w-100">
+                    <span class="input-group-text bg-transparent border-0 position-absolute" style="z-index: 4; color: rgba(255,255,255,0.6);">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </span>
+                    <input type="text" class="form-control search-input rounded-2 ps-5" placeholder="Cari laporan...">
                 </div>
-                <input type="text" 
-                       class="bg-white/10 border border-white/20 text-white text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-1.5 placeholder-gray-300" 
-                       placeholder="Cari laporan...">
             </div>
-        </div>
 
-        <!-- Right Side User Info -->
-        <div class="flex items-center space-x-3">
-            <span class="text-sm font-medium">Admin</span>
-            <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-                <i class="fa-solid fa-user text-white"></i>
+            <!-- Right Side User Info -->
+            <div class="d-flex align-items-center ms-auto">
+                <span class="small fw-medium me-3 text-white">Admin</span>
+                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background-color: rgba(255,255,255,0.2);">
+                    <i class="fa-solid fa-user text-white"></i>
+                </div>
             </div>
+            
         </div>
     </nav>
 
     <!-- Breadcrumb -->
-    <div class="bg-white border-b px-6 py-2 flex items-center text-sm text-gray-500">
-        <i class="fa-solid fa-house mr-2 text-xs"></i>
-        <a href="#" class="hover:text-gray-700">Home</a>
+    <div class="bg-white border-bottom px-4 py-2 d-flex align-items-center small text-secondary">
+        <i class="fa-solid fa-house me-2" style="font-size: 11px;"></i>
+        <a href="#" class="text-decoration-none text-secondary">Home</a>
         <span class="mx-2">/</span>
-        <span class="font-medium text-gray-700">Dashboard Spreadsheet</span>
+        <span class="fw-semibold text-dark">Dashboard Spreadsheet</span>
     </div>
 
     <!-- Main Content Area -->
-    <main class="max-w-[1600px] mx-auto px-6 py-6">
+    <main class="container-fluid py-4" style="max-width: 1600px;">
         
-        <!-- Section Title -->
-        <div class="flex items-center mb-6">
-            <i class="fa-solid fa-folder-open text-blue-400 text-2xl mr-3"></i>
-            <h1 class="text-xl font-semibold text-gray-700">Laporan Tersedia <span class="text-sm font-normal text-gray-400 ml-1">(3)</span></h1>
-        </div>
 
         <!-- Cards Grid -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-5">
+        <div class="row g-4">
             
             <!-- Card 1: Data SQL MIO -->
-            <div class="bg-white rounded border card-shadow card-hover transition duration-200 flex flex-col overflow-hidden h-[300px]">
-                <!-- Image Header -->
-                <div class="h-[120px] bg-blue-50 relative border-b flex items-center justify-center p-2">
-                     <!-- TEMPAT GANTI GAMBAR COVER MENU 1 -->
-                    <img src="https://cdn.phototourl.com/free/2026-08-24-7c6d90d1-56c4-485c-b69e-a420751c1726.png" alt="Cover Data SQL" class="w-full h-full object-cover">
-                    <!-- Badge -->
-                    <span class="absolute top-2 right-2 bg-gray-700 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">
-                        Report
-                    </span>
-                </div>
-                
-                <!-- Content -->
-                <div class="p-4 flex-grow flex flex-col">
-                    <h2 class="text-base font-semibold text-gray-800 mb-1 line-clamp-1">Data SQL MIO</h2>
-                    <p class="text-xs text-gray-500 line-clamp-3 leading-relaxed">
-                        Akses report database MIO EWACS.
-                    </p>
-                </div>
-                
-                <!-- Footer -->
-                <div class="border-t border-gray-100 p-3 bg-gray-50 flex justify-between items-center mt-auto">
-                    <div class="flex items-center text-gray-400 text-xs">
-                        <i class="fa-solid fa-database mr-1.5"></i> SQL Server
-                    </div>
-                    <a href="http://kpcssqrp401/ReportS/browse/xxx_EWACS/MIO" 
-                       target="_blank" 
-                       class="text-blue-500 hover:text-blue-700 text-xs font-medium flex items-center transition-colors">
-                        Buka <i class="fa-solid fa-arrow-right ml-1"></i>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <div class="card h-100 card-shadow card-hover border-0 overflow-hidden">
+                    <!-- GAMBAR SEKARANG BISA DIKLIK -->
+                    <a href="http://kpcssqrp401/ReportS/browse/xxx_EWACS/MIO" target="_blank" class="img-header" style="background-color: #e3f2fd;">
+                        <img src="https://cdn.phototourl.com/free/2026-08-24-7c6d90d1-56c4-485c-b69e-a420751c1726.png" alt="Cover Data SQL">
+                        <span class="badge bg-secondary badge-custom text-uppercase">Report</span>
                     </a>
+                    
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fs-6 fw-bold text-dark mb-1 line-clamp-1">Data SQL MIO</h5>
+                        <p class="card-text small text-secondary line-clamp-3 mb-0">
+                            Akses report database MIO EWACS.
+                        </p>
+                    </div>
+                    
+                    <div class="card-footer bg-light border-top-0 p-3 d-flex justify-content-between align-items-center mt-auto">
+                        <div class="small text-secondary">
+                            <i class="fa-solid fa-database me-1"></i> SQL Server
+                        </div>
+                        <a href="http://kpcssqrp401/ReportS/browse/xxx_EWACS/MIO" target="_blank" class="text-decoration-none small fw-bold">
+                            Buka <i class="fa-solid fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <!-- Card 2: Equipment Dewatering 2026 -->
-            <div class="bg-white rounded border card-shadow card-hover transition duration-200 flex flex-col overflow-hidden h-[300px]">
-                <!-- Image Header -->
-                <div class="h-[120px] bg-green-50 relative border-b flex items-center justify-center p-2">
-                    <!-- TEMPAT GANTI GAMBAR COVER MENU 2 -->
-                    <img src="https://cdn.phototourl.com/free/2026-08-24-fdc48442-fa1a-4281-b187-0cb6d5416175.png" alt="Cover Equipment" class="w-full h-full object-cover">
-                    <!-- Badge -->
-                    <span class="absolute top-2 right-2 bg-gray-700 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">
-                        Monitoring
-                    </span>
-                </div>
-                
-                <!-- Content -->
-                <div class="p-4 flex-grow flex flex-col">
-                    <h2 class="text-base font-semibold text-gray-800 mb-1 line-clamp-1">Eq. Dewatering 2026</h2>
-                    <p class="text-xs text-gray-500 line-clamp-3 leading-relaxed">
-                        Monitoring equipment dewatering tahun 2026. Data real-time dan histori.
-                    </p>
-                </div>
-                
-                <!-- Footer -->
-                <div class="border-t border-gray-100 p-3 bg-gray-50 flex justify-between items-center mt-auto">
-                    <div class="flex items-center text-gray-400 text-xs">
-                        <i class="fa-solid fa-file-excel mr-1.5 text-green-600"></i> Google Sheets
-                    </div>
-                    <a href="https://docs.google.com/spreadsheets/d/1185FuxrP9YTtDWLErXUDWtg3vu2em0xPaISGw8BHbR8/edit?gid=1560822780#gid=1560822780" 
-                       target="_blank"
-                       rel="noopener noreferrer" 
-                       class="text-blue-500 hover:text-blue-700 text-xs font-medium flex items-center transition-colors">
-                        Buka <i class="fa-solid fa-arrow-right ml-1"></i>
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <div class="card h-100 card-shadow card-hover border-0 overflow-hidden">
+                    <!-- GAMBAR SEKARANG BISA DIKLIK -->
+                    <a href="https://docs.google.com/spreadsheets/d/1185FuxrP9YTtDWLErXUDWtg3vu2em0xPaISGw8BHbR8/edit?gid=1560822780#gid=1560822780" target="_blank" class="img-header" style="background-color: #e8f5e9;">
+                        <img src="https://cdn.phototourl.com/free/2026-08-24-fdc48442-fa1a-4281-b187-0cb6d5416175.png" alt="Cover Equipment">
+                        <span class="badge bg-secondary badge-custom text-uppercase">Monitoring</span>
                     </a>
+                    
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fs-6 fw-bold text-dark mb-1 line-clamp-1">Eq. Dewatering 2026</h5>
+                        <p class="card-text small text-secondary line-clamp-3 mb-0">
+                            Monitoring equipment dewatering tahun 2026. Data real-time dan histori.
+                        </p>
+                    </div>
+                    
+                    <div class="card-footer bg-light border-top-0 p-3 d-flex justify-content-between align-items-center mt-auto">
+                        <div class="small text-secondary">
+                            <i class="fa-solid fa-file-excel text-success me-1"></i> Sheets
+                        </div>
+                        <a href="https://docs.google.com/spreadsheets/d/1185FuxrP9YTtDWLErXUDWtg3vu2em0xPaISGw8BHbR8/edit?gid=1560822780#gid=1560822780" target="_blank" class="text-decoration-none small fw-bold">
+                            Buka <i class="fa-solid fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
                 </div>
             </div>
 
             <!-- Card 3: Dashboard Pump Performance (Iframe) -->
-            <div class="bg-white rounded border card-shadow card-hover transition duration-200 flex flex-col overflow-hidden h-[300px]">
-                <!-- Image Header -->
-                <div class="h-[120px] bg-purple-50 relative border-b flex items-center justify-center p-2">
-                    <!-- TEMPAT GANTI GAMBAR COVER MENU 3 -->
-                    <img src="https://cdn.phototourl.com/free/2026-08-24-8dff7a87-5210-4f72-a75c-c5c917ad806a.png" alt="Cover Pump Performance" class="w-full h-full object-cover">
-                    <!-- Badge -->
-                    <span class="absolute top-2 right-2 bg-gray-700 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">
-                        Dashboard
-                    </span>
-                </div>
-                
-                <!-- Content -->
-                <div class="p-4 flex-grow flex flex-col">
-                    <h2 class="text-base font-semibold text-gray-800 mb-1 line-clamp-1">Pump Performance</h2>
-                    <p class="text-xs text-gray-500 line-clamp-3 leading-relaxed">
-                        Visualisasi interaktif performa pompa dewatering (Web App).
-                    </p>
-                </div>
-                
-                <!-- Footer (Triggers Iframe) -->
-                <div class="border-t border-gray-100 p-3 bg-gray-50 flex justify-between items-center mt-auto">
-                    <div class="flex items-center text-gray-400 text-xs">
-                        <i class="fa-brands fa-google mr-1.5 text-blue-500"></i> Web App
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <div class="card h-100 card-shadow card-hover border-0 overflow-hidden">
+                    <!-- GAMBAR SEKARANG BISA DIKLIK MEMANGGIL IFRAME -->
+                    <div onclick="openSpreadsheet('https://script.google.com/macros/s/AKfycbyMs2gEwJdfHC6gawXy3SE_0iEGGQGdVWxWmDQxWMHnXdHfPpZw6kbm1qhKmIbVWbg4/exec', 'Dashboard Pump Performance Dewatering 2026')" class="img-header" style="background-color: #f3e5f5;">
+                        <img src="https://cdn.phototourl.com/free/2026-08-24-8dff7a87-5210-4f72-a75c-c5c917ad806a.png" alt="Cover Pump Performance">
+                        <span class="badge bg-secondary badge-custom text-uppercase">Dashboard</span>
                     </div>
-                    <!-- This button calls openSpreadsheet() instead of linking -->
-                    <button onclick="openSpreadsheet()" 
-                       class="text-blue-500 hover:text-blue-700 text-xs font-medium flex items-center transition-colors cursor-pointer bg-transparent border-none p-0">
-                        Buka <i class="fa-solid fa-arrow-right ml-1"></i>
-                    </button>
+                    
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fs-6 fw-bold text-dark mb-1 line-clamp-1">Pump Performance</h5>
+                        <p class="card-text small text-secondary line-clamp-3 mb-0">
+                            Visualisasi interaktif performa pompa dewatering (Web App).
+                        </p>
+                    </div>
+                    
+                    <div class="card-footer bg-light border-top-0 p-3 d-flex justify-content-between align-items-center mt-auto">
+                        <div class="small text-secondary">
+                            <i class="fa-brands fa-google text-primary me-1"></i> Web App
+                        </div>
+                        <button onclick="openSpreadsheet('https://script.google.com/macros/s/AKfycbyMs2gEwJdfHC6gawXy3SE_0iEGGQGdVWxWmDQxWMHnXdHfPpZw6kbm1qhKmIbVWbg4/exec', 'Dashboard Pump Performance Dewatering 2026')" class="btn btn-link text-decoration-none p-0 m-0 small fw-bold">
+                            Buka <i class="fa-solid fa-arrow-right ms-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: MENU BARU (TAMBAHAN) -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <div class="card h-100 card-shadow card-hover border-0 overflow-hidden">
+                    <!-- GAMBAR SEKARANG BISA DIKLIK MEMANGGIL IFRAME -->
+                    <div onclick="openSpreadsheet('https://docs.google.com/spreadsheets/d/1185FuxrP9YTtDWLErXUDWtg3vu2em0xPaISGw8BHbR8/edit?gid=1134486434#gid=1134486434', 'HM SUBCONT DAN REPORT MD')" class="img-header" style="background-color: #fff8e1;">
+                        <img src="https://cdn.phototourl.com/free/2026-09-23-b23c9936-5d60-4b86-a845-16df67ce6f1d.png" alt="HM SUBCONT REPORT MD">
+                        <span class="badge bg-warning text-dark badge-custom text-uppercase shadow-sm">Menu Baru</span>
+                    </div>
+                    
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fs-6 fw-bold text-dark mb-1 line-clamp-1">HM SUBCONT & REPORT MD</h5>
+                        <p class="card-text small text-secondary line-clamp-3 mb-0">
+                            Input Laporan HM Subcont dan Laporan ke MD.
+                        </p>
+                    </div>
+                    
+                    <div class="card-footer bg-light border-top-0 p-3 d-flex justify-content-between align-items-center mt-auto">
+                        <div class="small text-secondary">
+                            <i class="fa-solid fa-globe text-warning me-1"></i> Web App
+                        </div>
+                        <button onclick="openSpreadsheet('https://docs.google.com/spreadsheets/d/1185FuxrP9YTtDWLErXUDWtg3vu2em0xPaISGw8BHbR8/edit?gid=1134486434#gid=1134486434', 'HM SUBCONT DAN REPORT MD')" class="btn btn-link text-decoration-none p-0 m-0 small fw-bold">
+                            Buka <i class="fa-solid fa-arrow-right ms-1"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
 
         </div>
     </main>
 
-    <!-- IFRAME SECTION (Hidden by default) -->
-    <div id="spreadsheetSection" class="hidden fixed inset-0 z-50 bg-gray-100 flex-col h-screen w-full">
+    <!-- IFRAME SECTION (Shared Modal for Iframe/Web Apps using Bootstrap classes) -->
+    <div id="spreadsheetSection" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-light flex-column">
         <!-- Iframe Header -->
-        <div class="bg-white shadow px-6 py-3 flex justify-between items-center border-b border-gray-200">
-            <div class="flex items-center">
-                <i class="fa-solid fa-chart-pie text-purple-600 mr-3"></i>
-                <h2 class="text-lg font-semibold text-gray-700">Dashboard Pump Performance Dewatering 2026</h2>
+        <div class="bg-white shadow-sm px-4 py-3 d-flex justify-content-between align-items-center border-bottom">
+            <div class="d-flex align-items-center">
+                <i class="fa-solid fa-chart-pie text-purple fs-5 me-3" style="color: #6f42c1;"></i>
+                <h2 id="iframeTitle" class="h5 mb-0 fw-bold text-dark">Judul Dashboard</h2>
             </div>
-            <div class="flex gap-3">
-                <a href="https://script.google.com/macros/s/AKfycbyMs2gEwJdfHC6gawXy3SE_0iEGGQGdVWxWmDQxWMHnXdHfPpZw6kbm1qhKmIbVWbg4/exec" target="_blank" class="bg-gray-100 text-gray-700 px-3 py-1.5 rounded text-sm hover:bg-gray-200 transition border border-gray-300 flex items-center" title="Buka di Tab Baru">
-                    <i class="fa-solid fa-arrow-up-right-from-square mr-1.5"></i> Tab Baru
+            <div class="d-flex gap-2">
+                <a id="iframeNewTabBtn" href="#" target="_blank" class="btn btn-light btn-sm border fw-medium d-flex align-items-center" title="Buka di Tab Baru">
+                    <i class="fa-solid fa-arrow-up-right-from-square me-2"></i> Tab Baru
                 </a>
-                <button onclick="closeSpreadsheet()" class="bg-red-50 text-red-600 border border-red-200 px-4 py-1.5 rounded text-sm hover:bg-red-100 transition flex items-center">
-                    <i class="fa-solid fa-xmark mr-1.5"></i> Tutup
+                <button onclick="closeSpreadsheet()" class="btn btn-danger btn-sm bg-opacity-10 text-danger border-danger fw-medium d-flex align-items-center">
+                    <i class="fa-solid fa-xmark me-2"></i> Tutup
                 </button>
             </div>
         </div>
         
         <!-- The actual Iframe -->
-        <div class="flex-1 w-full bg-white relative">
-            <!-- Loading indicator (optional, simple text here) -->
-            <div id="iframeLoader" class="absolute inset-0 flex items-center justify-center bg-white z-0">
-                <span class="text-gray-400 flex items-center"><i class="fa-solid fa-circle-notch fa-spin mr-2"></i> Memuat Dashboard...</span>
+        <div class="flex-grow-1 w-100 bg-white position-relative">
+            <div id="iframeLoader" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-white z-0">
+                <span class="text-secondary d-flex align-items-center">
+                    <i class="fa-solid fa-circle-notch fa-spin me-2"></i> Memuat Dashboard...
+                </span>
             </div>
-            
-            <iframe id="dataIframe" src="" class="w-full h-full border-none relative z-10" onload="document.getElementById('iframeLoader').style.display='none';"></iframe>
+            <iframe id="dataIframe" src="" class="w-100 h-100 border-0 position-relative" style="z-index: 10;" onload="document.getElementById('iframeLoader').style.display='none';"></iframe>
         </div>
     </div>
 
-    <!-- Script to handle Iframe logic -->
+    <!-- Script to handle Iframe logic dynamically (Bootstrap tailored) -->
     <script>
-        function openSpreadsheet() {
+        function openSpreadsheet(url, title) {
             const iframeSection = document.getElementById('spreadsheetSection');
             const dataIframe = document.getElementById('dataIframe');
             const loader = document.getElementById('iframeLoader');
+            const titleElement = document.getElementById('iframeTitle');
+            const newTabBtn = document.getElementById('iframeNewTabBtn');
             
-            // Show the section
-            iframeSection.classList.remove('hidden');
-            iframeSection.classList.add('flex');
+            // Set dynamic title and links
+            titleElement.textContent = title;
+            newTabBtn.href = url;
+
+            // Show the section using Bootstrap display utility classes
+            iframeSection.classList.remove('d-none');
+            iframeSection.classList.add('d-flex');
             
             // Reset and show loader
             loader.style.display = 'flex';
             
-            // Set source only when opening to save resources
-            if (!dataIframe.src || dataIframe.src === window.location.href) {
-                dataIframe.src = "https://script.google.com/macros/s/AKfycbyMs2gEwJdfHC6gawXy3SE_0iEGGQGdVWxWmDQxWMHnXdHfPpZw6kbm1qhKmIbVWbg4/exec";
-            }
+            // Set source
+            dataIframe.src = url;
             
             // Prevent body scrolling behind iframe
             document.body.style.overflow = 'hidden';
@@ -227,14 +284,19 @@
 
         function closeSpreadsheet() {
             const iframeSection = document.getElementById('spreadsheetSection');
+            const dataIframe = document.getElementById('dataIframe');
             
-            // Hide the section
-            iframeSection.classList.add('hidden');
-            iframeSection.classList.remove('flex');
+            // Hide the section & clear src to stop background activity
+            iframeSection.classList.add('d-none');
+            iframeSection.classList.remove('d-flex');
+            dataIframe.src = '';
             
             // Restore body scrolling
             document.body.style.overflow = 'auto';
         }
     </script>
+    
+    <!-- Bootstrap JS (Optional, but good practice if you want to add dropdowns/modals later) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
