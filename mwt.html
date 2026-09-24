@@ -481,10 +481,21 @@
                 name: "TSS & PH Perjam", caption: "Data TSS & PH Perjam cukup di Report Timesheet",
                 image: "https://cdn.phototourl.com/free/2026-08-11-b5b9d1ba-e545-4cbf-96b5-40165f54d913.png", badge: "Real-time"
             },
+
             sheet6: { 
                 id: "1_QEw0cPXGLu5xar7YJq6IuIu9Lkfb8xMLl4o0osdGe0", gid: "690433105", 
                 name: "Report Timesheet", caption: "Upload hasil Timesheet MWT disini",
                 image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=500&q=80", badge: "Timesheet"
+            },
+             sheet7: { 
+                id: "10d3FSPdfXU3CigewvKi3srGO2Gw8DPREHk6Uxli-aGA", gid: "1547539972", 
+                name: "Report Timesheet", caption: "Dashboard UA MWT",
+                image: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?auto=format&fit=crop&w=500&q=80", badge: "Timesheet"
+            },
+             sheet8: { 
+                url: "https://pitservice1.github.io/e-mwt/", isExternal: true,
+                name: "Menu E-MWT", caption: "Aplikasi E-MWT Pit Service 1",
+                image: "https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png", badge: "Web App"
             }
         };
 
@@ -531,12 +542,19 @@
             updateBreadcrumb(`Dashboard Spreadsheet / ${sheetName}`);
         }
 
+
         function loadSheet(sheetKey) {
             const s = sheets[sheetKey];
             if (!s) return;
             
             loadingEl.style.display = 'block';
-            sheetFrame.src = `https://docs.google.com/spreadsheets/d/${s.id}/edit?hl=id&gid=${s.gid}`;
+            
+            // Logika baru: Deteksi apakah URL web external atau ID Google Sheets
+            if (s.isExternal && s.url) {
+                sheetFrame.src = s.url;
+            } else {
+                sheetFrame.src = `https://docs.google.com/spreadsheets/d/${s.id}/edit?hl=id&gid=${s.gid}`;
+            }
             
             sheetFrame.onload = () => {
                 loadingEl.style.display = 'none';
