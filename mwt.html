@@ -543,18 +543,20 @@
         }
 
 
+     
         function loadSheet(sheetKey) {
             const s = sheets[sheetKey];
             if (!s) return;
             
-            loadingEl.style.display = 'block';
-            
-            // Logika baru: Deteksi apakah URL web external atau ID Google Sheets
+            // LOGIKA BARU: Jika web eksternal, langsung buka di tab baru dan hentikan proses iframe
             if (s.isExternal && s.url) {
-                sheetFrame.src = s.url;
-            } else {
-                sheetFrame.src = `https://docs.google.com/spreadsheets/d/${s.id}/edit?hl=id&gid=${s.gid}`;
+                window.open(s.url, '_blank');
+                return;
             }
+            
+            // Proses normal khusus untuk Google Sheets (Iframe internal)
+            loadingEl.style.display = 'block';
+            sheetFrame.src = `https://docs.google.com/spreadsheets/d/${s.id}/edit?hl=id&gid=${s.gid}`;
             
             sheetFrame.onload = () => {
                 loadingEl.style.display = 'none';
