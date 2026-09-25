@@ -1,51 +1,337 @@
-
-
-<style>
-  /* SEMBUNYIKAN HEADER GOOGLE SITES */
-  header, 
-  .sites-header, 
-  .navbar, 
-  [role="banner"],
-  .sites-embed-site-header,
-  .site-header-container {
-    display: none !important;
-    height: 0 !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    position: absolute !important;
-  }
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#ffffff">
   
-  /* ATUR TAMPILAN IFRAME */
-  iframe {
-    position: fixed !important;
-    top: 0 !important;
-    left: 0 !important;
-    width: 100vw !important;
-    height: 100vh !important;
-    border: none !important;
-    z-index: 999999 !important;
-  }
+  <!-- Optimasi Khusus iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Hitung Debit">
+  <title>Hitung Debit</title>
   
-  /* ATUR BODY */
-  body {
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-  }
-</style>
+  <!-- Favicon dan Apple Touch Icon -->
+  <link rel="icon" type="image/png" href="https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png"> 
+  <link rel="apple-touch-icon" href="https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png">
+ 
+  <!-- Manifest Dinamis -->
+  <link id="pwa-manifest" rel="manifest" href="">
 
-<iframe src="https://script.google.com/macros/s/AKfycbxkoKmNE1F7zWiuDqfngbq3K-lo5lHUAC_Mj1pe34HW6c3pS9c3JiTNuxGH89ePNCQJIQ/exec">
-</iframe>
+  <style>
+    body {
+      margin: 0 !important;
+      padding: 0 !important;
+      overflow: hidden !important;
+      background-color: #f4f7f6;
+      touch-action: none; 
+    }
 
-<script>
-  // Force hide Google Sites UI
-  setTimeout(() => {
-    const elements = document.querySelectorAll('div');
-    elements.forEach(el => {
-      const style = window.getComputedStyle(el);
-      if (style.position === 'fixed' || style.top === '0px') {
-        el.style.display = 'none !important';
+    /* Sembunyikan Header bawaan Google Sites/Platform lain */
+    header, .sites-header, .navbar, [role="banner"],
+    .sites-embed-site-header, .site-header-container {
+      display: none !important;
+      height: 0 !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      position: absolute !important;
+    }
+    
+    iframe {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      border: none !important;
+      z-index: 10 !important;
+      opacity: 0; 
+      transition: opacity 0.8s ease-in-out;
+    }
+
+    /* Loading Screen */
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999 !important;
+      transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+    }
+
+    .loader-logo {
+      width: 150px; /* Diperbesar sedikit agar lebih menonjol */
+      height: auto;
+      object-fit: contain;
+      animation: pulse 2s infinite ease-in-out;
+      margin-bottom: 20px;
+    }
+
+    .loading-text {
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      color: #555;
+      font-size: 16px;
+      font-weight: 500;
+      margin-bottom: 15px;
+      animation: blink 1.5s infinite;
+    }
+
+    /* Loading Bar Style */
+    .loading-bar-container {
+      width: 200px;
+      height: 6px;
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .loading-bar {
+      height: 100%;
+      width: 0;
+      background-color: #3498db;
+      border-radius: 4px;
+      animation: loadProgress 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(0.95); }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.6; }
+    }
+
+    @keyframes loadProgress {
+      0% { width: 0; transform: translateX(-100%); }
+      50% { width: 100%; transform: translateX(0); }
+      100% { width: 100%; transform: translateX(100%); }
+    }
+    
+    /* Tombol PWA Android */
+    #install-btn {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      padding: 12px 24px;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(52, 152, 219, 0.4);
+      cursor: pointer;
+      z-index: 1000000;
+      transition: all 0.3s ease;
+    }
+    #install-btn:hover { background-color: #2980b9; transform: translateY(-2px); }
+
+    /* Modal Instruksi iOS */
+    #ios-install-prompt {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: white;
+      padding: 15px 20px;
+      border-radius: 12px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+      z-index: 1000000;
+      font-family: 'Segoe UI', Roboto, sans-serif;
+      text-align: center;
+      width: 80%;
+      max-width: 320px;
+    }
+    #ios-install-prompt p { margin: 0 0 10px 0; font-size: 14px; color: #333; }
+    #ios-install-prompt span { font-size: 20px; font-weight: bold; }
+    #close-ios-prompt {
+      background: #eee; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOADING SCREEN -->
+  <div id="loading-screen">
+    <img src="https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png" alt="Logo" class="loader-logo">
+    <div class="loading-text">Memuat Aplikasi...</div>
+    <div class="loading-bar-container">
+      <div class="loading-bar"></div>
+    </div>
+  </div>
+
+  <!-- IFRAME DENGAN URL BARU -->
+  <iframe id="main-iframe" src="https://script.google.com/macros/s/AKfycbxkoKmNE1F7zWiuDqfngbq3K-lo5lHUAC_Mj1pe34HW6c3pS9c3JiTNuxGH89ePNCQJIQ/exec"></iframe>
+
+  <!-- TOMBOL INSTALL ANDROID -->
+  <button id="install-btn">Install App Hitung Debit</button>
+
+  <!-- MODAL INSTALL IOS -->
+  <div id="ios-install-prompt">
+    <p>Install Hitung Debit di iPhone Anda:</p>
+    <p>Tap icon Share <span>⍐</span> di bawah, lalu pilih<br><strong>"Add to Home Screen"</strong></p>
+    <button id="close-ios-prompt">Tutup</button>
+  </div>
+
+  <script>
+    // 1. Loading Screen Logic
+    const iframe = document.getElementById('main-iframe');
+    const loadingScreen = document.getElementById('loading-screen');
+    iframe.onload = () => {
+      loadingScreen.style.opacity = '0';
+      loadingScreen.style.visibility = 'hidden';
+      iframe.style.opacity = '1';
+    };
+    setTimeout(() => {
+      if (loadingScreen.style.opacity !== '0') {
+        loadingScreen.style.opacity = '0';
+        loadingScreen.style.visibility = 'hidden';
+        iframe.style.opacity = '1';
+      }
+    }, 12000);
+
+    // 2. Hide Google Sites UI
+    setTimeout(() => {
+      document.querySelectorAll('div').forEach(el => {
+        const style = window.getComputedStyle(el);
+        if ((style.position === 'fixed' || style.top === '0px') && 
+            !['loading-screen', 'install-btn', 'ios-install-prompt'].includes(el.id)) {
+          el.style.display = 'none !important';
+        }
+      });
+    }, 1000);
+
+    // 3. PWA Manifest (Diupdate Nama dan Ikonnya)
+    const manifestData = {
+      "name": "Hitung Debit",
+      "short_name": "Hitung Debit",
+      "description": "Aplikasi Hitung Debit",
+      "start_url": ".",
+      "display": "standalone",
+      "background_color": "#ffffff",
+      "theme_color": "#ffffff",
+      "icons": [
+        {"src": "https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png", "sizes": "192x192", "type": "image/png"},
+        {"src": "https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png", "sizes": "512x512", "type": "image/png"}
+      ]
+    };
+    const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+    document.getElementById('pwa-manifest').setAttribute('href', URL.createObjectURL(manifestBlob));
+
+    // 4. Service Worker dengan Dukungan Notifikasi (Push)
+    const swCode = `
+      self.addEventListener('install', (event) => self.skipWaiting());
+      self.addEventListener('activate', (event) => event.waitUntil(clients.claim()));
+      
+      self.addEventListener('fetch', (event) => {
+        event.respondWith(fetch(event.request).catch(() => new Response('Offline.')));
+      });
+
+      // Menerima Push Notification (Background)
+      self.addEventListener('push', function(event) {
+        let options = {
+          body: event.data ? event.data.text() : 'Pesan baru diterima!',
+          icon: 'https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png',
+          vibrate: [200, 100, 200],
+          badge: 'https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png'
+        };
+        event.waitUntil(self.registration.showNotification('Hitung Debit', options));
+      });
+
+      // Aksi saat notifikasi di-klik
+      self.addEventListener('notificationclick', function(event) {
+        event.notification.close();
+        event.waitUntil(clients.openWindow('/'));
+      });
+    `;
+    const swBlob = new Blob([swCode], { type: 'application/javascript' });
+    
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register(URL.createObjectURL(swBlob)).then(() => {
+          console.log('SW PWA Registered');
+        });
+      });
+    }
+
+    // 5. PWA Install Prompt (Android vs iOS)
+    const isIos = () => {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      return /iphone|ipad|ipod/.test(userAgent);
+    };
+    const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+
+    if (isIos() && !isInStandaloneMode()) {
+      // Tampilkan panduan install untuk iOS (tampil setelah 3 detik)
+      setTimeout(() => {
+        document.getElementById('ios-install-prompt').style.display = 'block';
+      }, 3000);
+      
+      document.getElementById('close-ios-prompt').addEventListener('click', () => {
+        document.getElementById('ios-install-prompt').style.display = 'none';
+      });
+    } else {
+      // Android Install Prompt
+      let deferredPrompt;
+      const installBtn = document.getElementById('install-btn');
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        installBtn.style.display = 'block';
+      });
+      installBtn.addEventListener('click', async () => {
+        if (deferredPrompt) {
+          deferredPrompt.prompt();
+          await deferredPrompt.userChoice;
+          deferredPrompt = null;
+          installBtn.style.display = 'none';
+        }
+      });
+      window.addEventListener('appinstalled', () => {
+        installBtn.style.display = 'none';
+      });
+    }
+
+    // 6. Request Notification Permission
+    function requestNotificationPermission() {
+      if ("Notification" in window) {
+        Notification.requestPermission().then(permission => {
+          if (permission === "granted") console.log("Notifikasi diizinkan.");
+        });
+      }
+    }
+    
+    // Minta izin notifikasi (sebaiknya dipanggil saat user berinteraksi dengan layar, misal klik body)
+    document.body.addEventListener('click', () => {
+      if (Notification.permission === 'default') requestNotificationPermission();
+    }, { once: true });
+
+    // 7. Bridge Komunikasi Iframe (Untuk memicu notifikasi dari Google Script)
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'NEW_MESSAGE') {
+        if (Notification.permission === 'granted') {
+          navigator.serviceWorker.ready.then(function(registration) {
+            registration.showNotification('Pemberitahuan Baru', {
+              body: event.data.text || 'Anda menerima pesan baru',
+              icon: 'https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png',
+              vibrate: [200, 100, 200]
+            });
+          });
+        }
       }
     });
-  }, 1000);
-</script>
+  </script>
+</body>
+</html>
