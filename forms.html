@@ -66,7 +66,7 @@
     }
 
     .loader-logo {
-      width: 150px; /* Diperbesar sedikit agar lebih menonjol */
+      width: 150px;
       height: auto;
       object-fit: contain;
       animation: pulse 2s infinite ease-in-out;
@@ -82,7 +82,6 @@
       animation: blink 1.5s infinite;
     }
 
-    /* Loading Bar Style */
     .loading-bar-container {
       width: 200px;
       height: 6px;
@@ -274,7 +273,6 @@
     const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
 
     if (isIos() && !isInStandaloneMode()) {
-      // Tampilkan panduan install untuk iOS (tampil setelah 3 detik)
       setTimeout(() => {
         document.getElementById('ios-install-prompt').style.display = 'block';
       }, 3000);
@@ -283,7 +281,6 @@
         document.getElementById('ios-install-prompt').style.display = 'none';
       });
     } else {
-      // Android Install Prompt
       let deferredPrompt;
       const installBtn = document.getElementById('install-btn');
       window.addEventListener('beforeinstallprompt', (e) => {
@@ -313,7 +310,6 @@
       }
     }
     
-    // Minta izin notifikasi (sebaiknya dipanggil saat user berinteraksi dengan layar, misal klik body)
     document.body.addEventListener('click', () => {
       if (Notification.permission === 'default') requestNotificationPermission();
     }, { once: true });
@@ -332,8 +328,54 @@
         }
       }
     });
+
+    // ============================================================
+    // 8. BACK BUTTON HANDLING (PERBAIKAN)
+    // Tujuan: Saat user klik back / swipe back di mobile,
+    // cukup kembali ke menu utama, BUKAN keluar dari aplikasi.
+    // ============================================================
+
+    // Tambahkan history state agar tombol back tidak langsung keluar
+    history.pushState({ page: 'main' }, '', location.href);
+
+    // Saat user menekan tombol back / swipe back
+    window.addEventListener('popstate', function (event) {
+      // Cek apakah iframe masih bisa navigasi ke belakang
+      try {
+        const iframeWindow = iframe.contentWindow;
+        const iframeHistory = iframeWindow.history;
+
+        // Kirim sinyal ke iframe untuk kembali ke menu utama
+        iframeWindow.postMessage({ type: 'GO_HOME' }, '*');
+
+        // Coba navigasi history iframe ke belakang
+        // (jika iframe punya history internal, ini akan kembali ke halaman sebelumnya)
+        if (iframeHistory && iframeHistory.length > 1) {
+          iframeHistory.back();
+        }
+      } catch (e) {
+        // Cross-origin: fallback dengan reload iframe ke URL awal (menu utama)
+        iframe.src = iframe.src;
+      }
+
+      // Selalu tambahkan state lagi supaya back berikutnya juga tidak keluar
+      history.pushState({ page: 'main' }, '', location.href);
+    });
+
+    // Fallback untuk Android: cegah back default keluar aplikasi
+    window.addEventListener('beforeunload', function (e) {
+      // Hanya trigger jika bukan reload yang disengaja
+      if (!window._allowExit) {
+        e.preventDefault();
+        e.returnValue = '';
+        history.pushState({ page: 'main' }, '', location.href);
+        // Kirim sinyal ke iframe untuk kembali ke menu utama
+        try {
+          iframe.contentWindow.postMessage({ type: 'GO_HOME' }, '*');
+        } catch (err) {}
+        return '';
+      }
+    });
   </script>
 </body>
 </html>
-
-
