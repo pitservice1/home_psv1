@@ -1702,39 +1702,72 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
 
-// ===== REGISTER SERVICE WORKER =====
+// ===== REGISTER SERVICE WORKER (langsung, tanpa tunggu load) =====
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js')
-      .then(reg => console.log('SW registered:', reg.scope))
-      .catch(err => console.log('SW failed:', err));
+  navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
+    .then(reg => {
+      console.log('SW registered:', reg.scope);
+      // Cek update SW setiap kali halaman dibuka
+      reg.update();
+    })
+    .catch(err => console.log('SW failed:', err));
+
+  // Kalau ada SW baru siap, langsung aktifkan
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    console.log('SW baru aktif — reload untuk versi terbaru');
+    // Tidak auto-reload di sini biar tidak ganggu user; reload ditangani version check
   });
 }
 
-// ===== AUTO VERSION CHECK (Force Update) =====
-// Ganti BUILD_VERSION setiap kali commit agar device lain auto-refresh
-const BUILD_VERSION = '2025-01-15-v1';
+// ===== AUTO VERSION CHECK via version.json (SUMBER KEBENARAN) =====
+(async function autoVersionCheck() {
+  try {
+    // Fetch version.json dengan cache-buster mutlak
+    const res = await fetch('version.json?t=' + Date.now(), {
+      cache: 'no-store',
+      headers: { 'Cache-Control': 'no-cache' }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    const serverVersion = data.version;
+    const storedVersion = localStorage.getItem('psv_build_version');
 
-(function autoVersionCheck() {
-  const storedVersion = localStorage.getItem('psv_build_version');
-  if (storedVersion && storedVersion !== BUILD_VERSION) {
-    // Versi berubah → bersihkan cache & reload paksa
-    localStorage.setItem('psv_build_version', BUILD_VERSION);
-    if ('caches' in window) {
-      caches.keys().then(names => {
-        names.forEach(name => caches.delete(name));
-      }).finally(() => {
-        window.location.reload(true);
-      });
-    } else {
-      window.location.reload(true);
+    if (storedVersion && storedVersion !== serverVersion) {
+      console.log('Versi baru terdeteksi:', storedVersion, '→', serverVersion);
+      localStorage.setItem('psv_build_version', serverVersion);
+
+      // Hapus semua cache SW
+      if ('caches' in window) {
+        const names = await caches.keys();
+        await Promise.all(names.map(n => caches.delete(n)));
+      }
+
+      // Unregister SW lama biar install ulang
+      if ('serviceWorker' in navigator) {
+        const regs = await navigator.serviceWorker.getRegistrations();
+        await Promise.all(regs.map(r => r.unregister()));
+      }
+
+      // Reload dengan URL unik → bypass cache total
+      const url = new URL(window.location.href);
+      url.searchParams.set('v', serverVersion);
+      url.searchParams.set('t', Date.now());
+      window.location.replace(url.toString());
+      return;
     }
-    return;
-  }
-  localStorage.setItem('psv_build_version', BUILD_VERSION);
-})();
 
+    // Simpan versi pertama kali
+    if (!storedVersion) {
+      localStorage.setItem('psv_build_version', serverVersion);
+    }
+  } catch (err) {
+    console.warn('Version check gagal (offline?):', err);
+  }
+})();
 // ===== PWA MANIFEST + INSTALL POPUP =====
+// CATATAN: Versi aplikasi sekarang diatur di version.json
+// Setiap commit: ubah version.json + SW_VERSION di sw.js
+
 const manifestData = {
   name: "Pit Service 1",
   short_name: "PSV1",
