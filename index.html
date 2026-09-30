@@ -7,6 +7,12 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
+
+<!-- ===== ANTI-CACHE: Paksa browser selalu cek versi terbaru ===== -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+
 <title>Pit Service 1</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1695,6 +1701,38 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 });
+
+// ===== REGISTER SERVICE WORKER =====
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.log('SW failed:', err));
+  });
+}
+
+// ===== AUTO VERSION CHECK (Force Update) =====
+// Ganti BUILD_VERSION setiap kali commit agar device lain auto-refresh
+const BUILD_VERSION = '2025-01-15-v1';
+
+(function autoVersionCheck() {
+  const storedVersion = localStorage.getItem('psv_build_version');
+  if (storedVersion && storedVersion !== BUILD_VERSION) {
+    // Versi berubah → bersihkan cache & reload paksa
+    localStorage.setItem('psv_build_version', BUILD_VERSION);
+    if ('caches' in window) {
+      caches.keys().then(names => {
+        names.forEach(name => caches.delete(name));
+      }).finally(() => {
+        window.location.reload(true);
+      });
+    } else {
+      window.location.reload(true);
+    }
+    return;
+  }
+  localStorage.setItem('psv_build_version', BUILD_VERSION);
+})();
 
 // ===== PWA MANIFEST + INSTALL POPUP =====
 const manifestData = {
