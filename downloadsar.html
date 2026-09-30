@@ -8,7 +8,7 @@
   <!-- Optimasi Khusus iOS PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="JSA">
+  <meta name="apple-mobile-web-app-title" content="Download SAR">
   <title>Download SAR</title>
   
   <!-- Favicon dan Apple Touch Icon -->
@@ -175,11 +175,11 @@
   <iframe id="main-iframe" src="https://script.google.com/macros/s/AKfycbyxOwcPSpSee1J1M-TKovYvcJbnvL468zB6IOAXKGRKS1PaU_fH5tuMVAP7FdK8ayx3kQ/exec?page=Download"></iframe>
 
   <!-- TOMBOL INSTALL ANDROID -->
-  <button id="install-btn">Install App JSA</button>
+  <button id="install-btn">Install App Download SAR</button>
 
   <!-- MODAL INSTALL IOS -->
   <div id="ios-install-prompt">
-    <p>Install JSA di iPhone Anda:</p>
+    <p>Install Download SAR di iPhone Anda:</p>
     <p>Tap icon Share <span>⍐</span> di bawah, lalu pilih<br><strong>"Add to Home Screen"</strong></p>
     <button id="close-ios-prompt">Tutup</button>
   </div>
@@ -214,9 +214,9 @@
 
     // 3. PWA Manifest (Diupdate Nama dan Ikonnya)
     const manifestData = {
-      "name": "JSA",
-      "short_name": "JSA",
-      "description": "Aplikasi JSA",
+      "name": "Download SAR",
+      "short_name": "Download SAR",
+      "description": "Aplikasi Download SAR",
       "start_url": ".",
       "display": "standalone",
       "background_color": "#ffffff",
@@ -246,7 +246,7 @@
           vibrate: [200, 100, 200],
           badge: 'https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png'
         };
-        event.waitUntil(self.registration.showNotification('JSA', options));
+        event.waitUntil(self.registration.showNotification('Download SAR', options));
       });
 
       // Aksi saat notifikasi di-klik
