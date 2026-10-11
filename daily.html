@@ -51,8 +51,49 @@
     .menu-link:hover .arrow { color: #1e6f8a; transform: translateX(4px); }
 
     /* Iframe */
-    .iframe-container { flex: 1; width: 100%; display: none; flex-direction: column; }
-    .iframe-container iframe { width: 100%; flex: 1; border: none; min-height: calc(100vh - 60px); }
+    .iframe-container { flex: 1; width: 100%; display: none; flex-direction: column; position: relative; }
+    .iframe-container iframe { width: 100%; flex: 1; border: none; min-height: calc(100vh - 60px); display: block; }
+
+    /* ========== LOADING OVERLAY ========== */
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(244, 247, 249, 0.95);
+      backdrop-filter: blur(2px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      z-index: 50;
+      gap: 16px;
+    }
+    .loading-overlay.active {
+      display: flex;
+    }
+    .loading-spinner {
+      width: 42px;
+      height: 42px;
+      border: 3px solid #dce8ef;
+      border-top-color: #0070d2;
+      border-radius: 50%;
+      animation: spinLoad 0.7s linear infinite;
+    }
+    @keyframes spinLoad {
+      to { transform: rotate(360deg); }
+    }
+    .loading-text {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #1c3a4a;
+      letter-spacing: 0.2px;
+      text-align: center;
+      padding: 0 20px;
+    }
+    .loading-sub {
+      font-size: 0.72rem;
+      color: #5e7e8e;
+      margin-top: -8px;
+    }
 
     /* PWA Pop-up Modal (Iklan Centered) */
     .install-modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,30,50,0.6); z-index: 9999; align-items: center; justify-content: center; backdrop-filter: blur(3px); }
@@ -155,10 +196,18 @@
           <div class="menu-footer"><span class="arrow"><i class="fas fa-chevron-right"></i></span></div>
         </a>
       </div>
+    </div>
 
     <!-- IFRAME VIEW -->
     <div id="iframeView" class="iframe-container">
-      <iframe id="contentIframe" src=""></iframe>
+      <iframe id="contentIframe" src="about:blank" allow="clipboard-write; fullscreen" loading="eager"></iframe>
+
+      <!-- Loading Overlay -->
+      <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner"></div>
+        <div class="loading-text" id="loadingText">Memuat halaman…</div>
+        <div class="loading-sub">Mohon tunggu sebentar</div>
+      </div>
     </div>
   </div>
 </div>
@@ -186,7 +235,9 @@
 </div>
 
 <script>
-  // 1. INJEKSI MANIFEST PWA SECARA DINAMIS (Menggantikan file manifest.json)
+  /* ============================================================
+     1. INJEKSI MANIFEST PWA SECARA DINAMIS
+     ============================================================ */
   const manifestData = {
     name: "Activity PSV1",
     short_name: "PSV1",
@@ -205,34 +256,116 @@
   manifestLink.href = 'data:application/manifest+json;charset=utf-8,' + encodeURIComponent(manifestString);
   document.head.appendChild(manifestLink);
 
-  // 2. LOGIKA IFRAME & MENU
+  /* ============================================================
+     2. LOGIKA IFRAME & MENU
+     ============================================================ */
   const menuView = document.getElementById('menuView'),
         iframeView = document.getElementById('iframeView'),
         contentIframe = document.getElementById('contentIframe'),
         btnBack = document.getElementById('btnBack'),
         headerTitle = document.getElementById('headerTitle');
 
+  const loadingOverlay = document.getElementById('loadingOverlay');
+  const loadingText = document.getElementById('loadingText');
+  let loadingTimeout = null;
+  let fallbackTimer = null;
+
+  function showLoading(label) {
+    if (label) loadingText.textContent = 'Memuat ' + label + '…';
+    loadingOverlay.classList.add('active');
+
+    // Fallback teks — kalau 8 detik belum load, ubah pesan
+    clearTimeout(loadingTimeout);
+    loadingTimeout = setTimeout(() => {
+      loadingText.textContent = 'Hampir selesai, mohon tunggu…';
+    }, 8000);
+  }
+
+  function hideLoading() {
+    clearTimeout(loadingTimeout);
+    clearTimeout(fallbackTimer);
+    loadingOverlay.classList.remove('active');
+  }
+
+  // Deteksi iframe selesai dimuat → sembunyikan spinner
+  contentIframe.addEventListener('load', function() {
+    const src = contentIframe.getAttribute('src') || '';
+    if (src && src !== 'about:blank') {
+      setTimeout(hideLoading, 100);
+    }
+  });
+
+  // === PRE-FLIGHT: Preconnect saat hover supaya pembukaan cepat ===
+  document.querySelectorAll('.menu-link').forEach(link => {
+    const target = link.getAttribute('data-target');
+    if (target === 'iframe' || target === 'Iframe') {
+      link.addEventListener('mouseenter', function() {
+        const url = this.getAttribute('href');
+        if (url && !document.querySelector('link[data-preload="' + url + '"]')) {
+          try {
+            const preconnect = document.createElement('link');
+            preconnect.rel = 'preconnect';
+            preconnect.href = new URL(url).origin;
+            preconnect.crossOrigin = 'anonymous';
+            preconnect.setAttribute('data-preload', url);
+            document.head.appendChild(preconnect);
+          } catch (e) { /* ignore */ }
+        }
+      }, { passive: true });
+    }
+  });
+
+  // === KLIK MENU ===
   document.querySelectorAll('.menu-link').forEach(link => {
     link.addEventListener('click', function(e) {
       if (this.getAttribute('data-target') === 'blank') return;
       e.preventDefault();
+
+      const label = this.querySelector('h3').innerText;
+      const url = this.getAttribute('href');
+
+      // 1. Tampilkan spinner SEGERA
+      showLoading(label);
+
+      // 2. Reset iframe → pastikan onload berikutnya PASTI terpicu
+      contentIframe.src = 'about:blank';
+
+      // 3. Tampilkan container iframe
       menuView.style.display = 'none';
       iframeView.style.display = 'flex';
       btnBack.style.display = 'flex';
-      headerTitle.innerText = this.querySelector('h3').innerText;
-      contentIframe.src = this.getAttribute('href');
+      headerTitle.innerText = label;
+
+      // 4. Set src baru pada tick berikutnya (setelah container ter-render
+      //    dengan ukuran yang benar → browser render iframe → onload reliable)
+      requestAnimationFrame(() => {
+        contentIframe.src = url;
+      });
+
+      // 5. Fallback safety — kalau onload tidak terpanggil (cross-origin edge case)
+      //    paksa hide setelah 12 detik
+      clearTimeout(fallbackTimer);
+      fallbackTimer = setTimeout(() => {
+        if (loadingOverlay.classList.contains('active')) {
+          hideLoading();
+        }
+      }, 12000);
     });
   });
 
   function goHome() {
+    if (typeof hideLoading === 'function') hideLoading();
+
     iframeView.style.display = 'none';
     menuView.style.display = 'grid';
     btnBack.style.display = 'none';
     headerTitle.innerText = 'Activity PSV1';
-    contentIframe.src = '';
+    contentIframe.src = 'about:blank';
   }
 
-// 3. LOGIKA SMART POP-UP INSTALL & TOMBOL DOWNLOAD
+  /* ============================================================
+     3. LOGIKA SMART POP-UP INSTALL & TOMBOL DOWNLOAD
+     ============================================================ */
   let deferredPrompt;
 
   // Tangkap sistem prompt bawaan Android/Chrome
@@ -241,7 +374,7 @@
     deferredPrompt = e;
   });
 
-  // Tangkap event jika aplikasi berhasil di-install (Trigger otomatis dari OS)
+  // Tangkap event jika aplikasi berhasil di-install
   window.addEventListener('appinstalled', () => {
     localStorage.setItem('psv1_app_installed', 'true');
     document.getElementById('installModalOverlay').style.display = 'none';
@@ -252,11 +385,9 @@
     const isAndroid = /android/.test(window.navigator.userAgent.toLowerCase());
     const isInStandaloneMode = ('standalone' in window.navigator && window.navigator.standalone) || window.matchMedia('(display-mode: standalone)').matches;
 
-    // Cek memori browser: Apakah user sudah pernah tutup pop-up atau sudah install?
     const isPopupClosed = localStorage.getItem('psv1_popup_closed') === 'true';
     const isAppInstalled = localStorage.getItem('psv1_app_installed') === 'true';
 
-    // Tampilkan pop-up HANYA jika bukan mode aplikasi, belum diinstal, dan pop-up belum ditutup manual
     if (!isInStandaloneMode && !isAppInstalled && !isPopupClosed) {
       const overlay = document.getElementById('installModalOverlay');
       overlay.style.display = 'flex';
@@ -264,15 +395,13 @@
       const btnInstall = document.getElementById('btnInstall');
       
       if (isIos) {
-        // iOS tidak mengizinkan trigger tombol install, wajib tunjukkan panduan
         document.getElementById('iosGuide').style.display = 'block';
       } else {
-        // Android / Windows - Tampilkan tombol Download
         btnInstall.style.display = 'flex';
       }
     }
     
-    // Aksi Tutup Modal & Simpan ke memori agar tidak muncul lagi
+    // Aksi Tutup Modal
     document.getElementById('btnCloseModal').addEventListener('click', () => {
       document.getElementById('installModalOverlay').style.display = 'none';
       localStorage.setItem('psv1_popup_closed', 'true');
@@ -291,13 +420,38 @@
           }
           deferredPrompt = null;
         } else {
-          // Fallback GAS: Jika eksekusi terblokir sandbox iframe Google
           document.getElementById('androidGuide').style.display = 'block';
           btnInstallElem.innerHTML = '<i class="fas fa-arrow-down"></i> Ikuti Petunjuk di Bawah';
           btnInstallElem.style.background = '#5e7e8e';
           btnInstallElem.style.boxShadow = 'none';
         }
       });
+    }
+  });
+
+  /* ============================================================
+     4. IDLE PRELOAD — Preconnect halaman GAS utama saat browser idle
+     ============================================================ */
+  window.addEventListener('load', () => {
+    const doPreconnect = () => {
+      const firstMenu = document.querySelector('.menu-link[data-target="iframe"], .menu-link[data-target="Iframe"]');
+      if (firstMenu) {
+        const url = firstMenu.getAttribute('href');
+        if (url) {
+          try {
+            const link = document.createElement('link');
+            link.rel = 'preconnect';
+            link.href = new URL(url).origin;
+            link.crossOrigin = 'anonymous';
+            document.head.appendChild(link);
+          } catch (e) { /* ignore */ }
+        }
+      }
+    };
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(doPreconnect, { timeout: 3000 });
+    } else {
+      setTimeout(doPreconnect, 2000);
     }
   });
 </script>
