@@ -106,31 +106,34 @@
     flex-shrink: 0;
   }
 
-  /* ===== AVATAR (Orang Berhelm Proyek) ===== */
+  /* ===== AVATAR (Gambar Google Drive) ===== */
   .account-icon-header {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: linear-gradient(135deg, #fbbf24, #f59e0b);
+    background: #e2e8f0; /* Warna fallback jika gambar gagal load */
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: var(--sap-transition);
-    box-shadow: 0 2px 8px rgba(251, 191, 36, 0.35);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     flex-shrink: 0;
     overflow: hidden;
-    padding: 3px;
+    padding: 0; /* Padding dihapus agar gambar penuh */
     box-sizing: border-box;
   }
   .account-icon-header:hover {
     transform: scale(1.06);
-    box-shadow: 0 4px 16px rgba(251, 191, 36, 0.5);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
   }
-  .account-icon-header svg {
+  /* Styling untuk tag img di dalam avatar */
+  .account-icon-header img {
     width: 100%;
     height: 100%;
+    object-fit: cover;
     display: block;
+    border-radius: 50%;
   }
 
   .header-right {
@@ -1023,26 +1026,10 @@
     <section class="header-section">
       <div class="header-left">
         <div class="account-icon-header" title="Profil" id="accountIconHeader">
-          <!-- Avatar: Orang Berhelm Proyek -->
-          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true">
-            <path d="M8 12 Q8 5 16 5 Q24 5 24 12 L24 13 L8 13 Z" fill="#fbbf24"/>
-            <path d="M10 11 Q10 6 16 6 Q22 6 22 11 L22 12 L10 12 Z" fill="#f59e0b"/>
-            <rect x="7" y="12" width="18" height="2" rx="1" fill="#d97706"/>
-            <path d="M11 9 Q13 6.5 16 6.5" stroke="#fde68a" stroke-width="0.7" fill="none" stroke-linecap="round" opacity="0.8"/>
-            <circle cx="16" cy="19" r="5.5" fill="#f4d4b0"/>
-            <path d="M10.5 17 Q10 19 10.5 21 L11 21 L11 17 Z" fill="#2b1d14"/>
-            <path d="M21.5 17 Q22 19 21.5 21 L21 21 L21 17 Z" fill="#2b1d14"/>
-            <circle cx="14" cy="19" r="0.75" fill="#1a1a1a"/>
-            <circle cx="18" cy="19" r="0.75" fill="#1a1a1a"/>
-            <path d="M14 21.3 Q16 22.5 18 21.3" stroke="#8b5a3c" stroke-width="0.6" fill="none" stroke-linecap="round"/>
-            <rect x="14.5" y="23.5" width="3" height="2" fill="#e6b891"/>
-            <path d="M16 25c-3.5 0-6.5 1.8-6.5 4V31h13v-2c0-2.2-3-4-6.5-4z" fill="#f97316"/>
-            <rect x="10.5" y="27" width="11" height="0.8" fill="#fde68a"/>
-            <rect x="10.5" y="29" width="11" height="0.8" fill="#fde68a"/>
-            <path d="M13.5 25.5 L16 27 L18.5 25.5" stroke="#d97706" stroke-width="0.6" fill="none"/>
-            <path d="M11.5 14 Q11 16 11.5 18" stroke="#d97706" stroke-width="0.6" fill="none"/>
-            <path d="M20.5 14 Q21 16 20.5 18" stroke="#d97706" stroke-width="0.6" fill="none"/>
-          </svg>
+          <!-- Avatar: Gambar dari Google Drive -->
+          <img src="https://drive.google.com/thumbnail?id=17SVBleeTt3UrPszlwCw-_fLrBYiYgD57&sz=w300" 
+               alt="Profil" 
+               onerror="this.style.display='none'; this.parentElement.style.background='#0a6ed1'; this.parentElement.innerHTML='<span style=\'color:white; font-weight:bold; font-size:16px;\'>P</span>';">
         </div>
       </div>
 
