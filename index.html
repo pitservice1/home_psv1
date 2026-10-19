@@ -1017,6 +1017,92 @@
       transition: transform 0.3s ease;
     }
   }
+
+  /* ===== FLOATING CENTER BOTTOM NAV (DARK THEME) ===== */
+  .bottom-nav {
+    background: rgba(18, 20, 23, 0.96) !important; /* Tema gelap sesuai gambar */
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+  }
+
+  .bottom-nav-item {
+    color: #8e99a8; /* Warna icon pasif abu-abu */
+    font-size: 0.65rem;
+  }
+
+  .bottom-nav-item:active {
+    transform: scale(0.9);
+  }
+
+  .bottom-nav-item.active {
+    color: #3b82f6; /* Warna biru terang */
+  }
+
+  /* Container Khusus untuk Home di Tengah */
+  .bottom-nav-item.nav-center {
+    position: relative;
+    overflow: visible;
+    /* Menarik elemen ke atas agar melayang (floating) */
+    transform: translateY(-18px); 
+  }
+
+  /* Label "Home" diletakkan di bawah */
+  .nav-center .nav-label {
+    position: absolute;
+    bottom: -18px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: #ffffff;
+    transition: color 0.3s;
+  }
+
+  /* Wrapper lingkaran putih di sekeliling logo */
+  .nav-center .center-logo-wrapper {
+    width: 58px;
+    height: 58px;
+    background: #121417; /* Menyesuaikan background nav */
+    border: 3px solid #ffffff; /* Cincin putih */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Logo P dan Biru */
+  .nav-center .nav-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: contain;
+    background: #0a6ed1; /* Warna biru dasar logo */
+    padding: 4px;
+  }
+
+  /* Animasi saat icon tengah ditekan */
+  .bottom-nav-item.nav-center:active .center-logo-wrapper {
+    transform: scale(0.92);
+  }
+
+  /* Titik Notifikasi Oranye di atas lingkaran */
+  .nav-center::after {
+    content: '';
+    position: absolute;
+    top: 4px;
+    right: calc(50% - 22px);
+    width: 14px;
+    height: 14px;
+    background: #f59e0b; /* Warna kuning/oranye */
+    border: 2px solid #121417; /* Border membaur dengan background */
+    border-radius: 50%;
+    z-index: 10;
+    display: block; /* Ubah jadi 'none' jika ingin menyembunyikan titik oranye */
+  }
+
+  /* Perkecil sedikit item non-center agar fokus ke tengah */
+  .bottom-nav-item:not(.nav-center) .material-symbols-rounded {
+    font-size: 22px;
+  }
 </style>
 </head>
 <body>
@@ -1282,26 +1368,43 @@
 
 <!-- ============ BOTTOM NAVIGATION (MOBILE ONLY) ============ -->
 <nav class="bottom-nav" id="bottomNav">
-  <div class="bottom-nav-inner">
-    <a class="bottom-nav-item active" href="https://pitservice1.github.io/home_psv1/">
-      <span class="material-symbols-rounded">home</span>
-      <span>Home</span>
+  <div class="bottom-nav-inner" id="bottomNavInner">
+    
+    <!-- 1. Menu (Kiri) -->
+    <a class="bottom-nav-item" href="#" data-index="0">
+      <span class="material-symbols-rounded">format_list_bulleted</span>
+      <span>Menu</span>
     </a>
-    <a class="bottom-nav-item" href="https://pitservice1.github.io/home_psv1/daily.html">
+
+    <!-- 2. Daily (Kiri) -->
+    <a class="bottom-nav-item" href="https://pitservice1.github.io/home_psv1/daily.html" data-index="1">
       <span class="material-symbols-rounded">agriculture</span>
       <span>Daily</span>
     </a>
-    <a class="bottom-nav-item" href="https://pitservice1.github.io/home_psv1/gudang.html">
-      <span class="material-symbols-rounded">warehouse</span>
-      <span>Gudang</span>
+
+    <!-- 3. HOME (Tengah - Floating Logo) -->
+    <a class="bottom-nav-item nav-center active" href="https://pitservice1.github.io/home_psv1/" data-index="2" aria-label="Home">
+      <div class="center-logo-wrapper">
+        <img
+          class="nav-logo"
+          src="https://drive.google.com/thumbnail?id=1K_V55Rp85UY1DwYPo0dgbmKT5-cI6nzj&sz=w300"
+          alt="Home"
+          onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'material-symbols-rounded\' style=\'color:#0a6ed1;\'>home</span>';"
+        />
+      </div>
+      <span class="nav-label">Home</span>
     </a>
-    <a class="bottom-nav-item" href="https://pitservice1.github.io/home_psv1/inspeksi.html">
-      <span class="material-symbols-rounded">checklist</span>
-      <span>Inspeksi</span>
+
+    <!-- 4. Notifikasi / Arsip (Kanan) -->
+    <a class="bottom-nav-item" href="#" data-index="3">
+      <span class="material-symbols-rounded">notifications</span>
+      <span>Notif</span>
     </a>
-    <a class="bottom-nav-item" href="https://pitservice1.github.io/home_psv1/debit.html">
-      <span class="material-symbols-rounded">speed</span>
-      <span>Debit</span>
+
+    <!-- 5. Profil (Kanan) -->
+    <a class="bottom-nav-item" href="#" data-index="4">
+      <span class="material-symbols-rounded">person</span>
+      <span>Profil</span>
     </a>
   </div>
 </nav>
@@ -1983,6 +2086,31 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
+</script>
+
+<!-- ===== BOTTOM NAV ANIMATION SCRIPT ===== -->
+<script>
+(function() {
+  function initBottomNav() {
+    const inner = document.getElementById('bottomNavInner');
+    if (!inner) return;
+
+    const items = inner.querySelectorAll('.bottom-nav-item');
+    
+    items.forEach(function(item) {
+      item.addEventListener('click', function() {
+        item.style.transform = 'scale(0.88)';
+        setTimeout(() => { item.style.transform = ''; }, 150);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initBottomNav);
+  } else {
+    initBottomNav();
+  }
+})();
 </script>
 </body>
 </html>
