@@ -111,7 +111,7 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: #e2e8f0; /* Warna fallback jika gambar gagal load */
+    background: #e2e8f0;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -120,14 +120,13 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     flex-shrink: 0;
     overflow: hidden;
-    padding: 0; /* Padding dihapus agar gambar penuh */
+    padding: 0;
     box-sizing: border-box;
   }
   .account-icon-header:hover {
     transform: scale(1.06);
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
   }
-  /* Styling untuk tag img di dalam avatar */
   .account-icon-header img {
     width: 100%;
     height: 100%;
@@ -167,18 +166,15 @@
     position: absolute;
     top: 4px;
     right: 4px;
-    /* min-width: 17px; */  <-- Hapus atau comment
     height: auto;
     padding: 0;
-    /* background: #e74c3c; */ <-- Hapus atau comment
-    color: #e74c3c; /* <-- Ubah warna teks menjadi merah */
-    font-size: 0.65rem; /* Sedikit dibesarkan agar angka 3 terlihat jelas */
+    color: #e74c3c;
+    font-size: 0.65rem;
     font-weight: 700;
     border-radius: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    /* border: 2px solid #fff; */ <-- Hapus atau comment
     box-sizing: content-box;
   }
 
@@ -452,7 +448,6 @@
     min-width: 0;
   }
 
-  /* ===== NAMA MENU (h3): UTUH, BOLEH 2 BARIS ===== */
   .card h3 {
     margin: 0;
     font-size: 0.92rem;
@@ -477,7 +472,6 @@
       0 8px 24px rgba(0, 0, 0, 0.4);
   }
 
-  /* ===== SUB MENU (p): DIPENDEKKAN DENGAN ... (1 BARIS) ===== */
   .card p {
     margin: 2px 0 0 0;
     color: rgba(255, 255, 255, 0.9);
@@ -1018,90 +1012,83 @@
     }
   }
 
-  /* ===== FLOATING CENTER BOTTOM NAV (DARK THEME) ===== */
-  .bottom-nav {
-    background: rgba(18, 20, 23, 0.96) !important; /* Tema gelap sesuai gambar */
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-  }
-
-  .bottom-nav-item {
-    color: #8e99a8; /* Warna icon pasif abu-abu */
-    font-size: 0.65rem;
-  }
-
-  .bottom-nav-item:active {
-    transform: scale(0.9);
-  }
-
-  .bottom-nav-item.active {
-    color: #3b82f6; /* Warna biru terang */
-  }
-
-  /* Container Khusus untuk Home di Tengah */
+  /* =========================================
+     FLOATING HOME BUTTON (Tengah) - FIXED LOGO FULL
+     ========================================= */
   .bottom-nav-item.nav-center {
     position: relative;
     overflow: visible;
-    /* Menarik elemen ke atas agar melayang (floating) */
-    transform: translateY(-18px); 
+    transform: translateY(-18px); /* Naik ke atas melayang */
+    background: transparent !important;
   }
 
-  /* Label "Home" diletakkan di bawah */
+  .nav-center .center-logo-wrapper {
+    width: 58px;
+    height: 58px;
+    background: #ffffff; /* Lingkaran putih */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    padding: 3px; /* Sedikit ruang agar logo tidak menyentuh ujung lingkaran */
+  }
+
+  .nav-center .nav-logo {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: contain; /* Agar seluruh gambar terlihat utuh, tidak terpotong */
+    background: transparent; 
+  }
+
   .nav-center .nav-label {
     position: absolute;
     bottom: -18px;
     font-size: 0.65rem;
     font-weight: 600;
-    color: #ffffff;
-    transition: color 0.3s;
+    color: #94a3b8;
   }
 
-  /* Wrapper lingkaran putih di sekeliling logo */
-  .nav-center .center-logo-wrapper {
-    width: 58px;
-    height: 58px;
-    background: #121417; /* Menyesuaikan background nav */
-    border: 3px solid #ffffff; /* Cincin putih */
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
-    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  .bottom-nav-item.nav-center.active {
+    color: #0a6ed1;
   }
 
-  /* Logo P dan Biru */
-  .nav-center .nav-logo {
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    object-fit: contain;
-    background: #0a6ed1; /* Warna biru dasar logo */
-    padding: 4px;
+  .bottom-nav-item.nav-center.active::after {
+    display: none; /* Hilangkan dot di atas karena sudah ada logo */
   }
 
-  /* Animasi saat icon tengah ditekan */
   .bottom-nav-item.nav-center:active .center-logo-wrapper {
     transform: scale(0.92);
   }
 
-  /* Titik Notifikasi Oranye di atas lingkaran */
-  .nav-center::after {
-    content: '';
-    position: absolute;
-    top: 4px;
-    right: calc(50% - 22px);
-    width: 14px;
-    height: 14px;
-    background: #f59e0b; /* Warna kuning/oranye */
-    border: 2px solid #121417; /* Border membaur dengan background */
-    border-radius: 50%;
-    z-index: 10;
-    display: block; /* Ubah jadi 'none' jika ingin menyembunyikan titik oranye */
+  /* Penyesuaian ukuran untuk layar kecil */
+  @media (max-width: 485px) {
+    .nav-center .center-logo-wrapper {
+      width: 52px;
+      height: 52px;
+    }
+    .nav-center .nav-label {
+      font-size: 0.6rem;
+      bottom: -16px;
+    }
+    .bottom-nav-item.nav-center {
+      transform: translateY(-15px);
+    }
   }
-
-  /* Perkecil sedikit item non-center agar fokus ke tengah */
-  .bottom-nav-item:not(.nav-center) .material-symbols-rounded {
-    font-size: 22px;
+  @media (max-width: 360px) {
+    .nav-center .center-logo-wrapper {
+      width: 48px;
+      height: 48px;
+    }
+    .nav-center .nav-label {
+      font-size: 0.55rem;
+      bottom: -14px;
+    }
+    .bottom-nav-item.nav-center {
+      transform: translateY(-12px);
+    }
   }
 </style>
 </head>
@@ -1368,43 +1355,36 @@
 
 <!-- ============ BOTTOM NAVIGATION (MOBILE ONLY) ============ -->
 <nav class="bottom-nav" id="bottomNav">
-  <div class="bottom-nav-inner" id="bottomNavInner">
-    
-    <!-- 1. Menu (Kiri) -->
-    <a class="bottom-nav-item" href="#" data-index="0">
-      <span class="material-symbols-rounded">format_list_bulleted</span>
-      <span>Menu</span>
-    </a>
-
-    <!-- 2. Daily (Kiri) -->
-    <a class="bottom-nav-item" href="https://pitservice1.github.io/home_psv1/daily.html" data-index="1">
+  <div class="bottom-nav-inner">
+    <a class="bottom-nav-item" href="https://pitservice1.github.io/home_psv1/daily.html">
       <span class="material-symbols-rounded">agriculture</span>
       <span>Daily</span>
     </a>
-
-    <!-- 3. HOME (Tengah - Floating Logo) -->
-    <a class="bottom-nav-item nav-center active" href="https://pitservice1.github.io/home_psv1/" data-index="2" aria-label="Home">
+    <a class="bottom-nav-item" href="https://pitservice1.github.io/home_psv1/gudang.html">
+      <span class="material-symbols-rounded">warehouse</span>
+      <span>Gudang</span>
+    </a>
+    
+    <!-- TOMBOL HOME FLOATING DI TENGAH -->
+    <a class="bottom-nav-item nav-center active" href="https://pitservice1.github.io/home_psv1/" aria-label="Home">
       <div class="center-logo-wrapper">
         <img
           class="nav-logo"
           src="https://drive.google.com/thumbnail?id=1K_V55Rp85UY1DwYPo0dgbmKT5-cI6nzj&sz=w300"
           alt="Home"
-          onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'material-symbols-rounded\' style=\'color:#0a6ed1;\'>home</span>';"
+          onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'material-symbols-rounded\' style=\'color:#0a6ed1; font-size:30px;\'>home</span>';"
         />
       </div>
       <span class="nav-label">Home</span>
     </a>
-
-    <!-- 4. Notifikasi / Arsip (Kanan) -->
-    <a class="bottom-nav-item" href="#" data-index="3">
-      <span class="material-symbols-rounded">notifications</span>
-      <span>Notif</span>
+    
+    <a class="bottom-nav-item" href="https://pitservice1.github.io/home_psv1/inspeksi.html">
+      <span class="material-symbols-rounded">checklist</span>
+      <span>Inspeksi</span>
     </a>
-
-    <!-- 5. Profil (Kanan) -->
-    <a class="bottom-nav-item" href="#" data-index="4">
-      <span class="material-symbols-rounded">person</span>
-      <span>Profil</span>
+    <a class="bottom-nav-item" href="https://pitservice1.github.io/home_psv1/debit.html">
+      <span class="material-symbols-rounded">speed</span>
+      <span>Debit</span>
     </a>
   </div>
 </nav>
@@ -2086,31 +2066,6 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   }
 });
-</script>
-
-<!-- ===== BOTTOM NAV ANIMATION SCRIPT ===== -->
-<script>
-(function() {
-  function initBottomNav() {
-    const inner = document.getElementById('bottomNavInner');
-    if (!inner) return;
-
-    const items = inner.querySelectorAll('.bottom-nav-item');
-    
-    items.forEach(function(item) {
-      item.addEventListener('click', function() {
-        item.style.transform = 'scale(0.88)';
-        setTimeout(() => { item.style.transform = ''; }, 150);
-      });
-    });
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initBottomNav);
-  } else {
-    initBottomNav();
-  }
-})();
 </script>
 </body>
 </html>
