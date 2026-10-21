@@ -5,21 +5,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>APD Pit Service 1 — SAP Fiori Launchpad</title>
 
-<!-- Font Awesome Icon -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<!-- Google Fonts (Inter untuk presisi SAP Fiori feel) -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
     :root {
-        --fiori-bg: #f5f6f7;
-        --fiori-shell-bg: #354a5f;
-        --fiori-shell-text: #ffffff;
-        --fiori-card-bg: rgba(255, 255, 255, 0.1);
-        --fiori-card-hover: rgba(255, 255, 255, 0.2);
-        --fiori-text-main: #32363a;
-        --fiori-text-muted: #6a6d70;
-        --fiori-accent: #0a6ed1;
+        --primary: #1e3a8a;
+        --primary-dark: #172e6e;
+        --primary-light: #2563eb;
+        --primary-soft: #eff6ff;
+        --border: #e2e8f0;
+        --text-main: #0f172a;
+        --text-sub: #475569;
+        --text-muted: #94a3b8;
+        --bg: #f1f5f9;
+        --radius: 4px;
     }
 
     * {
@@ -29,341 +29,456 @@
         font-family: 'Inter', 'Segoe UI', sans-serif;
     }
 
-    /* Pastikan HTML & Body mengisi penuh layar dan mencegah scroll ganda */
     html, body {
         height: 100vh;
         overflow: hidden;
-        background-color: var(--fiori-bg);
-        color: var(--fiori-text-main);
+        background-color: var(--bg);
+        color: var(--text-main);
         display: flex;
         flex-direction: column;
+        -webkit-font-smoothing: antialiased;
     }
 
-    /* SAP Fiori Shell Bar / Header */
-    .fiori-shell {
-        background-color: var(--fiori-shell-bg);
-        color: var(--fiori-shell-text);
-        padding: 6px 16px;
+    /* ===== HEADER ===== */
+    .app-header {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+        color: #fff;
+        padding: 6px 14px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        box-shadow: 0 2px 8px rgba(30, 58, 138, 0.25);
         flex-shrink: 0;
         z-index: 1000;
-        gap: 15px;
+        gap: 10px;
+        min-height: 48px;
     }
 
-    .fiori-shell-left {
+    .header-left {
         display: flex;
         align-items: center;
-        gap: 12px;
-        flex-shrink: 0;
+        gap: 8px;
+        min-width: 0;
+        flex: 1;
     }
 
-    .menu-toggle-btn {
-        background: transparent;
-        border: none;
-        color: var(--fiori-shell-text);
-        font-size: 16px;
+    .icon-btn {
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        color: #fff;
+        font-size: 13px;
         cursor: pointer;
-        padding: 6px 10px;
-        border-radius: 4px;
+        width: 32px;
+        height: 32px;
+        border-radius: var(--radius);
         transition: background 0.2s;
-        display: none; /* Muncul saat layar kecil / mobile */
-    }
-
-    .menu-toggle-btn:hover {
-        background: rgba(255, 255, 255, 0.1);
-    }
-
-    .fiori-shell-brand h2 {
-        font-size: 13px;
-        font-weight: 600;
-        letter-spacing: 0.2px;
-        white-space: nowrap;
-    }
-
-    /* Menu Navigasi di Header (Minimalis) */
-    .header-nav {
         display: flex;
         align-items: center;
-        gap: 6px;
-        overflow-x: auto;
-        padding: 4px 0;
-    }
-
-    .header-nav::-webkit-scrollbar {
-        height: 3px;
-    }
-    .header-nav::-webkit-scrollbar-thumb {
-        background: rgba(255,255,255,0.2);
-        border-radius: 2px;
-    }
-
-    .header-nav-item {
-        background: var(--fiori-card-bg);
-        color: var(--fiori-shell-text);
-        padding: 5px 10px;
-        border-radius: 4px;
+        justify-content: center;
+        flex-shrink: 0;
         text-decoration: none;
+    }
+
+    .icon-btn:hover {
+        background: rgba(255, 255, 255, 0.28);
+    }
+
+    .icon-btn.hidden { display: none; }
+
+    .brand {
         display: flex;
         align-items: center;
-        gap: 6px;
-        font-size: 11.5px;
-        font-weight: 500;
-        white-space: nowrap;
-        transition: background 0.2s, transform 0.1s;
-        border: 1px solid rgba(255, 255, 255, 0.05);
+        gap: 8px;
+        min-width: 0;
+        flex: 1;
     }
 
-    .header-nav-item i {
-        font-size: 12px;
-        color: #72b1ff;
-    }
-
-    .header-nav-item:hover {
-        background: var(--fiori-card-hover);
-        border-color: rgba(255, 255, 255, 0.2);
-    }
-
-    .fiori-shell-user {
-        font-size: 11px;
-        color: #bfc9d1;
-        white-space: nowrap;
+    .brand-icon {
+        width: 30px;
+        height: 30px;
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.18);
+        border: 1px solid rgba(255, 255, 255, 0.28);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 13px;
         flex-shrink: 0;
     }
 
-    /* Mobile Drawer / Sidebar Overlay */
-    .sidebar-overlay {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0, 0, 0, 0.4);
-        backdrop-filter: blur(2px);
-        z-index: 1050;
-        display: none;
-        opacity: 0;
-        transition: opacity 0.3s ease;
-    }
-
-    .sidebar-overlay.show {
-        display: block;
-        opacity: 1;
-    }
-
-    .sidebar-drawer {
-        position: fixed;
-        top: 0;
-        left: -280px;
-        width: 280px;
-        height: 100%;
-        background: #ffffff;
-        z-index: 1100;
-        box-shadow: 4px 0 15px rgba(0,0,0,0.1);
-        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        display: flex;
-        flex-direction: column;
-    }
-
-    .sidebar-drawer.show {
-        left: 0;
-    }
-
-    .sidebar-header {
-        background: var(--fiori-shell-bg);
-        color: #fff;
-        padding: 16px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
+    .brand h2 {
+        font-size: 12px;
         font-weight: 600;
-        font-size: 14px;
+        letter-spacing: 0.3px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-transform: uppercase;
     }
 
-    .sidebar-close-btn {
-        background: transparent;
-        border: none;
-        color: #fff;
-        font-size: 16px;
-        cursor: pointer;
-    }
-
-    .sidebar-menu-list {
-        padding: 12px 0;
-        overflow-y: auto;
-        flex: 1;
-    }
-
-    .sidebar-item {
+    /* Breadcrumb di header saat embed */
+    .header-title {
+        font-size: 12px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
         display: flex;
         align-items: center;
-        gap: 12px;
-        padding: 12px 20px;
-        text-decoration: none;
-        color: var(--fiori-text-main);
-        font-size: 13px;
+        gap: 6px;
+    }
+    .header-title i { font-size: 11px; opacity: 0.85; }
+
+    .user-chip {
+        font-size: 11px;
+        color: rgba(255, 255, 255, 0.9);
+        white-space: nowrap;
+        flex-shrink: 0;
+        padding: 6px 10px;
+        border-radius: var(--radius);
+        background: rgba(255, 255, 255, 0.12);
+        border: 1px solid rgba(255, 255, 255, 0.25);
         font-weight: 500;
-        border-left: 3px solid transparent;
-        transition: all 0.2s;
     }
 
-    .sidebar-item i {
-        font-size: 16px;
-        color: var(--fiori-accent);
-        width: 20px;
-        text-align: center;
-    }
-
-    .sidebar-item:hover {
-        background: #f0f5fb;
-        border-left-color: var(--fiori-accent);
-        color: var(--fiori-accent);
-    }
-
-    /* Main Container / Workspace Penuh */
-    .container {
+    /* ===== MAIN ===== */
+    .main {
         flex: 1;
         display: flex;
         flex-direction: column;
         width: 100%;
-        max-width: 100%;
-        padding: 8px 12px;
+        padding: 8px;
+        min-height: 0;
         overflow: hidden;
     }
 
-    /* Iframe Wrapper Container Style - Memenuhi Sisa Layar */
-    .iframe-container {
+    /* ===== LAUNCHER / GRID MENU ===== */
+    .launcher {
         flex: 1;
-        background: #ffffff;
-        border: 1px solid #d9d9d9;
-        border-radius: 6px;
-        box-shadow: 0 4px 16px rgba(0,0,0,0.06);
         display: flex;
         flex-direction: column;
-        overflow: hidden;
+        overflow-y: auto;
+        gap: 8px;
         min-height: 0;
     }
 
-    .iframe-header {
-        background: #f8f9fa;
-        padding: 6px 12px;
-        border-bottom: 1px solid #d9d9d9;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-size: 11px;
-        font-weight: 600;
-        color: var(--fiori-text-main);
+    .launcher.hidden { display: none; }
+
+    .menu-section {
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+        overflow: hidden;
         flex-shrink: 0;
     }
 
-    .iframe-header span i {
-        color: var(--fiori-accent);
-        margin-right: 4px;
+    .menu-section-header {
+        background: var(--primary);
+        color: #fff;
+        padding: 8px 12px;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.4px;
+        text-transform: uppercase;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
 
-    /* Iframe mengisi penuh ruang ke bawah */
-    iframe {
+    .menu-section-header i { font-size: 11px; }
+
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .menu-card {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 12px;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        text-decoration: none;
+        color: var(--text-main);
+        transition: all 0.2s;
+        min-width: 0;
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+        cursor: pointer;
+        text-align: left;
+        font-family: inherit;
+        width: 100%;
+    }
+
+    .menu-card:hover {
+        border-color: var(--primary-light);
+        background: var(--primary-soft);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+    }
+
+    .menu-card:active { transform: translateY(0); }
+
+    .menu-card-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: var(--radius);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 14px;
+        flex-shrink: 0;
+        border: 1px solid;
+    }
+
+    .menu-card:nth-child(1) .menu-card-icon { background: #dbeafe; color: #1e40af; border-color: #bfdbfe; }
+    .menu-card:nth-child(2) .menu-card-icon { background: #dcfce7; color: #15803d; border-color: #bbf7d0; }
+    .menu-card:nth-child(3) .menu-card-icon { background: #fef3c7; color: #b45309; border-color: #fde68a; }
+    .menu-card:nth-child(4) .menu-card-icon { background: #ede9fe; color: #6d28d9; border-color: #ddd6fe; }
+
+    .menu-card-body {
+        min-width: 0;
+        flex: 1;
+        overflow: hidden;
+    }
+
+    .menu-card-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text-main);
+        margin-bottom: 1px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .menu-card-desc {
+        font-size: 10px;
+        color: var(--text-sub);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* ===== EMBED / IFRAME VIEW ===== */
+    .embed-view {
+        flex: 1;
+        display: none;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .embed-view.active { display: flex; }
+
+    .embed-frame-wrapper {
+        flex: 1;
+        background: #fff;
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+    }
+
+    .embed-frame-wrapper iframe {
         flex: 1;
         width: 100%;
         height: 100%;
         border: none;
-        background: #ffffff;
+        background: #fff;
     }
 
-    /* Footer Korporat Ringkas */
+    /* ===== LOADING ===== */
+    .embed-loading {
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.92);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        z-index: 5;
+        font-size: 12px;
+        color: var(--text-sub);
+        transition: opacity 0.2s;
+    }
+
+    .embed-loading.hidden { display: none; }
+
+    .spinner {
+        width: 34px;
+        height: 34px;
+        border: 3px solid var(--border);
+        border-top-color: var(--primary);
+        border-radius: 50%;
+        animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .embed-view { position: relative; }
+
+    /* ===== FOOTER ===== */
     footer {
         text-align: center;
         padding: 6px;
         font-size: 10px;
-        color: var(--fiori-text-muted);
-        border-top: 1px solid #e5e5e5;
-        background: #ffffff;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border);
+        background: #fff;
         flex-shrink: 0;
+        font-weight: 500;
     }
 
-    /* Responsif untuk layar kecil / mobile */
+    /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
-        .menu-toggle-btn {
-            display: inline-block;
+        .app-header { padding: 5px 10px; gap: 8px; min-height: 44px; }
+        .user-chip { display: none; }
+        .brand-icon { display: none; }
+        .brand h2 { font-size: 11px; }
+        .header-title { font-size: 11px; }
+
+        .main { padding: 6px; }
+
+        .menu-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 6px;
+            padding: 8px;
         }
-        .header-nav {
-            display: none; /* Sembunyikan menu bar di header pada layar kecil, gunakan hamburger menu */
+
+        .menu-card { padding: 8px 10px; gap: 8px; }
+        .menu-card-icon { width: 32px; height: 32px; font-size: 12px; }
+        .menu-card-title { font-size: 11px; }
+        .menu-card-desc { font-size: 9px; }
+    }
+
+    @media (max-width: 480px) {
+        .app-header { padding: 4px 8px; gap: 6px; }
+        .icon-btn { width: 30px; height: 30px; font-size: 12px; }
+        .brand h2 { font-size: 10px; }
+        .header-title { font-size: 10px; }
+
+        .main { padding: 4px; }
+
+        .menu-section-header { padding: 6px 10px; font-size: 10px; }
+
+        .menu-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4px;
+            padding: 6px;
         }
-        .fiori-shell-user {
-            display: none;
+
+        .menu-card {
+            padding: 7px 8px;
+            gap: 6px;
+            flex-direction: column;
+            align-items: flex-start;
         }
+
+        .menu-card-icon { width: 28px; height: 28px; font-size: 11px; }
+        .menu-card-title { font-size: 10px; white-space: normal; line-height: 1.2; }
+        .menu-card-desc { font-size: 8px; display: none; }
+
+        footer { font-size: 9px; padding: 4px; }
+    }
+
+    @media (max-width: 360px) {
+        .menu-grid { grid-template-columns: 1fr; }
     }
 </style>
 </head>
 <body>
 
-<!-- SAP Fiori Shell Bar / Header dengan Menu Minimalis -->
-<header class="fiori-shell">
-    <div class="fiori-shell-left">
-        <button class="menu-toggle-btn" onclick="toggleSidebar()" title="Menu Navigasi">
-            <i class="fas fa-bars"></i>
+<!-- ===== HEADER ===== -->
+<header class="app-header">
+    <div class="header-left">
+        <!-- Home (link eksternal) -->
+        <a href="https://pitservice1.github.io/home_psv1/" class="icon-btn" title="Home Utama">
+            <i class="fas fa-home"></i>
+        </a>
+
+        <!-- Back (muncul saat embed) -->
+        <button class="icon-btn hidden" id="backBtn" onclick="closeEmbed()" title="Kembali ke Menu">
+            <i class="fas fa-arrow-left"></i>
         </button>
-        <div class="fiori-shell-brand">
-            <h2>APD Management</h2>
+
+        <div class="brand">
+            <div class="brand-icon"><i class="fas fa-helmet-safety"></i></div>
+            <h2 id="headerBrand">APD Management</h2>
+            <div class="header-title hidden" id="headerTitle">
+                <i class="fas fa-chevron-right" style="opacity:.5;"></i>
+                <span id="headerTitleText">—</span>
+            </div>
         </div>
     </div>
-
-    <!-- Menu Navigasi Ringkas di Header -->
-    <nav class="header-nav">
-        <a href="https://script.google.com/macros/s/AKfycbww3SmtXHkE_BWMOsyh8nLFnmtxJKvZEhPzRszHRbdEV0wnn8UQJAygeJJ4Wil43-NUpw/exec" target="iframe" class="header-nav-item">
-            <i class="fas fa-file-signature"></i> Input Transaksi
-        </a>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSemUtp5oVI1_8QkzURXLWGTijMzSajyE2MqxvLgvU_NDJRX4Q/viewform" target="iframe" class="header-nav-item">
-            <i class="fas fa-box-open"></i> Pengajuan
-        </a>
-        <a href="https://forms.gle/3idP5X7tS4r9jJHX9" target="_blank" class="header-nav-item">
-            <i class="fas fa-handshake"></i> Tanda Terima
-        </a>
-        <a href="https://docs.google.com/spreadsheets/d/1v5Xyj00qmj4pzCGoyRPydwLjDfu57nMBcOWtTognoyg/edit?gid=1245499998#gid=1245499998" target="iframe" class="header-nav-item">
-            <i class="fas fa-database"></i> Database
-        </a>
-    </nav>
-
-    <div class="fiori-shell-user">
-        Pit Service Air
+    <div class="user-chip">
+        <i class="fas fa-user-circle"></i> Pit Service Air
     </div>
 </header>
 
-<!-- Sidebar Drawer & Overlay Mobile (Untuk layar HP) -->
-<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
-<div class="sidebar-drawer" id="sidebarDrawer">
-    <div class="sidebar-header">
-        <span><i class="fas fa-compass me-2"></i> Navigasi Menu</span>
-        <button class="sidebar-close-btn" onclick="toggleSidebar()"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="sidebar-menu-list">
-        <a href="https://script.google.com/macros/s/AKfycbww3SmtXHkE_BWMOsyh8nLFnmtxJKvZEhPzRszHRbdEV0wnn8UQJAygeJJ4Wil43-NUpw/exec" target="iframe" class="sidebar-item" onclick="toggleSidebar()">
-            <i class="fas fa-file-signature"></i> Input Transaksi
-        </a>
-        <a href="https://docs.google.com/forms/d/e/1FAIpQLSemUtp5oVI1_8QkzURXLWGTijMzSajyE2MqxvLgvU_NDJRX4Q/viewform" target="_blank" class="sidebar-item">
-            <i class="fas fa-box-open"></i> Pengajuan APD
-        </a>
-        <a href="https://forms.gle/3idP5X7tS4r9jJHX9" target="_blank" class="sidebar-item">
-            <i class="fas fa-handshake"></i> Tanda Terima APD
-        </a>
-        <a href="https://docs.google.com/spreadsheets/d/1v5Xyj00qmj4pzCGoyRPydwLjDfu57nMBcOWtTognoyg/edit?gid=1245499998#gid=1245499998" target="_blank" class="sidebar-item">
-            <i class="fas fa-database"></i> Database Monitoring
-        </a>
-    </div>
-</div>
+<!-- ===== MAIN ===== -->
+<div class="main">
 
-<!-- Workspace Utama (Iframe Layar Penuh) -->
-<div class="container">
-    <div class="iframe-container">
-        <div class="iframe-header">
-            <span><i class="fas fa-window-maximize"></i> Workspace / Live Preview Form Input</span>
-            <span style="font-size: 10px; color: var(--fiori-text-muted);">SAP Fiori Viewport mode</span>
-        </div>
-        <iframe name="iframe" src="https://script.google.com/macros/s/AKfycbww3SmtXHkE_BWMOsyh8nLFnmtxJKvZEhPzRszHRbdEV0wnn8UQJAygeJJ4Wil43-NUpw/exec"></iframe>
+    <!-- LAUNCHER (GRID MENU) -->
+    <div class="launcher" id="launcher">
+        <section class="menu-section">
+            <div class="menu-section-header">
+                <i class="fas fa-th-large"></i> Menu Utama
+            </div>
+            <div class="menu-grid">
+                <button class="menu-card" onclick="openEmbed('Input Transaksi','https://script.google.com/macros/s/AKfycbww3SmtXHkE_BWMOsyh8nLFnmtxJKvZEhPzRszHRbdEV0wnn8UQJAygeJJ4Wil43-NUpw/exec','iframe')">
+                    <div class="menu-card-icon"><i class="fas fa-file-signature"></i></div>
+                    <div class="menu-card-body">
+                        <div class="menu-card-title">Input Transaksi</div>
+                        <div class="menu-card-desc">Form input APD masuk/keluar</div>
+                    </div>
+                </button>
+
+                <button class="menu-card" onclick="openEmbed('Pengajuan APD','https://docs.google.com/forms/d/e/1FAIpQLSemUtp5oVI1_8QkzURXLWGTijMzSajyE2MqxvLgvU_NDJRX4Q/viewform','iframe')">
+                    <div class="menu-card-icon"><i class="fas fa-box-open"></i></div>
+                    <div class="menu-card-body">
+                        <div class="menu-card-title">Pengajuan APD</div>
+                        <div class="menu-card-desc">Form pengajuan barang APD</div>
+                    </div>
+                </button>
+
+                <button class="menu-card" onclick="openEmbed('Tanda Terima','https://forms.gle/3idP5X7tS4r9jJHX9','blank')">
+                    <div class="menu-card-icon"><i class="fas fa-handshake"></i></div>
+                    <div class="menu-card-body">
+                        <div class="menu-card-title">Tanda Terima</div>
+                        <div class="menu-card-desc">Konfirmasi penerimaan APD</div>
+                    </div>
+                </button>
+
+                <button class="menu-card" onclick="openEmbed('Database','https://docs.google.com/spreadsheets/d/1v5Xyj00qmj4pzCGoyRPydwLjDfu57nMBcOWtTognoyg/edit?gid=1245499998#gid=1245499998','iframe')">
+                    <div class="menu-card-icon"><i class="fas fa-database"></i></div>
+                    <div class="menu-card-body">
+                        <div class="menu-card-title">Database</div>
+                        <div class="menu-card-desc">Monitoring stok & riwayat APD</div>
+                    </div>
+                </button>
+            </div>
+        </section>
     </div>
+
+    <!-- EMBED VIEW (FULL) -->
+    <div class="embed-view" id="embedView">
+        <div class="embed-frame-wrapper">
+            <iframe id="embedFrame" src="about:blank" title="Workspace"></iframe>
+        </div>
+        <div class="embed-loading hidden" id="embedLoading">
+            <div class="spinner"></div>
+            <div id="embedLoadingText">Memuat...</div>
+        </div>
+    </div>
+
 </div>
 
 <footer>
@@ -371,14 +486,71 @@
 </footer>
 
 <script>
-    // Fungsi untuk membuka / menutup Sidebar Drawer Menu (Mode Mobile)
-    function toggleSidebar() {
-        const drawer = document.getElementById('sidebarDrawer');
-        const overlay = document.getElementById('sidebarOverlay');
-        if (drawer && overlay) {
-            drawer.classList.toggle('show');
-            overlay.classList.toggle('show');
+    const launcher = document.getElementById('launcher');
+    const embedView = document.getElementById('embedView');
+    const embedFrame = document.getElementById('embedFrame');
+    const embedLoading = document.getElementById('embedLoading');
+    const embedLoadingText = document.getElementById('embedLoadingText');
+    const backBtn = document.getElementById('backBtn');
+    const headerBrand = document.getElementById('headerBrand');
+    const headerTitle = document.getElementById('headerTitle');
+    const headerTitleText = document.getElementById('headerTitleText');
+
+    let loadingTimeout = null;
+
+    function openEmbed(title, url, mode) {
+        // Mode "blank" = buka tab baru, tidak embed
+        if (mode === 'blank') {
+            window.open(url, '_blank', 'noopener,noreferrer');
+            return;
         }
+
+        // Tampilkan embed view full
+        launcher.classList.add('hidden');
+        embedView.classList.add('active');
+
+        // Header: tampil back + judul
+        backBtn.classList.remove('hidden');
+        headerBrand.style.display = 'none';
+        headerTitle.classList.remove('hidden');
+        headerTitleText.textContent = title;
+
+        // Loading state
+        embedLoading.classList.remove('hidden');
+        embedLoadingText.textContent = `Memuat ${title}...`;
+        embedFrame.src = 'about:blank';
+
+        // Load iframe
+        embedFrame.onload = () => {
+            clearTimeout(loadingTimeout);
+            embedLoading.classList.add('hidden');
+        };
+        embedFrame.onerror = () => {
+            clearTimeout(loadingTimeout);
+            embedLoadingText.textContent = 'Gagal memuat halaman. Coba kembali.';
+        };
+
+        embedFrame.src = url;
+
+        // Fallback timeout
+        clearTimeout(loadingTimeout);
+        loadingTimeout = setTimeout(() => {
+            if (!embedLoading.classList.contains('hidden')) {
+                embedLoading.classList.add('hidden');
+            }
+        }, 12000);
+    }
+
+    function closeEmbed() {
+        // Kembali ke launcher
+        embedView.classList.remove('active');
+        launcher.classList.remove('hidden');
+        embedFrame.src = 'about:blank';
+
+        // Header: sembunyikan back + judul
+        backBtn.classList.add('hidden');
+        headerBrand.style.display = 'flex';
+        headerTitle.classList.add('hidden');
     }
 </script>
 
