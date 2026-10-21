@@ -1139,7 +1139,7 @@
             <option value="https://storage.googleapis.com/infompkpcs/audio/Dzikir%20dan%20Doa%20-%20Dzikir%20Pagi%20dan%20Petang-%20Dzikir%20Petang.mp3">Dzikir Petang</option>
             <option value="https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/18.mp3">Surah Al Kahfi</option>
             <option value="https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/1.mp3">Mishari Rashid al-`Afasy</option>
-            <option value="http://10.2.168.249:8000/bahana">Bahana FM Sangatta (Jaringan Lokal)</option>
+            <option value="http://10.2.168.249:8000/bahana" data-http="true">Bahana FM Sangatta (Jaringan Lokal)</option>
             <option value="https://i.klikhost.com/8232/stream">Radio GWP 98.6 FM Sangatta</option>
             <option value="https://live.phoenixradiobali.com:8250/phoenixradio">Phoenix Radio Bali 91.0 FM</option>
             <option value="https://kpfmstreaming.kaltimpost.co.id">KP FM Balikpapan</option>
@@ -1620,6 +1620,57 @@ document.addEventListener('DOMContentLoaded', function() {
     updatePlayState(false);
     stationNameSpan.textContent = 'Pilih station...';
   }
+  function showBahanaHelpDialog(stationName, stationUrl) {
+    const isAndroid = /android/i.test(navigator.userAgent);
+    const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent);
+
+    let instruksi = '';
+    if (isAndroid) {
+      instruksi = '<strong>Cara mengizinkan di Chrome Android:</strong><br>1. Buka <strong>Setelan Chrome</strong> (⋮ → Setelan).<br>2. Pilih <strong>Setelan situs</strong> → <strong>Konten tidak aman</strong>.<br>3. Tambahkan URL situs ini ke daftar <strong>"Diizinkan"</strong>.<br>4. <strong>Refresh</strong> halaman.';
+    } else if (isIOS) {
+      instruksi = 'Safari iOS tidak mendukung pemutaran konten HTTP dari halaman HTTPS.<br><br><strong>Solusi:</strong> Akses aplikasi via IP lokal kantor (http://...) atau gunakan browser lain.';
+    } else {
+      instruksi = '<strong>Cara mengizinkan di Browser Desktop:</strong><br>1. Klik ikon <strong>🔒 (gembok)</strong> di sebelah kiri URL.<br>2. Pilih <strong>"Site settings"</strong>.<br>3. Cari <strong>"Insecure content"</strong>.<br>4. Ubah dari <strong>"Block"</strong> menjadi <strong>"Allow"</strong>.<br>5. <strong>Refresh</strong> halaman.';
+    }
+
+    const dialog = document.createElement('div');
+    dialog.style.cssText = 'position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:20px;';
+    dialog.innerHTML = '<div style="background:#fff;border-radius:16px;padding:24px;max-width:480px;width:100%;max-height:85vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3);font-family:Google Sans,sans-serif;">' +
+      '<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">' +
+        '<div style="width:44px;height:44px;border-radius:12px;background:#fef3c7;display:flex;align-items:center;justify-content:center;flex-shrink:0;">' +
+          '<span class="material-symbols-rounded" style="color:#d97706;font-size:24px;">warning</span>' +
+        '</div>' +
+        '<div><h3 style="margin:0;font-size:1.05rem;color:#1e293b;font-weight:700;">Radio Tidak Bisa Diputar</h3>' +
+        '<p style="margin:2px 0 0;font-size:0.8rem;color:#64748b;">' + stationName + '</p></div>' +
+      '</div>' +
+      '<p style="font-size:0.85rem;color:#475569;line-height:1.6;margin:0 0 16px;">Stasiun ini menggunakan alamat <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:0.8rem;">http://</code> (tidak aman), sedangkan halaman ini berjalan di <code style="background:#f1f5f9;padding:2px 6px;border-radius:4px;font-size:0.8rem;">https://</code>. Browser memblokir konten campuran ini demi keamanan.</p>' +
+      '<div style="background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;font-size:0.82rem;color:#334155;line-height:1.7;">' + instruksi + '</div>' +
+      '<div style="display:flex;gap:10px;margin-top:18px;">' +
+        '<button id="copyStreamUrlBtn" style="flex:1;background:#f1f5f9;color:#475569;border:none;border-radius:10px;padding:12px;font-weight:600;font-size:0.85rem;cursor:pointer;font-family:inherit;">Salin URL Stream</button>' +
+        '<button id="closeBahanaDialogBtn" style="flex:1;background:#0a6ed1;color:white;border:none;border-radius:10px;padding:12px;font-weight:600;font-size:0.85rem;cursor:pointer;font-family:inherit;">Mengerti</button>' +
+      '</div>' +
+    '</div>';
+    document.body.appendChild(dialog);
+    document.body.style.overflow = 'hidden';
+
+    dialog.querySelector('#closeBahanaDialogBtn').addEventListener('click', function() {
+      dialog.remove();
+      document.body.style.overflow = '';
+      resetPlayer();
+      audioSelect.selectedIndex = 0;
+    });
+
+    dialog.querySelector('#copyStreamUrlBtn').addEventListener('click', function() {
+      const btn = this;
+      const textarea = document.createElement('textarea');
+      textarea.value = stationUrl;
+      document.body.appendChild(textarea);
+      textarea.select();
+      try { document.execCommand('copy'); btn.textContent = '✓ URL Tersalin'; } catch(e) {}
+      document.body.removeChild(textarea);
+      setTimeout(function() { btn.textContent = 'Salin URL Stream'; }, 2000);
+    });
+  }
 
   function handleAudioError() {
     isPlaying = false;
@@ -1640,23 +1691,32 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  audioSelect.addEventListener('change', function() {
+    audioSelect.addEventListener('change', function() {
     const selectedOption = this.options[this.selectedIndex];
     const stationUrl = this.value;
     const stationName = selectedOption.textContent;
+    const isHttpStation = selectedOption.dataset.http === 'true';
+    const isPageHttps = window.location.protocol === 'https:';
 
-    if (stationUrl) {
-      stationNameSpan.textContent = stationName;
-      audioElement.src = stationUrl;
-      audioElement.load();
-      playBtn.disabled = false;
-      stopBtn.disabled = false;
-      audioElement.play().then(() => {
-        isPlaying = true; updatePlayState(true);
-      }).catch(() => handleAudioError());
-    } else {
+    if (!stationUrl) {
       resetPlayer();
+      return;
     }
+
+    if (isHttpStation && isPageHttps) {
+      stationNameSpan.textContent = stationName + ' (HTTP)';
+      showBahanaHelpDialog(stationName, stationUrl);
+      return;
+    }
+
+    stationNameSpan.textContent = stationName;
+    audioElement.src = stationUrl;
+    audioElement.load();
+    playBtn.disabled = false;
+    stopBtn.disabled = false;
+    audioElement.play().then(() => {
+      isPlaying = true; updatePlayState(true);
+    }).catch(() => handleAudioError());
   });
 
   playBtn.addEventListener('click', function() {
