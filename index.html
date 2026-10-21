@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-<meta name="theme-color" content="#0a6ed1">
+<meta name="theme-color" content="#1e3a8a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="mobile-web-app-capable" content="yes">
@@ -80,7 +80,7 @@
     padding: 0 !important;
   }
 
-  /* ===== HEADER ===== */
+  /* ===== HEADER (DIUBAH BIRU) ===== */
   .header-section {
     display: flex;
     align-items: center;
@@ -90,11 +90,9 @@
     position: sticky;
     top: 0;
     z-index: 50;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+    background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+    border-bottom: none;
+    box-shadow: 0 2px 8px rgba(30, 58, 138, 0.25);
     transition: var(--sap-transition);
     gap: 12px;
   }
@@ -111,21 +109,21 @@
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background: #e2e8f0;
+    background: rgba(255, 255, 255, 0.15);
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     transition: var(--sap-transition);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     flex-shrink: 0;
     overflow: hidden;
     padding: 0;
     box-sizing: border-box;
   }
   .account-icon-header:hover {
+    background: rgba(255, 255, 255, 0.28);
     transform: scale(1.06);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
   }
   .account-icon-header img {
     width: 100%;
@@ -148,7 +146,7 @@
     border: none;
     border-radius: 50%;
     background: transparent;
-    color: var(--sap-text-secondary);
+    color: rgba(255, 255, 255, 0.85);
     font-size: 1.1rem;
     cursor: pointer;
     display: flex;
@@ -159,8 +157,8 @@
     flex-shrink: 0;
   }
   .header-btn:hover {
-    background: var(--sap-hover);
-    color: var(--sap-primary);
+    background: rgba(255, 255, 255, 0.18);
+    color: #ffffff;
   }
   .header-btn .badge {
     position: absolute;
@@ -168,7 +166,7 @@
     right: 4px;
     height: auto;
     padding: 0;
-    color: #e74c3c;
+    color: #fecaca;
     font-size: 0.65rem;
     font-weight: 700;
     border-radius: 0;
@@ -178,8 +176,8 @@
     box-sizing: content-box;
   }
 
-  .header-btn#powerBtn { color: #dc2626; }
-  .header-btn#powerBtn:hover { background: #fef2f2; color: #b91c1c; }
+  .header-btn#powerBtn { color: rgba(255, 255, 255, 0.85); }
+  .header-btn#powerBtn:hover { background: rgba(239, 68, 68, 0.35); color: #ffffff; }
 
   /* ===== SEARCH BAR ===== */
   .search-container {
@@ -192,29 +190,28 @@
   .search-box {
     width: 100%;
     padding: 9px 16px 9px 42px;
-    border: 1.5px solid var(--sap-border);
+    border: 1px solid rgba(255, 255, 255, 0.3);
     border-radius: 50px;
     font-size: 0.88rem;
     font-family: 'Google Sans', sans-serif;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(8px);
-    color: var(--sap-text);
+    background: rgba(255, 255, 255, 0.15);
+    color: #ffffff;
     transition: var(--sap-transition);
-    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+    box-shadow: none;
   }
   .search-box:focus {
-    background: #ffffff;
-    border-color: var(--sap-primary);
-    box-shadow: 0 4px 20px rgba(10, 110, 209, 0.12);
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.55);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.12);
     outline: none;
   }
-  .search-box::placeholder { color: var(--sap-text-secondary); font-weight: 400; }
+  .search-box::placeholder { color: rgba(255, 255, 255, 0.7); font-weight: 400; }
   .search-icon {
     position: absolute;
     left: 14px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--sap-text-secondary);
+    color: rgba(255, 255, 255, 0.75);
     font-size: 1.05rem;
     z-index: 31;
     pointer-events: none;
@@ -1102,7 +1099,7 @@
           <!-- Avatar: Gambar dari Google Drive -->
           <img src="https://drive.google.com/thumbnail?id=17SVBleeTt3UrPszlwCw-_fLrBYiYgD57&sz=w300" 
                alt="Profil" 
-               onerror="this.style.display='none'; this.parentElement.style.background='#0a6ed1'; this.parentElement.innerHTML='<span style=\'color:white; font-weight:bold; font-size:16px;\'>P</span>';">
+               onerror="this.style.display='none'; this.parentElement.style.background='rgba(255,255,255,0.2)'; this.parentElement.innerHTML='<span style=\'color:#fff; font-weight:bold; font-size:16px;\'>P</span>';">
         </div>
       </div>
 
