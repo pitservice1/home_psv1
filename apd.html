@@ -39,11 +39,11 @@
         -webkit-font-smoothing: antialiased;
     }
 
-    /* ===== HEADER ===== */
+    /* ===== HEADER (SATU-SATUNYA) ===== */
     .app-header {
         background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
         color: #fff;
-        padding: 6px 14px;
+        padding: 8px 16px;
         display: flex;
         align-items: center;
         justify-content: space-between;
@@ -51,13 +51,13 @@
         flex-shrink: 0;
         z-index: 1000;
         gap: 10px;
-        min-height: 48px;
+        min-height: 52px;
     }
 
     .header-left {
         display: flex;
         align-items: center;
-        gap: 8px;
+        gap: 10px;
         min-width: 0;
         flex: 1;
     }
@@ -68,8 +68,8 @@
         color: #fff;
         font-size: 13px;
         cursor: pointer;
-        width: 32px;
-        height: 32px;
+        width: 34px;
+        height: 34px;
         border-radius: var(--radius);
         transition: background 0.2s;
         display: flex;
@@ -85,56 +85,30 @@
 
     .icon-btn.hidden { display: none; }
 
-    .brand {
+    .header-brand-block {
         display: flex;
         align-items: center;
         gap: 8px;
         min-width: 0;
-        flex: 1;
     }
 
-    .brand-icon {
-        width: 30px;
-        height: 30px;
-        border-radius: var(--radius);
-        background: rgba(255, 255, 255, 0.18);
-        border: 1px solid rgba(255, 255, 255, 0.28);
-        display: flex;
-        align-items: center;
-        justify-content: center;
+    .header-title {
         font-size: 13px;
-        flex-shrink: 0;
-    }
-
-    .brand h2 {
-        font-size: 12px;
         font-weight: 600;
         letter-spacing: 0.3px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         text-transform: uppercase;
+        color: #fff;
     }
-
-    /* Breadcrumb di header saat embed */
-    .header-title {
-        font-size: 12px;
-        font-weight: 600;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-    .header-title i { font-size: 11px; opacity: 0.85; }
 
     .user-chip {
         font-size: 11px;
         color: rgba(255, 255, 255, 0.9);
         white-space: nowrap;
         flex-shrink: 0;
-        padding: 6px 10px;
+        padding: 6px 12px;
         border-radius: var(--radius);
         background: rgba(255, 255, 255, 0.12);
         border: 1px solid rgba(255, 255, 255, 0.25);
@@ -147,7 +121,7 @@
         display: flex;
         flex-direction: column;
         width: 100%;
-        padding: 8px;
+        padding: 12px;
         min-height: 0;
         overflow: hidden;
     }
@@ -158,7 +132,7 @@
         display: flex;
         flex-direction: column;
         overflow-y: auto;
-        gap: 8px;
+        gap: 12px;
         min-height: 0;
     }
 
@@ -173,33 +147,19 @@
         flex-shrink: 0;
     }
 
-    .menu-section-header {
-        background: var(--primary);
-        color: #fff;
-        padding: 8px 12px;
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: 0.4px;
-        text-transform: uppercase;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
-
-    .menu-section-header i { font-size: 11px; }
-
+    /* Grid standar launchpad */
     .menu-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-        gap: 8px;
-        padding: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 12px;
+        padding: 14px;
     }
 
     .menu-card {
         display: flex;
         align-items: center;
-        gap: 10px;
-        padding: 10px 12px;
+        gap: 14px;
+        padding: 16px 18px;
         background: #fff;
         border: 1px solid var(--border);
         border-radius: var(--radius);
@@ -212,25 +172,26 @@
         text-align: left;
         font-family: inherit;
         width: 100%;
+        min-height: 80px;
     }
 
     .menu-card:hover {
         border-color: var(--primary-light);
         background: var(--primary-soft);
-        transform: translateY(-1px);
-        box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(15, 23, 42, 0.1);
     }
 
     .menu-card:active { transform: translateY(0); }
 
     .menu-card-icon {
-        width: 36px;
-        height: 36px;
+        width: 48px;
+        height: 48px;
         border-radius: var(--radius);
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 14px;
+        font-size: 20px;
         flex-shrink: 0;
         border: 1px solid;
     }
@@ -247,17 +208,17 @@
     }
 
     .menu-card-title {
-        font-size: 12px;
+        font-size: 14px;
         font-weight: 700;
         color: var(--text-main);
-        margin-bottom: 1px;
+        margin-bottom: 3px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
 
     .menu-card-desc {
-        font-size: 10px;
+        font-size: 11px;
         color: var(--text-sub);
         white-space: nowrap;
         overflow: hidden;
@@ -270,6 +231,7 @@
         display: none;
         flex-direction: column;
         min-height: 0;
+        position: relative;
     }
 
     .embed-view.active { display: flex; }
@@ -308,6 +270,7 @@
         font-size: 12px;
         color: var(--text-sub);
         transition: opacity 0.2s;
+        border-radius: var(--radius);
     }
 
     .embed-loading.hidden { display: none; }
@@ -323,12 +286,10 @@
 
     @keyframes spin { to { transform: rotate(360deg); } }
 
-    .embed-view { position: relative; }
-
     /* ===== FOOTER ===== */
     footer {
         text-align: center;
-        padding: 6px;
+        padding: 8px;
         font-size: 10px;
         color: var(--text-muted);
         border-top: 1px solid var(--border);
@@ -339,64 +300,54 @@
 
     /* ===== RESPONSIVE ===== */
     @media (max-width: 768px) {
-        .app-header { padding: 5px 10px; gap: 8px; min-height: 44px; }
+        .app-header { padding: 6px 12px; gap: 8px; min-height: 46px; }
         .user-chip { display: none; }
-        .brand-icon { display: none; }
-        .brand h2 { font-size: 11px; }
         .header-title { font-size: 11px; }
+
+        .main { padding: 8px; }
+
+        .menu-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            padding: 10px;
+        }
+
+        .menu-card { padding: 12px; gap: 10px; min-height: 70px; }
+        .menu-card-icon { width: 40px; height: 40px; font-size: 16px; }
+        .menu-card-title { font-size: 12px; }
+        .menu-card-desc { font-size: 10px; }
+    }
+
+    @media (max-width: 480px) {
+        .app-header { padding: 5px 10px; gap: 6px; }
+        .icon-btn { width: 30px; height: 30px; font-size: 12px; }
+        .header-title { font-size: 10px; }
 
         .main { padding: 6px; }
 
         .menu-grid {
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: 1fr;
             gap: 6px;
             padding: 8px;
         }
 
-        .menu-card { padding: 8px 10px; gap: 8px; }
-        .menu-card-icon { width: 32px; height: 32px; font-size: 12px; }
-        .menu-card-title { font-size: 11px; }
-        .menu-card-desc { font-size: 9px; }
-    }
-
-    @media (max-width: 480px) {
-        .app-header { padding: 4px 8px; gap: 6px; }
-        .icon-btn { width: 30px; height: 30px; font-size: 12px; }
-        .brand h2 { font-size: 10px; }
-        .header-title { font-size: 10px; }
-
-        .main { padding: 4px; }
-
-        .menu-section-header { padding: 6px 10px; font-size: 10px; }
-
-        .menu-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 4px;
-            padding: 6px;
-        }
-
         .menu-card {
-            padding: 7px 8px;
-            gap: 6px;
-            flex-direction: column;
-            align-items: flex-start;
+            padding: 10px 12px;
+            gap: 10px;
+            min-height: 64px;
         }
 
-        .menu-card-icon { width: 28px; height: 28px; font-size: 11px; }
-        .menu-card-title { font-size: 10px; white-space: normal; line-height: 1.2; }
-        .menu-card-desc { font-size: 8px; display: none; }
+        .menu-card-icon { width: 36px; height: 36px; font-size: 14px; }
+        .menu-card-title { font-size: 12px; }
+        .menu-card-desc { font-size: 10px; }
 
-        footer { font-size: 9px; padding: 4px; }
-    }
-
-    @media (max-width: 360px) {
-        .menu-grid { grid-template-columns: 1fr; }
+        footer { font-size: 9px; padding: 6px; }
     }
 </style>
 </head>
 <body>
 
-<!-- ===== HEADER ===== -->
+<!-- ===== HEADER (SATU-SATUNYA) ===== -->
 <header class="app-header">
     <div class="header-left">
         <!-- Home (link eksternal) -->
@@ -409,12 +360,10 @@
             <i class="fas fa-arrow-left"></i>
         </button>
 
-        <div class="brand">
-            <div class="brand-icon"><i class="fas fa-helmet-safety"></i></div>
-            <h2 id="headerBrand">APD Management</h2>
-            <div class="header-title hidden" id="headerTitle">
-                <i class="fas fa-chevron-right" style="opacity:.5;"></i>
-                <span id="headerTitleText">—</span>
+        <!-- Judul dinamis (tanpa icon helm) -->
+        <div class="header-brand-block">
+            <div class="header-title" id="headerTitle">
+                APD Management
             </div>
         </div>
     </div>
@@ -426,12 +375,9 @@
 <!-- ===== MAIN ===== -->
 <div class="main">
 
-    <!-- LAUNCHER (GRID MENU) -->
+    <!-- LAUNCHER (GRID MENU, tanpa header "Menu Utama") -->
     <div class="launcher" id="launcher">
         <section class="menu-section">
-            <div class="menu-section-header">
-                <i class="fas fa-th-large"></i> Menu Utama
-            </div>
             <div class="menu-grid">
                 <button class="menu-card" onclick="openEmbed('Input Transaksi','https://script.google.com/macros/s/AKfycbww3SmtXHkE_BWMOsyh8nLFnmtxJKvZEhPzRszHRbdEV0wnn8UQJAygeJJ4Wil43-NUpw/exec','iframe')">
                     <div class="menu-card-icon"><i class="fas fa-file-signature"></i></div>
@@ -492,9 +438,7 @@
     const embedLoading = document.getElementById('embedLoading');
     const embedLoadingText = document.getElementById('embedLoadingText');
     const backBtn = document.getElementById('backBtn');
-    const headerBrand = document.getElementById('headerBrand');
     const headerTitle = document.getElementById('headerTitle');
-    const headerTitleText = document.getElementById('headerTitleText');
 
     let loadingTimeout = null;
 
@@ -509,11 +453,9 @@
         launcher.classList.add('hidden');
         embedView.classList.add('active');
 
-        // Header: tampil back + judul
+        // Header: tampil back + ubah judul
         backBtn.classList.remove('hidden');
-        headerBrand.style.display = 'none';
-        headerTitle.classList.remove('hidden');
-        headerTitleText.textContent = title;
+        headerTitle.textContent = title;
 
         // Loading state
         embedLoading.classList.remove('hidden');
@@ -547,10 +489,9 @@
         launcher.classList.remove('hidden');
         embedFrame.src = 'about:blank';
 
-        // Header: sembunyikan back + judul
+        // Header: sembunyikan back + kembalikan judul default
         backBtn.classList.add('hidden');
-        headerBrand.style.display = 'flex';
-        headerTitle.classList.add('hidden');
+        headerTitle.textContent = 'APD Management';
     }
 </script>
 
