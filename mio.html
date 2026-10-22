@@ -11,19 +11,51 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     
     <style>
-        /* Custom Colors */
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f6f9; }
-        .bg-header-dark { background-color: #34495e; }
+        :root {
+            --primary: #1e3a8a;
+            --primary-dark: #172e6e;
+            --primary-light: #2563eb;
+            --primary-soft: #eff6ff;
+            --border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --text-muted: #94a3b8;
+            --bg: #f1f5f9;
+            --radius: 4px;
+        }
+
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== NAVBAR BIRU ===== */
+        .bg-header-dark { 
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%) !important; 
+        }
         .text-header-text { color: #ecf0f1; }
         
         /* Card & Shadow Styles */
-        .card-shadow { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-        .card-hover { transition: all 0.3s cubic-bezier(.25,.8,.25,1); }
-        .card-hover:hover { box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23); transform: translateY(-3px); }
+        .card-shadow { 
+            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.1); 
+        }
+        .card-hover { 
+            transition: all 0.2s cubic-bezier(.25,.8,.25,1); 
+        }
+        .card-hover:hover { 
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.1); 
+            transform: translateY(-2px); 
+            border-color: var(--primary-light) !important;
+        }
+
+        /* Card radius tegas */
+        .card { border-radius: var(--radius) !important; }
         
-        /* Image Header Styles (Lebih Besar & Clickable) */
+        /* Image Header Styles */
         .img-header { 
-            height: 200px; /* Diperbesar dari sebelumnya */
+            height: 160px;
             position: relative; 
             overflow: hidden; 
             cursor: pointer; 
@@ -35,15 +67,17 @@
             object-fit: cover; 
             transition: transform 0.3s ease;
         }
-        /* Efek zoom saat gambar dihover */
-        .img-header:hover img { transform: scale(1.08); } 
+        .img-header:hover img { transform: scale(1.05); }
         
         .badge-custom { 
             position: absolute; 
-            top: 10px; right: 10px; 
-            font-size: 0.65rem; 
-            letter-spacing: 0.5px; 
+            top: 8px; right: 8px; 
+            font-size: 9px; 
+            letter-spacing: 0.3px; 
             z-index: 2;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-weight: 700;
         }
         
         /* Typography helpers */
@@ -55,17 +89,114 @@
         
         /* Custom Input Search Navbar */
         .search-input {
-            background-color: rgba(255,255,255,0.1);
-            border: 1px solid rgba(255,255,255,0.2);
+            background-color: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.28);
             color: #fff;
+            border-radius: var(--radius) !important;
+            height: 34px;
+            font-size: 12px;
         }
         .search-input:focus {
-            background-color: rgba(255,255,255,0.2);
+            background-color: rgba(255,255,255,0.25);
             color: #fff;
-            border-color: #0d6efd;
-            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+            border-color: rgba(255,255,255,0.55);
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.12);
         }
-        .search-input::placeholder { color: rgba(255,255,255,0.6); }
+        .search-input::placeholder { color: rgba(255,255,255,0.7); }
+
+        /* Tombol Home di navbar */
+        .btn-home-nav {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.28);
+            color: #fff !important;
+            border-radius: var(--radius);
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            height: 34px;
+            white-space: nowrap;
+        }
+        .btn-home-nav:hover {
+            background: rgba(255,255,255,0.28);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb-bar {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 8px 16px;
+            font-size: 11px;
+            color: var(--text-sub);
+        }
+        .breadcrumb-bar a { color: var(--text-sub); text-decoration: none; }
+        .breadcrumb-bar a:hover { color: var(--primary); }
+        .breadcrumb-bar .current { color: var(--primary); font-weight: 600; }
+
+        /* Card content */
+        .card-title { font-size: 12px !important; }
+        .card-text { font-size: 10px !important; line-height: 1.4; }
+        .card-footer { padding: 8px 12px !important; font-size: 10px; }
+        .card-body { padding: 10px 12px !important; }
+        .card-footer .btn-link, .card-footer .small { font-size: 10px !important; color: var(--primary) !important; }
+        .card-footer .text-secondary { color: var(--text-sub) !important; }
+
+        /* Iframe Header */
+        .iframe-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: #fff;
+            padding: 10px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(30, 58, 138, 0.25);
+        }
+        .iframe-header h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin: 0; color: #fff; }
+        .iframe-header .icon { color: #fff; font-size: 15px; margin-right: 8px; }
+        .btn-iframe-tab, .btn-iframe-close {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.28);
+            color: #fff !important;
+            border-radius: var(--radius);
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .btn-iframe-tab:hover, .btn-iframe-close:hover {
+            background: rgba(255,255,255,0.28);
+        }
+        .btn-iframe-close:hover { background: rgba(239,68,68,0.5); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .img-header { height: 130px; }
+            .btn-home-nav span { display: none; }
+            .btn-home-nav { padding: 6px 10px; }
+            .navbar { padding: 6px 10px !important; }
+            .search-input { height: 32px; font-size: 11px; }
+            .breadcrumb-bar { padding: 6px 12px; font-size: 10px; }
+            .iframe-header { padding: 8px 12px; }
+            .iframe-header h2 { font-size: 11px; }
+            .btn-iframe-tab, .btn-iframe-close { padding: 5px 9px; font-size: 10px; }
+            .btn-iframe-tab span, .btn-iframe-close span { display: none; }
+        }
+        @media (max-width: 480px) {
+            .img-header { height: 110px; }
+            .card-title { font-size: 11px !important; }
+            .card-text { font-size: 9px !important; }
+        }
     </style>
 </head>
 <body>
@@ -74,26 +205,26 @@
     <nav class="navbar navbar-expand bg-header-dark text-header-text py-2">
         <div class="container-fluid align-items-center">
             
-            <div class="d-flex align-items-center w-100" style="max-width: 600px;">
+            <div class="d-flex align-items-center w-100 gap-2" style="max-width: 600px;">
                 <!-- Home Button -->
-                <button class="btn btn-outline-light btn-sm me-3 d-flex align-items-center px-3">
-                    <i class="fa-solid fa-table-cells-large me-2"></i> Home
-                </button>
+                <a href="https://pitservice1.github.io/home_psv1/" class="btn-home-nav" title="Halaman Utama">
+                    <i class="fa-solid fa-house"></i> <span>Home</span>
+                </a>
                 
                 <!-- Search Bar -->
-                <div class="input-group input-group-sm w-100">
-                    <span class="input-group-text bg-transparent border-0 position-absolute" style="z-index: 4; color: rgba(255,255,255,0.6);">
-                        <i class="fa-solid fa-magnifying-glass"></i>
+                <div class="input-group input-group-sm w-100" style="position: relative;">
+                    <span class="input-group-text bg-transparent border-0 position-absolute" style="z-index: 4; color: rgba(255,255,255,0.6); height: 100%; display: flex; align-items: center; padding-left: 12px;">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size: 11px;"></i>
                     </span>
-                    <input type="text" class="form-control search-input rounded-2 ps-5" placeholder="Cari laporan...">
+                    <input type="text" class="form-control search-input ps-5" placeholder="Cari laporan...">
                 </div>
             </div>
 
             <!-- Right Side User Info -->
             <div class="d-flex align-items-center ms-auto">
-                <span class="small fw-medium me-3 text-white">Admin</span>
-                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; background-color: rgba(255,255,255,0.2);">
-                    <i class="fa-solid fa-user text-white"></i>
+                <span class="small fw-medium me-3 text-white d-none d-sm-inline" style="font-size: 11px;">Admin</span>
+                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px; background-color: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.28);">
+                    <i class="fa-solid fa-user text-white" style="font-size: 12px;"></i>
                 </div>
             </div>
             
@@ -101,39 +232,37 @@
     </nav>
 
     <!-- Breadcrumb -->
-    <div class="bg-white border-bottom px-4 py-2 d-flex align-items-center small text-secondary">
-        <i class="fa-solid fa-house me-2" style="font-size: 11px;"></i>
-        <a href="#" class="text-decoration-none text-secondary">Home</a>
-        <span class="mx-2">/</span>
-        <span class="fw-semibold text-dark">Dashboard Spreadsheet</span>
+    <div class="breadcrumb-bar d-flex align-items-center">
+        <i class="fa-solid fa-house me-2" style="font-size: 10px; color: var(--primary);"></i>
+        <a href="https://pitservice1.github.io/home_psv1/">Home</a>
+        <span class="mx-2" style="color: var(--text-muted);">/</span>
+        <span class="current">Dashboard Spreadsheet</span>
     </div>
 
     <!-- Main Content Area -->
-    <main class="container-fluid py-4" style="max-width: 1600px;">
+    <main class="container-fluid py-3" style="max-width: 1600px; padding-left: 12px; padding-right: 12px;">
         
-
         <!-- Cards Grid -->
-        <div class="row g-4">
+        <div class="row g-2">
             
             <!-- Card 1: Data SQL MIO -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card h-100 card-shadow card-hover border-0 overflow-hidden">
-                    <!-- GAMBAR SEKARANG BISA DIKLIK -->
+                <div class="card h-100 card-shadow card-hover border overflow-hidden">
                     <a href="http://kpcssqrp401/ReportS/browse/xxx_EWACS/MIO" target="_blank" class="img-header" style="background-color: #e3f2fd;">
-                        <img src="https://cdn.phototourl.com/free/2026-08-24-7c6d90d1-56c4-485c-b69e-a420751c1726.png" alt="Cover Data SQL">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ01yDMAPD_ut3FEYoyTxk7DNwzyjayT9XerCLqIi4pSuNVCfFJ9LRM-6Q&s=10" alt="Cover Data SQL">
                         <span class="badge bg-secondary badge-custom text-uppercase">Report</span>
                     </a>
                     
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title fs-6 fw-bold text-dark mb-1 line-clamp-1">Data SQL MIO</h5>
-                        <p class="card-text small text-secondary line-clamp-3 mb-0">
+                        <h5 class="card-title fw-bold text-dark mb-1 line-clamp-1">Data SQL MIO</h5>
+                        <p class="card-text text-secondary line-clamp-3 mb-0">
                             Akses report database MIO EWACS.
                         </p>
                     </div>
                     
-                    <div class="card-footer bg-light border-top-0 p-3 d-flex justify-content-between align-items-center mt-auto">
+                    <div class="card-footer bg-light border-top d-flex justify-content-between align-items-center mt-auto">
                         <div class="small text-secondary">
-                            <i class="fa-solid fa-database me-1"></i> SQL Server
+                            <i class="fa-solid fa-database me-1" style="color: var(--primary);"></i> SQL Server
                         </div>
                         <a href="http://kpcssqrp401/ReportS/browse/xxx_EWACS/MIO" target="_blank" class="text-decoration-none small fw-bold">
                             Buka <i class="fa-solid fa-arrow-right ms-1"></i>
@@ -144,21 +273,20 @@
 
             <!-- Card 2: Equipment Dewatering 2026 -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card h-100 card-shadow card-hover border-0 overflow-hidden">
-                    <!-- GAMBAR SEKARANG BISA DIKLIK -->
+                <div class="card h-100 card-shadow card-hover border overflow-hidden">
                     <a href="https://docs.google.com/spreadsheets/d/1185FuxrP9YTtDWLErXUDWtg3vu2em0xPaISGw8BHbR8/edit?gid=1560822780#gid=1560822780" target="_blank" class="img-header" style="background-color: #e8f5e9;">
-                        <img src="https://cdn.phototourl.com/free/2026-08-24-fdc48442-fa1a-4281-b187-0cb6d5416175.png" alt="Cover Equipment">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ01yDMAPD_ut3FEYoyTxk7DNwzyjayT9XerCLqIi4pSuNVCfFJ9LRM-6Q&s=10" alt="Cover Equipment">
                         <span class="badge bg-secondary badge-custom text-uppercase">Monitoring</span>
                     </a>
                     
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title fs-6 fw-bold text-dark mb-1 line-clamp-1">Eq. Dewatering 2026</h5>
-                        <p class="card-text small text-secondary line-clamp-3 mb-0">
+                        <h5 class="card-title fw-bold text-dark mb-1 line-clamp-1">Eq. Dewatering 2026</h5>
+                        <p class="card-text text-secondary line-clamp-3 mb-0">
                             Monitoring equipment dewatering tahun 2026. Data real-time dan histori.
                         </p>
                     </div>
                     
-                    <div class="card-footer bg-light border-top-0 p-3 d-flex justify-content-between align-items-center mt-auto">
+                    <div class="card-footer bg-light border-top d-flex justify-content-between align-items-center mt-auto">
                         <div class="small text-secondary">
                             <i class="fa-solid fa-file-excel text-success me-1"></i> Sheets
                         </div>
@@ -171,21 +299,20 @@
 
             <!-- Card 3: Dashboard Pump Performance (Iframe) -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card h-100 card-shadow card-hover border-0 overflow-hidden">
-                    <!-- GAMBAR SEKARANG BISA DIKLIK MEMANGGIL IFRAME -->
+                <div class="card h-100 card-shadow card-hover border overflow-hidden">
                     <div onclick="openSpreadsheet('https://script.google.com/macros/s/AKfycbyMs2gEwJdfHC6gawXy3SE_0iEGGQGdVWxWmDQxWMHnXdHfPpZw6kbm1qhKmIbVWbg4/exec', 'Dashboard Pump Performance Dewatering 2026')" class="img-header" style="background-color: #f3e5f5;">
-                        <img src="https://cdn.phototourl.com/free/2026-08-24-8dff7a87-5210-4f72-a75c-c5c917ad806a.png" alt="Cover Pump Performance">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKhMjmYF4XnnyfhQyBDdZdxDyzbj8g2ZKWRu06fQhIxoo5WPxvBOF_7eXq&s=10" alt="Cover Pump Performance">
                         <span class="badge bg-secondary badge-custom text-uppercase">Dashboard</span>
                     </div>
                     
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title fs-6 fw-bold text-dark mb-1 line-clamp-1">Pump Performance</h5>
-                        <p class="card-text small text-secondary line-clamp-3 mb-0">
+                        <h5 class="card-title fw-bold text-dark mb-1 line-clamp-1">Pump Performance</h5>
+                        <p class="card-text text-secondary line-clamp-3 mb-0">
                             Visualisasi interaktif performa pompa dewatering (Web App).
                         </p>
                     </div>
                     
-                    <div class="card-footer bg-light border-top-0 p-3 d-flex justify-content-between align-items-center mt-auto">
+                    <div class="card-footer bg-light border-top d-flex justify-content-between align-items-center mt-auto">
                         <div class="small text-secondary">
                             <i class="fa-brands fa-google text-primary me-1"></i> Web App
                         </div>
@@ -196,22 +323,22 @@
                 </div>
             </div>
 
-            <!-- Card 5: Report MD -->
+            <!-- Card 4: Report MD -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card h-100 card-shadow card-hover border-0 overflow-hidden">
+                <div class="card h-100 card-shadow card-hover border overflow-hidden">
                     <div onclick="openSpreadsheet('https://docs.google.com/spreadsheets/d/1185FuxrP9YTtDWLErXUDWtg3vu2em0xPaISGw8BHbR8/edit?gid=1520875421#gid=1520875421', 'Report MD')" class="img-header" style="background-color: #e3f2fd;">
-                        <img src="https://cdn.phototourl.com/member/2026-09-25-91906f98-b458-4717-b09a-bbfa68bf68c6.png" alt="Report MD">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1HJqeqouUBH-7aZGBk69MnxIcUcET5__q9GpTh9BGMgxdiCRdTayI2Qw&s=10" alt="Report MD">
                         <span class="badge bg-secondary badge-custom text-uppercase">Report</span>
                     </div>
 
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title fs-6 fw-bold text-dark mb-1 line-clamp-1">Report MD</h5>
-                        <p class="card-text small text-secondary line-clamp-3 mb-0">
+                        <h5 class="card-title fw-bold text-dark mb-1 line-clamp-1">Report MD</h5>
+                        <p class="card-text text-secondary line-clamp-3 mb-0">
                             Report MD.
                         </p>
                     </div>
 
-                    <div class="card-footer bg-light border-top-0 p-3 d-flex justify-content-between align-items-center mt-auto">
+                    <div class="card-footer bg-light border-top d-flex justify-content-between align-items-center mt-auto">
                         <div class="small text-secondary">
                             <i class="fa-solid fa-file-excel text-success me-1"></i> Sheets
                         </div>
@@ -222,23 +349,22 @@
                 </div>
             </div>
 
-            <!-- Card 4: MENU BARU (TAMBAHAN) -->
+            <!-- Card 5: MENU BARU -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card h-100 card-shadow card-hover border-0 overflow-hidden">
-                    <!-- GAMBAR SEKARANG BISA DIKLIK MEMANGGIL IFRAME -->
+                <div class="card h-100 card-shadow card-hover border overflow-hidden">
                     <div onclick="openSpreadsheet('https://docs.google.com/spreadsheets/d/1185FuxrP9YTtDWLErXUDWtg3vu2em0xPaISGw8BHbR8/edit?gid=1134486434#gid=1134486434', 'HM SUBCONT')" class="img-header" style="background-color: #fff8e1;">
-                        <img src="https://cdn.phototourl.com/free/2026-09-23-b23c9936-5d60-4b86-a845-16df67ce6f1d.png" alt="HM SUBCONT REPORT MD">
-                        <span class="badge bg-warning text-dark badge-custom text-uppercase shadow-sm">Menu Baru</span>
+                        <img src="https://www.gooddata.ai/docs/dashboards/dashboard_demo.webp" alt="HM SUBCONT REPORT MD">
+                        <span class="badge bg-warning text-dark badge-custom text-uppercase">Menu Baru</span>
                     </div>
                     
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title fs-6 fw-bold text-dark mb-1 line-clamp-1">HM SUBCONT & REPORT MD</h5>
-                        <p class="card-text small text-secondary line-clamp-3 mb-0">
+                        <h5 class="card-title fw-bold text-dark mb-1 line-clamp-1">HM SUBCONT & REPORT MD</h5>
+                        <p class="card-text text-secondary line-clamp-3 mb-0">
                             Input Laporan HM.
                         </p>
                     </div>
                     
-                    <div class="card-footer bg-light border-top-0 p-3 d-flex justify-content-between align-items-center mt-auto">
+                    <div class="card-footer bg-light border-top d-flex justify-content-between align-items-center mt-auto">
                         <div class="small text-secondary">
                             <i class="fa-solid fa-globe text-warning me-1"></i> Web App
                         </div>
@@ -253,28 +379,28 @@
         </div>
     </main>
 
-    <!-- IFRAME SECTION (Shared Modal for Iframe/Web Apps using Bootstrap classes) -->
+    <!-- IFRAME SECTION -->
     <div id="spreadsheetSection" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-light flex-column">
         <!-- Iframe Header -->
-        <div class="bg-white shadow-sm px-4 py-3 d-flex justify-content-between align-items-center border-bottom">
+        <div class="iframe-header">
             <div class="d-flex align-items-center">
-                <i class="fa-solid fa-chart-pie text-purple fs-5 me-3" style="color: #6f42c1;"></i>
-                <h2 id="iframeTitle" class="h5 mb-0 fw-bold text-dark">Judul Dashboard</h2>
+                <i class="fa-solid fa-chart-pie icon"></i>
+                <h2 id="iframeTitle">Judul Dashboard</h2>
             </div>
             <div class="d-flex gap-2">
-                <a id="iframeNewTabBtn" href="#" target="_blank" class="btn btn-light btn-sm border fw-medium d-flex align-items-center" title="Buka di Tab Baru">
-                    <i class="fa-solid fa-arrow-up-right-from-square me-2"></i> Tab Baru
+                <a id="iframeNewTabBtn" href="#" target="_blank" class="btn-iframe-tab" title="Buka di Tab Baru">
+                    <i class="fa-solid fa-arrow-up-right-from-square"></i> <span>Tab Baru</span>
                 </a>
-                <button onclick="closeSpreadsheet()" class="btn btn-danger btn-sm bg-opacity-10 text-danger border-danger fw-medium d-flex align-items-center">
-                    <i class="fa-solid fa-xmark me-2"></i> Tutup
+                <button onclick="closeSpreadsheet()" class="btn-iframe-close">
+                    <i class="fa-solid fa-xmark"></i> <span>Tutup</span>
                 </button>
             </div>
         </div>
         
         <!-- The actual Iframe -->
         <div class="flex-grow-1 w-100 bg-white position-relative">
-            <div id="iframeLoader" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-white z-0">
-                <span class="text-secondary d-flex align-items-center">
+            <div id="iframeLoader" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-white" style="z-index: 9;">
+                <span class="text-secondary d-flex align-items-center" style="font-size: 12px;">
                     <i class="fa-solid fa-circle-notch fa-spin me-2"></i> Memuat Dashboard...
                 </span>
             </div>
@@ -282,7 +408,7 @@
         </div>
     </div>
 
-    <!-- Script to handle Iframe logic dynamically (Bootstrap tailored) -->
+    <!-- Script JS tetap (tidak diubah) -->
     <script>
         function openSpreadsheet(url, title) {
             const iframeSection = document.getElementById('spreadsheetSection');
@@ -291,21 +417,16 @@
             const titleElement = document.getElementById('iframeTitle');
             const newTabBtn = document.getElementById('iframeNewTabBtn');
             
-            // Set dynamic title and links
             titleElement.textContent = title;
             newTabBtn.href = url;
 
-            // Show the section using Bootstrap display utility classes
             iframeSection.classList.remove('d-none');
             iframeSection.classList.add('d-flex');
             
-            // Reset and show loader
             loader.style.display = 'flex';
             
-            // Set source
             dataIframe.src = url;
             
-            // Prevent body scrolling behind iframe
             document.body.style.overflow = 'hidden';
         }
 
@@ -313,17 +434,15 @@
             const iframeSection = document.getElementById('spreadsheetSection');
             const dataIframe = document.getElementById('dataIframe');
             
-            // Hide the section & clear src to stop background activity
             iframeSection.classList.add('d-none');
             iframeSection.classList.remove('d-flex');
             dataIframe.src = '';
             
-            // Restore body scrolling
             document.body.style.overflow = 'auto';
         }
     </script>
     
-    <!-- Bootstrap JS (Optional, but good practice if you want to add dropdowns/modals later) -->
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
