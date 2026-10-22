@@ -3,1036 +3,1084 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pit Service 1 KPCS</title>
+    <title>MANPOWER KPCS</title>
     <style>
-/* RESET & BASE */
+        /* Add your CSS styles here */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+
+
+        header {
+            background-color: #3498db;
+            color: white;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .logo-section {
+            font-size: 20px;
+            font-weight: bold;
+            font-color: White;
+        }
+
+        /* Navbar satu */
+        nav {
+            background-color: #212121;
+            position: relative; 
+            border-bottom: 0px solid #444;
+            padding: 8px;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            position: relative;
+            z-index: 1;
+        }
+
+
+        nav ul li {
+            margin-right: 20px;
+        }
+
+        nav ul li:last-child {
+            margin-right: 0;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        nav ul li ul {
+            display: none;
+            position: absolute;
+            background-color: #212121;
+            padding: 0;
+        }
+
+        nav ul li:hover ul {
+            display: block;
+        }
+
+        nav ul li ul li {
+            display: block;
+            margin: 0;
+        }
+
+        nav ul li ul li a {
+            display: block;
+            padding: 5px;
+            color: white;
+        }
+
+	nav:hover {
+    	z-index: 999; 
+	}
+
+/* Navbar Pertama (Atas) harus punya z-index lebih tinggi saat dibuka */
+        nav.top-bar { z-index: 100; 
+            background-color: #063970;
+} 
+        nav.bottom-bar { z-index: 50;
+            background-color: #031d38;
+}
+
+        nav.footer-bar { z-index: 20;
+            background-color: #0e192b;
+}
+
+        .body-area {
+            flex: 0 0 calc(25% - 20px);
+            min-width: 100px;
+            background-color: #f0f0f0;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+/* ---------- FOOTER MODERN ---------- */
+footer {
+    background-color: #1a1a1a; /* Hitam yang lebih deep */
+    color: #ffffff;
+    padding: 40px 20px 20px 20px;
+    margin-top: 50px;
+    border-top: 4px solid #3498db; /* Garis aksen biru di atas */
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+.footer-section {
+    flex: 1;
+    min-width: 250px;
+    text-align: left;
+}
+
+.footer-section h3 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #3498db;
+    border-left: 3px solid #FFC300;
+    padding-left: 10px;
+}
+
+.footer-section p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #bbb;
+}
+
+.footer-bottom {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #333;
+    text-align: center;
+    font-size: 13px;
+    color: #888;
+}
+
+.footer-logo {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.footer-logo span.gold {
+    color: #FFC300;
+}
+
+.nrp-badge {
+    display: inline-block;
+    background: #333;
+    padding: 2px 10px;
+    border-radius: 4px;
+    margin-top: 5px;
+    color: #FFC300;
+    font-family: monospace;
+}
+
+        /* Add styles for the pop-up */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .popup-content {
+            background-color: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+        }
+        .video-container {
+    border-radius: 2px; /* Adjust the value to control the roundness of the corners */
+    overflow: hidden;
+    border: 0px solid #ccc; /* Add a border for the rounded rectangle appearance */
+}
+
+
+video {
+    width: 20%;
+    height: auto;
+    border: 1px solid #333; /* Add a border directly to the video element */
+    border-radius: 10px; /* Adjust the value to control the roundness of the corners */
+}
+<!------- three collumn -------->
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 body {
-    background: #f4f7fc;
-    color: #1e2a3a;
-    line-height: 1.5;
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
-/* HEADER with RADIO - MODIFIED FOR CENTER POSITION */
-.top-header {
-    background: linear-gradient(145deg, #1e3c5c, #0f2b40);
-    color: white;
-    padding: 12px 24px;
-    box-shadow: 0 6px 14px rgba(0,20,40,0.3);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    border-bottom: 3px solid #FFC300;
+/* The grid: Three equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 20%;
+  padding: 2px;
+  text-align: center;
+  font-size: 15px;
+  cursor: pointer;
+  color: white;
 }
 
-.header-container {
-    max-width: 1440px;
-    margin: 0 auto;
+.containerTab {
+  padding: 10px;
+  color: white;
+}
+    .button-link {
+        display: inline-block;
+        padding: 5px 60px;
+        background-color: #212121;
+        color: white;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        font-size: 15px;
+        font-weight: bold;
+        outline: none; /* Untuk menghapus tampilan outline saat tombol ditekan */
+    }
+    .button-link:hover {
+        text-decoration: none; /* Menghapus underline saat dihover */
+    }
+
+/* ---------- TODO LIST (UPDATED) ---------- */
+.todo {
+    max-width: 1000px;
+    margin: 0px auto; /* Memberi jeda lebih besar dari elemen atas/bawah */
+    padding: 10px;
+    background-color: transparent; /* Menghilangkan background kotak utama agar blend */
+    border-radius: 0;
+    box-shadow: none; /* Menghilangkan shadow agar tidak terlihat seperti frame mengambang */
+}
+
+.todo h2 {
+    text-align: center;
+    margin-bottom: 30px; /* Jeda antara judul dan input */
+    font-weight: bold;
+    color: #333;
+}
+
+/* Input area */
+.todo .task-container {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
-    justify-content: center; /* CHANGED: from space-between to center */
+    gap: 15px; /* Jeda antar kolom input lebih lebar */
+    margin-bottom: 35px; /* Jeda antara area input dengan tabel di bawahnya */
+}
+
+#todoNrp, #todoTask {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline: none;
+}
+
+#todoNrp {
+    width: 150px;
+}
+
+#todoTask {
+    flex: 1;
+}
+
+/* Button umum */
+.todo button {
+    padding: 10px 20px;
+    background-color: #212121;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s;
+}
+
+.todo button:hover {
+    background-color: #444;
+}
+
+/* Table Style */
+.todo table {
+    width: 100%;
+    border-collapse: separate; /* Menggunakan separate untuk kontrol jarak lebih baik */
+    border-spacing: 0 8px; /* Memberi jeda halus antar baris */
+    table-layout: fixed;
+}
+
+.todo th {
+    background: none; /* Menghilangkan background hitam pekat */
+    color: #333;
+    border-bottom: 2px solid #3498db; /* Garis bawah biru untuk kesan modern */
+    padding: 12px 8px;
+    text-align: left;
+    text-transform: uppercase;
+    font-size: 13px;
+}
+
+.todo td {
+    background-color: #ffffff; /* Baris putih bersih */
+    border: none;
+    padding: 15px 10px;
+    vertical-align: middle;
+    word-wrap: break-word;
+    border-bottom: 1px solid #eee; /* Garis pemisah tipis antar data */
+}
+
+/* Membuat baris terlihat sedikit terangkat saat di-hover */
+.todo tbody tr:hover td {
+    background-color: #f9f9f9;
+}
+
+.col-nrp { width: 140px; }
+.col-note { width: auto; }
+.col-action { width: 100px; text-align: center; }
+
+/* Tombol khusus di tabel */
+.todo td button {
+    padding: 5px 10px;
+    font-size: 12px;
+}
+
+/* Send button area */
+.todo .send-email {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    gap: 15px; /* Tambahkan baris ini untuk memberi jarak antar tombol */
+}
+
+.todo .send-email button {
+    width: 250px;
+    height: 40px;
+    background-color: #2a83bf;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2); /* Shadow tipis hanya pada tombol utama */
+}
+
+.prayer-widget-container {
+            width: 100%;
+            max-width: 400px; /* Lebih kecil */
+            margin: auto;
+            border: 1px solid #ccc;
+            padding: 5px; /* Padding lebih kecil */
+            border-radius: 5px;
+            box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1);
+        }
+        iframe {
+            width: 100%;
+            height: 300px; /* Lebih kecil */
+            border: none;
+            overflow: hidden;
+        }
+        h2 {
+            font-size: 16px; /* Ukuran judul lebih kecil */
+            margin-bottom: 10px;
+        }
+
+.btn-send {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    width: 250px;
+    height: 48px;
+    background-color: #3498db;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-open {
+    background-color: #2c3e50; /* Warna pembeda */
+}
+
+/* ---------- MODERN RADIO PLAYER ---------- */
+.radio-card {
+    background: linear-gradient(135deg, #ffffff, #f1f1f1);
+    border-radius: 15px;
+    padding: 25px;
+    max-width: 500px;
+    margin: 30px auto;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    border: 1px solid #e0e0e0;
+    text-align: center;
+}
+
+.radio-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.live-dot {
+    height: 10px;
+    width: 10px;
+    background-color: #ff0000;
+    border-radius: 50%;
+    display: inline-block;
+    animation: blink 1.5s ease-in-out infinite;
+}
+
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0.3; }
+    100% { opacity: 1; }
+}
+
+.radio-title {
+    font-weight: bold;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 14px;
+}
+
+.radio-controls {
+    display: flex;
+    flex-direction: column;
     gap: 15px;
+    align-items: center;
 }
 
-/* HIDE LOGO AREA COMPLETELY - UNCOMMENT IF YOU WANT TO HIDE LOGO
-.logo-area {
-    display: none;
-}
-*/
-
-/* IF YOU WANT TO KEEP LOGO BUT RADIO CENTERED, USE THIS INSTEAD:
-.header-container {
-    justify-content: space-between;
+.custom-select-wrapper {
+    width: 100%;
     position: relative;
 }
 
-.radio-header-player {
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    width: auto;
-    min-width: 400px;
-}
-
-@media (max-width: 767px) {
-    .radio-header-player {
-        position: static;
-        transform: none;
-        width: 100%;
-        min-width: auto;
-    }
-    
-    .header-container {
-        justify-content: center;
-        flex-direction: column;
-    }
-}
-*/
-
-.logo-area {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo-icon {
-    background: #FFC300;
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 24px;
-    color: #0f2b40;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-}
-
-.logo-text {
-    font-size: 1.6rem;
-    font-weight: 700;
-    letter-spacing: 1px;
-}
-.logo-text span { color: #FFC300; }
-
-/* RADIO PLAYER MODERN - CENTERED IN HEADER */
-.radio-header-player {
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    border-radius: 60px;
-    padding: 5px 15px 5px 20px;
-    border: 1px solid rgba(255,255,255,0.25);
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-    margin: 0 auto; /* ENSURE CENTERING */
-}
-
-.live-badge {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: #c92a2a;
-    padding: 4px 12px;
-    border-radius: 30px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-}
-.pulse-dot {
-    width: 10px;
-    height: 10px;
-    background: #fff;
-    border-radius: 50%;
-    animation: pulse 1.4s infinite;
-}
-@keyframes pulse { 
-    0% { opacity: 1; transform: scale(1); } 
-    50% { opacity: 0.4; transform: scale(1.2); } 
-    100% { opacity: 1; transform: scale(1); } 
-}
-
-.header-radio-controls {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    flex-wrap: wrap;
-    justify-content: center; /* ADDED: center controls */
-}
-.header-radio-controls select {
-    background: white;
-    border: none;
-    padding: 8px 28px 8px 16px;
-    border-radius: 40px;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: #1e2a3a;
-    cursor: pointer;
-    appearance: none;
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="%23333" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    min-width: 200px;
-}
-.radio-btn {
-    background: #FFC300;
-    border: none;
-    color: #0f2b40;
-    font-weight: bold;
-    padding: 8px 18px;
-    border-radius: 40px;
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    cursor: pointer;
-    transition: 0.2s;
-    box-shadow: 0 2px 6px rgba(255,195,0,0.4);
-}
-.radio-btn:hover { background: #ffd633; transform: scale(1.02); }
-.vol-stop {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(0,0,0,0.3);
-    padding: 4px 10px;
-    border-radius: 40px;
-}
-.vol-stop input[type=range] { width: 70px; cursor: pointer; accent-color: #FFC300; }
-.vol-stop button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.4rem;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    padding: 0 4px;
-}
-#audioFrameHeader { display: none; }
-
-/* SEARCH BAR PROFESIONAL DI ATAS GRID */
-.search-section {
-    max-width: 1440px;
-    margin: 20px auto 10px;
-    padding: 0 20px;
-}
-.search-wrapper {
-    background: white;
-    border-radius: 60px;
-    padding: 6px 6px 6px 20px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.04);
-    border: 1px solid #e2e8f0;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: 0.2s;
-}
-.search-wrapper:focus-within {
-    box-shadow: 0 8px 25px rgba(255,195,0,0.15);
-    border-color: #FFC300;
-}
-.search-icon {
-    color: #718096;
-    font-size: 1.2rem;
-}
-#searchInput {
-    flex: 1;
-    border: none;
-    outline: none;
-    background: transparent;
-    padding: 14px 0;
-    font-size: 1rem;
-    color: #1e293b;
-}
-#searchInput::placeholder {
-    color: #94a3b8;
-    font-weight: 400;
-}
-.search-clear {
-    background: #f1f5f9;
-    border: none;
-    border-radius: 40px;
-    padding: 8px 18px;
-    font-weight: 600;
-    color: #334155;
-    cursor: pointer;
-    transition: 0.2s;
-    margin-right: 4px;
-    font-size: 0.9rem;
-}
-.search-clear:hover {
-    background: #e2e8f0;
-    color: #0f172a;
-}
-
-/* GRID LINK CARD */
-.link-grid-section {
-    max-width: 1440px;
-    margin: 20px auto 20px;
-    padding: 0 20px;
-}
-
-.grid-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 20px;
-    border-left: 6px solid #FFC300;
-    padding-left: 16px;
-    color: #0f2b40;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-.result-count {
-    background: #e9edf2;
-    font-size: 0.9rem;
-    font-weight: normal;
-    padding: 4px 12px;
-    border-radius: 40px;
-    color: #2d3c53;
-    margin-left: 12px;
-}
-
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-    transition: 0.3s;
-}
-
-.nav-card {
-    background: white;
-    border-radius: 20px;
-    padding: 18px 8px 12px;
-    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04), 0 2px 4px rgba(0, 20, 40, 0.08);
-    transition: 0.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    border: 1px solid #eef2f6;
-}
-
-.nav-card:hover {
-    transform: translateY(-5px);
-    border-color: #FFC300;
-    box-shadow: 0 14px 24px rgba(0,35,70,0.1);
-}
-
-.card-icon {
-    width: 48px;
-    height: 48px;
-    background: #eef4fa;
-    border-radius: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 12px;
-    font-size: 1.8rem;
-    font-weight: 700;
-    color: #1e3c5c;
-}
-
-.nav-card a {
-    font-weight: 600;
-    color: #1e3c5c;
-    text-decoration: none;
-    font-size: 1rem;
-    word-break: break-word;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-}
-
-.nav-card a:hover { color: #FFC300; text-decoration: underline; }
-
-.card-caption {
-    font-size: 0.7rem;
-    color: #5f6c80;
-    margin-top: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.3px;
-    max-width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-/* FOOTER Pit Service 1 KPCS */
-footer {
-    background: #121e2c;
-    color: #ddd;
-    margin-top: 50px;
-    padding: 30px 20px 20px;
-    border-top: 4px solid #FFC300;
-}
-
-.footer-container {
-    max-width: 1440px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    align-items: center;
-    gap: 25px;
-}
-
-.footer-logo-large {
-    font-size: 2rem;
-    font-weight: 800;
-    color: white;
-    line-height: 1.2;
-}
-.footer-logo-large span { color: #FFC300; }
-
-.footer-service {
-    background: #1d3142;
-    padding: 10px 25px;
-    border-radius: 50px;
-    font-weight: 600;
-    font-size: 1.5rem;
-    color: #FFC300;
-    border: 1px solid #FFC300;
-    box-shadow: 0 0 12px rgba(255,195,0,0.3);
-    text-transform: uppercase;
-}
-
-.footer-copyright {
+#audioSelect {
     width: 100%;
-    text-align: center;
-    margin-top: 30px;
-    padding-top: 18px;
-    border-top: 1px solid #2e3e4e;
-    color: #8899aa;
-    font-size: 0.9rem;
+    padding: 12px;
+    border-radius: 8px;
+    border: 2px solid #3498db;
+    background-color: white;
+    font-size: 14px;
+    color: #333;
+    cursor: pointer;
+    appearance: none; /* Menghilangkan panah default */
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%233498db' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 20px;
 }
 
-/* tambahan kecil */
-.btn-stop {
-    background: transparent;
-    border: 1px solid #fff6;
-    border-radius: 30px;
+.play-btn {
+    background: #3498db;
     color: white;
-    padding: 4px 12px;
-    font-weight: 500;
-}
-.btn-stop:hover { background: #ffffff22; }
+    border: none;
+    padding: 12px 40px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 1
 
-/* SEMBUNYIKAN ELEMEN LAMA */
-.old-body-area, .todo, .radio-card, .body-container, .body-area, nav, .logo-section, header:not(.top-header) {
-    display: none;
-}
-
-/* ========== RESPONSIVE BREAKPOINTS ========== */
-
-/* MOBILE (max-width: 767px) - 3 GRID DENGAN ICON LEBIH KECIL */
-@media (max-width: 767px) {
-    /* Header - radio di tengah */
-    .top-header {
-        padding: 8px 12px;
-    }
-    
-    .header-container {
-        flex-direction: column;
-        align-items: center; /* CHANGED: center alignment */
-        gap: 8px;
-        justify-content: center;
-    }
-    
-    .logo-area {
-        justify-content: center;
-        width: 100%;
-    }
-    
-    .logo-text {
-        font-size: 1.2rem;
-    }
-    
-    .logo-icon {
-        width: 32px;
-        height: 32px;
-        font-size: 1.2rem;
-    }
-    
-    .radio-header-player {
-        padding: 6px 12px;
-        width: 100%;
-        justify-content: center;
-        margin: 0 auto;
-    }
-    
-    .live-badge {
-        padding: 2px 8px;
-        font-size: 0.7rem;
-    }
-    
-    .header-radio-controls {
-        flex: 1;
-        justify-content: center;
-        width: 100%;
-    }
-    
-    .header-radio-controls select {
-        min-width: 140px;
-        padding: 6px 24px 6px 12px;
-        font-size: 0.8rem;
-        background-size: 16px;
-    }
-    
-    .radio-btn {
-        padding: 6px 12px;
-        font-size: 0.8rem;
-    }
-    
-    .vol-stop {
-        padding: 2px 6px;
-    }
-    
-    .vol-stop input[type=range] {
-        width: 50px;
-    }
-    
-    /* SEARCH SECTION - TETAP TAMPIL DI MOBILE */
-    .search-section {
-        display: block;
-        padding: 0 12px;
-        margin: 12px auto 8px;
-    }
-    
-    .search-wrapper {
-        padding: 3px 3px 3px 12px;
-    }
-    
-    .search-icon {
-        font-size: 1rem;
-    }
-    
-    #searchInput {
-        padding: 10px 0;
-        font-size: 0.9rem;
-    }
-    
-    .search-clear {
-        padding: 6px 12px;
-        font-size: 0.8rem;
-    }
-    
-    /* LINK GRID - 3 KOLOM DENGAN ICON LEBIH KECIL */
-    .link-grid-section {
-        display: block;
-        padding: 0 10px;
-        margin: 10px auto;
-    }
-    
-    .grid-title {
-        font-size: 1.2rem;
-        margin-bottom: 12px;
-        padding-left: 10px;
-    }
-    
-    .result-count {
-        font-size: 0.8rem;
-        padding: 3px 8px;
-    }
-    
-    .card-grid {
-        grid-template-columns: repeat(3, 1fr);
-        gap: 8px;
-    }
-    
-    .nav-card {
-        padding: 10px 4px 8px;
-        border-radius: 16px;
-    }
-    
-    .card-icon {
-        width: 36px;
-        height: 36px;
-        font-size: 1.3rem;
-        margin-bottom: 6px;
-        border-radius: 20px;
-    }
-    
-    .nav-card a {
-        font-size: 0.8rem;
-        line-height: 1.2;
-        -webkit-line-clamp: 2;
-        max-height: 2.4em;
-    }
-    
-    .card-caption {
-        font-size: 0.6rem;
-        margin-top: 4px;
-        letter-spacing: 0.2px;
-        white-space: nowrap;
-        max-width: 100%;
-    }
-    
-    /* FOOTER - TETAP TAMPIL DI MOBILE */
-    footer {
-        display: block;
-        margin-top: 30px;
-        padding: 20px 15px 15px;
-    }
-    
-    .footer-container {
-        flex-direction: column;
-        text-align: center;
-        gap: 15px;
-    }
-    
-    .footer-logo-large {
-        font-size: 1.5rem;
-    }
-    
-    .footer-service {
-        font-size: 1.2rem;
-        padding: 8px 20px;
-    }
-    
-    .footer-copyright {
-        margin-top: 20px;
-        padding-top: 15px;
-        font-size: 0.8rem;
-    }
-}
-
-/* SMALL MOBILE (max-width: 380px) - PENYESUAIAN EKSTRA */
-@media (max-width: 380px) {
-    .card-grid {
-        gap: 5px;
-    }
-    
-    .nav-card {
-        padding: 8px 3px 6px;
-    }
-    
-    .card-icon {
-        width: 32px;
-        height: 32px;
-        font-size: 1.1rem;
-        margin-bottom: 4px;
-    }
-    
-    .nav-card a {
-        font-size: 0.7rem;
-    }
-    
-    .card-caption {
-        font-size: 0.55rem;
-        margin-top: 3px;
-    }
-    
-    .grid-title {
-        font-size: 1.1rem;
-    }
-    
-    .search-wrapper {
-        padding: 2px 2px 2px 10px;
-    }
-    
-    #searchInput {
-        font-size: 0.85rem;
-        padding: 8px 0;
-    }
-    
-    .search-clear {
-        padding: 4px 8px;
-        font-size: 0.7rem;
-    }
-    
-    /* Extra small mobile adjustments for radio */
-    .header-radio-controls {
-        flex-direction: column;
-        align-items: center;
-    }
-    
-    .vol-stop {
-        width: 100%;
-        justify-content: center;
-    }
-}
-
-/* TABLET (768px - 1023px) */
-@media (min-width: 768px) and (max-width: 1023px) {
-    .card-grid {
-        grid-template-columns: repeat(5, 1fr);
-        gap: 12px;
-    }
-    
-    .nav-card {
-        padding: 16px 6px 10px;
-    }
-    
-    .card-icon {
-        width: 42px;
-        height: 42px;
-        font-size: 1.5rem;
-        margin-bottom: 8px;
-    }
-    
-    .nav-card a {
-        font-size: 0.85rem;
-    }
-    
-    .card-caption {
-        font-size: 0.65rem;
-        margin-top: 4px;
-    }
-    
-    .search-wrapper {
-        padding: 4px 4px 4px 16px;
-    }
-    
-    #searchInput {
-        padding: 10px 0;
-        font-size: 0.9rem;
-    }
-    
-    .search-clear {
-        padding: 6px 14px;
-        font-size: 0.8rem;
-    }
-    
-    /* Tablet radio centering */
-    .header-container {
-        justify-content: center;
-    }
-}
-
-/* DESKTOP (min-width: 1024px) */
-@media (min-width: 1024px) {
-    .card-grid {
-        grid-template-columns: repeat(7, 1fr);
-        gap: 16px;
-    }
-    
-    .nav-card {
-        padding: 18px 8px 12px;
-    }
-    
-    .card-icon {
-        width: 48px;
-        height: 48px;
-        font-size: 1.8rem;
-        margin-bottom: 12px;
-    }
-    
-    .nav-card a {
-        font-size: 1rem;
-    }
-    
-    .card-caption {
-        display: block;
-        font-size: 0.7rem;
-        margin-top: 6px;
-    }
-    
-    /* Desktop radio centering */
-    .header-container {
-        justify-content: center;
-    }
-}
-
-/* ULTRA WIDE SCREENS - maintain centering */
-@media (min-width: 1600px) {
-    .header-container {
-        justify-content: center;
-    }
-}
     </style>
 </head>
-<body>
+    <header>
+        <div class="logo-section">
+            <h1><a style="text-decoration:none" href="https://t.me/infomanpower" target="_blank" title="MiForce"><font color="white">MANP</font><font color="#FFC300">O</font><font color="white">WER</font></h1>
+        </div>
+    </header>
 
-<!-- HEADER (radio di dalamnya) -->
-<header class="top-header">
-    <div class="header-container">
+<!-----------------------------------------------NAV BAR MENU--------------------------------------->
+    <nav class="top-bar">
+        <ul>
+
+<!-----------------------------------------------OCR--------------------------------------->
+
+<li>
+                <a href="#" title="Services">OCR</a>
+                <ul>
+		<li><a href="http://10.168.106.246/doc/page/preview.asp" target="_blank" title="PMKPCS">CCTV Soulmate</a></li>
+		<li><a href="http://10.168.106.246/doc/page/preview.asp" target="_blank" title="PMKPCS">CCTV Supernova</a></li>
+		<li><a href="http://10.168.168.130/doc/page/preview.asp" target="_blank" title="PMKPCS">CCTV Stockpile</a></li>
+		<li><a href="http://10.168.106.242/doc/page/preview.asp" target="_blank" title="PMKPCS">CCTV Tyre</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/12oHfEOEDzXJAOKFmOSa5HTokjQMqn81gSawhYBlS8OE/edit#gid=1167434580" target="_blank" title="Dashboard OCR">Dashboard OCR</a></li>
+                </ul>
+            </li>
+<!-----------------------------------------------SAP--------------------------------------->
+<li>
+                <a href="#" title="Services">SAP</a>
+                <ul>
+            	<li><a href="http://pamawebprod/portal/NewPamaWeb/tabid/1065/ctl/Login/Default.aspx?returnurl=%2fportal%2fNewPamaWeb%2ftabid%2f1065%2flogon%2fwindows%2fDefault.aspx" target="_blank" title="PAMAWEB">PAMAWEB</a></li>
+		<li><a href="http://1pamaweb/" target="_blank" title="Website Manpower">New PAMAWEB</a></li>
+	        <li><a href="https://docs.google.com/spreadsheets/d/1GsityXP6gqUoYaf9lXC2HLUWu3N16rKOuF0OaLnnkyc/edit?gid=246839999#gid=246839999" target="_blank" title="HRGA Portal">Raport Admin</a></li>
+                    <li><a href="https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#Shell-home" target="_blank" title="HRGA Portal">SAP FIORI</a></li>
+		<li><a href="https://hcm44.sapsf.com/sf/home?" target="_blank" title="SAP Success Factor">SAP SUCCESS</a></li>
+                    <li><a href="http://pamametabase:3000/public/question/65f45675-2bb1-49f9-8b1c-8d86ad2297d7?NRP=&ta_date=&dstrct_code=&dept_code=&TerminalId=" target="_blank" title="Roster">CiCo per Nrp</a></li>
+                    <li><a href="https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_PersonalWorkSchedule-manage" target="_blank" title="Roster">Roster</a></li>
+                    <li><a href="https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_EmployeeTravelReport-manage" target="_blank" title="Histori Pengajuan">Travel Report</a></li>
+                    <li><a href="https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_UploadSubstitutions-manage" target="_blank" title="Rubah hari off">Upload Roster</a></li>
+                    <li><a href="https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_LaporanTimeStatement-manage" target="_blank" title="HRGA Portal">Time Statement</a></li>
+                    <li><a href="https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_AbsenceQuotaInformation-manage" target="_blank" title="Sisa saldo cuti tahunan">Sisa tahunan</a></li>
+                    <li><a href="http://kpcswspu403/hrgaolweb/login.aspx" target="_blank" title="HRGA Portal">HRGA</a></li>
+		    <li><a href="https://docs.google.com/spreadsheets/d/1GsityXP6gqUoYaf9lXC2HLUWu3N16rKOuF0OaLnnkyc/edit?gid=246839999#gid=246839999" target="_blank" title="HRGA Portal">Raport Admin</a></li>
+                    <li><a href="http://kpcswspu403:8080/absent_wr/absent_wr" target="_blank" title="Absensi WR">Work readiness</a></li>
+                    <li><a href="http://kpcswspu403:8080/optrack/jkp0/data_jkp" target="_blank" title="Operator Tracking">Operator Tracking</a></li>
+                    <li><a href="http://kpcswspu403/packmeal" target="_blank" title="Pack Meal">Pack Meal</a></li>
+                </ul>
+            </li>
+<!-----------------------------------------------FORMULIR--------------------------------------->
+<li>
+                <a href="#" title="Services">FORM</a>
+                <ul>
+		<li><a href="https://forms.gle/V5yBpjHtzZP9orpK9" target="_blank" title="SAP Success Factor">Terlambat Induksi</a></li>
+                    <li><a href="https://forms.gle/NgkZtMHTJJb7JhM68" target="_blank" title="Rubah hari off">Absen Training Highrisk</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/1rTrN80ZFr6VQ7egowp3q_GuTPw4PWJkr7PkZrhMLLu4/edit?gid=0#gid=0" target="_blank" title="Rubah hari off">Rute Sheet</a></li>
+                    <li><a href="https://forms.gle/2eetHBA8BsPmQqL46" target="_blank" title="Rubah hari off">CNC PKWT</a></li>
+                    <li><a href="https://forms.office.com/r/G8fUHaFbaA" target="_blank" title="Rubah hari off">TTD PKWT</a></li>
+		<li><a href="https://docs.google.com/spreadsheets/d/13PIrWf8cNt75v-MFuPpE7uf0SDUjJz5BWrcZsTqMrmE/edit?resourcekey=&gid=38477354#gid=38477354" target="_blank" title="Website Manpower">Lapor JKP</a></li>
+		<li><a href="https://drive.google.com/drive/folders/11JCzhtJBjMq6H76K1Yti9PSbQ0W5La3R" target="_blank" title="Website Manpower">MOR</a></li>
+		<li><a href="https://drive.google.com/drive/folders/1tWTsSyV_dCmcEEXLpF8Wa3MC3wCbb8tT?usp=sharing" target="_blank" title="Website Manpower">Absensi Blasting</a></li>
+		<li><a href="https://drive.google.com/drive/folders/1s1w-8K4KlzLD0jtfOyFyhAE46PpeGZYW?usp=sharing" target="_blank" title="Website Manpower">Setting Alat</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/1y7ktyx3LuiSxHYKdO3aurRwaWz10YwAw_8-AJq16M3w/edit?usp=sharing" target="_blank" title="Rubah hari off">Absensi WR</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/1kna3K22DRphAZ8zDic2bd-Pl6XwYn6Sq8uzMdRHQT-Q/edit?usp=sharing" target="_blank" title="Rubah hari off">Absensi Dev Fatigue</a></li>
+                    <li><a href="#" target="_blank" title="Rubah hari off">-</a></li>
+</ul>
+            </li>
+<!--------------------------------------------------BANDARA------------------------------------->
+            <li>
+                <a href="#" title="Services">BANDARA</a>
+                <ul>
+                    <li><a href="https://bandara.pamapersada.com/Login" target="_blank" title="New Bandara Report Finger">Bandara Pamapersada</a></li>
+                    <li><a href="http://pama-kpcs:8081/Login" target="_blank" title="New Bandara Report Finger">New Bandara</a></li>
+                    <li><a href="http://10.2.168.90/Login" target="_blank" title="New Bandara Report Finger">Old Bandara</a></li>
+                    <li><a href="http://kpcswspu403/bandaramanpower/login.aspx" target="_blank" title="Update Memo, Remove and Assign">Bandara Manpower</a></li>
+                    <li><a href="http://kpcswspu403:8080/bandara_enh/login" target="_blank" title="Bandara Enhancement">Bandara Enhancement</a></li>
+                    <li><a href="http://kpcswspu403/bandaraportal" target="_blank" title="Bandara Report">Bandara Report</a></li>
+                    <li><a href="http://kpcswspu403/dispatch/DispSettingFleet" target="_blank" title="Bandara Report">Bandara 24/7</a></li>
+		    <li><a href="http://kpcssqrp402/ReportS/report/EWACS/PSV%20Darat/Test%20Code/New%20Share%20GL%20PIT%20LAIN" target="_blank" title="Persiapan Change Shift">Persiapan Change Shift</a></li>
+                    <li><a href="http://pama-kpcs:8081/ScheduleUnit" target="_blank" title="New Bandara Report Finger">Setting Unit</a></li>
+                    <li><a href="http://pama-kpcs:8081/Schedule/ScheduleNew" target="_blank" title="New Bandara Report Finger">Setting Manpower</a></li>
+                    <li><a href="http://kpcssqbd401/ReportServer/Pages/ReportViewer.aspx?%2fBANDARA%2fNew+Bandara%2frpt_monitoring_status_operator&rs:Command=Render" target="_blank" title="New Bandara Report Finger">Absen In</a></li>
+                    <li><a href="http://kpcssqbd401/ReportServer/Pages/ReportViewer.aspx?%2fBANDARA%2fDisplay+Report%2frpt_display_optFatigue_NEW&rs:Command=Render" target="_blank" title="New Bandara Report Finger">Fatigue</a></li>
+                </ul>
+            </li>
+<!--------------------------------------------------EWACS------------------------------------->
+            <li><a href="#" title="EWACS">EWACS</a>
+	 <ul>
+			<li><a href="http://kpcswspu403/ewacs" target="_blank" title="Ewacs Pro Portal">Ewacs</a></li>
+			<li><a href="http://kpcssqrp402/ReportS/report/EWACS/Maintenance/01.%20UNIT%20BREAKDOWN%20PER%20REGION">Unit Down<a></li>
+			<li><a href="http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2fMIO%2fDashboard+Login+Opt&rs:Command=Render">Login Ewacs</a></li>
+			<li><a href="http://kpcssqrp402/ReportS/report/EWACSPRO/DASHBOARD/Mancal%20Gak%20Sesuai%20Setting" target="_blank" title="Mancal Tidak Sesuai Settingan">Login Ewacs Tidak Sesuai</a></li>
+			<li><a href="http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2fMIO%2fRealtime+10+Login+Terakhir+Share&rs:Command=Render" target="_blank" title="Mancal Tidak Sesuai Settingan>Record Login Ewacs</a></li>
+			<li><a href="http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACSPRO%2fREALTIME%2fRealtime+Record+Login+Logout+Operator&rs:Command=Render" target="_blank" title="Ewacs Pro Portal">Resume Login</a</li>
+			<li><a href="http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2fMIO%2f010.+DIGITAL+TIMESHEET+HISTORICAL+SHARE&rs:Command=Render" target="_blank" title="Mancal Tidak Sesuai Settingan">Timesheet Digital</a></li>
+			<li><a href="http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f2023_01_02_Monitoring+Operator+By+TS&rs:Command=Render" target="_blank" title="Ewacs Pro Portal">Report Timesheet</a></li>
+			<li><a href="http://kpctsqrs401/reports/report/EWACS_KPCT/TO%20PRODUCTION/HM%20OPERATOR%20PAMA" target="_blank" title="Mancal Tidak Sesuai Settingan>Cek HM Area 2</a></li>
+			<li><a href="http://kpctsqrs401/reports/report/EWACS_KPCT/Review%20Timesheet%20%5BMerger%5D" target="_blank" title="Mancal Tidak Sesuai Settingan>Timesheet Area 2</a></li>
+			<li><a href="http://kpctsqrs402/reports/report/EWACSPRO/DASHBOARD%20OPT%20LOGIN%20EWACSPRO%20For%20Operation" target="_blank" title="Mancal Tidak Sesuai Settingan>Login EWACS AREA 2</a></li>
+			<li><a href="https://docs.google.com/spreadsheets/d/1r4dRgpsb5JjxRcMINjIbqylhzBShy8OV_-_S6uSoX_I/edit?gid=0#gid=0" target="_blank" title="Mancal Tidak Sesuai Settingan>JKP 0</a></li>
+			<li><a href="http://kpcssqrp402/ReportS/report/EWACSPRO/REALTIME/Realtime%20Report%20Setting%20Fleet" target="_blank" title="Dasboard Mio">Dashboard MIO</a></li>
+            <li><a href="http://kpcssqrp402/reports/browse/EWACS/MIO" target="_blank" title="Ewacs Pro Portal">SQL MIO</a></li>
+			<li><a href="http://kpcssqrp402/ReportS/report/EWACS/Performance%20Project/Delay%20KPCS" target="_blank" title="Ewacs Pro Portal">SQL Delay</a></li>
+			<li><a href="http://kpcssqrp402/reports/report/EWACSPRO/PERIODICAL/KPCS%20Periodic%20Change%20Shift%20Loader" target="_blank" title="Ewacs Pro Portal">SQL CS Loader</a></li>
+		</ul>
+	</li>
+<!--------------------------------------------------MIFORCE------------------------------------->
+<li>
+                <a href="#" target="_blank" title="Services">MIFORCE</a>
+                <ul>
+			<li><a href="http://kpcssqrp402/ReportS/report/EWACS/KPCS/List%20Unit%20by%20PIT" target="_blank" title="New MiForce">New MiForce</a></li>
+			<li><a href="http://kpcssqrp401/ReportS/report/OCR/OCR%20Report%20Setting%20Bandara" target="_blank" title="MiForce">MiForce</a></li>
+			<li><a href="http://kpctsqrs402/reports/report/EWACSPRO/DISPATCHING/KPCT%20Realtime%20Report%20Setting%20Fleet" target="_blank" title="New MiForce">Set Fleet SPE</a></li>
+			<li><a href="http://kpcssqbd401/reports/report/BANDARA/New%20Bandara/Report%20GL%20Check%20Bugar" target="_blank" title="Check BUgar">Check Bugar</a></li>
+                </ul>
+            </li>
+<!--------------------------------------------------OPA------------------------------------->
+<li>
+                <a href="#" title="">OPA</a>
+                <ul>
+                    <li><a href="https://opa.pamapersada.com/login" target="_blank" title="ADM-KPCS01 #opa-pamapersada5678! atau ADMSPR-KPCS01 PersadaKpcs123!">OPA DashBoard</a></li>
+		    <li><a href="http://pamametabase:3000/public/question/dd40610f-f5ad-4bc8-a1fb-53c2463307c1?start_date=2026-03-03&end_date=2026-03-03&distrik=KPCS&nrp=&shift=ALL&kategori=Fatigue">Report Klarifikasi OPA</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/1bf6eXp7H93l0YlHpXSiMlPUkUVV_BeASzJF5iczecMo/edit#gid=0" target="_blank" title="">OPA CNC Sheet</a></li>
+                    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSd9Vx_h_d9PVEqKCK4CMgRka2PzKmhZQMFkSDSIc8UZLN6g7w/viewform" target="_blank" title="Rubah hari off">Upload CNC OPA</a></li>
+                    <li><a href="http://10.168.106.250/doc/page/playback.asp" target="_blank" title="TFT Dasboard">CCTV pembuktian</a></li>
+                    <li><a href="http://kpcssqrp401/ReportServer/Pages/ReportViewer.aspx?%2fBANDARA%2frpt_mobile_check_fatigue&rs:Command=Render" target="_blank" title="">Mobile Check Fatigue</a></li>
+                    <li><a href="https://bit.ly/DASHBOARDTRAININGEXPERT" target="_blank" title="TFT Dasboard">TFT Expert</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/1e328Vf-QbdG57BCPkyiW7xdvg5JVJxR2LArwUUn9QQA/edit?pli=1#gid=0" target="_blank" title="TFT Dasboard">Kimper Highrisk</a></li>
+                </ul>
+            </li>
+<!--------------------------------------------------MOR------------------------------------->
+<li>
+                <a href="#" title="Services">MOR</a>
+                <ul>
+                    	<li><a href="http://morsuko.apps.pamapersada.net/Home" target="_blank" title="HRGA Portal">MOR</a></li>
+                    	<li><a href="http://sap1pama.apps.pamapersada.net/Login" target="_blank" title="SAP Online">SAP Online</a></li>
+                    	<li><a href="https://docs.google.com/spreadsheets/d/1C-YEgCNE-IvuCh2YqB6kG54wf4g22WMgCOQh1IVzVLo/edit?resourcekey=&gid=1200264687#gid=1200264687" target="_blank" title="SAP Online">OCA Sheet</a></li>
+            </li>
+                </ul>
+<!--------------------------------------------------ID KIMPER------------------------------------->
+<li>
+                <a href="#" title="">KIMPER</a>
+                <ul>
+                    <li><a href="http://kpcswspu403:8080/SHE/login" target="_blank" target="_blank" title="Kimper Online">SHE Kimpering</a></li>
+		    <li><a href="https://bit.ly/she-kpcs-pages" target="_blank" target="_blank" title="Kimper Online">Portal SHE ID</a></li>
+ 		    <li><a href="https://script.google.com/macros/s/AKfycbwqEawRw8LSZJki0BE9ph0aE7FK_yqgSQ7Qe6jRFx6F_PW9mvLtH4vYT2lLfN72Y_Z1wg/exec" target="_blank" target="_blank" title="Kimper Online">Data terima ID</a></li>
+                    <li><a href="https://storage.googleapis.com/infompkpcs/MinePermit.html" target="_blank" target="_blank" title="Kimper Online">MP Kimpering</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/1JNVFp5J0Do29UyHiQvn1I6kuL2PFp-LeWMZk2_Mw7Ak/edit?gid=0#gid=0" target="_blank" target="_blank" title="Kimper Online">Upload data kimper</a></li>
+                    <li><a href="https://pamapersada-my.sharepoint.com/personal/p61060290_pamapersada_net/_layouts/15/guestaccess.aspx?share=EiCrUWYszQ5EnTepd8CrgIIB3iWjiPBtT-1W9IpFrjnUPw&e=ed6fZC" target="_blank">Rekonsil ID</a></li>
+                    <li><a href="https://bit.ly/DATABASE-MCU-CAHAYA" target="_blank" title="ABSEN MCU">MCU Cahaya</a></li>
+                    <li><a href="https://bit.ly/DATABASE-MCU-MELOY" target="_blank" title="ABSEN MCU">MCU Meloy</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/11-r6nLOBl6OfVBsoo-7I1dSq9NH3XBz-hzhoE3OTUtE/edit?gid=1278333579#gid=1278333579
+" target="_blank" title="ABSEN MCU">MCU RSPKT</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/1e328Vf-QbdG57BCPkyiW7xdvg5JVJxR2LArwUUn9QQA/edit#gid=0" target="_blank">Database Kimper HR</a></li>
+                </ul>
+            </li>
+<!--------------------------------------------------IPO------------------------------------->
+		<li><a href="http://iposinergi.apps.pamapersada.net/" target="_blank" title="HRGA">IPO</a></li>
+<!--------------------------------------------------SISTEM------------------------------------->
+            <li>
+                <a href="#" title="Services">SISTEM</a>
+                <ul>
+		<li><a href="https://outlook.office365.com/mail/" target="_blank" title="Outlook">EMAIL</a></li>
+                    <li><a href="http://kpcswspu403/glgradingv3/Home " target="_blank" title="MiForce">FLOR</a></li>
+                    <li><a href="http://spol/login" target="_blank" title="Check Bugar">FL SHE Coord</a></li>
+                    <li><a href="http://spol.apps.pamapersada.net/Login" target="_blank" title="HRGA">SPOL</a></li>
+                    <li><a href="http://jiepwspu403/APPS/culture/login" target="_blank" title="HRGA">CDO</a></li>
+                    <li><a href="http://jiepwspu420/APPS/newpoins/login" target="_blank" target="_blank" title="Kimper Online">New Poins</a></li>
+		<li><a href="http://jiepwspu420/APPS/CPMD_SMISME/Login" target="_blank" target="_blank" title="Kimper Online">SMI SME</a></li>
+		<li><a href="http://moving/Login" target="_blank" title="PMKPCS">Moving</a></li>
+		<li><a href="http://kpcswspu403:8080/HC/login" target="_blank" title="PMKPCS">IDP</a></li>
+		<li><a href="http://jarvisweb" target="_blank" title="PMKPCS">Jarvis</a></li>
+		<li><a href="http://satupamabi/#/signin" target="_blank" title="PMKPCS">Tablue</a></li>
+		</ul></li>
+<!--------------------------------------------------PRODTI------------------------------------->
+            <li>
+                <a href="#" title="Services">PRODTI</a>
+                <ul>
+                    <li><a href="http://jiepwspu420/APPS/newpoins" target="_blank" title="">NewPoins</a></li>
+                    <li><a href="https://pamaitsm.service-now.com/escpro?id=kpmg_of_ec_dashboard" target="_blank" title="">HelpDesk</a></li>
+		<li><a href="http://kpcssqrp402/reports/report/EWACS/1.%20Performance%20Project/PRODUCTIVITY/Productivity%20Loader%20and%20Hauler" target="_blank" title="">Prodty loader hauler PerDept PerPit</a></li>
+                    <li><a href="http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f0.+Priority+Report%2f2.+Productivity+Loader&rs:Command=Render" target="_blank" title="Dashboard OCR">Prodty loader per Hari</a></li>
+                    <li><a href="http://kpcssqrp402/reports/report/EWACSPRO/REPORT%20DEVELOPMENT/Productivity%20Loader%20Per%20Shift%20By%20HM" target="_blank" title="Operator Tracking">Prodty loader per Day per shift</a></li>
+                    <li><a href="http://kpcssqrp402/ReportS/report/EWACS/KPCS/DETAIL%20LOADER%20PERFORMANCE" target="_blank" title="Pack Meal">Prodty loader per Operator</a></li>
+                    <li><a href="http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f0.+Priority+Report%2f1.+Trend+Productivity+Hauler+Per+Dept&rs:Command=Render" target="_blank" title="">Trend prodty hauler</a></li>
+                    <li><a href="http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f0.+Priority+Report%2f3.+Achievement+Productivity+231+bcm+hour.km+Hauler&rs:Command=Render" target="_blank" title="Pack Meal">Ach.Prodty ≥231 bcm/hour.km Hauler</a></li>
+                    <li><a href="http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f0.+Priority+Report%2f5.+Productivity+Hauler+Per+CN&rs:Command=Render" target="_blank" title="Pack Meal">Prodty hauler per Operator</a></li>
+                    <li><a href="http://kpcssqrp402/reports/report/EWACS/0.%20Priority%20Report/5.%20Productivity%20Hauler%20Per%20CN" target="_blank" title="Pack Meal">Prodty Hauler Per CN</a></li>
+                    <li><a href="http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f0.+Priority+Report%2f%5bOLD%5d+5.+Productivity+Hauler+Per+CN&rs:Command=Render" target="_blank" title="Pack Meal">Prodty Hauler CN Old</a></li>
+                </ul>
+            </li>
+<!--------------------------------------------------SOSIAL------------------------------------->
+<li>
+                <a href="#" title="Services">SOSIAL</a>
+                <ul>
+                    <li><a href="https://web.whatsapp.com/" target="_blank" title="Whatsapp Web">Whatsapp</a></li>
+                    <li><a href="https://web.telegram.org/k/" target="_blank" title="Telegram Web">Telegram</a></li>
+                    <li><a href="https://messages.google.com/web/authentication" target="_blank" title="Android Web">SMS</a></li>
+                    <li><a href="https://teams.microsoft.com/_#/conversations/Umum?threadId=19:XnruFufRmxBfYe0zJ102D4vScUVimAX97HvbGG3O1LI1@thread.tacv2&ctx=channel" target="_blank" title="MS Teams">Ms.Teams</a></li>
+                    <li><a href="https://linktr.ee/infomanpower" target="_blank" title="Info MP">Info MP</a></li>
+                    <li><a href="https://linktr.ee/glspama" target="_blank" title="Web GLS">Info GLS</a></li>
+                    <li><a href="https://linktr.ee/admin" target="_blank" title="Web GLS">Linktree</a></li>
+                    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSd9Vx_h_d9PVEqKCK4CMgRka2PzKmhZQMFkSDSIc8UZLN6g7w/viewform" target="_blank" title="">Form</a></li>
+
+                </ul>
+            </li>
+<!--------------------------------------------------FORMULIR------------------------------------->
+<li>
+                <a href="#" title="Services">FORMULIR</a>
+                <ul>
+                    <li><a href="https://forms.gle/KacVpv2tNqwo8rEV6" target="_blank" title="Surat Pernyataan Minum Obat">FORM OBAT</a></li>
+                    <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSd9Vx_h_d9PVEqKCK4CMgRka2PzKmhZQMFkSDSIc8UZLN6g7w/viewform" target="_blank" title="Form Input OPA">FORM OPA</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/1PT-i9QjR1EXaHy1pThNpG1SbxTFNq35fVDipaziBPNo/edit?resourcekey=&gid=503159177#gid=503159177" target="_blank" title="Sheet Obat">SHEET OBAT</a></li>
+                </ul>
+            </li>
+
+        </ul>
+    </nav>
+
+<!--------------------------------------------------MENU KEDUA ------------------------------------->
+
+<nav class="bottom-bar">
+<ul>
+		<li>
+                <a href="https://storage.googleapis.com/infompkpcs/index.html"  target="_blank" title="Services">INFOMP</a>
+		</li>
 
 
-        <!-- RADIO PLAYER (volume, stop, play) -->
-        <div class="radio-header-player">
-            <div class="live-badge">
-                <span class="pulse-dot"></span> LIVE
-            </div>
-            <div class="header-radio-controls">
-                <select id="headerAudioSelect">
-                    <option value="" disabled selected>Pilih Stasiun Radio</option>
-                    <option value="https://storage.googleapis.com/infompkpcs/audio/Dzikir%20dan%20Doa%20-%20Dzikir%20Pagi%20dan%20Petang-%20Dzikir%20Pagi.mp3">Dzikir Pagi</option>
-                    <option value="https://storage.googleapis.com/infompkpcs/audio/Dzikir%20dan%20Doa%20-%20Dzikir%20Pagi%20dan%20Petang-%20Dzikir%20Petang.mp3">Dzikir Petang</option>
-                    <option value="https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/18.mp3">Surah Al Kahfi</option>
-                    <option value="https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/1.mp3">Mishari Rashid al-`Afasy</option>
-                    <option value="http://10.2.168.249:8000/bahana">Bahana FM Sangatta</option>
-                    <option disabled>─────────News─────────</option>
-                    <option value="https://stream.live.vc.bbcmedia.co.uk/bbc_world_service">BBC World Service</option>
-                    <option value="https://stream-ssl.arenastreaming.com:8000/jakarta">Elshinta Jakarta</option>
-                    <option value="https://pu.klikhost.com/proxy/kbr/kbr">KBR 68H Jakarta</option>
-                    <option value="https://stream-node0.rri.co.id/streaming/14/9014/kbrn.mp3">RRI Pro3 Jakarta</option>
-                    <option value="https://stream-node0.rri.co.id/streaming/22/9022/rrimakasarpro3.mp3">RRI Pro3 Makassar</option>
-                    <option value="https://stream-node1.rri.co.id/streaming/16/9116/rrisamarindapro3.mp3">RRI Pro3 Samarinda</option>
-                    <option value="https://stream-node1.rri.co.id/streaming/19/9219/rrisurakartapro3.mp3">RRI Pro3 Surakarta</option>
-                    <option disabled>─────────Musik─────────</option>
-                    <option value="https://kpfmstreaming.kaltimpost.co.id">KP FM Balikpapan</option>
-                    <option value="https://pu.klikhost.com/proxy/kpfm/stream?1741745242165">KP FM Samarinda</option>
-                    <option value="https://103.123.98.58/listen/1027_mtb_fm_surabaya/radio.mp3">MTB Surabaya</option>
-                    <option value="https://srv1.streamcast.my.id/listen/metta_solo_fm/radio.mp3">Metta FM Solo</option>
-                    <option value="https://i.klikhost.com/8010/stream">Suara Mahakam Samarinda</option>
-                    <option value="https://c5.siar.us/proxy/ssfm/stream">Suara Surabaya</option>
-                    <option value="https://a1.siar.us/radio/8440/radio.mp3?1605496428">Sun Banjarmasin</option>
-                    <option value="https://s5.alhastream.com/listen/22/radio">Utari Cilacap</option>
-                    <option value="https://svara-stream.radioddns.net/jakarta_z999fm_aac.m3u">Z99 Jakarta</option>
-                    <option disabled>─────────Religi─────────</option>
-                    <option value="https://streaming.radiomuslim.com/;stream/1">Radio Muslim Yogyakarta</option>
-                    <option value="https://radioislamindonesia.com/mutiaraquran.mp3">Radio Mutiara Quran Semarang</option>
-                    <option value="https://radioislamindonesia.com/rodja.mp3">Radio Rodja</option>
-                    <option value="https://radioislamindonesia.com/rodjatv.mp3">Rodja TV</option>
-                    <option disabled>─────────RRI Pro 1 & 2─────────</option>
-                    <option value="https://stream-node1.rri.co.id/streaming/25/9025/rrijakartapro1.mp3">RRI Pro1 Jakarta</option>
-                    <option value="https://stream-node1.rri.co.id/streaming/25/9025/rrijakartapro2.mp3">RRI Pro2 Jakarta</option>
-                    <option value="https://stream-node0.rri.co.id/streaming/22/9022/rrimakasarpro1.mp3">RRI Pro1 Makassar</option>
-                    <option value="https://stream-node0.rri.co.id/streaming/22/9022/rrimakasarpro2.mp3">RRI Pro2 Makassar</option>
-                    <option value="https://stream-node0.rri.co.id/streaming/19/9119/rripurwokertopro1.mp3">RRI Pro1 Purwokerto</option>
-                    <option value="https://stream-node0.rri.co.id/streaming/19/9119/rripurwokertopro2.mp3">RRI Pro2 Purwokerto</option>
-                    <option value="https://stream-node1.rri.co.id/streaming/16/9116/rrisamarindapro1.mp3">RRI Pro1 Samarinda</option>
-                    <option value="https://stream-node1.rri.co.id/streaming/16/9116/rrisamarindapro2.mp3">RRI Pro2 Samarinda</option>
-                    <option value="https://stream-node1.rri.co.id/streaming/19/9219/rrisurakartapro1.mp3">RRI Pro1 Surakarta</option>
-                    <option value="https://stream-node1.rri.co.id/streaming/19/9219/rrisurakartapro2.mp3">RRI Pro2 Surakarta</option>
-                </select>
+		<li>
+                <a href="#" title="Services">PLAN CUTI</a>
+                <ul>
+                    <li><a href="https://sites.google.com/view/infomp/cuti-operator" target="_blank" title="Surat Pernyataan Minum Obat">Dashboard Operator</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/13fgvyPWKMr8TAdL2o_dItDe4FZVQSbo05qHP_ujvplg/edit?gid=1629635366#gid=1629635366" target="_blank" title="Form Input OPA">Sheet Operator</a></li>
+                    <li><a href="https://sites.google.com/view/infomp/cuti-gl" target="_blank" title="Surat Pernyataan Minum Obat">Dashboard Nonom</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/1Boy4DmaNDB5H1_XejGYX0bEF2afp_jc3YTMryfm8yoA/edit?gid=1629635366#gid=1629635366" target="_blank" title="Form Input OPA">Sheet Nonom</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/1XXBSW1DsNq3hOloTt-D9Lf2D5WIQothJ0IcMRpT71FY/edit?gid=1106615704#gid=1106615704" target="_blank" title="Form Input OPA">Update rute</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/1rTrN80ZFr6VQ7egowp3q_GuTPw4PWJkr7PkZrhMLLu4/edit?usp=sharing" target="_blank" title="Form Input OPA">Rute Terkini</a></li>
+                    <li><a href="https://sites.google.com/view/bu-infomp/laportiket" target="_blank" title="Form Input OPA">Form Lapor tiket</a></li>
+                    <li><a href="https://sites.google.com/view/bu-infomp/dash-tiket" target="_blank" title="Form Input OPA">Dashboard Lapor tiket</a></li>
+                </ul>
+		</li>
 
-                <button class="radio-btn" id="playBtnHeader">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                </button>
-                
-                <div class="vol-stop">
-                    <button id="stopBtnHeader" class="btn-stop" title="Stop">⏹️</button>
-                    <input type="range" id="volumeSlider" min="0" max="1" step="0.05" value="0.7">
-                </div>
-            </div>
+		<li>
+                <a href="#" title="Services">LAPOR MP</a>
+                <ul>
+                    <li><a href="https://docs.google.com/spreadsheets/d/1kMo83N47EnwskC_BjGFQvR0mP1avbMR1mEUA9mzbndM/edit?gid=0#gid=0" target="_blank" title="Form Input OPA">Lapor kehadiran</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/17WSiMWvojWod7ld2phzs7L2LLfD_knAQPXT5H1Nj-PM/edit?resourcekey=&gid=1977725842#gid=1977725842" target="_blank" title="Lapor terlambat induksi">Lambat induksi</a></li>
+
+                </ul>
+		</li>
+
+		<li>
+                <a href="#" title="Services">SETTINGAN</a>
+                <ul>
+                    <li><a href="https://docs.google.com/spreadsheets/d/19xKKcUPsZ6I6LHN-7X9WqFG9Lm4f8wYJ7aW7EBSmOYM/edit?gid=0#gid=0" target="_blank" title="Surat Pernyataan Minum Obat">Sheet Routing</a></li>
+                    <li><a href="https://sites.google.com/view/infomp/wr-app" target="_blank" title="Form Input OPA">Dashboard Routing</a></li>
+                    <li><a href="https://drive.google.com/drive/folders/1s1w-8K4KlzLD0jtfOyFyhAE46PpeGZYW?usp=sharing" target="_blank" title="Form Input OPA">Upload Settingan</a></li>
+		    <li><a href="https://docs.google.com/spreadsheets/d/10pVIynZnaGmPm5UiKmBrY7NhbZjFZeInqDuz-uNVoRU/edit?gid=0#gid=0">Link Training</a></li>
+                    <li><a href="https://drive.google.com/drive/folders/1UNuqAfcMW9rkz26Wo1Us9bhn387stcIw" target="_blank" title="Form Input OPA">Upload Piket Operasional Terbatas</a></li>
+                </ul>
+		</li>
+
+		<li>
+                <a href="#" title="Services">HIGHRISK</a>
+                <ul>
+                    <li><a href="https://sites.google.com/view/infomp/hrapp" target="_blank" title="Form Input OPA">Dashboard Highrisk</a></li>
+                    <li><a href="https://docs.google.com/spreadsheets/d/1F--88IQt4dRPO8u1zsB8ExQBNbTAYr--7PfvtSHlRlc/edit?gid=0#gid=0" target="_blank" title="Surat Pernyataan Minum Obat">Sheet Highrisk</a></li>
+
+                </ul>
+		</li>
+
+        </ul>
+    </nav>
+<!--------------------------------------------------end MENU KEDUA ------------------------------------->
+<!--------------------------------------------------MENU KETIGA ------------------------------------->
+
+<nav class="third-bar">
+<ul>
+		
+</ul>
+</nav>
+<!--------------------------------------------------end MENU KEDUA ------------------------------------->
+     <div class="body-container">
+        <div class="body-area">
+
+<div class="todo">
+        <h2>CATATAN DAN JOB PENDING</h2>
+
+        <div class="task-container">
+            <input type="text" id="todoNrp" placeholder="NRP">
+            <input type="text" id="todoTask" placeholder="Masukan catatan job pending...">
+            <button class="btn-add" onclick="addTodo()">+ Add Task</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 150px;">NRP</th>
+                    <th>CATATAN</th>
+                    <th style="width: 100px; text-align: center;">EDIT</th>
+                    <th style="width: 100px; text-align: center;">HAPUS</th>
+                </tr>
+            </thead>
+            <tbody id="todoList">
+                </tbody>
+        </table>
+
+<center><div class="send-email">
+    <button onclick="sendTodoEmail()" style="margin-right: 15px;">SEND NOTES</button>
+    <button onclick="window.open('https://docs.google.com/spreadsheets/d/1gpM2P82zGqJu-rBvdgOzwflwXaDgakqyUSNj562kAcM/edit?usp=sharing')">OPEN NOTES</button>
+</div></center>
+    </div>
+
+
+<!-- ===================== -->
+<div class="radio-card">
+    <div class="radio-header">
+        <span class="live-dot"></span>
+        <span class="radio-title">Streaming Audio Station</span>
+    </div>
+
+    <div class="radio-controls">
+        <div class="custom-select-wrapper">
+            <select id="audioSelect">
+        <option value="" selected disabled>Pilih Stasiun</option>
+        <option value="https://storage.googleapis.com/infompkpcs/audio/Dzikir%20dan%20Doa%20-%20Dzikir%20Pagi%20dan%20Petang-%20Dzikir%20Pagi.mp3">Dzikir Pagi</option>
+        <option value="https://storage.googleapis.com/infompkpcs/audio/Dzikir%20dan%20Doa%20-%20Dzikir%20Pagi%20dan%20Petang-%20Dzikir%20Petang.mp3">Dzikir Petang</option>
+        <option value="https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/18.mp3">Surah Al Kahfi</option>
+        <option value="https://download.quranicaudio.com/qdc/mishari_al_afasy/murattal/1.mp3">Mishari Rashid al-`Afasy</option>
+        <option value="http://10.2.168.249:8000/bahana">Bahana FM Sangatta</option>
+
+        <option value="#">---------News---------</option>
+        <option value="https://stream.live.vc.bbcmedia.co.uk/bbc_world_service">BBC World Service</option>
+        <option value="https://live-hls-web-aje-gcp.thehlive.com/VOICE-AJE/01.m3u8">Al Jazeera English</option>
+        <option value="https://stream-ssl.arenastreaming.com:8000/jakarta">Elshinta Jakarta</option>
+        <option value="https://pu.klikhost.com/proxy/kbr/kbr">KBR 68H Jakarta</option>
+        <option value="https://stream-node0.rri.co.id/streaming/14/9014/kbrn.mp3">RRI Pro3 Jakarta</option>
+        <option value="https://stream-node0.rri.co.id/streaming/22/9022/rrimakasarpro3.mp3">RRI Pro3 Makassar</option>
+        <option value="https://stream-node1.rri.co.id/streaming/16/9116/rrisamarindapro3.mp3">RRI Pro3 Samarinda</option>
+        <option value="https://stream-node1.rri.co.id/streaming/19/9219/rrisurakartapro3.mp3">RRI Pro3 Surakarta</option>
+
+
+        <option value="#">---------Musik---------</option>
+        <option value="https://kpfmstreaming.kaltimpost.co.id">KP FM Balikpapan</option>
+        <option value="https://pu.klikhost.com/proxy/kpfm/stream?1741745242165">KP FM Samarinda</option>
+        <option value="https://103.123.98.58/listen/1027_mtb_fm_surabaya/radio.mp3">MTB Surabaya</option>
+        <option value="https://srv1.streamcast.my.id/listen/metta_solo_fm/radio.mp3">Metta FM Solo</option>
+        <option value="https://i.klikhost.com/8010/stream">Suara Mahakam Samarinda</option>
+        <option value="https://c5.siar.us/proxy/ssfm/stream">Suara Surabaya</option>
+        <option value="https://a1.siar.us/radio/8440/radio.mp3?1605496428"">Sun Banjarmasin</option>
+        <option value="https://s5.alhastream.com/listen/22/radio">Utari Cilacap</option>
+        <option value="https://svara-stream.radioddns.net/jakarta_z999fm_aac.m3u">Z99 Jakarta</option>
+
+        <option value="#">---------Religi---------</option>
+        <option value="https://streaming.radiomuslim.com/;stream/1">Radio Muslim Yogyakarta</option>
+        <option value="https://radioislamindonesia.com/mutiaraquran.mp3">Radio Mutiara Quran Semarang</option>
+        <option value="https://radioislamindonesia.com/rodja.mp3">Radio Rodja</option>
+        <option value="https://radioislamindonesia.com/rodjatv.mp3">Rodja TV</option>
+
+          <option value="#">---------RRI Pro 1 dan Pro 2---------</option>
+        <option value="https://stream-node1.rri.co.id/streaming/25/9025/rrijakartapro1.mp3">RRI Pro1 Jakarta</option>
+        <option value="https://stream-node1.rri.co.id/streaming/25/9025/rrijakartapro2.mp3">RRI Pro2 Jakarta</option>
+
+
+        <option value="https://stream-node0.rri.co.id/streaming/22/9022/rrimakasarpro1.mp3">RRI Pro1 Makassar</option>
+        <option value="https://stream-node0.rri.co.id/streaming/22/9022/rrimakasarpro2.mp3">RRI Pro2 Makassar</option>
+
+
+        <option value="https://stream-node0.rri.co.id/streaming/19/9119/rripurwokertopro1.mp3">RRI Pro1 Purwokerto</option>
+        <option value="https://stream-node0.rri.co.id/streaming/19/9119/rripurwokertopro2.mp3">RRI Pro2 Purwokerto</option>
+
+        <option value="https://stream-node1.rri.co.id/streaming/16/9116/rrisamarindapro1.mp3">RRI Pro1 Samarinda</option>
+        <option value="https://stream-node1.rri.co.id/streaming/16/9116/rrisamarindapro2.mp3">RRI Pro2 Samarinda</option>
+
+
+        <option value="https://stream-node1.rri.co.id/streaming/19/9219/rrisurakartapro1.mp3">RRI Pro1 Surakarta</option>
+        <option value="https://stream-node1.rri.co.id/streaming/19/9219/rrisurakartapro2.mp3">RRI Pro2 Surakarta</option>
+
+
+
+
+    </select>
+
+        </div>
+
+        <button class="play-btn" onclick="startRadio()">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M8 5v14l11-7z"/>
+            </svg>
+            PUTAR RADIO
+        </button>
+        
+        <div id="audioFrame" style="display:none; width: 100%;">
+            <audio id="audioPlayer" controls></audio>
         </div>
     </div>
-    <audio id="headerAudioPlayer" style="display: none;"></audio>
-</header>
+</div>
+              
+<div style="text-align:center">
+</div>
+            </div>
+        </div>
 
-<!-- SEARCH CEPAT (di atas grid) -->
-<section class="search-section">
-    <div class="search-wrapper">
-        <span class="search-icon">🔍</span>
-        <input type="text" id="searchInput" placeholder="Cari layanan atau aplikasi... (nama / caption)" autocomplete="off">
-        <button class="search-clear" id="clearSearch">✖ Clear</button>
+     </div>
     </div>
-</section>
 
-<!-- GRID KARTU LINK (dengan ikon emoji profesional) -->
-<section class="link-grid-section">
-    <div class="grid-title">
-         Layanan & Akses Cepat
-        <span class="result-count" id="resultCount">137 item</span>
-    </div>
-    <div class="card-grid" id="linkCardGrid"></div>
-</section>
 
-<!-- FOOTER PIT SERVICE 1 KPCS -->
+
 <footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <div class="footer-logo">
+                MANP<span class="gold">O</span>WER
+            </div>
+            <p>
+                Platform integrasi data dan monitoring operasional PAMA Site KPCS. 
+                Memudahkan akses cepat ke berbagai tools dan sistem dalam satu pintu.
+            </p>
+        </div>
 
-    <div class="footer-copyright">
-        © 2026 Pit Service 1 KPCS — All tools and links maintained internally.
+        <div class="footer-section">
+            <h3>LOCATION</h3>
+            <p>
+                PAMA SITE KPCS<br>
+                Sangatta, Kutai Timur<br>
+                Kalimantan Timur, Indonesia
+            </p>
+        </div>
+
+        <div class="footer-section" style="text-align: right;">
+            <h3></h3>
+            <p>Dikelola oleh manpower</p>
+            <div class="nrp-badge">ID: 61060290</div>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        &copy; 2023 - 2026 <strong>MANPOWER PAMA SITE KPCS</strong>. All Rights Reserved.
     </div>
 </footer>
 
 <script>
-    (function() {
-        // --------------------------------------------------------------
-        // 1. DATA LINK (lengkap 137 item, dengan emoji unik per kategori)
-        // --------------------------------------------------------------
-        const linksData = [
-            // Kategori dengan emoji yang mewakili
-            { category: "PAMAWEB", name: "PAMAWEB", url: "http://pamawebprod/portal/NewPamaWeb/tabid/1065/ctl/Login/Default.aspx?returnurl=%2fportal%2fNewPamaWeb%2ftabid%2f1065%2flogon%2fwindows%2fDefault.aspx", caption: "PAMAWEB", emoji: "🌐" },
-            { category: "PAMAWEB", name: "New PAMAWEB", url: "http://1pamaweb/", caption: "New PAMAWEB", emoji: "🌐" },
-            { category: "INFOMP", name: "WEBSITE", url: "https://storage.googleapis.com/infompkpcs/index.html", caption: "INFOMP", emoji: "📰" },
-            { category: "INFOMP", name: "FILE SHARING", url: "https://drive.google.com/drive/folders/1il9UwB-xcGRePhLJ3imtegv_rlgv6alq", caption: "FILE SHARING", emoji: "📁" },
-            { category: "OCR", name: "CCTV Soulmate", url: "http://10.168.106.246/doc/page/preview.asp", caption: "CCTV", emoji: "📹" },
-            { category: "OCR", name: "CCTV Supernova", url: "http://10.168.106.246/doc/page/preview.asp", caption: "CCTV", emoji: "📹" },
-            { category: "OCR", name: "CCTV Stockpile", url: "http://10.168.168.130/doc/page/preview.asp", caption: "CCTV", emoji: "📹" },
-            { category: "OCR", name: "CCTV Tyre", url: "http://10.168.106.242/doc/page/preview.asp", caption: "CCTV", emoji: "📹" },
-            { category: "OCR", name: "Dashboard OCR", url: "https://docs.google.com/spreadsheets/d/12oHfEOEDzXJAOKFmOSa5HTokjQMqn81gSawhYBlS8OE/edit#gid=1167434580", caption: "DASHBOARD", emoji: "📊" },
-            { category: "SAP", name: "SAP FIORI", url: "https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#Shell-home", caption: "FIORI", emoji: "💼" },
-            { category: "SAP", name: "SAP SUCCESS", url: "https://hcm44.sapsf.com/sf/home?", caption: "SUCCESS", emoji: "💼" },
-            { category: "SAP", name: "CiCo per Nrp", url: "http://pamametabase:3000/public/question/65f45675-2bb1-49f9-8b1c-8d86ad2297d7?NRP=&ta_date=&dstrct_code=&dept_code=&TerminalId=", caption: "CiCo", emoji: "💼" },
-            { category: "SAP", name: "Roster", url: "https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_PersonalWorkSchedule-manage", caption: "ROSTER", emoji: "📅" },
-            { category: "SAP", name: "Travel Report", url: "https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_EmployeeTravelReport-manage", caption: "TRAVEL", emoji: "✈️" },
-            { category: "SAP", name: "Upload Roster", url: "https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_UploadSubstitutions-manage", caption: "UPLOAD", emoji: "📤" },
-            { category: "SAP", name: "Time Statement", url: "https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_LaporanTimeStatement-manage", caption: "TIMESTMT", emoji: "⏳" },
-            { category: "SAP", name: "Sisa tahunan", url: "https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#ZHC_AbsenceQuotaInformation-manage", caption: "SISA CUTI", emoji: "🗓️" },
-            { category: "SAP", name: "HRGA", url: "http://kpcswspu403/hrgaolweb/login.aspx", caption: "HRGA", emoji: "🧑‍💼" },
-            { category: "SAP", name: "Work readiness", url: "http://kpcswspu403:8080/absent_wr/absent_wr", caption: "WR", emoji: "✅" },
-            { category: "SAP", name: "Operator Tracking", url: "http://kpcswspu403:8080/optrack/jkp0/data_jkp", caption: "OPTRACK", emoji: "📍" },
-            { category: "SAP", name: "Pack Meal", url: "http://kpcswspu403/packmeal", caption: "PACKMEAL", emoji: "🍱" },
-            { category: "FORM", name: "Penyerahan Operator", url: "https://forms.office.com/r/1GBn6by2GX", caption: "PENYERAHAN", emoji: "📝" },
-            { category: "FORM", name: "Terlambat Induksi", url: "https://forms.gle/V5yBpjHtzZP9orpK9", caption: "INDUKSI", emoji: "📝" },
-            { category: "FORM", name: "Absen Training Highrisk", url: "https://forms.gle/NgkZtMHTJJb7JhM68", caption: "TRAINING HR", emoji: "📝" },
-            { category: "FORM", name: "Rute Sheet", url: "https://docs.google.com/spreadsheets/d/1XXBSW1DsNq3hOloTt-D9Lf2D5WIQothJ0IcMRpT71FY/edit?resourcekey=&gid=1106615704#gid=1106615704", caption: "RUTE", emoji: "🗺️" },
-            { category: "FORM", name: "CNC PKWT", url: "https://forms.gle/2eetHBA8BsPmQqL46", caption: "CNC PKWT", emoji: "📄" },
-            { category: "FORM", name: "TTD PKWT", url: "https://forms.office.com/r/G8fUHaFbaA", caption: "TTD PKWT", emoji: "✍️" },
-            { category: "FORM", name: "INFOMP KPCS", url: "https://sites.google.com/view/infomp", caption: "INFOMP", emoji: "ℹ️" },
-            { category: "FORM", name: "Lapor JKP", url: "https://docs.google.com/spreadsheets/d/13PIrWf8cNt75v-MFuPpE7uf0SDUjJz5BWrcZsTqMrmE/edit?resourcekey=&gid=38477354#gid=38477354", caption: "JKP", emoji: "📢" },
-            { category: "FORM", name: "MOR", url: "https://drive.google.com/drive/folders/11JCzhtJBjMq6H76K1Yti9PSbQ0W5La3R", caption: "MOR", emoji: "📂" },
-            { category: "FORM", name: "Absensi Blasting", url: "https://drive.google.com/drive/folders/1tWTsSyV_dCmcEEXLpF8Wa3MC3wCbb8tT?usp=sharing", caption: "BLASTING", emoji: "💥" },
-            { category: "FORM", name: "Setting Alat", url: "https://drive.google.com/drive/folders/1s1w-8K4KlzLD0jtfOyFyhAE46PpeGZYW?usp=sharing", caption: "SETTING", emoji: "⚙️" },
-            { category: "FORM", name: "Absensi WR", url: "https://docs.google.com/spreadsheets/d/1y7ktyx3LuiSxHYKdO3aurRwaWz10YwAw_8-AJq16M3w/edit?usp=sharing", caption: "ABS WR", emoji: "📋" },
-            { category: "FORM", name: "Absensi Dev Fatigue", url: "https://docs.google.com/spreadsheets/d/1kna3K22DRphAZ8zDic2bd-Pl6XwYn6Sq8uzMdRHQT-Q/edit?usp=sharing", caption: "FATIGUE", emoji: "😴" },
-            { category: "BANDARA", name: "New Bandara", url: "http://pama-kpcs:8081/Login", caption: "NEW BANDARA", emoji: "🛬" },
-            { category: "BANDARA", name: "Old Bandara", url: "http://10.2.168.90/Login", caption: "OLD BANDARA", emoji: "🛫" },
-            { category: "BANDARA", name: "Bandara Manpower", url: "http://kpcswspu403/bandaramanpower/login.aspx", caption: "MANPOWER", emoji: "🧑‍✈️" },
-            { category: "BANDARA", name: "Bandara Enhancement", url: "http://kpcswspu403:8080/bandara_enh/login", caption: "ENHANCE", emoji: "⚡" },
-            { category: "BANDARA", name: "Bandara Report", url: "http://kpcswspu403/bandaraportal", caption: "REPORT", emoji: "📑" },
-            { category: "BANDARA", name: "Bandara 24/7", url: "http://kpcswspu403/dispatch/DispSettingFleet", caption: "24/7", emoji: "🕒" },
-            { category: "BANDARA", name: "Persiapan Change Shift", url: "http://kpcssqrp402/ReportS/report/EWACS/PSV%20Darat/Test%20Code/New%20Share%20GL%20PIT%20LAIN", caption: "CHSHIFT", emoji: "🔄" },
-            { category: "BANDARA", name: "Setting Unit", url: "http://pama-kpcs:8081/ScheduleUnit", caption: "SET UNIT", emoji: "⚙️" },
-            { category: "BANDARA", name: "Setting Manpower", url: "http://pama-kpcs:8081/Schedule/ScheduleNew", caption: "SET MP", emoji: "👥" },
-            { category: "BANDARA", name: "Absen In", url: "http://kpcssqbd401/ReportServer/Pages/ReportViewer.aspx?%2fBANDARA%2fNew+Bandara%2frpt_monitoring_status_operator&rs:Command=Render", caption: "ABSEN IN", emoji: "📥" },
-            { category: "BANDARA", name: "Fatigue", url: "http://kpcssqbd401/ReportServer/Pages/ReportViewer.aspx?%2fBANDARA%2fDisplay+Report%2frpt_display_optFatigue_NEW&rs:Command=Render", caption: "FATIGUE", emoji: "💤" },
-            { category: "EWACS", name: "Ewacs", url: "http://kpcswspu403/ewacs", caption: "EWACS", emoji: "📡" },
-            { category: "EWACS", name: "Login Ewacs", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2fDashboard+Login+Opt&rs:Command=Render", caption: "LOGIN", emoji: "🔑" },
-            { category: "EWACS", name: "Login Ewacs Tidak Sesuai", url: "http://kpcssqrp402/ReportS/report/EWACSPRO/DASHBOARD/Mancal%20Gak%20Sesuai%20Setting", caption: "TIDAK SESUAI", emoji: "⚠️" },
-            { category: "EWACS", name: "Record Login Ewacs", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2fMIO%2fRealtime+10+Login+Terakhir+Share&rs:Command=Render", caption: "REC LOGIN", emoji: "📼" },
-            { category: "EWACS", name: "Resume Login", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACSPRO%2fREALTIME%2fRealtime+Record+Login+Logout+Operator&rs:Command=Render", caption: "RESUME", emoji: "📊" },
-            { category: "EWACS", name: "Timesheet Digital", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2fMIO%2f010.+DIGITAL+TIMESHEET+HISTORICAL+SHARE&rs:Command=Render", caption: "TIMESHEET", emoji: "⏲️" },
-            { category: "EWACS", name: "Report Timesheet", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f2023_01_02_Monitoring+Operator+By+TS&rs:Command=Render", caption: "REPORT TS", emoji: "📈" },
-            { category: "EWACS", name: "Cek HM Area 2", url: "http://kpctsqrs401/reports/report/EWACS_KPCT/TO%20PRODUCTION/HM%20OPERATOR%20PAMA", caption: "HM AREA2", emoji: "📏" },
-            { category: "EWACS", name: "Timesheet Area 2", url: "http://kpctsqrs401/reports/report/EWACS_KPCT/Review%20Timesheet%20%5BMerger%5D", caption: "TS AREA2", emoji: "📋" },
-            { category: "EWACS", name: "JKP 0", url: "https://docs.google.com/spreadsheets/d/1r4dRgpsb5JjxRcMINjIbqylhzBShy8OV_-_S6uSoX_I/edit?gid=0#gid=0", caption: "JKP 0", emoji: "🟢" },
-            { category: "EWACS", name: "Dashboard MIO", url: "http://kpcssqrp402/ReportS/report/EWACSPRO/REALTIME/Realtime%20Report%20Setting%20Fleet", caption: "MIO", emoji: "📉" },
-            { category: "EWACS", name: "SQL MIO", url: "http://kpcssqrp402/reports/browse/EWACS/MIO", caption: "SQL MIO", emoji: "🗄️" },
-            { category: "EWACS", name: "SQL Delay", url: "http://kpcssqrp402/ReportS/report/EWACS/Performance%20Project/Delay%20KPCS", caption: "DELAY", emoji: "⏱️" },
-            { category: "EWACS", name: "SQL CS Loader", url: "http://kpcssqrp402/reports/report/EWACSPRO/PERIODICAL/KPCS%20Periodic%20Change%20Shift%20Loader", caption: "CS LOADER", emoji: "🔄" },
-            { category: "MIFORCE", name: "New MiForce", url: "http://kpcssqrp402/ReportS/report/EWACS/KPCS/List%20Unit%20by%20PIT", caption: "NEW MIFORCE", emoji: "🆕" },
-            { category: "MIFORCE", name: "MiForce", url: "http://kpcssqrp401/ReportS/report/OCR/OCR%20Report%20Setting%20Bandara", caption: "MIFORCE", emoji: "💪" },
-            { category: "MIFORCE", name: "Set Fleet SPE", url: "http://kpctsqrs402/reports/report/EWACSPRO/DISPATCHING/KPCT%20Realtime%20Report%20Setting%20Fleet", caption: "SPE", emoji: "🚛" },
-            { category: "MIFORCE", name: "Check Bugar", url: "http://kpcssqbd401/reports/report/BANDARA/New%20Bandara/Report%20GL%20Check%20Bugar", caption: "BUGAR", emoji: "🏋️" },
-            { category: "OPA", name: "OPA DashBoard", url: "https://opa.pamapersada.com/login", caption: "OPA", emoji: "📊" },
-            { category: "OPA", name: "OPA CNC Sheet", url: "https://docs.google.com/spreadsheets/d/1bf6eXp7H93l0YlHpXSiMlPUkUVV_BeASzJF5iczecMo/edit#gid=0", caption: "CNC SHEET", emoji: "📄" },
-            { category: "OPA", name: "Upload CNC OPA", url: "https://docs.google.com/forms/d/e/1FAIpQLSd9Vx_h_d9PVEqKCK4CMgRka2PzKmhZQMFkSDSIc8UZLN6g7w/viewform", caption: "UPLOAD CNC", emoji: "☁️" },
-            { category: "OPA", name: "CCTV pembuktian", url: "http://10.168.106.250/doc/page/playback.asp", caption: "CCTV", emoji: "📹" },
-            { category: "OPA", name: "Mobile Check Fatigue", url: "http://kpcssqrp401/ReportServer/Pages/ReportViewer.aspx?%2fBANDARA%2frpt_mobile_check_fatigue&rs:Command=Render", caption: "MOBILE FATIGUE", emoji: "📱" },
-            { category: "OPA", name: "TFT Expert", url: "https://bit.ly/DASHBOARDTRAININGEXPERT", caption: "TFT", emoji: "📺" },
-            { category: "OPA", name: "Kimper Highrisk", url: "https://docs.google.com/spreadsheets/d/1e328Vf-QbdG57BCPkyiW7xdvg5JVJxR2LArwUUn9QQA/edit?pli=1#gid=0", caption: "KIMPER HR", emoji: "⚠️" },
-            { category: "MOR", name: "MOR", url: "http://morsuko.apps.pamapersada.net/Home", caption: "MOR", emoji: "📁" },
-            { category: "MOR", name: "SAP Online", url: "http://sap1pama.apps.pamapersada.net/Login", caption: "SAP ONLINE", emoji: "💻" },
-            { category: "MOR", name: "OCA Sheet", url: "https://docs.google.com/spreadsheets/d/1C-YEgCNE-IvuCh2YqB6kG54wf4g22WMgCOQh1IVzVLo/edit?resourcekey=&gid=1200264687#gid=1200264687", caption: "OCA", emoji: "📊" },
-            { category: "ID KIMPER", name: "KIMPER", url: "http://kpcswspu403:8080/SHE/login", caption: "KIMPER", emoji: "🛡️" },
-            { category: "ID KIMPER", name: "Rekonsil ID", url: "https://pamapersada-my.sharepoint.com/personal/p61060290_pamapersada_net/_layouts/15/guestaccess.aspx?share=EiCrUWYszQ5EnTepd8CrgIIB3iWjiPBtT-1W9IpFrjnUPw&e=ed6fZC", caption: "REKON ID", emoji: "🆔" },
-            { category: "ID KIMPER", name: "MCU Cahaya", url: "https://bit.ly/DATABASE-MCU-CAHAYA", caption: "MCU CAHAYA", emoji: "🩺" },
-            { category: "ID KIMPER", name: "MCU Meloy", url: "https://bit.ly/DATABASE-MCU-MELOY", caption: "MCU MELOY", emoji: "🩺" },
-            { category: "ID KIMPER", name: "MCU RSPKT", url: "https://docs.google.com/spreadsheets/d/11-r6nLOBl6OfVBsoo-7I1dSq9NH3XBz-hzhoE3OTUtE/edit?gid=1278333579#gid=1278333579", caption: "MCU RSPKT", emoji: "🏥" },
-            { category: "ID KIMPER", name: "Database Kimper HR", url: "https://docs.google.com/spreadsheets/d/1e328Vf-QbdG57BCPkyiW7xdvg5JVJxR2LArwUUn9QQA/edit#gid=0", caption: "DB KIMPER", emoji: "🗃️" },
-            { category: "IPO", name: "IPO", url: "http://iposinergi.apps.pamapersada.net/", caption: "IPO", emoji: "📈" },
-            { category: "SISTEM", name: "EMAIL", url: "https://outlook.office365.com/mail/", caption: "OUTLOOK", emoji: "📧" },
-            { category: "SISTEM", name: "FLOR", url: "http://kpcswspu403/glgradingv3/Home", caption: "FLOR", emoji: "🌸" },
-            { category: "SISTEM", name: "FL SHE Coord", url: "http://spol/login", caption: "FL SHE", emoji: "📌" },
-            { category: "SISTEM", name: "SPOL", url: "http://spol.apps.pamapersada.net/Login", caption: "SPOL", emoji: "🔧" },
-            { category: "SISTEM", name: "CDO", url: "http://jiepwspu403/APPS/culture/login", caption: "CDO", emoji: "🎯" },
-            { category: "SISTEM", name: "New Poins", url: "http://jiepwspu420/APPS/newpoins/login", caption: "NEW POINS", emoji: "💰" },
-            { category: "SISTEM", name: "SMI SME", url: "http://jiepwspu420/APPS/CPMD_SMISME/Login", caption: "SMI SME", emoji: "🏭" },
-            { category: "SISTEM", name: "Moving", url: "http://moving/Login", caption: "MOVING", emoji: "🚚" },
-            { category: "SISTEM", name: "IDP", url: "http://kpcswspu403:8080/HC/login", caption: "IDP", emoji: "📘" },
-            { category: "SISTEM", name: "Jarvis", url: "http://jarvisweb", caption: "JARVIS", emoji: "🤖" },
-            { category: "SISTEM", name: "Tablue", url: "http://satupamabi/#/signin", caption: "TABLUE", emoji: "📊" },
-            { category: "PRODTI", name: "NewPoins", url: "http://jiepwspu420/APPS/newpoins", caption: "NEWPOINS", emoji: "💰" },
-            { category: "PRODTI", name: "HelpDesk", url: "https://pamaitsm.service-now.com/escpro?id=kpmg_of_ec_dashboard", caption: "HELPDESK", emoji: "🆘" },
-            { category: "PRODTI", name: "Prodty loader hauler PerDept PerPit", url: "http://kpcssqrp402/reports/report/EWACS/1.%20Performance%20Project/PRODUCTIVITY/Productivity%20Loader%20and%20Hauler", caption: "PRODTY L/H", emoji: "📊" },
-            { category: "PRODTI", name: "Prodty loader per Hari", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f0.+Priority+Report%2f2.+Productivity+Loader&rs:Command=Render", caption: "PRODTY L", emoji: "📆" },
-            { category: "PRODTI", name: "Prodty loader per Day per shift", url: "http://kpcssqrp402/reports/report/EWACSPRO/REPORT%20DEVELOPMENT/Productivity%20Loader%20Per%20Shift%20By%20HM", caption: "PRODTY L/SHIFT", emoji: "🔄" },
-            { category: "PRODTI", name: "Prodty loader per Operator", url: "http://kpcssqrp402/ReportS/report/EWACS/KPCS/DETAIL%20LOADER%20PERFORMANCE", caption: "PRODTY L/OP", emoji: "👤" },
-            { category: "PRODTI", name: "Trend prodty hauler", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f0.+Priority+Report%2f1.+Trend+Productivity+Hauler+Per+Dept&rs:Command=Render", caption: "TREND H", emoji: "📈" },
-            { category: "PRODTI", name: "Ach.Prodty ≥231 bcm/hour.km Hauler", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f0.+Priority+Report%2f3.+Achievement+Productivity+231+bcm+hour.km+Hauler&rs:Command=Render", caption: "ACH 231", emoji: "🏆" },
-            { category: "PRODTI", name: "Prodty hauler per Operator", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f0.+Priority+Report%2f5.+Productivity+Hauler+Per+CN&rs:Command=Render", caption: "PRODTY H/OP", emoji: "🚛" },
-            { category: "PRODTI", name: "Prodty Hauler Per CN", url: "http://kpcssqrp402/reports/report/EWACS/0.%20Priority%20Report/5.%20Productivity%20Hauler%20Per%20CN", caption: "H/CN", emoji: "🚜" },
-            { category: "PRODTI", name: "Prodty Hauler CN Old", url: "http://kpcssqrp402/ReportServer/Pages/ReportViewer.aspx?%2fEWACS%2f0.+Priority+Report%2f%5bOLD%5d+5.+Productivity+Hauler+Per+CN&rs:Command=Render", caption: "H/CN OLD", emoji: "📦" },
-            { category: "SOSIAL", name: "Whatsapp", url: "https://web.whatsapp.com/", caption: "WA", emoji: "💬" },
-            { category: "SOSIAL", name: "Telegram", url: "https://web.telegram.org/k/", caption: "TG", emoji: "✈️" },
-            { category: "SOSIAL", name: "SMS", url: "https://messages.google.com/web/authentication", caption: "SMS", emoji: "📱" },
-            { category: "SOSIAL", name: "Ms.Teams", url: "https://teams.microsoft.com/_#/conversations/Umum?threadId=19:XnruFufRmxBfYe0zJ102D4vScUVimAX97HvbGG3O1LI1@thread.tacv2&ctx=channel", caption: "TEAMS", emoji: "👥" },
-            { category: "SOSIAL", name: "Info MP", url: "https://linktr.ee/infomanpower", caption: "INFO MP", emoji: "ℹ️" },
-            { category: "SOSIAL", name: "Info GLS", url: "https://linktr.ee/glspama", caption: "GLS", emoji: "📢" },
-            { category: "SOSIAL", name: "Linktree", url: "https://linktr.ee/admin", caption: "LINKTREE", emoji: "🌳" },
-            { category: "SOSIAL", name: "Form", url: "https://docs.google.com/forms/d/e/1FAIpQLSd9Vx_h_d9PVEqKCK4CMgRka2PzKmhZQMFkSDSIc8UZLN6g7w/viewform", caption: "FORM", emoji: "📋" },
-            { category: "FORMULIR", name: "FORM OBAT", url: "https://forms.gle/KacVpv2tNqwo8rEV6", caption: "OBAT", emoji: "💊" },
-            { category: "FORMULIR", name: "FORM OPA", url: "https://docs.google.com/forms/d/e/1FAIpQLSd9Vx_h_d9PVEqKCK4CMgRka2PzKmhZQMFkSDSIc8UZLN6g7w/viewform", caption: "OPA", emoji: "📝" },
-            { category: "FORMULIR", name: "SHEET OBAT", url: "https://docs.google.com/spreadsheets/d/1PT-i9QjR1EXaHy1pThNpG1SbxTFNq35fVDipaziBPNo/edit?resourcekey=&gid=503159177#gid=503159177", caption: "SHEET OBAT", emoji: "💊" },
-        ];
+function addTodo() {
+    const nrp = document.getElementById("todoNrp").value.trim();
+    const task = document.getElementById("todoTask").value.trim();
 
-        const grid = document.getElementById('linkCardGrid');
-        const searchInput = document.getElementById('searchInput');
-        const clearBtn = document.getElementById('clearSearch');
-        const resultSpan = document.getElementById('resultCount');
+    if (!nrp || !task) {
+        alert("NRP dan Catatan tidak boleh kosong!");
+        return;
+    }
 
-        // Fungsi render kartu berdasarkan data
-        function renderCards(filteredData) {
-            grid.innerHTML = '';
-            filteredData.forEach(item => {
-                const card = document.createElement('div');
-                card.className = 'nav-card';
-                // Gunakan emoji yang sudah ditentukan, fallback ke huruf pertama jika tidak ada
-                const iconEmoji = item.emoji || item.category.charAt(0);
-                card.innerHTML = `
-                    <div class="card-icon">${iconEmoji}</div>
-                    <a href="${item.url}" target="_blank" title="${item.name}">${item.name}</a>
-                    <div class="card-caption">${item.caption}</div>
-                `;
-                grid.appendChild(card);
-            });
-            resultSpan.innerText = filteredData.length + ' item';
-        }
+    const table = document.getElementById("todoList");
+    const row = table.insertRow();
 
-        // Filter function (pencarian case-insensitive di name & caption)
-        function filterCards() {
-            const keyword = searchInput.value.trim().toLowerCase();
-            if (keyword === '') {
-                renderCards(linksData);
-            } else {
-                const filtered = linksData.filter(item => 
-                    item.name.toLowerCase().includes(keyword) || 
-                    item.caption.toLowerCase().includes(keyword) ||
-                    (item.category && item.category.toLowerCase().includes(keyword))
-                );
-                renderCards(filtered);
-            }
-        }
+    row.insertCell(0).innerText = nrp;   
+    row.insertCell(1).innerText = task;  
 
-        // Inisialisasi semua kartu
-        renderCards(linksData);
+    // PERBAIKAN: Memberi teks "Edit" dan "Hapus" agar muncul di layar
+    row.insertCell(2).innerHTML = '<button onclick="editRow(this)" style="background:#f39c12; color:white; padding:5px; width:100%;">Update</button>';
+    row.insertCell(3).innerHTML = '<button onclick="this.closest(\'tr\').remove()" style="background:#e74c3c; color:white; padding:5px; width:100%;">Delete</button>';
 
-        // Event listener search
-        searchInput.addEventListener('input', filterCards);
-        clearBtn.addEventListener('click', function() {
-            searchInput.value = '';
-            renderCards(linksData);
-            searchInput.focus();
-        });
+    document.getElementById("todoNrp").value = "";
+    document.getElementById("todoTask").value = "";
+}
 
-        // RADIO HEADER CONTROLS (sama seperti sebelumnya)
-        const audioPlayer = document.getElementById('headerAudioPlayer');
-        const select = document.getElementById('headerAudioSelect');
-        const playBtn = document.getElementById('playBtnHeader');
-        const stopBtn = document.getElementById('stopBtnHeader');
-        const volumeSlider = document.getElementById('volumeSlider');
+function editRow(btn) {
+    const row = btn.closest("tr");
+    const nrpCell = row.cells[0];
+    const taskCell = row.cells[1];
 
-        playBtn.addEventListener('click', () => {
-            if (select.value) {
-                audioPlayer.src = select.value;
-                audioPlayer.volume = volumeSlider.value;
-                audioPlayer.play().catch(e => alert('Gagal memutar: ' + e));
-            } else {
-                alert('Pilih stasiun radio dahulu');
-            }
-        });
+    const newNrp = prompt("Edit NRP:", nrpCell.innerText);
+    const newTask = prompt("Edit Catatan:", taskCell.innerText);
 
-        stopBtn.addEventListener('click', () => {
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0;
-        });
+    if (newNrp !== null && newNrp !== "") nrpCell.innerText = newNrp;
+    if (newTask !== null && newTask !== "") taskCell.innerText = newTask;
+}
 
-        volumeSlider.addEventListener('input', (e) => {
-            audioPlayer.volume = e.target.value;
-        });
+function sendTodoEmail() {
+    const rows = document.getElementById("todoList").rows;
 
-    })();
+    if (rows.length === 0) {
+        alert("Tidak ada data di tabel untuk dikirim");
+        return;
+    }
+
+    const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSfQyYOK04AUBucIx4OcKtKICISzDJ1vNe4Q9DNyUCd5tnd4Zg/formResponse";
+
+    for (let i = 0; i < rows.length; i++) {
+        const nrp = rows[i].cells[0].innerText;
+        const catatan = rows[i].cells[1].innerText;
+
+        // Pastikan ID entry benar-benar sesuai dengan yang ada di Google Form Anda
+        const finalURL = `${formURL}?entry.1281773744=${encodeURIComponent(nrp)}&entry.1578703193=${encodeURIComponent(catatan)}&submit=Submit`;
+        
+        const img = new Image();
+        img.onerror = function() { console.log("Data terkirim (ignore error)"); }; // Form response bukan gambar asli, jadi akan memicu onerror tapi tetap terkirim
+        img.src = finalURL;
+    }
+
+    alert(`✅ Berhasil! ${rows.length} catatan sedang diproses ke Google Form.`);
+    document.getElementById("todoList").innerHTML = "";
+}
+// Fungsi Radio tetap sama
+var audio = document.getElementById('audioPlayer');
+var audioSelect = document.getElementById('audioSelect');
+var audioFrame = document.getElementById('audioFrame');
+
+function startRadio() {
+    var audioSrc = audioSelect.value;
+    if (!audioSrc) return;
+    audioFrame.style.display = 'block';
+    audio.src = audioSrc;
+    audio.play();
+}
 </script>
 
-<!-- tidak ada catatan / job pending -->
+<script>
+        // 1. FUNGSI TAMBAH BARIS
+        function addTodo() {
+            const nrp = document.getElementById("todoNrp").value.trim();
+            const task = document.getElementById("todoTask").value.trim();
+
+            if (!nrp || !task) {
+                alert("NRP dan Catatan tidak boleh kosong!");
+                return;
+            }
+
+            const table = document.getElementById("todoList");
+            const row = table.insertRow();
+
+            // Isi Kolom
+            row.insertCell(0).innerText = nrp;
+            row.insertCell(1).innerText = task;
+            
+            // Kolom Update (Sekarang Muncul Teksnya)
+            row.insertCell(2).innerHTML = '<button class="btn-update" onclick="editRow(this)">Update</button>';
+            
+            // Kolom Delete
+            row.insertCell(3).innerHTML = '<button class="btn-delete" onclick="this.closest(\'tr\').remove()">Delete</button>';
+
+            // Reset Input
+            document.getElementById("todoNrp").value = "";
+            document.getElementById("todoTask").value = "";
+        }
+
+        // 2. FUNGSI EDIT BARIS
+        function editRow(btn) {
+            const row = btn.closest("tr");
+            const nrpCell = row.cells[0];
+            const taskCell = row.cells[1];
+
+            const newNrp = prompt("Edit NRP:", nrpCell.innerText);
+            const newTask = prompt("Edit Catatan:", taskCell.innerText);
+
+            if (newNrp !== null && newNrp !== "") nrpCell.innerText = newNrp;
+            if (newTask !== null && newTask !== "") taskCell.innerText = newTask;
+        }
+
+        // 3. FUNGSI KIRIM DATA KE GOOGLE FORM (PASTI MASUK)
+        function sendTodoEmail() {
+            const rows = document.getElementById("todoList").rows;
+
+            if (rows.length === 0) {
+                alert("Tabel kosong! Tambahkan data dulu.");
+                return;
+            }
+
+            const formURL = "https://docs.google.com/forms/d/e/1FAIpQLSfQyYOK04AUBucIx4OcKtKICISzDJ1vNe4Q9DNyUCd5tnd4Zg/formResponse";
+
+            // Kirim per baris menggunakan metode Image Beacon (Tembus CORS)
+            for (let i = 0; i < rows.length; i++) {
+                const nrp = rows[i].cells[0].innerText;
+                const catatan = rows[i].cells[1].innerText;
+
+                // Parameter URL dengan ID Entry yang Anda berikan
+                const finalURL = `${formURL}?entry.1281773744=${encodeURIComponent(nrp)}&entry.1578703193=${encodeURIComponent(catatan)}&submit=Submit`;
+                
+                // Eksekusi pengiriman
+                const img = new Image();
+                img.src = finalURL;
+            }
+
+            alert(`✅ Berhasil! ${rows.length} data sedang dikirim ke Spreadsheet.`);
+            
+            // Bersihkan tabel setelah kirim
+            document.getElementById("todoList").innerHTML = "";
+        }
+    </script>
+
+
+
+    <!--toharison muh.abdullah 6106290-->
 </body>
 </html>
