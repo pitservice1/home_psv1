@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Spreadsheet</title>
     
-    <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     
     <style>
@@ -31,63 +29,35 @@
             -webkit-font-smoothing: antialiased;
         }
 
-        /* ===== NAVBAR BIRU ===== */
         .bg-header-dark { 
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%) !important; 
         }
         .text-header-text { color: #ecf0f1; }
         
-        /* Card & Shadow Styles */
-        .card-shadow { 
-            box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.1); 
-        }
-        .card-hover { 
-            transition: all 0.2s cubic-bezier(.25,.8,.25,1); 
-        }
+        .card-shadow { box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.1); }
+        .card-hover { transition: all 0.2s cubic-bezier(.25,.8,.25,1); }
         .card-hover:hover { 
             box-shadow: 0 6px 16px rgba(15, 23, 42, 0.1); 
             transform: translateY(-2px); 
             border-color: var(--primary-light) !important;
         }
-
-        /* Card radius tegas */
         .card { border-radius: var(--radius) !important; }
         
-        /* Image Header Styles */
-        .img-header { 
-            height: 160px;
-            position: relative; 
-            overflow: hidden; 
-            cursor: pointer; 
-            display: block;
-        }
-        .img-header img { 
-            width: 100%; 
-            height: 100%; 
-            object-fit: cover; 
-            transition: transform 0.3s ease;
-        }
+        .img-header { height: 160px; position: relative; overflow: hidden; cursor: pointer; display: block; }
+        .img-header img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
         .img-header:hover img { transform: scale(1.05); }
         
         .badge-custom { 
-            position: absolute; 
-            top: 8px; right: 8px; 
-            font-size: 9px; 
-            letter-spacing: 0.3px; 
-            z-index: 2;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-weight: 700;
+            position: absolute; top: 8px; right: 8px; 
+            font-size: 9px; letter-spacing: 0.3px; z-index: 2;
+            padding: 3px 8px; border-radius: 3px; font-weight: 700;
         }
         
-        /* Typography helpers */
         .line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
         .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
         
-        /* Iframe overlay */
         #spreadsheetSection { z-index: 1050; }
         
-        /* Custom Input Search Navbar */
         .search-input {
             background-color: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.28);
@@ -104,7 +74,6 @@
         }
         .search-input::placeholder { color: rgba(255,255,255,0.7); }
 
-        /* Tombol Home di navbar */
         .btn-home-nav {
             background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.28);
@@ -127,7 +96,6 @@
             transform: translateY(-1px);
         }
 
-        /* Breadcrumb */
         .breadcrumb-bar {
             background: #fff;
             border-bottom: 1px solid var(--border);
@@ -139,7 +107,6 @@
         .breadcrumb-bar a:hover { color: var(--primary); }
         .breadcrumb-bar .current { color: var(--primary); font-weight: 600; }
 
-        /* Card content */
         .card-title { font-size: 12px !important; }
         .card-text { font-size: 10px !important; line-height: 1.4; }
         .card-footer { padding: 8px 12px !important; font-size: 10px; }
@@ -153,13 +120,15 @@
             color: #fff;
             padding: 10px 16px;
             display: flex;
-            justify-content: space-between;
             align-items: center;
+            gap: 10px;
             box-shadow: 0 2px 8px rgba(30, 58, 138, 0.25);
         }
         .iframe-header h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin: 0; color: #fff; }
-        .iframe-header .icon { color: #fff; font-size: 15px; margin-right: 8px; }
-        .btn-iframe-tab, .btn-iframe-close {
+        .iframe-header .icon { color: #fff; font-size: 15px; }
+
+        /* Tombol Back to Home di kiri header iframe */
+        .btn-back-home {
             background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.28);
             color: #fff !important;
@@ -170,16 +139,14 @@
             display: inline-flex;
             align-items: center;
             gap: 6px;
-            text-decoration: none;
             transition: all 0.2s;
             font-family: inherit;
+            cursor: pointer;
+            flex-shrink: 0;
+            white-space: nowrap;
         }
-        .btn-iframe-tab:hover, .btn-iframe-close:hover {
-            background: rgba(255,255,255,0.28);
-        }
-        .btn-iframe-close:hover { background: rgba(239,68,68,0.5); }
+        .btn-back-home:hover { background: rgba(255,255,255,0.28); }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .img-header { height: 130px; }
             .btn-home-nav span { display: none; }
@@ -189,8 +156,8 @@
             .breadcrumb-bar { padding: 6px 12px; font-size: 10px; }
             .iframe-header { padding: 8px 12px; }
             .iframe-header h2 { font-size: 11px; }
-            .btn-iframe-tab, .btn-iframe-close { padding: 5px 9px; font-size: 10px; }
-            .btn-iframe-tab span, .btn-iframe-close span { display: none; }
+            .btn-back-home { padding: 5px 9px; font-size: 10px; }
+            .btn-back-home span { display: none; }
         }
         @media (max-width: 480px) {
             .img-header { height: 110px; }
@@ -201,17 +168,14 @@
 </head>
 <body>
 
-    <!-- Top Navigation Bar -->
     <nav class="navbar navbar-expand bg-header-dark text-header-text py-2">
         <div class="container-fluid align-items-center">
             
             <div class="d-flex align-items-center w-100 gap-2" style="max-width: 600px;">
-                <!-- Home Button -->
                 <a href="https://pitservice1.github.io/home_psv1/" class="btn-home-nav" title="Halaman Utama">
                     <i class="fa-solid fa-house"></i> <span>Home</span>
                 </a>
                 
-                <!-- Search Bar -->
                 <div class="input-group input-group-sm w-100" style="position: relative;">
                     <span class="input-group-text bg-transparent border-0 position-absolute" style="z-index: 4; color: rgba(255,255,255,0.6); height: 100%; display: flex; align-items: center; padding-left: 12px;">
                         <i class="fa-solid fa-magnifying-glass" style="font-size: 11px;"></i>
@@ -220,7 +184,6 @@
                 </div>
             </div>
 
-            <!-- Right Side User Info -->
             <div class="d-flex align-items-center ms-auto">
                 <span class="small fw-medium me-3 text-white d-none d-sm-inline" style="font-size: 11px;">Admin</span>
                 <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px; background-color: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.28);">
@@ -231,7 +194,6 @@
         </div>
     </nav>
 
-    <!-- Breadcrumb -->
     <div class="breadcrumb-bar d-flex align-items-center">
         <i class="fa-solid fa-house me-2" style="font-size: 10px; color: var(--primary);"></i>
         <a href="https://pitservice1.github.io/home_psv1/">Home</a>
@@ -239,10 +201,8 @@
         <span class="current">Dashboard Spreadsheet</span>
     </div>
 
-    <!-- Main Content Area -->
     <main class="container-fluid py-3" style="max-width: 1600px; padding-left: 12px; padding-right: 12px;">
         
-        <!-- Cards Grid -->
         <div class="row g-2">
             
             <!-- Card 1: Data SQL MIO -->
@@ -274,7 +234,7 @@
             <!-- Card 2: Equipment Dewatering 2026 -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                 <div class="card h-100 card-shadow card-hover border overflow-hidden">
-                    <a href="https://script.google.com/macros/s/AKfycbyMs2gEwJdfHC6gawXy3SE_0iEGGQGdVWxWmDQxWMHnXdHfPpZw6kbm1qhKmIbVWbg4/exec?page=PECI" target="_blank" class="img-header" style="background-color: #e8f5e9;">
+                    <a href="https://docs.google.com/spreadsheets/d/1185FuxrP9YTtDWLErXUDWtg3vu2em0xPaISGw8BHbR8/edit?gid=0#gid=0" target="_blank" class="img-header" style="background-color: #e8f5e9;">
                         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQoBd56XFD2uHaMNHH9Sk5haWadqyP_vpVfYrJ9HJkm7g&s" alt="Cover Equipment">
                         <span class="badge bg-secondary badge-custom text-uppercase">Monitoring</span>
                     </a>
@@ -282,7 +242,7 @@
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title fw-bold text-dark mb-1 line-clamp-1">Eq. Dewatering 2026</h5>
                         <p class="card-text text-secondary line-clamp-3 mb-0">
-                            Monitoring equipment dewatering tahun 2026. Data real-time dan histori.
+                            Monitoring equipment, Mapping Posisi Pump 2026. Data real-time dan histori.
                         </p>
                     </div>
                     
@@ -290,14 +250,40 @@
                         <div class="small text-secondary">
                             <i class="fa-solid fa-file-excel text-success me-1"></i> Sheets
                         </div>
-                        <a href="https://script.google.com/macros/s/AKfycbyMs2gEwJdfHC6gawXy3SE_0iEGGQGdVWxWmDQxWMHnXdHfPpZw6kbm1qhKmIbVWbg4/exec?page=PECI" target="_blank" class="text-decoration-none small fw-bold">
+                        <a href="https://docs.google.com/spreadsheets/d/1185FuxrP9YTtDWLErXUDWtg3vu2em0xPaISGw8BHbR8/edit?gid=0#gid=0" target="_blank" class="text-decoration-none small fw-bold">
                             Buka <i class="fa-solid fa-arrow-right ms-1"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 3: Dashboard Pump Performance (Iframe) -->
+            <!-- Card 3: Dashboard PECI -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <div class="card h-100 card-shadow card-hover border overflow-hidden">
+                    <div onclick="openSpreadsheet('https://script.google.com/macros/s/AKfycbyMs2gEwJdfHC6gawXy3SE_0iEGGQGdVWxWmDQxWMHnXdHfPpZw6kbm1qhKmIbVWbg4/exec?page=PECI', 'Dashboard PECI')" class="img-header" style="background-color: #e8f5e9;">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR92TKRHXmCPIzinn8j2nm9aeHljJAC7rzUYwrhAilGYQ&s=10" alt="Cover PECI">
+                        <span class="badge bg-secondary badge-custom text-uppercase">Monitoring</span>
+                    </div>
+                    
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold text-dark mb-1 line-clamp-1">Dashboard PECI</h5>
+                        <p class="card-text text-secondary line-clamp-3 mb-0">
+                            Monitoring Pump (PECI)
+                        </p>
+                    </div>
+                    
+                    <div class="card-footer bg-light border-top d-flex justify-content-between align-items-center mt-auto">
+                        <div class="small text-secondary">
+                            <i class="fa-brands fa-google text-primary me-1"></i> Web App
+                        </div>
+                        <button onclick="openSpreadsheet('https://script.google.com/macros/s/AKfycbyMs2gEwJdfHC6gawXy3SE_0iEGGQGdVWxWmDQxWMHnXdHfPpZw6kbm1qhKmIbVWbg4/exec?page=PECI', 'Dashboard PECI')" class="btn btn-link text-decoration-none p-0 m-0 small fw-bold">
+                            Buka <i class="fa-solid fa-arrow-right ms-1"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Dashboard Pump Performance -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                 <div class="card h-100 card-shadow card-hover border overflow-hidden">
                     <div onclick="openSpreadsheet('https://script.google.com/macros/s/AKfycbyMs2gEwJdfHC6gawXy3SE_0iEGGQGdVWxWmDQxWMHnXdHfPpZw6kbm1qhKmIbVWbg4/exec?page=index', 'Dashboard Pump Performance Dewatering 2026')" class="img-header" style="background-color: #f3e5f5;">
@@ -306,7 +292,7 @@
                     </div>
                     
                     <div class="card-body d-flex flex-column">
-                        <h5 class="card-title fw-bold text-dark mb-1 line-clamp-1">Pump Performance</h5>
+                        <h5 class="card-title fw-bold text-dark mb-1 line-clamp-1"> Dashboard Pump Performance</h5>
                         <p class="card-text text-secondary line-clamp-3 mb-0">
                             Visualisasi interaktif performa pompa dewatering (Web App).
                         </p>
@@ -323,7 +309,7 @@
                 </div>
             </div>
 
-            <!-- Card 4: Report MD -->
+            <!-- Card 5: Report MD -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                 <div class="card h-100 card-shadow card-hover border overflow-hidden">
                     <div onclick="openSpreadsheet('https://docs.google.com/spreadsheets/d/1185FuxrP9YTtDWLErXUDWtg3vu2em0xPaISGw8BHbR8/edit?gid=1520875421#gid=1520875421', 'Report MD')" class="img-header" style="background-color: #e3f2fd;">
@@ -349,7 +335,7 @@
                 </div>
             </div>
 
-            <!-- Card 5: MENU BARU -->
+            <!-- Card 6: HM SUBCONT & REPORT MD -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                 <div class="card h-100 card-shadow card-hover border overflow-hidden">
                     <div onclick="openSpreadsheet('https://docs.google.com/spreadsheets/d/1185FuxrP9YTtDWLErXUDWtg3vu2em0xPaISGw8BHbR8/edit?gid=1134486434#gid=1134486434', 'HM SUBCONT')" class="img-header" style="background-color: #fff8e1;">
@@ -372,7 +358,6 @@
                             Buka <i class="fa-solid fa-arrow-right ms-1"></i>
                         </button>
                     </div>
-
                 </div>
             </div>
 
@@ -381,23 +366,15 @@
 
     <!-- IFRAME SECTION -->
     <div id="spreadsheetSection" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-light flex-column">
-        <!-- Iframe Header -->
         <div class="iframe-header">
-            <div class="d-flex align-items-center">
-                <i class="fa-solid fa-chart-pie icon"></i>
-                <h2 id="iframeTitle">Judul Dashboard</h2>
-            </div>
-            <div class="d-flex gap-2">
-                <a id="iframeNewTabBtn" href="#" target="_blank" class="btn-iframe-tab" title="Buka di Tab Baru">
-                    <i class="fa-solid fa-arrow-up-right-from-square"></i> <span>Tab Baru</span>
-                </a>
-                <button onclick="closeSpreadsheet()" class="btn-iframe-close">
-                    <i class="fa-solid fa-xmark"></i> <span>Tutup</span>
-                </button>
-            </div>
+            <!-- Hanya tombol Back di kiri -->
+            <button class="btn-back-home" onclick="closeSpreadsheet()" title="Kembali ke Dashboard">
+                <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+            </button>
+            <i class="fa-solid fa-chart-pie icon"></i>
+            <h2 id="iframeTitle">Judul Dashboard</h2>
         </div>
         
-        <!-- The actual Iframe -->
         <div class="flex-grow-1 w-100 bg-white position-relative">
             <div id="iframeLoader" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-white" style="z-index: 9;">
                 <span class="text-secondary d-flex align-items-center" style="font-size: 12px;">
@@ -408,17 +385,14 @@
         </div>
     </div>
 
-    <!-- Script JS tetap (tidak diubah) -->
     <script>
         function openSpreadsheet(url, title) {
             const iframeSection = document.getElementById('spreadsheetSection');
             const dataIframe = document.getElementById('dataIframe');
             const loader = document.getElementById('iframeLoader');
             const titleElement = document.getElementById('iframeTitle');
-            const newTabBtn = document.getElementById('iframeNewTabBtn');
             
             titleElement.textContent = title;
-            newTabBtn.href = url;
 
             iframeSection.classList.remove('d-none');
             iframeSection.classList.add('d-flex');
@@ -442,7 +416,6 @@
         }
     </script>
     
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
