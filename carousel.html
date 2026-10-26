@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Carousel Manager - Upload & Manage</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: #f0f4f8;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ===== HEADER ===== */
+        .header {
+            background: linear-gradient(135deg, #1a365d, #2b6cb0);
+            color: white;
+            padding: 24px 30px;
+            border-radius: 16px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            box-shadow: 0 4px 20px rgba(26, 54, 93, 0.3);
+        }
+
+        .header h1 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .header h1 i {
+            font-size: 1.8rem;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn:active {
+            transform: scale(0.96);
+        }
+
+        .btn-primary {
+            background: white;
+            color: #1a365d;
+        }
+
+        .btn-primary:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-success {
+            background: #38a169;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #2f855a;
+        }
+
+        .btn-danger {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #c53030;
+        }
+
+        .btn-warning {
+            background: #dd6b20;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #c05621;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: white;
+        }
+
+        .btn-sm {
+            padding: 6px 14px;
+            font-size: 0.75rem;
+            border-radius: 8px;
+        }
+
+        /* ===== CAROUSEL PREVIEW ===== */
+        .carousel-preview {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            margin-bottom: 24px;
+            position: relative;
+            height: 400px;
+        }
+
+        .carousel-slides {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .carousel-slide {
+            width: 100%;
+            height: 100%;
+            display: none;
+            position: relative;
+            background: #1a202c;
+        }
+
+        .carousel-slide.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.98); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #1a202c;
+        }
+
+        .carousel-slide .slide-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+        }
+
+        .carousel-slide .slide-overlay h3 {
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .carousel-slide .slide-overlay p {
+            font-size: 0.8rem;
+            opacity: 0.8;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .carousel-dot.active {
+            background: white;
+            transform: scale(1.2);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-arrow:hover {
+            background: rgba(0, 0, 0, 0.7);
+            transform: translateY(-50%) scale(1.05);
+        }
+
+        .carousel-arrow.prev {
+            left: 16px;
+        }
+
+        .carousel-arrow.next {
+            right: 16px;
+        }
+
+        .carousel-empty {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            color: #a0aec0;
+            background: #f7fafc;
+        }
+
+        .carousel-empty i {
+            font-size: 4rem;
+            margin-bottom: 12px;
+        }
+
+        .carousel-empty h3 {
+            font-size: 1.2rem;
+            color: #4a5568;
+        }
+
+        .carousel-empty p {
+            font-size: 0.9rem;
+            color: #a0aec0;
+        }
+
+        /* ===== GALLERY GRID ===== */
+        .gallery-section {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+        }
+
+        .gallery-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .gallery-header h2 {
+            font-size: 1.2rem;
+            color: #1a202c;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .gallery-header .count {
+            background: #e2e8f0;
+            padding: 2px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: #4a5568;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            aspect-ratio: 16/9;
+            background: #edf2f7;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .gallery-item .item-actions {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            display: flex;
+            gap: 4px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover .item-actions {
+            opacity: 1;
+        }
+
+        .gallery-item .item-actions .btn {
+            padding: 6px 10px;
+            font-size: 0.7rem;
+            border-radius: 6px;
+        }
+
+        .gallery-item .item-label {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 8px 12px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            color: white;
+            font-size: 0.75rem;
+            font-weight: 500;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* ===== MODAL UPLOAD ===== */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 32px;
+            max-width: 500px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: modalSlideUp 0.3s ease;
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-content h2 {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            color: #1a202c;
+        }
+
+        .modal-content .subtitle {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-bottom: 20px;
+        }
+
+        .modal-content .upload-area {
+            border: 2px dashed #e2e8f0;
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 16px;
+        }
+
+        .modal-content .upload-area:hover {
+            border-color: #2b6cb0;
+            background: #f7fafc;
+        }
+
+        .modal-content .upload-area i {
+            font-size: 3rem;
+            color: #a0aec0;
+            margin-bottom: 8px;
+        }
+
+        .modal-content .upload-area p {
+            color: #718096;
+            font-size: 0.9rem;
+        }
+
+        .modal-content .upload-area .hint {
+            font-size: 0.75rem;
+            color: #a0aec0;
+        }
+
+        .modal-content .upload-preview {
+            margin-top: 16px;
+            border-radius: 12px;
+            overflow: hidden;
+            display: none;
+        }
+
+        .modal-content .upload-preview img {
+            width: 100%;
+            max-height: 300px;
+            object-fit: contain;
+            background: #edf2f7;
+        }
+
+        .modal-content .file-input {
+            display: none;
+        }
+
+        .modal-content .modal-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .modal-content .modal-actions .btn {
+            flex: 1;
+            justify-content: center;
+            min-width: 100px;
+        }
+
+        /* ===== LOADING ===== */
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #e2e8f0;
+            border-top-color: #2b6cb0;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== TOAST NOTIFICATION ===== */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            padding: 16px 24px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 500;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            z-index: 9999;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.4s ease;
+            max-width: 400px;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: #38a169;
+        }
+
+        .toast.error {
+            background: #e53e3e;
+        }
+
+        .toast.info {
+            background: #2b6cb0;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            
+            .header {
+                padding: 16px 20px;
+                flex-direction: column;
+                align-items: stretch;
+                text-align: center;
+            }
+
+            .header h1 { font-size: 1.2rem; justify-content: center; }
+            .header-actions { justify-content: center; }
+
+            .carousel-preview { height: 280px; }
+
+            .carousel-arrow {
+                width: 32px;
+                height: 32px;
+                font-size: 0.8rem;
+            }
+
+            .carousel-arrow.prev { left: 8px; }
+            .carousel-arrow.next { right: 8px; }
+
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 12px;
+            }
+
+            .modal-content {
+                padding: 24px;
+                margin: 12px;
+            }
+
+            .modal-content .upload-area {
+                padding: 24px 16px;
+            }
+
+            .toast {
+                bottom: 16px;
+                right: 16px;
+                left: 16px;
+                max-width: 100%;
+                padding: 14px 18px;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .carousel-preview { height: 200px; }
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                gap: 8px;
+            }
+            .gallery-section { padding: 16px; }
+            .header h1 { font-size: 1rem; }
+            .btn { padding: 8px 14px; font-size: 0.8rem; }
+        }
+
+        /* ===== CUSTOM CONFIRM MODAL ANIMATION ===== */
+        @keyframes modalFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes modalSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- ===== HEADER ===== -->
+        <div class="header">
+            <h1>
+                <i class="fas fa-images"></i>
+                Carousel Manager
+            </h1>
+            <div class="header-actions">
+                <button class="btn btn-primary" onclick="openUploadModal('file')">
+                    <i class="fas fa-upload"></i> Upload
+                </button>
+                <button class="btn btn-success" onclick="openUploadModal('camera')">
+                    <i class="fas fa-camera"></i> Kamera
+                </button>
+                <button class="btn btn-outline" onclick="refreshGallery()">
+                    <i class="fas fa-sync-alt"></i> Refresh
+                </button>
+            </div>
+        </div>
+
+        <!-- ===== CAROUSEL PREVIEW ===== -->
+        <div class="carousel-preview" id="carouselPreview">
+            <div class="carousel-slides" id="carouselSlides">
+                <div class="carousel-empty" id="carouselEmpty">
+                    <i class="fas fa-image"></i>
+                    <h3>Belum ada gambar</h3>
+                    <p>Upload gambar pertama Anda</p>
+                </div>
+            </div>
+            <button class="carousel-arrow prev" onclick="changeSlide(-1)" style="display:none;" id="prevBtn">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <button class="carousel-arrow next" onclick="changeSlide(1)" style="display:none;" id="nextBtn">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            <div class="carousel-nav" id="carouselNav"></div>
+        </div>
+
+        <!-- ===== GALLERY SECTION ===== -->
+        <div class="gallery-section">
+            <div class="gallery-header">
+                <h2>
+                    <i class="fas fa-th"></i>
+                    Galeri Gambar
+                    <span class="count" id="imageCount">0 gambar</span>
+                </h2>
+                <div style="display:flex; gap:8px; flex-wrap:wrap;">
+                    <button class="btn btn-sm btn-danger" onclick="window.deleteAllImages()">
+                        <i class="fas fa-trash-alt"></i> Hapus Semua
+                    </button>
+                </div>
+            </div>
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery items akan di-render oleh JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== MODAL UPLOAD ===== -->
+    <div class="modal-overlay" id="uploadModal">
+        <div class="modal-content">
+            <h2 id="modalTitle">Upload Gambar</h2>
+            <p class="subtitle" id="modalSubtitle">Pilih gambar dari perangkat atau kamera</p>
+
+            <div class="upload-area" id="uploadArea" onclick="document.getElementById('fileInput').click()">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Klik untuk pilih gambar</p>
+                <span class="hint">Format: JPG, PNG, GIF, WEBP</span>
+            </div>
+
+            <input type="file" class="file-input" id="fileInput" accept="image/*" capture="environment" multiple>
+
+            <div class="upload-preview" id="uploadPreview">
+                <img id="previewImage" src="" alt="Preview">
+            </div>
+
+            <div id="uploadProgress" style="display:none; margin-top:12px;">
+                <div style="background:#e2e8f0; border-radius:20px; height:8px; overflow:hidden;">
+                    <div id="progressBar" style="width:0%; height:100%; background:#2b6cb0; transition:width 0.3s;"></div>
+                </div>
+                <p style="font-size:0.8rem; color:#718096; margin-top:4px;" id="progressText">Mengupload...</p>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-primary" id="uploadBtn" onclick="uploadSelectedFiles()" disabled>
+                    <i class="fas fa-upload"></i> Upload
+                </button>
+                <button class="btn btn-secondary" style="background:#e2e8f0; color:#4a5568;" onclick="closeUploadModal()">
+                    Batal
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== TOAST NOTIFICATION ===== -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // ============================================================
+        // KONFIGURASI
+        // ============================================================
+        const API_URL = 'https://script.google.com/macros/s/AKfycbz7jP9WxeJOmmgYZmsAakAY6cVLMpOC1ON8rmA3ctLyRN9kuoo0L719eI_EGDbJtOPH/exec';
+
+        let carouselData = [];
+        let currentSlideIndex = 0;
+        let slideInterval = null;
+        let selectedFiles = [];
+
+        // ============================================================
+        // LOAD DATA DARI API
+        // ============================================================
+        async function loadCarouselData() {
+            try {
+                showToast('🔄 Memuat data...', 'info');
+                const response = await fetch(API_URL);
+                
+                if (!response.ok) {
+                    throw new Error('Gagal memuat data: ' + response.status);
+                }
+                
+                const data = await response.json();
+
+                if (data.success && data.images && data.images.length > 0) {
+                    carouselData = data.images;
+                    renderCarousel();
+                    renderGallery();
+                    showToast(`✅ ${carouselData.length} gambar dimuat`, 'success');
+                } else {
+                    carouselData = [];
+                    renderCarousel();
+                    renderGallery();
+                    showToast('ℹ️ Belum ada gambar di galeri', 'info');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showToast('❌ Gagal memuat data: ' + error.message, 'error');
+                
+                // Coba pakai data lokal jika ada
+                const localData = localStorage.getItem('carouselData');
+                if (localData) {
+                    try {
+                        carouselData = JSON.parse(localData);
+                        renderCarousel();
+                        renderGallery();
+                        showToast('📦 Menggunakan data lokal (offline)', 'info');
+                    } catch(e) {}
+                }
+            }
+        }
+
+        // ============================================================
+        // RENDER CAROUSEL - DENGAN TOMBOL DELETE DI SLIDE
+        // ============================================================
+        function renderCarousel() {
+            const container = document.getElementById('carouselSlides');
+            const nav = document.getElementById('carouselNav');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+
+            // Hapus semua slide
+            container.innerHTML = '';
+            nav.innerHTML = '';
+
+            if (carouselData.length === 0) {
+                container.innerHTML = `
+                    <div class="carousel-empty" id="carouselEmpty">
+                        <i class="fas fa-image"></i>
+                        <h3>Belum ada gambar</h3>
+                        <p>Upload gambar pertama Anda</p>
+                    </div>
+                `;
+                prevBtn.style.display = 'none';
+                nextBtn.style.display = 'none';
+                return;
+            }
+
+            prevBtn.style.display = 'flex';
+            nextBtn.style.display = 'flex';
+
+            carouselData.forEach((item, index) => {
+                const slide = document.createElement('div');
+                slide.className = `carousel-slide ${index === 0 ? 'active' : ''}`;
+                slide.innerHTML = `
+                    <img src="${item.fullUrl || item.url}" alt="${item.title || 'Slide ' + (index + 1)}" loading="lazy">
+                    <div class="slide-overlay">
+                        <div style="display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <h3>${item.title || 'Slide ' + (index + 1)}</h3>
+                                <p>${new Date(item.lastUpdated).toLocaleDateString('id-ID')}</p>
+                            </div>
+                            <button class="btn btn-danger btn-sm" onclick="window.deleteImage('${item.id}', ${index})" 
+                                    style="background:rgba(229,62,62,0.9); color:white; border:none; padding:4px 12px; border-radius:6px; cursor:pointer;">
+                                <i class="fas fa-trash-alt"></i> Hapus
+                            </button>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(slide);
+
+                // Dot
+                const dot = document.createElement('div');
+                dot.className = `carousel-dot ${index === 0 ? 'active' : ''}`;
+                dot.onclick = () => goToSlide(index);
+                nav.appendChild(dot);
+            });
+
+            currentSlideIndex = 0;
+            startAutoSlide();
+        }
+
+        // ============================================================
+        // CAROUSEL NAVIGATION
+        // ============================================================
+        function goToSlide(index) {
+            const slides = document.querySelectorAll('.carousel-slide');
+            const dots = document.querySelectorAll('.carousel-dot');
+
+            if (slides.length === 0) return;
+
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+
+            currentSlideIndex = index;
+        }
+
+        function changeSlide(direction) {
+            const total = carouselData.length;
+            if (total === 0) return;
+
+            let newIndex = currentSlideIndex + direction;
+            if (newIndex < 0) newIndex = total - 1;
+            if (newIndex >= total) newIndex = 0;
+
+            goToSlide(newIndex);
+            resetAutoSlide();
+        }
+
+        function startAutoSlide() {
+            if (slideInterval) clearInterval(slideInterval);
+            if (carouselData.length > 1) {
+                slideInterval = setInterval(() => {
+                    changeSlide(1);
+                }, 4000);
+            }
+        }
+
+        function resetAutoSlide() {
+            if (slideInterval) {
+                clearInterval(slideInterval);
+                startAutoSlide();
+            }
+        }
+
+        // ============================================================
+        // RENDER GALLERY
+        // ============================================================
+        function renderGallery() {
+            const grid = document.getElementById('galleryGrid');
+            const count = document.getElementById('imageCount');
+
+            if (carouselData.length === 0) {
+                grid.innerHTML = `
+                    <div style="grid-column:1/-1; text-align:center; padding:40px; color:#a0aec0;">
+                        <i class="fas fa-images" style="font-size:3rem; display:block; margin-bottom:12px;"></i>
+                        <p>Belum ada gambar. Upload gambar pertama Anda!</p>
+                    </div>
+                `;
+                count.textContent = '0 gambar';
+                return;
+            }
+
+            grid.innerHTML = carouselData.map((item, index) => `
+                <div class="gallery-item">
+                    <img src="${item.url}" alt="${item.title || 'Image ' + (index + 1)}" loading="lazy">
+                    <div class="item-label">${item.title || 'Image ' + (index + 1)}</div>
+                    <div class="item-actions">
+                        <button class="btn btn-danger btn-sm" onclick="window.deleteImage('${item.id}', ${index})" title="Hapus">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                        <button class="btn btn-primary btn-sm" onclick="window.copyImageUrl('${item.fullUrl || item.url}')" title="Copy URL">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            count.textContent = carouselData.length + ' gambar';
+        }
+
+        // ============================================================
+        // UPLOAD FUNCTION
+        // ============================================================
+        function openUploadModal(type) {
+            const modal = document.getElementById('uploadModal');
+            const title = document.getElementById('modalTitle');
+            const subtitle = document.getElementById('modalSubtitle');
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.getElementById('uploadArea');
+            const preview = document.getElementById('uploadPreview');
+            const previewImg = document.getElementById('previewImage');
+            const uploadBtn = document.getElementById('uploadBtn');
+
+            // Reset
+            selectedFiles = [];
+            preview.style.display = 'none';
+            previewImg.src = '';
+            uploadBtn.disabled = true;
+            document.getElementById('uploadProgress').style.display = 'none';
+            document.getElementById('progressBar').style.width = '0%';
+            fileInput.value = '';
+
+            if (type === 'camera') {
+                title.textContent = '📸 Ambil Gambar dari Kamera';
+                subtitle.textContent = 'Gunakan kamera perangkat untuk mengambil gambar';
+                fileInput.setAttribute('capture', 'environment');
+                uploadArea.innerHTML = `
+                    <i class="fas fa-camera"></i>
+                    <p>Klik untuk buka kamera</p>
+                    <span class="hint">Ambil gambar langsung dari kamera</span>
+                `;
+            } else {
+                title.textContent = '📁 Upload Gambar';
+                subtitle.textContent = 'Pilih gambar dari perangkat Anda';
+                fileInput.removeAttribute('capture');
+                uploadArea.innerHTML = `
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Klik untuk pilih gambar</p>
+                    <span class="hint">Format: JPG, PNG, GIF, WEBP</span>
+                `;
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeUploadModal() {
+            document.getElementById('uploadModal').classList.remove('active');
+            document.body.style.overflow = '';
+            document.getElementById('fileInput').value = '';
+        }
+
+        // ============================================================
+        // HANDLE FILE SELECTION
+        // ============================================================
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const files = e.target.files;
+            if (files.length === 0) return;
+
+            selectedFiles = Array.from(files);
+            const preview = document.getElementById('uploadPreview');
+            const previewImg = document.getElementById('previewImage');
+            const uploadBtn = document.getElementById('uploadBtn');
+
+            // Tampilkan preview file pertama
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                previewImg.src = event.target.result;
+                preview.style.display = 'block';
+                uploadBtn.disabled = false;
+            };
+            reader.readAsDataURL(selectedFiles[0]);
+
+            // Update info jumlah file
+            const uploadArea = document.getElementById('uploadArea');
+            if (selectedFiles.length > 1) {
+                uploadArea.innerHTML = `
+                    <i class="fas fa-check-circle" style="color:#38a169;"></i>
+                    <p>${selectedFiles.length} file dipilih</p>
+                    <span class="hint">Klik lagi untuk tambah file</span>
+                `;
+            } else {
+                uploadArea.innerHTML = `
+                    <i class="fas fa-check-circle" style="color:#38a169;"></i>
+                    <p>${selectedFiles[0].name}</p>
+                    <span class="hint">${(selectedFiles[0].size / 1024).toFixed(1)} KB</span>
+                `;
+            }
+        });
+
+        // ============================================================
+        // UPLOAD EXECUTION
+        // ============================================================
+        async function uploadSelectedFiles() {
+            if (selectedFiles.length === 0) {
+                showToast('Pilih gambar terlebih dahulu', 'error');
+                return;
+            }
+
+            const uploadBtn = document.getElementById('uploadBtn');
+            const progressDiv = document.getElementById('uploadProgress');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+
+            uploadBtn.disabled = true;
+            progressDiv.style.display = 'block';
+
+            let successCount = 0;
+            let failCount = 0;
+
+            for (let i = 0; i < selectedFiles.length; i++) {
+                const file = selectedFiles[i];
+                const progress = ((i + 1) / selectedFiles.length) * 100;
+                progressBar.style.width = progress + '%';
+                progressText.textContent = `Mengupload ${i + 1} dari ${selectedFiles.length}...`;
+
+                try {
+                    const base64 = await fileToBase64(file);
+                    const fileName = file.name.replace(/\.[^/.]+$/, '') + '_' + Date.now();
+
+                    await fetch(API_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'upload',
+                            imageData: base64.split(',')[1],
+                            fileName: fileName + '.' + file.name.split('.').pop()
+                        })
+                    });
+
+                    successCount++;
+                    console.log(`✅ Uploaded: ${file.name}`);
+
+                } catch (error) {
+                    console.error('Upload error:', error);
+                    failCount++;
+                }
+            }
+
+            progressBar.style.width = '100%';
+            progressText.textContent = `✅ Selesai! ${successCount} berhasil, ${failCount} gagal`;
+
+            setTimeout(() => {
+                progressDiv.style.display = 'none';
+                progressBar.style.width = '0%';
+            }, 2000);
+
+            uploadBtn.disabled = false;
+
+            if (successCount > 0) {
+                showToast(`✅ ${successCount} gambar berhasil diupload!`, 'success');
+                closeUploadModal();
+                setTimeout(() => loadCarouselData(), 1500);
+            } else {
+                showToast('❌ Gagal upload semua gambar', 'error');
+            }
+        }
+
+        // ============================================================
+        // 🔥 DELETE IMAGE - DENGAN CUSTOM CONFIRM MODAL
+        // ============================================================
+        window.deleteImage = function(fileId, index) {
+            console.log('🗑️ Menghapus gambar:', fileId, 'index:', index);
+            showDeleteConfirm(fileId, index);
+        };
+
+        // ============================================================
+        // CUSTOM CONFIRM MODAL (TANPA confirm() ASLI)
+        // ============================================================
+        function showDeleteConfirm(fileId, index) {
+            // Cek apakah sudah ada overlay, jika ya hapus dulu
+            const existingOverlay = document.getElementById('deleteConfirmOverlay');
+            if (existingOverlay) existingOverlay.remove();
+
+            const overlay = document.createElement('div');
+            overlay.id = 'deleteConfirmOverlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.6);
+                backdrop-filter: blur(4px);
+                z-index: 99999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: modalFadeIn 0.2s ease;
+            `;
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                background: white;
+                border-radius: 16px;
+                padding: 32px 28px;
+                max-width: 420px;
+                width: 90%;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                text-align: center;
+                animation: modalSlideUp 0.3s ease;
+            `;
+            
+            modal.innerHTML = `
+                <div style="font-size: 3rem; margin-bottom: 12px;">🗑️</div>
+                <h3 style="font-size: 1.2rem; color: #1a202c; margin-bottom: 8px;">Hapus Gambar?</h3>
+                <p style="font-size: 0.95rem; color: #718096; margin-bottom: 20px;">Gambar akan dihapus permanen dari galeri.</p>
+                <div style="display: flex; gap: 12px; justify-content: center;">
+                    <button id="confirmDeleteBtn" style="
+                        padding: 10px 32px;
+                        background: #e53e3e;
+                        color: white;
+                        border: none;
+                        border-radius: 10px;
+                        font-weight: 600;
+                        font-size: 0.95rem;
+                        cursor: pointer;
+                        transition: all 0.2s;
+                    ">Ya, Hapus</button>
+                    <button id="cancelDeleteBtn" style="
+                        padding: 10px 32px;
+                        background: #e2e8f0;
+                        color: #4a5568;
+                        border: none;
+                        border-radius: 10px;
+                        font-weight: 600;
+                        font-size: 0.95rem;
+                        cursor: pointer;
+                        transition: all 0.2s;
+                    ">Batal</button>
+                </div>
+            `;
+            
+            overlay.appendChild(modal);
+            document.body.appendChild(overlay);
+            
+            // Event listener untuk tombol
+            document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+                overlay.remove();
+                executeDelete(fileId, index);
+            });
+            
+            document.getElementById('cancelDeleteBtn').addEventListener('click', function() {
+                overlay.remove();
+            });
+            
+            // Klik di luar modal untuk batal
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    overlay.remove();
+                }
+            });
+        }
+
+        // ============================================================
+        // EKSEKUSI DELETE SETELAH KONFIRMASI
+        // ============================================================
+        async function executeDelete(fileId, index) {
+            showToast('🗑️ Menghapus gambar...', 'info');
+
+            try {
+                await fetch(API_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        action: 'delete',
+                        fileId: fileId
+                    })
+                });
+
+                // Hapus dari data lokal
+                carouselData.splice(index, 1);
+                localStorage.setItem('carouselData', JSON.stringify(carouselData));
+                
+                renderCarousel();
+                renderGallery();
+                
+                showToast('🗑️ Gambar berhasil dihapus!', 'success');
+                
+            } catch (error) {
+                console.error('Delete error:', error);
+                showToast('❌ Gagal hapus gambar: ' + error.message, 'error');
+            }
+        }
+
+        // ============================================================
+        // 🔥 COPY IMAGE URL - DIFINISIKAN DI GLOBAL SCOPE
+        // ============================================================
+        window.copyImageUrl = function(url) {
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(url).then(() => {
+                    showToast('📋 URL disalin!', 'success');
+                }).catch(() => {
+                    fallbackCopy(url);
+                });
+            } else {
+                fallbackCopy(url);
+            }
+        };
+
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            textarea.style.position = 'fixed';
+            textarea.style.opacity = '0';
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast('📋 URL disalin!', 'success');
+            } catch (e) {
+                showToast('❌ Gagal copy URL', 'error');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        // ============================================================
+        // DELETE ALL IMAGES - DENGAN CUSTOM CONFIRM
+        // ============================================================
+        window.deleteAllImages = function() {
+            if (carouselData.length === 0) {
+                showToast('Tidak ada gambar untuk dihapus', 'info');
+                return;
+            }
+            showDeleteAllConfirm();
+        };
+
+        function showDeleteAllConfirm() {
+            // Cek apakah sudah ada overlay, jika ya hapus dulu
+            const existingOverlay = document.getElementById('deleteConfirmOverlay');
+            if (existingOverlay) existingOverlay.remove();
+
+            const overlay = document.createElement('div');
+            overlay.id = 'deleteConfirmOverlay';
+            overlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0,0,0,0.6);
+                backdrop-filter: blur(4px);
+                z-index: 99999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                animation: modalFadeIn 0.2s ease;
+            `;
+            
+            const modal = document.createElement('div');
+            modal.style.cssText = `
+                background: white;
+                border-radius: 16px;
+                padding: 32px 28px;
+                max-width: 420px;
+                width: 90%;
+                box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+                text-align: center;
+                animation: modalSlideUp 0.3s ease;
+            `;
+            
+            modal.innerHTML = `
+                <div style="font-size: 3rem; margin-bottom: 12px;">⚠️</div>
+                <h3 style="font-size: 1.2rem; color: #1a202c; margin-bottom: 8px;">Hapus Semua Gambar?</h3>
+                <p style="font-size: 0.95rem; color: #718096; margin-bottom: 8px;">Akan menghapus <strong>${carouselData.length}</strong> gambar secara permanen.</p>
+                <p style="font-size: 0.85rem; color: #e53e3e; margin-bottom: 20px;">⚠️ Tindakan ini tidak bisa dibatalkan!</p>
+                <div style="display: flex; gap: 12px; justify-content: center;">
+                    <button id="confirmDeleteAllBtn" style="
+                        padding: 10px 32px;
+                        background: #e53e3e;
+                        color: white;
+                        border: none;
+                        border-radius: 10px;
+                        font-weight: 600;
+                        font-size: 0.95rem;
+                        cursor: pointer;
+                        transition: all 0.2s;
+                    ">Ya, Hapus Semua</button>
+                    <button id="cancelDeleteAllBtn" style="
+                        padding: 10px 32px;
+                        background: #e2e8f0;
+                        color: #4a5568;
+                        border: none;
+                        border-radius: 10px;
+                        font-weight: 600;
+                        font-size: 0.95rem;
+                        cursor: pointer;
+                        transition: all 0.2s;
+                    ">Batal</button>
+                </div>
+            `;
+            
+            overlay.appendChild(modal);
+            document.body.appendChild(overlay);
+            
+            document.getElementById('confirmDeleteAllBtn').addEventListener('click', function() {
+                overlay.remove();
+                executeDeleteAll();
+            });
+            
+            document.getElementById('cancelDeleteAllBtn').addEventListener('click', function() {
+                overlay.remove();
+            });
+            
+            overlay.addEventListener('click', function(e) {
+                if (e.target === overlay) {
+                    overlay.remove();
+                }
+            });
+        }
+
+        async function executeDeleteAll() {
+            showToast('🗑️ Menghapus semua gambar...', 'info');
+
+            let successCount = 0;
+            for (const item of carouselData) {
+                try {
+                    await fetch(API_URL, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            action: 'delete',
+                            fileId: item.id
+                        })
+                    });
+                    successCount++;
+                } catch (e) {
+                    console.error('Delete error:', e);
+                }
+            }
+
+            carouselData = [];
+            localStorage.setItem('carouselData', JSON.stringify(carouselData));
+            
+            renderCarousel();
+            renderGallery();
+            
+            showToast(`✅ ${successCount} gambar dihapus`, 'success');
+            setTimeout(() => loadCarouselData(), 500);
+        }
+
+        // ============================================================
+        // UTILITY FUNCTIONS
+        // ============================================================
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function refreshGallery() {
+            showToast('🔄 Memuat ulang...', 'info');
+            loadCarouselData();
+        }
+
+        // ============================================================
+        // TOAST NOTIFICATION
+        // ============================================================
+        function showToast(message, type = 'info') {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = `toast ${type}`;
+            toast.classList.add('show');
+
+            clearTimeout(toast._timeout);
+            toast._timeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // ============================================================
+        // KEYBOARD SHORTCUTS
+        // ============================================================
+        document.addEventListener('keydown', function(e) {
+            const modal = document.getElementById('uploadModal');
+            if (modal.classList.contains('active')) {
+                if (e.key === 'Escape') closeUploadModal();
+                return;
+            }
+
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+
+        // ============================================================
+        // CLOSE MODAL ON OVERLAY CLICK
+        // ============================================================
+        document.getElementById('uploadModal').addEventListener('click', function(e) {
+            if (e.target === this) closeUploadModal();
+        });
+
+        // ============================================================
+        // INIT
+        // ============================================================
+        // Load data dari localStorage dulu agar cepat
+        const savedData = localStorage.getItem('carouselData');
+        if (savedData) {
+            try {
+                carouselData = JSON.parse(savedData);
+                renderCarousel();
+                renderGallery();
+            } catch(e) {}
+        }
+        
+        // Kemudian fetch dari server
+        loadCarouselData();
+
+        console.log('✅ Carousel Manager siap!');
+        console.log('📊 Fungsi deleteImage tersedia:', typeof window.deleteImage === 'function');
+    </script>
+
+</body>
+</html>
