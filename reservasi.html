@@ -473,7 +473,7 @@ iframe {
         <i class="fa-solid fa-flask"></i>
         <span class="nav-label">Chemical</span>
       </div>
-      <div class="nav-item" data-title="Creat Reservasi" data-url="https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#Shell-home" onclick="handleNavClick(this, 'url')">
+      <div class="nav-item" data-title="Creat Reservasi" data-url="https://erp.sap.pamapersada.net/sap/bc/ui2/flp?sap-client=300&sap-language=EN#Shell-home" onclick="handleNavClick(this, 'blank')">
         <i class="fa-solid fa-pen"></i>
         <span class="nav-label">Creat Reservasi</span>
       </div>
@@ -629,6 +629,12 @@ function handleNavClick(element, type) {
 
   const url = element.dataset.url;
   const title = element.dataset.title;
+
+  // Mode 'blank' → buka tab baru, tidak embed
+  if (type === 'blank') {
+    window.open(url, '_blank', 'noopener,noreferrer');
+    return;
+  }
 
   navItems.forEach(item => item.classList.remove('active'));
   element.classList.add('active');
