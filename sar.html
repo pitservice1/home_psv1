@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#ffffff">
+  <meta name="theme-color" content="#1e3a8a">
   
   <!-- Optimasi Khusus iOS PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -11,19 +11,22 @@
   <meta name="apple-mobile-web-app-title" content="SAR PSV1">
   <title>SAR PSV1</title>
   
-  <link rel="icon" type="image/jpeg" href="https://drive.google.com/uc?export=view&id=10W4d_ADlJq2OJAFzZMFPd5p_p8bymYT2">  
-  <link rel="apple-touch-icon" href="https://drive.google.com/uc?export=view&id=10W4d_ADlJq2OJAFzZMFPd5p_p8bymYT2">
+  <link rel="icon" type="image/jpeg" href="https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300">
+  <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300">
 
-  <!-- Manifest Dinamis PWA -->
   <link id="pwa-manifest" rel="manifest" href="">
 
   <style>
     :root {
-      --primary-color: #3498db;
-      --primary-dark: #2980b9;
-      --bg-color: #f4f7f6;
-      --text-main: #333333;
-      --text-muted: #555555;
+      --primary: #1e3a8a;
+      --primary-light: #2563eb;
+      --primary-dark: #172e6e;
+      --primary-soft: #eff6ff;
+      --bg: #f1f5f9;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 4px;
     }
 
     * {
@@ -37,9 +40,9 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden !important;
-      background-color: var(--bg-color);
+      background-color: var(--bg);
       touch-action: manipulation;
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
 
     /* Sembunyikan Header Bawaan Google Sites */
@@ -61,59 +64,125 @@
       height: 100vh !important;
       border: none !important;
       z-index: 10 !important;
-      opacity: 0; 
+      opacity: 0;
       transition: opacity 0.8s ease-in-out;
     }
 
-    /* Loading Screen */
+    /* ===== LOADING SCREEN KORPORAT ===== */
     #loading-screen {
       position: fixed;
       top: 0;
       left: 0;
       width: 100vw;
       height: 100vh;
-      background-color: #ffffff;
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       z-index: 999999 !important;
       transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+      overflow: hidden;
+    }
+
+    /* Dekorasi background lingkaran korporat */
+    #loading-screen::before,
+    #loading-screen::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      pointer-events: none;
+    }
+    #loading-screen::before {
+      width: 420px;
+      height: 420px;
+      top: -160px;
+      left: -160px;
+    }
+    #loading-screen::after {
+      width: 320px;
+      height: 320px;
+      bottom: -140px;
+      right: -140px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    /* Logo wrapper — logo tampil full tanpa cahaya gradasi */
+    .loader-logo-wrapper {
+      position: relative;
+      z-index: 2;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 24px;
+      border-radius: 50%;
+      background: #ffffff;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
     .loader-logo {
-      width: 110px;
-      height: 110px;
+      width: 100%;
+      height: 100%;
       border-radius: 50%;
-      object-fit: cover;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-      animation: pulse 2s infinite ease-in-out;
-      margin-bottom: 30px;
-      border: 4px solid #f0f0f0;
+      object-fit: contain;
+      display: block;
+      border: none;
+      background: #ffffff;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Brand text */
+    .loader-brand {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 28px;
+      padding: 0 20px;
+    }
+
+    .loader-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin: 0 0 4px 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .loader-subtitle {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      margin: 0;
+    }
+
+    /* Spinner */
+    .spinner-wrapper {
+      position: relative;
+      z-index: 2;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .spinner {
-      width: 40px;
-      height: 40px;
-      border: 4px solid #f3f3f3;
-      border-top: 4px solid var(--primary-color);
+      width: 44px;
+      height: 44px;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      border-top-color: #ffffff;
       border-radius: 50%;
-      animation: spin 1s linear infinite;
-      margin-bottom: 15px;
-    }
-
-    .loading-text {
-      color: var(--text-muted);
-      font-size: 16px;
-      font-weight: 500;
-      animation: blink 1.5s infinite;
-      letter-spacing: 0.5px;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 152, 219, 0.4); }
-      70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(52, 152, 219, 0); }
-      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 152, 219, 0); }
+      animation: spin 0.9s linear infinite;
     }
 
     @keyframes spin {
@@ -121,63 +190,181 @@
       100% { transform: rotate(360deg); }
     }
 
+    /* Loading text */
+    .loading-text {
+      position: relative;
+      z-index: 2;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      animation: blink 1.8s infinite;
+      text-align: center;
+      padding: 0 20px;
+    }
+
     @keyframes blink {
       0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
+      50% { opacity: 0.55; }
     }
-    
-    /* Tombol PWA Android */
+
+    /* Progress dots korporat */
+    .loader-dots {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .loader-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      animation: dotBounce 1.4s infinite ease-in-out;
+    }
+
+    .loader-dots span:nth-child(1) { animation-delay: 0s; }
+    .loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dotBounce {
+      0%, 80%, 100% { transform: scale(0.6); background: rgba(255, 255, 255, 0.35); }
+      40%           { transform: scale(1);   background: #ffffff; }
+    }
+
+    /* Footer korporat kecil di loading */
+    .loader-footer {
+      position: absolute;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 2;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.4px;
+    }
+
+    /* ===== TOMBOL PWA ANDROID ===== */
     #install-btn {
       display: none;
       position: fixed;
       bottom: 24px;
       right: 24px;
-      background-color: var(--primary-color);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
       color: white;
-      border: none;
-      border-radius: 50px;
-      padding: 14px 26px;
-      font-size: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: var(--radius);
+      padding: 12px 22px;
+      font-size: 13px;
       font-weight: 600;
-      box-shadow: 0 6px 16px rgba(52, 152, 219, 0.4);
+      font-family: inherit;
+      letter-spacing: 0.3px;
+      box-shadow: 0 6px 20px rgba(30, 58, 138, 0.4);
       cursor: pointer;
       z-index: 1000000;
-      transition: all 0.3s ease;
+      transition: all 0.25s ease;
     }
-    #install-btn:hover { background-color: var(--primary-dark); transform: translateY(-2px); }
+    #install-btn:hover {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(30, 58, 138, 0.5);
+    }
 
-    /* Modal Instruksi iOS */
+    /* ===== MODAL IOS ===== */
     #ios-install-prompt {
       display: none;
       position: fixed;
       bottom: 24px;
       left: 50%;
       transform: translateX(-50%);
-      background-color: white;
+      background-color: #ffffff;
       padding: 18px 22px;
-      border-radius: 16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
       z-index: 1000000;
       text-align: center;
       width: 90%;
       max-width: 340px;
-      border: 1px solid rgba(0,0,0,0.08);
+      border: 1px solid var(--border);
     }
-    #ios-install-prompt p { margin: 0 0 10px 0; font-size: 14px; color: var(--text-main); line-height: 1.4; }
-    #ios-install-prompt span { font-size: 20px; font-weight: bold; color: var(--primary-color); }
+    #ios-install-prompt p {
+      margin: 0 0 10px 0;
+      font-size: 13px;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+    #ios-install-prompt span {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--primary);
+    }
     #close-ios-prompt {
-      background: #f1f2f6; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600; color: #555; width: 100%; margin-top: 5px;
+      background: var(--primary);
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 12px;
+      width: 100%;
+      margin-top: 5px;
+      transition: background 0.2s;
     }
-    #close-ios-prompt:hover { background: #e4e7eb; }
+    #close-ios-prompt:hover { background: var(--primary-dark); }
+
+    /* Mobile responsive */
+    @media (max-width: 480px) {
+      .loader-logo-wrapper { width: 100px; height: 100px; }
+      .loader-title { font-size: 18px; letter-spacing: 1px; }
+      .loader-subtitle { font-size: 10px; letter-spacing: 2px; }
+      .spinner { width: 38px; height: 38px; }
+      .spinner-wrapper { width: 38px; height: 38px; }
+      .loading-text { font-size: 12px; }
+      .loader-footer { font-size: 9px; bottom: 16px; }
+    }
   </style>
 </head>
 <body>
 
-  <!-- LOADING SCREEN -->
+  <!-- ===== LOADING SCREEN KORPORAT ===== -->
   <div id="loading-screen">
-    <img src="https://cdn.phototourl.com/free/2026-07-30-478ff464-9cca-4f6c-9a7d-e51450dcb75a.jpg" alt="Logo" class="loader-logo">
-    <div class="spinner"></div>
-    <div class="loading-text">Komunikasi setiap waktu</div>
+    <!-- Logo tampil full tanpa cahaya gradasi -->
+    <div class="loader-logo-wrapper">
+      <img src="https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300"
+           alt="Logo SAR PSV1"
+           class="loader-logo">
+    </div>
+
+    <!-- Brand -->
+    <div class="loader-brand">
+      <h1 class="loader-title">SAR PSV1</h1>
+      <p class="loader-subtitle">Enterprise Portal</p>
+    </div>
+
+    <!-- Spinner -->
+    <div class="spinner-wrapper">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="loading-text">Menyiapkan aplikasi...</div>
+
+    <!-- Dots animasi -->
+    <div class="loader-dots">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Footer -->
+    <div class="loader-footer">
+      © 2026 PIT Service Air — Enterprise Systems
+    </div>
   </div>
 
   <!-- IFRAME APLIKASI UTAMA -->
@@ -194,7 +381,7 @@
   </div>
 
   <script>
-    // 1. Loading Screen Logic dengan Fallback Timeout yang aman
+    // 1. Loading Screen Logic
     const iframe = document.getElementById('main-iframe');
     const loadingScreen = document.getElementById('loading-screen');
     
@@ -215,13 +402,14 @@
       document.querySelectorAll('div').forEach(el => {
         const style = window.getComputedStyle(el);
         if ((style.position === 'fixed' || style.top === '0px') && 
-            !['loading-screen', 'install-btn', 'ios-install-prompt'].includes(el.id)) {
+            !['loading-screen', 'install-btn', 'ios-install-prompt'].includes(el.id) &&
+            !el.closest('#loading-screen')) {
           el.style.display = 'none !important';
         }
       });
     }, 1200);
 
-    // 3. PWA Manifest Generator secara Dinamis
+    // 3. PWA Manifest Generator Dinamis
     const manifestData = {
       "name": "SAR PSV1",
       "short_name": "SAR PSV1",
@@ -229,17 +417,17 @@
       "start_url": "./",
       "scope": "./",
       "display": "standalone",
-      "background_color": "#ffffff",
-      "theme_color": "#ffffff",
+      "background_color": "#1e3a8a",
+      "theme_color": "#1e3a8a",
       "icons": [
-        {"src": "https://drive.google.com/uc?export=view&id=10W4d_ADlJq2OJAFzZMFPd5p_p8bymYT2", "sizes": "192x192", "type": "image/jpeg", "purpose": "any maskable"},
-        {"src": "https://drive.google.com/uc?export=view&id=10W4d_ADlJq2OJAFzZMFPd5p_p8bymYT2", "sizes": "512x512", "type": "image/jpeg", "purpose": "any maskable"}
+        {"src": "https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300", "sizes": "192x192", "type": "image/jpeg", "purpose": "any maskable"},
+        {"src": "https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300", "sizes": "512x512", "type": "image/jpeg", "purpose": "any maskable"}
       ]
     };
     const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
     document.getElementById('pwa-manifest').setAttribute('href', URL.createObjectURL(manifestBlob));
 
-    // 4. Service Worker Manajemen Cache & Push Notification Modern
+    // 4. Service Worker Cache & Push Notification
     const swCode = `
       const CACHE_NAME = 'sar-psv1-cache-v1';
       
@@ -277,12 +465,11 @@
         );
       });
 
-      // Handle Push Notifications
       self.addEventListener('push', function(event) {
         let notificationData = {
           body: 'Pesan atau laporan baru diterima!',
-          icon: '',
-          badge: ' https://drive.google.com/uc?export=view&id=10W4d_ADlJq2OJAFzZMFPd5p_p8bymYT2',
+          icon: 'https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300',
+          badge: 'https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300',
           vibrate: [200, 100, 200]
         };
 
@@ -322,12 +509,12 @@
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register(URL.createObjectURL(swBlob))
-          .then((reg) => console.log('PWA ServiceWorker registered successfully:', reg.scope))
+          .then((reg) => console.log('PWA ServiceWorker registered:', reg.scope))
           .catch((err) => console.error('PWA ServiceWorker registration failed:', err));
       });
     }
 
-    // 5. Cross-Platform Install Prompt Handlers (Android & iOS)
+    // 5. Install Prompt Handlers
     const isIos = () => {
       const userAgent = window.navigator.userAgent.toLowerCase();
       return /iphone|ipad|ipod/.test(userAgent);
@@ -372,27 +559,26 @@
 
       window.addEventListener('appinstalled', () => {
         if (installBtn) installBtn.style.display = 'none';
-        console.log('SAR PSV1 was successfully installed');
+        console.log('SAR PSV1 installed successfully');
       });
     }
 
-    // 6. Iframe Bridge Message & Local Push Listener
+    // 6. Iframe Bridge & Local Notification
     window.addEventListener('message', (event) => {
       if (event.data && event.data.type === 'NEW_MESSAGE') {
         if ("Notification" in window && Notification.permission === 'granted') {
           navigator.serviceWorker.ready.then((registration) => {
             registration.showNotification('Pesan Baru - SAR PSV1', {
               body: event.data.text || 'Anda menerima pembaruan laporan baru.',
-              icon: ' https://drive.google.com/uc?export=view&id=10W4d_ADlJq2OJAFzZMFPd5p_p8bymYT2',
-              badge: ' https://drive.google.com/uc?export=view&id=10W4d_ADlJq2OJAFzZMFPd5p_p8bymYT2',
+              icon: 'https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300',
+              badge: 'https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300',
               vibrate: [200, 100, 200]
             });
-          }).catch(err => console.error('Error triggering notification:', err));
+          }).catch(err => console.error('Error notification:', err));
         }
       }
     });
 
-    // Request Notification Permission on user click interaction
     document.body.addEventListener('click', () => {
       if ("Notification" in window && Notification.permission === 'default') {
         Notification.requestPermission().then(permission => {
