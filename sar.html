@@ -11,9 +11,9 @@
   <meta name="apple-mobile-web-app-title" content="SAR PSV1">
   <title>SAR PSV1</title>
   
-  <link rel="icon" type="image/jpeg" href="https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png">  
-  <link rel="apple-touch-icon" href="https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png">
- 
+  <link rel="icon" type="image/jpeg" href=" https://drive.google.com/uc?export=view&id=10W4d_ADlJq2OJAFzZMFPd5p_p8bymYT2">  
+  <link rel="apple-touch-icon" href=" https://drive.google.com/uc?export=view&id=10W4d_ADlJq2OJAFzZMFPd5p_p8bymYT2">
+
   <!-- Manifest Dinamis PWA -->
   <link id="pwa-manifest" rel="manifest" href="">
 
@@ -281,8 +281,8 @@
       self.addEventListener('push', function(event) {
         let notificationData = {
           body: 'Pesan atau laporan baru diterima!',
-          icon: 'https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png',
-          badge: 'https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png',
+          icon: '',
+          badge: ' https://drive.google.com/uc?export=view&id=10W4d_ADlJq2OJAFzZMFPd5p_p8bymYT2',
           vibrate: [200, 100, 200]
         };
 
@@ -383,8 +383,8 @@
           navigator.serviceWorker.ready.then((registration) => {
             registration.showNotification('Pesan Baru - SAR PSV1', {
               body: event.data.text || 'Anda menerima pembaruan laporan baru.',
-              icon: 'https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png',
-              badge: 'https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png',
+              icon: ' https://drive.google.com/uc?export=view&id=10W4d_ADlJq2OJAFzZMFPd5p_p8bymYT2',
+              badge: ' https://drive.google.com/uc?export=view&id=10W4d_ADlJq2OJAFzZMFPd5p_p8bymYT2',
               vibrate: [200, 100, 200]
             });
           }).catch(err => console.error('Error triggering notification:', err));
