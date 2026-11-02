@@ -58,6 +58,16 @@
       cursor: pointer; font-size: 1rem; transition: 0.2s;
     }
     .btn-back:hover { background: rgba(255,255,255,0.35); }
+
+    .btn-home {
+      background: rgba(255,255,255,0.2); border: none; color: white;
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1rem; transition: 0.2s;
+      text-decoration: none;
+    }
+    .btn-home:hover { background: rgba(255,255,255,0.35); color: #fff; }
+
     .header-sub { font-size: 1.05rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
 
     /* Container */
@@ -159,7 +169,7 @@
     }
     .loading-sub { font-size: 0.72rem; color: #5e7e8e; margin-top: -8px; }
 
-    /* ============ BOTTOM NAVBAR (3 MENU UTAMA) ============ */
+    /* ============ BOTTOM NAVBAR (HANYA MOBILE) ============ */
     .bottom-nav {
       position: fixed;
       left: 0; right: 0; bottom: 0;
@@ -167,7 +177,7 @@
       background: rgba(255,255,255,0.98);
       border-top: 1px solid #dce8ef;
       box-shadow: 0 -6px 20px rgba(0,30,50,0.08);
-      display: none; /* tampil hanya di menu view */
+      display: none; /* default hidden; hanya tampil di mobile via media query */
       z-index: 100;
       backdrop-filter: blur(8px);
     }
@@ -201,71 +211,6 @@
     .nav-item.active { color: #0070d2; }
     .nav-item.active .nav-icon { box-shadow: 0 4px 14px rgba(0,112,210,0.45); }
 
-    /* ============ PANEL SET URL (OPSIONAL) ============ */
-    .url-settings-btn {
-      position: fixed; right: 14px; top: 72px; z-index: 30;
-      width: 38px; height: 38px; border-radius: 50%;
-      background: rgba(255,255,255,0.95); border: 1px solid #dce8ef;
-      color: #1e6f8a; cursor: pointer; font-size: 15px;
-      display: flex; align-items: center; justify-content: center;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-      transition: 0.2s;
-    }
-    .url-settings-btn:hover { background: #fff; transform: rotate(20deg); }
-
-    .url-modal-overlay {
-      position: fixed; inset: 0; background: rgba(0,30,50,0.55);
-      display: none; align-items: center; justify-content: center;
-      z-index: 9998; backdrop-filter: blur(3px); padding: 16px;
-    }
-    .url-modal-overlay.open { display: flex; }
-    .url-modal {
-      background: #fff; width: 100%; max-width: 420px;
-      border-radius: 20px; padding: 22px 20px 18px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-      max-height: 88vh; overflow-y: auto;
-      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-    @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-    .url-modal h3 {
-      font-size: 1.05rem; color: #14323f; margin-bottom: 4px;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .url-modal .sub {
-      font-size: 0.72rem; color: #5e7e8e; margin-bottom: 16px; line-height: 1.4;
-    }
-    .url-field { margin-bottom: 14px; }
-    .url-field label {
-      display: block; font-size: 0.7rem; font-weight: 700;
-      color: #1e6f8a; margin-bottom: 5px; letter-spacing: 0.3px;
-      text-transform: uppercase;
-    }
-    .url-field input {
-      width: 100%; padding: 11px 12px;
-      border: 1.5px solid #dce8ef; border-radius: 10px;
-      font-size: 0.78rem; font-family: inherit; color: #1c3a4a;
-      background: #f9fbfc; transition: 0.2s;
-    }
-    .url-field input:focus {
-      outline: none; border-color: #0070d2; background: #fff;
-      box-shadow: 0 0 0 3px rgba(0,112,210,0.12);
-    }
-    .url-field .hint {
-      font-size: 0.62rem; color: #8aa2b0; margin-top: 4px;
-      word-break: break-all;
-    }
-    .url-modal-actions { display: flex; gap: 10px; margin-top: 6px; }
-    .btn-modal {
-      flex: 1; padding: 12px; border-radius: 11px; border: none;
-      font-size: 0.82rem; font-weight: 700; cursor: pointer;
-      font-family: inherit; transition: 0.2s;
-      display: flex; align-items: center; justify-content: center; gap: 6px;
-    }
-    .btn-save { background: #0070d2; color: #fff; box-shadow: 0 5px 14px rgba(0,112,210,0.3); }
-    .btn-save:hover { background: #005bb5; }
-    .btn-reset { background: #eef3f7; color: #5e7e8e; }
-    .btn-reset:hover { background: #e1e8ed; color: #1c3a4a; }
-
     /* ============ PWA INSTALL MODAL ============ */
     .install-modal-overlay {
       display: none; position: fixed; top: 0; left: 0;
@@ -279,6 +224,7 @@
       position: relative; box-shadow: 0 15px 35px rgba(0,0,0,0.25);
       animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
+    @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
     .btn-close-modal {
       position: absolute; top: 16px; right: 16px;
       background: #f0f4f8; border: none; color: #5e7e8e;
@@ -305,6 +251,22 @@
     }
 
     /* ============ RESPONSIVE ============ */
+    /* Mobile: tampilkan bottom nav */
+    @media (max-width: 767px) {
+      .bottom-nav.visible { display: flex; }
+    }
+    /* Desktop: sembunyikan bottom nav total */
+    @media (min-width: 768px) {
+      .bottom-nav,
+      .bottom-nav.visible { display: none !important; }
+      .content-grid {
+        padding-bottom: 28px;
+      }
+      .iframe-container iframe {
+        min-height: calc(100vh - 60px);
+      }
+    }
+
     /* Tablet: tetap 3 kolom, sedikit lebih lega */
     @media (min-width: 540px) {
       .content-grid { gap: 14px; padding: 22px 18px calc(var(--bottom-nav-h) + 30px) 18px; }
@@ -314,7 +276,7 @@
       .icon { width: 44px; height: 44px; font-size: 19px; border-radius: 12px; }
     }
     @media (min-width: 820px) {
-      .content-grid { grid-template-columns: repeat(4, 1fr); gap: 18px; padding: 28px 24px calc(var(--bottom-nav-h) + 34px) 24px; }
+      .content-grid { grid-template-columns: repeat(4, 1fr); gap: 18px; padding: 28px 24px 34px 24px; }
       .menu-info h3 { font-size: 0.95rem; }
       .menu-info p { font-size: 0.75rem; }
     }
@@ -328,17 +290,15 @@
       <button id="btnBack" class="btn-back" style="display: none;" onclick="goHome()" title="Kembali ke Menu">
         <i class="fas fa-chevron-left"></i>
       </button>
+      <a href="https://homepsv1.vercel.app/" class="btn-home" title="Home">
+        <i class="fas fa-home"></i>
+      </a>
       <div class="header-sub">
         <i class="fas fa-calendar-alt" style="margin-right: 8px; opacity:0.8;"></i>
         <span id="headerTitle">Activity PSV1</span>
       </div>
     </div>
   </header>
-
-  <!-- Tombol setelan URL opsional -->
-  <button id="btnUrlSettings" class="url-settings-btn" title="Atur URL Menu (Opsional)">
-    <i class="fas fa-link"></i>
-  </button>
 
   <div class="view-container">
     <!-- GRID MENU -->
@@ -460,7 +420,7 @@
   </div>
 </div>
 
-<!-- ============ BOTTOM NAVBAR (3 MENU UTAMA) ============ -->
+<!-- ============ BOTTOM NAVBAR (3 MENU UTAMA, MOBILE ONLY) ============ -->
 <nav id="bottomNav" class="bottom-nav visible">
   <div class="bottom-nav-inner">
     <button class="nav-item nav-pkh" data-key="pkh_form" data-label="Form PKH">
@@ -477,35 +437,6 @@
     </button>
   </div>
 </nav>
-
-<!-- ============ MODAL SET URL (OPSIONAL) ============ -->
-<div id="urlModalOverlay" class="url-modal-overlay">
-  <div class="url-modal">
-    <h3><i class="fas fa-link" style="color:#0070d2;"></i> Atur URL Menu</h3>
-    <p class="sub">Opsional. Kosongkan untuk memakai URL default. URL tersimpan di perangkat Anda (localStorage).</p>
-
-    <div class="url-field">
-      <label>Form PKH</label>
-      <input type="url" id="url_pkh_form" placeholder="https://…" inputmode="url" autocomplete="off" spellcheck="false" />
-      <div class="hint" id="hint_pkh_form"></div>
-    </div>
-    <div class="url-field">
-      <label>Form Handover</label>
-      <input type="url" id="url_handover_form" placeholder="https://…" inputmode="url" autocomplete="off" spellcheck="false" />
-      <div class="hint" id="hint_handover_form"></div>
-    </div>
-    <div class="url-field">
-      <label>Form Periksa Kolam / Inspeksi</label>
-      <input type="url" id="url_inspect_form" placeholder="https://…" inputmode="url" autocomplete="off" spellcheck="false" />
-      <div class="hint" id="hint_inspect_form"></div>
-    </div>
-
-    <div class="url-modal-actions">
-      <button class="btn-modal btn-reset" id="btnResetUrl"><i class="fas fa-undo"></i> Reset</button>
-      <button class="btn-modal btn-save" id="btnSaveUrl"><i class="fas fa-check"></i> Simpan</button>
-    </div>
-  </div>
-</div>
 
 <!-- PWA INSTALL MODAL -->
 <div id="installModalOverlay" class="install-modal-overlay">
@@ -531,23 +462,20 @@
 
 <script>
   /* ============================================================
-     0. KONFIGURASI URL CUSTOM (OPSIONAL)
+     0. KONFIGURASI URL DEFAULT
      ============================================================ */
-  const URL_STORAGE_PREFIX = 'psv1_url_';
   const DEFAULT_URLS = {};
   document.querySelectorAll('.menu-link').forEach(el => {
     const key = el.dataset.key;
     const def = el.dataset.default;
     if (key && def) {
       DEFAULT_URLS[key] = def;
-      // set href saat load
-      el.setAttribute('href', getUrl(key));
+      el.setAttribute('href', def);
     }
   });
 
   function getUrl(key) {
-    const custom = localStorage.getItem(URL_STORAGE_PREFIX + key);
-    return (custom && custom.trim()) ? custom.trim() : (DEFAULT_URLS[key] || '#');
+    return DEFAULT_URLS[key] || '#';
   }
 
   /* ============================================================
@@ -633,7 +561,7 @@
       return;
     }
     if (!url || url === '#') {
-      alert('URL untuk menu ini belum diatur. Buka ikon 🔗 di kanan atas untuk mengisi URL.');
+      alert('URL untuk menu ini belum diatur.');
       return;
     }
 
@@ -692,53 +620,7 @@
   window.goHome = goHome;
 
   /* ============================================================
-     3. MODAL SET URL OPSIONAL
-     ============================================================ */
-  const urlModalOverlay = document.getElementById('urlModalOverlay');
-  const urlKeys = ['pkh_form', 'handover_form', 'inspect_form'];
-
-  document.getElementById('btnUrlSettings').addEventListener('click', () => {
-    urlKeys.forEach(k => {
-      const input = document.getElementById('url_' + k);
-      const hint  = document.getElementById('hint_' + k);
-      const custom = localStorage.getItem(URL_STORAGE_PREFIX + k) || '';
-      input.value = custom;
-      hint.textContent = custom
-        ? 'Custom aktif'
-        : 'Default: ' + (DEFAULT_URLS[k] || '-');
-    });
-    urlModalOverlay.classList.add('open');
-  });
-
-  document.getElementById('btnSaveUrl').addEventListener('click', () => {
-    urlKeys.forEach(k => {
-      const val = (document.getElementById('url_' + k).value || '').trim();
-      if (val) localStorage.setItem(URL_STORAGE_PREFIX + k, val);
-      else localStorage.removeItem(URL_STORAGE_PREFIX + k);
-    });
-    // refresh href grid
-    document.querySelectorAll('.menu-link').forEach(el => {
-      if (el.dataset.key) el.setAttribute('href', getUrl(el.dataset.key));
-    });
-    urlModalOverlay.classList.remove('open');
-  });
-
-  document.getElementById('btnResetUrl').addEventListener('click', () => {
-    urlKeys.forEach(k => {
-      localStorage.removeItem(URL_STORAGE_PREFIX + k);
-      document.getElementById('url_' + k).value = '';
-    });
-    document.querySelectorAll('.menu-link').forEach(el => {
-      if (el.dataset.key) el.setAttribute('href', getUrl(el.dataset.key));
-    });
-  });
-
-  urlModalOverlay.addEventListener('click', (e) => {
-    if (e.target === urlModalOverlay) urlModalOverlay.classList.remove('open');
-  });
-
-  /* ============================================================
-     4. LOGIKA SMART POP-UP INSTALL & TOMBOL DOWNLOAD
+     3. LOGIKA SMART POP-UP INSTALL & TOMBOL DOWNLOAD
      ============================================================ */
   let deferredPrompt;
   window.addEventListener('beforeinstallprompt', (e) => {
@@ -792,7 +674,7 @@
   });
 
   /* ============================================================
-     5. IDLE PRELOAD
+     4. IDLE PRELOAD
      ============================================================ */
   window.addEventListener('load', () => {
     const doPreconnect = () => {
