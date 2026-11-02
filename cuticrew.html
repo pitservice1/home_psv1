@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#1e3a8a">
+  
+  <!-- Optimasi Khusus iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Form Cuti">
+  <title>SAR PSV1</title>
+  
+  <link rel="icon" type="image/jpeg" href="https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300">
+  <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300">
+
+  <link id="pwa-manifest" rel="manifest" href="">
+
+  <style>
+    :root {
+      --primary: #1e3a8a;
+      --primary-light: #2563eb;
+      --primary-dark: #172e6e;
+      --primary-soft: #eff6ff;
+      --bg: #f1f5f9;
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 4px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html, body {
+      margin: 0 !important;
+      padding: 0 !important;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden !important;
+      background-color: var(--bg);
+      touch-action: manipulation;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    /* Sembunyikan Header Bawaan Google Sites */
+    header, .sites-header, .navbar, [role="banner"],
+    .sites-embed-site-header, .site-header-container {
+      display: none !important;
+      height: 0 !important;
+      visibility: hidden !important;
+      opacity: 0 !important;
+      position: absolute !important;
+      pointer-events: none !important;
+    }
+    
+    iframe {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      border: none !important;
+      z-index: 10 !important;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+    }
+
+    /* ===== LOADING SCREEN KORPORAT ===== */
+    #loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 999999 !important;
+      transition: opacity 0.6s ease-out, visibility 0.6s ease-out;
+      overflow: hidden;
+    }
+
+    /* Dekorasi background lingkaran korporat */
+    #loading-screen::before,
+    #loading-screen::after {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.05);
+      pointer-events: none;
+    }
+    #loading-screen::before {
+      width: 420px;
+      height: 420px;
+      top: -160px;
+      left: -160px;
+    }
+    #loading-screen::after {
+      width: 320px;
+      height: 320px;
+      bottom: -140px;
+      right: -140px;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    /* Logo wrapper — logo tampil full tanpa cahaya gradasi */
+    .loader-logo-wrapper {
+      position: relative;
+      z-index: 2;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 24px;
+      border-radius: 50%;
+      background: #ffffff;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .loader-logo {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: contain;
+      display: block;
+      border: none;
+      background: #ffffff;
+      position: relative;
+      z-index: 3;
+    }
+
+    /* Brand text */
+    .loader-brand {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 28px;
+      padding: 0 20px;
+    }
+
+    .loader-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin: 0 0 4px 0;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .loader-subtitle {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.7);
+      margin: 0;
+    }
+
+    /* Spinner */
+    .spinner-wrapper {
+      position: relative;
+      z-index: 2;
+      width: 44px;
+      height: 44px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 3px solid rgba(255, 255, 255, 0.2);
+      border-top-color: #ffffff;
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Loading text */
+    .loading-text {
+      position: relative;
+      z-index: 2;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.5px;
+      animation: blink 1.8s infinite;
+      text-align: center;
+      padding: 0 20px;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.55; }
+    }
+
+    /* Progress dots korporat */
+    .loader-dots {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .loader-dots span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.4);
+      animation: dotBounce 1.4s infinite ease-in-out;
+    }
+
+    .loader-dots span:nth-child(1) { animation-delay: 0s; }
+    .loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes dotBounce {
+      0%, 80%, 100% { transform: scale(0.6); background: rgba(255, 255, 255, 0.35); }
+      40%           { transform: scale(1);   background: #ffffff; }
+    }
+
+    /* Footer korporat kecil di loading */
+    .loader-footer {
+      position: absolute;
+      bottom: 24px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      z-index: 2;
+      color: rgba(255, 255, 255, 0.55);
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.4px;
+    }
+
+    /* ===== TOMBOL PWA ANDROID ===== */
+    #install-btn {
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: var(--radius);
+      padding: 12px 22px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      letter-spacing: 0.3px;
+      box-shadow: 0 6px 20px rgba(30, 58, 138, 0.4);
+      cursor: pointer;
+      z-index: 1000000;
+      transition: all 0.25s ease;
+    }
+    #install-btn:hover {
+      background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(30, 58, 138, 0.5);
+    }
+
+    /* ===== MODAL IOS ===== */
+    #ios-install-prompt {
+      display: none;
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #ffffff;
+      padding: 18px 22px;
+      border-radius: var(--radius);
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.25);
+      z-index: 1000000;
+      text-align: center;
+      width: 90%;
+      max-width: 340px;
+      border: 1px solid var(--border);
+    }
+    #ios-install-prompt p {
+      margin: 0 0 10px 0;
+      font-size: 13px;
+      color: var(--text-main);
+      line-height: 1.5;
+    }
+    #ios-install-prompt span {
+      font-size: 18px;
+      font-weight: bold;
+      color: var(--primary);
+    }
+    #close-ios-prompt {
+      background: var(--primary);
+      border: none;
+      padding: 10px 20px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 600;
+      color: #ffffff;
+      font-family: inherit;
+      font-size: 12px;
+      width: 100%;
+      margin-top: 5px;
+      transition: background 0.2s;
+    }
+    #close-ios-prompt:hover { background: var(--primary-dark); }
+
+    /* Mobile responsive */
+    @media (max-width: 480px) {
+      .loader-logo-wrapper { width: 100px; height: 100px; }
+      .loader-title { font-size: 18px; letter-spacing: 1px; }
+      .loader-subtitle { font-size: 10px; letter-spacing: 2px; }
+      .spinner { width: 38px; height: 38px; }
+      .spinner-wrapper { width: 38px; height: 38px; }
+      .loading-text { font-size: 12px; }
+      .loader-footer { font-size: 9px; bottom: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== LOADING SCREEN KORPORAT ===== -->
+  <div id="loading-screen">
+    <!-- Logo tampil full tanpa cahaya gradasi -->
+    <div class="loader-logo-wrapper">
+      <img src="https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300"
+           alt="Logo Form Cuti"
+           class="loader-logo">
+    </div>
+
+    <!-- Brand -->
+    <div class="loader-brand">
+      <h1 class="loader-title">Form Cuti</h1>
+      <p class="loader-subtitle">Enterprise Portal</p>
+    </div>
+
+    <!-- Spinner -->
+    <div class="spinner-wrapper">
+      <div class="spinner"></div>
+    </div>
+
+    <div class="loading-text">Menyiapkan aplikasi...</div>
+
+    <!-- Dots animasi -->
+    <div class="loader-dots">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <!-- Footer -->
+    <div class="loader-footer">
+      © 2026 PIT Service Air — Enterprise Systems
+    </div>
+  </div>
+
+  <!-- IFRAME APLIKASI UTAMA -->
+  <iframe id="main-iframe" src="https://script.google.com/macros/s/AKfycbzvRDz2YKU7BgcF95J7WkeXH9U2eOOMQlCfDbzDOKL2ebcgxn9CcXUZ56Bjo2iG91Kv/exec"></iframe>
+
+  <!-- TOMBOL INSTALL ANDROID -->
+  <button id="install-btn">Install Form Cuti</button>
+
+  <!-- MODAL INSTALL IOS -->
+  <div id="ios-install-prompt">
+    <p>Install aplikasi SAR PSV1 di iPhone/iPad Anda:</p>
+    <p>Tap tombol Share <span>⍐</span> di bawah Safari, lalu pilih<br><strong>"Add to Home Screen"</strong></p>
+    <button id="close-ios-prompt">Mengerti</button>
+  </div>
+
+  <script>
+    // 1. Loading Screen Logic
+    const iframe = document.getElementById('main-iframe');
+    const loadingScreen = document.getElementById('loading-screen');
+    
+    let isLoaded = false;
+    function hideLoading() {
+      if (isLoaded) return;
+      isLoaded = true;
+      loadingScreen.style.opacity = '0';
+      loadingScreen.style.visibility = 'hidden';
+      iframe.style.opacity = '1';
+    }
+
+    iframe.onload = hideLoading;
+    setTimeout(hideLoading, 10000);
+
+    // 2. Pembersihan Otomatis Elemen Pengganggu UI Google Sites
+    setTimeout(() => {
+      document.querySelectorAll('div').forEach(el => {
+        const style = window.getComputedStyle(el);
+        if ((style.position === 'fixed' || style.top === '0px') && 
+            !['loading-screen', 'install-btn', 'ios-install-prompt'].includes(el.id) &&
+            !el.closest('#loading-screen')) {
+          el.style.display = 'none !important';
+        }
+      });
+    }, 1200);
+
+    // 3. PWA Manifest Generator Dinamis
+    const manifestData = {
+      "name": "SAR PSV1",
+      "short_name": "SAR PSV1",
+      "description": "Laporan Inspeksi Sump, Boster, dan Outlet",
+      "start_url": "./",
+      "scope": "./",
+      "display": "standalone",
+      "background_color": "#1e3a8a",
+      "theme_color": "#1e3a8a",
+      "icons": [
+        {"src": "https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300", "sizes": "192x192", "type": "image/jpeg", "purpose": "any maskable"},
+        {"src": "https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300", "sizes": "512x512", "type": "image/jpeg", "purpose": "any maskable"}
+      ]
+    };
+    const manifestBlob = new Blob([JSON.stringify(manifestData)], { type: 'application/json' });
+    document.getElementById('pwa-manifest').setAttribute('href', URL.createObjectURL(manifestBlob));
+
+    // 4. Service Worker Cache & Push Notification
+    const swCode = `
+      const CACHE_NAME = 'sar-psv1-cache-v1';
+      
+      self.addEventListener('install', (event) => {
+        self.skipWaiting();
+      });
+      
+      self.addEventListener('activate', (event) => {
+        event.waitUntil(
+          caches.keys().then((cacheNames) => {
+            return Promise.all(
+              cacheNames.map((cache) => {
+                if (cache !== CACHE_NAME) {
+                  return caches.delete(cache);
+                }
+              })
+            );
+          }).then(() => self.clients.claim())
+        );
+      });
+      
+      self.addEventListener('fetch', (event) => {
+        if (event.request.method !== 'GET') return;
+        event.respondWith(
+          fetch(event.request)
+            .catch(() => {
+              return caches.match(event.request).then((response) => {
+                return response || new Response('Aplikasi sedang offline. Periksa koneksi internet Anda.', {
+                  status: 503,
+                  statusText: 'Service Unavailable',
+                  headers: {'Content-Type': 'text/plain;charset=UTF-8'}
+                });
+              });
+            })
+        );
+      });
+
+      self.addEventListener('push', function(event) {
+        let notificationData = {
+          body: 'Pesan atau laporan baru diterima!',
+          icon: 'https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300',
+          badge: 'https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300',
+          vibrate: [200, 100, 200]
+        };
+
+        if (event.data) {
+          try {
+            const payload = event.data.json();
+            notificationData.body = payload.body || notificationData.body;
+          } catch (e) {
+            notificationData.body = event.data.text();
+          }
+        }
+
+        event.waitUntil(
+          self.registration.showNotification('SAR PSV1', notificationData)
+        );
+      });
+
+      self.addEventListener('notificationclick', function(event) {
+        event.notification.close();
+        event.waitUntil(
+          clients.matchAll({ type: 'window', includeUncontrolled: true }).then(windowClients => {
+            for (let client of windowClients) {
+              if (client.url && 'focus' in client) {
+                return client.focus();
+              }
+            }
+            if (clients.openWindow) {
+              return clients.openWindow('./');
+            }
+          })
+        );
+      });
+    `;
+
+    const swBlob = new Blob([swCode], { type: 'application/javascript' });
+    
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register(URL.createObjectURL(swBlob))
+          .then((reg) => console.log('PWA ServiceWorker registered:', reg.scope))
+          .catch((err) => console.error('PWA ServiceWorker registration failed:', err));
+      });
+    }
+
+    // 5. Install Prompt Handlers
+    const isIos = () => {
+      const userAgent = window.navigator.userAgent.toLowerCase();
+      return /iphone|ipad|ipod/.test(userAgent);
+    };
+    const isInStandaloneMode = () => ('standalone' in window.navigator) && (window.navigator.standalone);
+
+    if (isIos() && !isInStandaloneMode()) {
+      setTimeout(() => {
+        const iosPrompt = document.getElementById('ios-install-prompt');
+        if (iosPrompt) iosPrompt.style.display = 'block';
+      }, 3500);
+      
+      const closeBtn = document.getElementById('close-ios-prompt');
+      if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+          document.getElementById('ios-install-prompt').style.display = 'none';
+        });
+      }
+    } else {
+      let deferredPrompt;
+      const installBtn = document.getElementById('install-btn');
+      
+      window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (installBtn) installBtn.style.display = 'block';
+      });
+
+      if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+          if (deferredPrompt) {
+            deferredPrompt.prompt();
+            const choiceResult = await deferredPrompt.userChoice;
+            if (choiceResult.outcome === 'accepted') {
+              console.log('User accepted the install prompt');
+            }
+            deferredPrompt = null;
+            installBtn.style.display = 'none';
+          }
+        });
+      }
+
+      window.addEventListener('appinstalled', () => {
+        if (installBtn) installBtn.style.display = 'none';
+        console.log('SAR PSV1 installed successfully');
+      });
+    }
+
+    // 6. Iframe Bridge & Local Notification
+    window.addEventListener('message', (event) => {
+      if (event.data && event.data.type === 'NEW_MESSAGE') {
+        if ("Notification" in window && Notification.permission === 'granted') {
+          navigator.serviceWorker.ready.then((registration) => {
+            registration.showNotification('Pesan Baru - SAR PSV1', {
+              body: event.data.text || 'Anda menerima pembaruan laporan baru.',
+              icon: 'https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300',
+              badge: 'https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300',
+              vibrate: [200, 100, 200]
+            });
+          }).catch(err => console.error('Error notification:', err));
+        }
+      }
+    });
+
+    document.body.addEventListener('click', () => {
+      if ("Notification" in window && Notification.permission === 'default') {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted') {
+            console.log('Notification permission granted.');
+          }
+        });
+      }
+    }, { once: true });
+  </script>
+</body>
+</html>
