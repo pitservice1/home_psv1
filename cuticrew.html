@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Form Cuti">
-  <title>SAR PSV1</title>
+  <title>Form Cuti</title>
   
   <link rel="icon" type="image/jpeg" href="https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300">
   <link rel="apple-touch-icon" href="https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300">
@@ -375,7 +375,7 @@
 
   <!-- MODAL INSTALL IOS -->
   <div id="ios-install-prompt">
-    <p>Install aplikasi SAR PSV1 di iPhone/iPad Anda:</p>
+    <p>Install aplikasi Form Cuti di iPhone/iPad Anda:</p>
     <p>Tap tombol Share <span>⍐</span> di bawah Safari, lalu pilih<br><strong>"Add to Home Screen"</strong></p>
     <button id="close-ios-prompt">Mengerti</button>
   </div>
@@ -411,8 +411,8 @@
 
     // 3. PWA Manifest Generator Dinamis
     const manifestData = {
-      "name": "SAR PSV1",
-      "short_name": "SAR PSV1",
+      "name": "Form Cuti",
+      "short_name": "Form Cuti",
       "description": "Laporan Inspeksi Sump, Boster, dan Outlet",
       "start_url": "./",
       "scope": "./",
@@ -483,7 +483,7 @@
         }
 
         event.waitUntil(
-          self.registration.showNotification('SAR PSV1', notificationData)
+          self.registration.showNotification('Form Cuti', notificationData)
         );
       });
 
@@ -559,7 +559,7 @@
 
       window.addEventListener('appinstalled', () => {
         if (installBtn) installBtn.style.display = 'none';
-        console.log('SAR PSV1 installed successfully');
+        console.log('Form Cuti installed successfully');
       });
     }
 
@@ -568,7 +568,7 @@
       if (event.data && event.data.type === 'NEW_MESSAGE') {
         if ("Notification" in window && Notification.permission === 'granted') {
           navigator.serviceWorker.ready.then((registration) => {
-            registration.showNotification('Pesan Baru - SAR PSV1', {
+            registration.showNotification('Pesan Baru - Form Cuti', {
               body: event.data.text || 'Anda menerima pembaruan laporan baru.',
               icon: 'https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300',
               badge: 'https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300',
