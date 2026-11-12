@@ -496,7 +496,7 @@
             sheet4: {
                 id: "1HhUmariaHQiJ1AJU_zWcSO_-mBrJjznHzdhXGOyinwY", gid: "351995083",
                 name: "Weekly KPC", caption: "Upload Laporan Pemakaian Chemical ke KPC Update tiap hari",
-                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpQRqsw6yScmUJrFAXf-bspupvRHL9qKzp9rtJJO-NgFu8dWbxISFb5RTH&s=10", badge: "Uplaod"
+                image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpQRqsw6yScmUJrFAXf-bspupvRHL9qKzp9rtJJO-NgFu8dWbxISFb5RTH&s=10", badge: "Upload"
             },
             sheet5: {
                 id: "1_QEw0cPXGLu5xar7YJq6IuIu9Lkfb8xMLl4o0osdGe0", gid: "744388565",
@@ -517,6 +517,18 @@
                 id: "1HhUmariaHQiJ1AJU_zWcSO_-mBrJjznHzdhXGOyinwY", gid: "1068557097",
                 name: "DATA IDS BELANGIR", caption: "IDS BELANGIR DAN LC",
                 image: "https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300", badge: "Report"
+            },
+            /* =========================================
+               ✅ MENU BARU: POND PERFORMANCE (Web App)
+               Ganti URL 'image' di bawah ini dengan icon
+               yang Anda inginkan (Google Drive / link icon).
+               ========================================= */
+            sheet9: {
+                url: "https://script.google.com/macros/s/AKfycbwalTIjS6maIV-Y06K_kCIub5hV63HVl89s1gG8-MqE9hhSZaHbG2XeVDuzhIMN5pw1Bw/exec",
+                name: "Pond Performance",
+                caption: "Dashboard interaktif performa pond",
+                image: "https://drive.google.com/thumbnail?id=1D2KaaX4-Vgww6DMgb5wECFmqYfXkjPxr&sz=w300", // <--- GANTI URL ICON DISINI
+                badge: "Web App"
             }
         };
 
@@ -564,13 +576,21 @@
             const s = sheets[sheetKey];
             if (!s) return;
 
+            // Jika isExternal (link kantor), buka tab baru
             if (s.isExternal && s.url) {
                 window.open(s.url, '_blank');
                 return;
             }
 
             loadingEl.style.display = 'block';
-            sheetFrame.src = `https://docs.google.com/spreadsheets/d/${s.id}/edit?hl=id&gid=${s.gid}`;
+
+            // ✅ Jika ada `url` tapi bukan Google Sheets (misal Web App), pakai langsung
+            if (s.url) {
+                sheetFrame.src = s.url;
+            } else {
+                // Google Sheets
+                sheetFrame.src = `https://docs.google.com/spreadsheets/d/${s.id}/edit?hl=id&gid=${s.gid}`;
+            }
 
             sheetFrame.onload = () => {
                 loadingEl.style.display = 'none';
