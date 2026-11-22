@@ -1095,6 +1095,9 @@
 </style>
 </head>
 <body>
+<div id="networkBanner" style="display:none; position:fixed; top:0; left:0; right:0; z-index:99999;
+     background:#f59e0b; color:#fff; padding:6px; text-align:center; font-size:0.8rem;
+     font-weight:600; font-family:'Google Sans',sans-serif;">⚠️ Mode Offline — Data dari cache</div>
 <div class="pit-dashboard-container">
   <main>
     <!-- ============ HEADER ============ -->
@@ -1506,7 +1509,8 @@ document.addEventListener('DOMContentLoaded', function() {
     startSlideShow();
   }
 
-  async function fetchCarouselData() {
+    async function fetchCarouselData() {
+    const CACHE_KEY = 'psv_carousel_cache';
     try {
       carousel.innerHTML = '<div class="carousel-loading"><i class="fas fa-spinner fa-spin"></i></div>';
       const response = await fetch(GS_URL);
@@ -1515,13 +1519,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
       if (data.success && data.images && data.images.length > 0) {
         carouselData = data.images.map(img => ({ image: img.url }));
+        try { localStorage.setItem(CACHE_KEY, JSON.stringify(carouselData)); } catch(e) {}
         preloadImages(carouselData.map(i => i.image));
         createCarouselWithImages(carouselData);
       } else {
         throw new Error('Tidak ada gambar yang ditemukan');
       }
     } catch (error) {
-      console.error('Error fetching carousel data:', error);
+      console.warn('Carousel offline fallback:', error);
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        try {
+          carouselData = JSON.parse(cached);
+          if (carouselData.length > 0) {
+            createCarouselWithImages(carouselData);
+            return;
+          }
+        } catch(e) {}
+      }
       const fallbackImages = [
         { image: 'https://placehold.co/1200x675/0a6ed1/ffffff?text=PIT+SERVICE+AIR&font=google-sans' },
         { image: 'https://placehold.co/1200x675/008a7a/ffffff?text=Monitoring+Real-time&font=google-sans' },
@@ -1991,6 +2006,7 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // ===== BOTTOM NAV: Hide on keyboard open (visualViewport) =====
+    // ===== BOTTOM NAV: Hide on keyboard open (visualViewport) =====
   if (window.visualViewport) {
     const bottomNav = document.getElementById('bottomNav');
     if (bottomNav) {
@@ -2000,8 +2016,47 @@ document.addEventListener('DOMContentLoaded', function() {
       });
     }
   }
-});
 
+  // ===== ONLINE / OFFLINE BANNER =====
+  function updateNetworkBanner() {
+    const banner = document.getElementById('networkBanner');
+    if (!banner) return;
+    if (navigator.onLine) {
+      banner.style.display = 'block';
+      banner.style.background = '#10b981';
+      banner.textContent = '✓ Online — Sinkronisasi aktif';
+      setTimeout(() => { banner.style.display = 'none'; }, 2000);
+    } else {
+      banner.style.display = 'block';
+      banner.style.background = '#f59e0b';
+      banner.textContent = '⚠️ Mode Offline — Data dari cache';
+    }
+  }
+  window.addEventListener('online', updateNetworkBanner);
+  window.addEventListener('offline', updateNetworkBanner);
+  updateNetworkBanner();
+
+  // ===== PENDING QUEUE SYNC (untuk halaman lain yang punya form) =====
+  window.addEventListener('online', async () => {
+    const q = JSON.parse(localStorage.getItem('psv_pending_queue') || '[]');
+    if (!q.length) return;
+    const remaining = [];
+    for (const item of q) {
+      try {
+        const res = await fetch(item.url, {
+          method: item.method || 'POST',
+          body: JSON.stringify(item.data),
+          headers: { 'Content-Type': 'application/json' }
+        });
+        if (!res.ok) remaining.push(item);
+      } catch { remaining.push(item); }
+    }
+    localStorage.setItem('psv_pending_queue', JSON.stringify(remaining));
+    if (q.length - remaining.length > 0) {
+      console.log('✅ Sinkron ' + (q.length - remaining.length) + ' data pending');
+    }
+  });
+});
 // ===== REGISTER SERVICE WORKER (langsung, tanpa tunggu load) =====
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
