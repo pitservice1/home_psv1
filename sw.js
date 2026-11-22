@@ -5,36 +5,46 @@
 // - Asset statis (CDN, font, gambar): CACHE-FIRST
 // ============================================
 
-const SW_VERSION = 'psv1-sw-2025-01-15-v2'; // GANTI SETIAP COMMIT
+const SW_VERSION = 'psv1-sw-2025-01-15-v3'; // GANTI SETIAP COMMIT
 const STATIC_CACHE = 'psv1-static-' + SW_VERSION;
-
+const SHELL_CACHE = 'psv1-shell-' + SW_VERSION;
+const APP_SHELL = ['/', '/index.html', '/version.json'];
 // Daftar asset statis yang boleh di-cache (BUKAN HTML)
 const STATIC_ASSETS = [
   'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
   'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css',
-  'https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png'
+  'https://cdn.phototourl.com/free/2026-08-13-d76861c3-caa6-4b2c-b9aa-526379a6b839.png',
+  'https://drive.google.com/thumbnail?id=1xlIRH7qSczDUGQDhPViTY4qjfp1-BnNt&sz=w1920',
+  'https://drive.google.com/thumbnail?id=17SVBleeTt3UrPszlwCw-_fLrBYiYgD57&sz=w300',
+  'https://lh3.googleusercontent.com/d/1g2NwhwXkr6c5fQKNlYgZ2dH849uqQGSX=w300'
 ];
 
 // ===== INSTALL: Langsung aktif, cache asset statis =====
 self.addEventListener('install', (event) => {
   self.skipWaiting();
   event.waitUntil(
-    caches.open(STATIC_CACHE).then(cache => {
-      return cache.addAll(STATIC_ASSETS).catch(err => {
-        console.warn('Beberapa asset gagal di-cache:', err);
-      });
-    })
+    Promise.all([
+      caches.open(STATIC_CACHE).then(cache => {
+        return cache.addAll(STATIC_ASSETS).catch(err => {
+          console.warn('Beberapa asset gagal di-cache:', err);
+        });
+      }),
+      caches.open(SHELL_CACHE).then(cache => {
+        return cache.addAll(APP_SHELL).catch(err => {
+          console.warn('App shell gagal di-cache:', err);
+        });
+      })
+    ])
   );
 });
-
 // ===== ACTIVATE: Hapus cache lama, klaim klien =====
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
         keys
-          .filter(k => k !== STATIC_CACHE && k.startsWith('psv1-'))
+          .filter(k => k !== STATIC_CACHE && k !== SHELL_CACHE && k.startsWith('psv1-'))
           .map(k => caches.delete(k))
       )
     ).then(() => self.clients.claim())
@@ -61,25 +71,32 @@ self.addEventListener('fetch', (event) => {
 
   if (isHTML) {
     event.respondWith(
-      fetch(req, {
-        cache: 'no-store',
-        headers: { 'Cache-Control': 'no-cache' }
-      })
-      .then(response => response) // JANGAN cache HTML
-      .catch(() => caches.match(req).then(c => c || caches.match('/index.html')))
+      caches.open(SHELL_CACHE).then(cache =>
+        fetch(req, { cache: 'no-store' })
+          .then(response => {
+            if (response && response.ok) cache.put(req, response.clone());
+            return response;
+          })
+          .catch(() =>
+            cache.match(req).then(c =>
+              c || cache.match('/index.html') || cache.match('/')
+            )
+          )
+      )
     );
     return;
   }
 
   // === RULE 2: Asset statis (CDN, font, gambar) → CACHE-FIRST ===
-  const isStatic = url.hostname.includes('cdn.jsdelivr.net') ||
+   const isStatic = url.hostname.includes('cdn.jsdelivr.net') ||
                    url.hostname.includes('cdnjs.cloudflare.com') ||
                    url.hostname.includes('fonts.googleapis.com') ||
                    url.hostname.includes('fonts.gstatic.com') ||
                    url.hostname.includes('cdn.phototourl.com') ||
                    url.hostname.includes('unsplash.com') ||
+                   url.hostname.includes('drive.google.com') ||
+                   url.hostname.includes('lh3.googleusercontent.com') ||
                    /\.(css|js|png|jpg|jpeg|svg|woff2?|ttf|ico)$/i.test(url.pathname);
-
   if (isStatic) {
     event.respondWith(
       caches.match(req).then(cached => {
