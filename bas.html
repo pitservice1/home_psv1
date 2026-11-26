@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Spreadsheet</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #1e3a8a;
+            --primary-dark: #172e6e;
+            --primary-light: #2563eb;
+            --primary-soft: #eff6ff;
+            --border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-sub: #475569;
+            --text-muted: #94a3b8;
+            --bg: #f1f5f9;
+            --radius: 4px;
+        }
+
+        body { 
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
+            background-color: var(--bg); 
+            color: var(--text-main);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .bg-header-dark { 
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%) !important; 
+        }
+        .text-header-text { color: #ecf0f1; }
+        
+        .card-shadow { box-shadow: 0 1px 2px rgba(15, 23, 42, 0.06), 0 1px 3px rgba(15, 23, 42, 0.1); }
+        .card-hover { transition: all 0.2s cubic-bezier(.25,.8,.25,1); }
+        .card-hover:hover { 
+            box-shadow: 0 6px 16px rgba(15, 23, 42, 0.1); 
+            transform: translateY(-2px); 
+            border-color: var(--primary-light) !important;
+        }
+        .card { border-radius: var(--radius) !important; }
+        
+        .img-header { height: 160px; position: relative; overflow: hidden; cursor: pointer; display: block; }
+        .img-header img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+        .img-header:hover img { transform: scale(1.05); }
+        
+        .badge-custom { 
+            position: absolute; top: 8px; right: 8px; 
+            font-size: 9px; letter-spacing: 0.3px; z-index: 2;
+            padding: 3px 8px; border-radius: 3px; font-weight: 700;
+        }
+        
+        .line-clamp-1 { display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+        .line-clamp-3 { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+        
+        #spreadsheetSection { z-index: 1050; }
+        
+        .search-input {
+            background-color: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.28);
+            color: #fff;
+            border-radius: var(--radius) !important;
+            height: 34px;
+            font-size: 12px;
+        }
+        .search-input:focus {
+            background-color: rgba(255,255,255,0.25);
+            color: #fff;
+            border-color: rgba(255,255,255,0.55);
+            box-shadow: 0 0 0 3px rgba(255,255,255,0.12);
+        }
+        .search-input::placeholder { color: rgba(255,255,255,0.7); }
+
+        .btn-home-nav {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.28);
+            color: #fff !important;
+            border-radius: var(--radius);
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            height: 34px;
+            white-space: nowrap;
+        }
+        .btn-home-nav:hover {
+            background: rgba(255,255,255,0.28);
+            color: #fff;
+            transform: translateY(-1px);
+        }
+
+        .breadcrumb-bar {
+            background: #fff;
+            border-bottom: 1px solid var(--border);
+            padding: 8px 16px;
+            font-size: 11px;
+            color: var(--text-sub);
+        }
+        .breadcrumb-bar a { color: var(--text-sub); text-decoration: none; }
+        .breadcrumb-bar a:hover { color: var(--primary); }
+        .breadcrumb-bar .current { color: var(--primary); font-weight: 600; }
+
+        .card-title { font-size: 12px !important; }
+        .card-text { font-size: 10px !important; line-height: 1.4; }
+        .card-footer { padding: 8px 12px !important; font-size: 10px; }
+        .card-body { padding: 10px 12px !important; }
+        .card-footer .btn-link, .card-footer .small { font-size: 10px !important; color: var(--primary) !important; }
+        .card-footer .text-secondary { color: var(--text-sub) !important; }
+
+        /* Iframe Header */
+        .iframe-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: #fff;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 2px 8px rgba(30, 58, 138, 0.25);
+        }
+        .iframe-header h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin: 0; color: #fff; }
+        .iframe-header .icon { color: #fff; font-size: 15px; }
+
+        /* Tombol Back to Home di kiri header iframe */
+        .btn-back-home {
+            background: rgba(255,255,255,0.15);
+            border: 1px solid rgba(255,255,255,0.28);
+            color: #fff !important;
+            border-radius: var(--radius);
+            padding: 6px 12px;
+            font-size: 11px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s;
+            font-family: inherit;
+            cursor: pointer;
+            flex-shrink: 0;
+            white-space: nowrap;
+        }
+        .btn-back-home:hover { background: rgba(255,255,255,0.28); }
+
+        @media (max-width: 768px) {
+            .img-header { height: 130px; }
+            .btn-home-nav span { display: none; }
+            .btn-home-nav { padding: 6px 10px; }
+            .navbar { padding: 6px 10px !important; }
+            .search-input { height: 32px; font-size: 11px; }
+            .breadcrumb-bar { padding: 6px 12px; font-size: 10px; }
+            .iframe-header { padding: 8px 12px; }
+            .iframe-header h2 { font-size: 11px; }
+            .btn-back-home { padding: 5px 9px; font-size: 10px; }
+            .btn-back-home span { display: none; }
+        }
+        @media (max-width: 480px) {
+            .img-header { height: 110px; }
+            .card-title { font-size: 11px !important; }
+            .card-text { font-size: 9px !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand bg-header-dark text-header-text py-2">
+        <div class="container-fluid align-items-center">
+            
+            <div class="d-flex align-items-center w-100 gap-2" style="max-width: 600px;">
+                <a href="index.html" class="btn-home-nav" title="Halaman Utama">
+                    <i class="fa-solid fa-house"></i> <span>Home</span>
+                </a>
+                
+                <div class="input-group input-group-sm w-100" style="position: relative;">
+                    <span class="input-group-text bg-transparent border-0 position-absolute" style="z-index: 4; color: rgba(255,255,255,0.6); height: 100%; display: flex; align-items: center; padding-left: 12px;">
+                        <i class="fa-solid fa-magnifying-glass" style="font-size: 11px;"></i>
+                    </span>
+                    <input type="text" class="form-control search-input ps-5" placeholder="Cari laporan...">
+                </div>
+            </div>
+
+            <div class="d-flex align-items-center ms-auto">
+                <span class="small fw-medium me-3 text-white d-none d-sm-inline" style="font-size: 11px;">Admin</span>
+                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 30px; height: 30px; background-color: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.28);">
+                    <i class="fa-solid fa-user text-white" style="font-size: 12px;"></i>
+                </div>
+            </div>
+            
+        </div>
+    </nav>
+
+    <div class="breadcrumb-bar d-flex align-items-center">
+        <i class="fa-solid fa-house me-2" style="font-size: 10px; color: var(--primary);"></i>
+        <a href="https://pitservice1.github.io/home_psv1/">Home</a>
+        <span class="mx-2" style="color: var(--text-muted);">/</span>
+        <span class="current">Dashboard Spreadsheet</span>
+    </div>
+
+    <main class="container-fluid py-3" style="max-width: 1600px; padding-left: 12px; padding-right: 12px;">
+        
+        <div class="row g-2">
+            
+            <!-- Card 1: Data SQL MIO -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <div class="card h-100 card-shadow card-hover border overflow-hidden">
+                    <a href="https://script.google.com/macros/s/AKfycbzxB69D6okn1MY2k90K5nq5V8vL2r4a05VVOs-5dHagMouXFEEsk6QCyPpk0gg-NdCd/exec" target="Iframe" class="img-header" style="background-color: #e3f2fd;">
+                        <img src="https://lh3.googleusercontent.com/d/1mHNcv2wRyNdTSKl8wkIB4KQUIGb21gs-=w300" alt="BAS Pelampung">
+                        <span class="badge bg-secondary badge-custom text-uppercase">Report</span>
+                    </a>
+                    
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold text-dark mb-1 line-clamp-1">Berita Acara Secrap</h5>
+                        <p class="card-text text-secondary line-clamp-3 mb-0">
+                            Akses Buat BAS lebih cepat.
+                        </p>
+                    </div>
+                    
+                    <div class="card-footer bg-light border-top d-flex justify-content-between align-items-center mt-auto">
+                        <div class="small text-secondary">
+                            <i class="fa-solid fa-database me-1" style="color: var(--primary);"></i> BAS PELAMPUNG
+                        </div>
+                        <a href="https://script.google.com/macros/s/AKfycbzxB69D6okn1MY2k90K5nq5V8vL2r4a05VVOs-5dHagMouXFEEsk6QCyPpk0gg-NdCd/exec" target="iframe" class="text-decoration-none small fw-bold">
+                            Buka <i class="fa-solid fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Equipment Dewatering 2026 -->
+            <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+                <div class="card h-100 card-shadow card-hover border overflow-hidden">
+                    <a href="https://script.google.com/macros/s/AKfycbwY-gAcEJ77iJUZpjefX2k_hn1EtDzpxaIuXjrrsen3MvBpD4rly7F7jPXjYlM_qYtvgw/exec" target="iframe" class="img-header" style="background-color: #e8f5e9;">
+                        <img src="https://astraotoshop.com/asset/article-aop/Hand-Tools_20240909.webp" alt="Cover Equipment">
+                        <span class="badge bg-secondary badge-custom text-uppercase">BAS Tools</span>
+                    </a>
+                    
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title fw-bold text-dark mb-1 line-clamp-1">BAS Tools</h5>
+                        <p class="card-text text-secondary line-clamp-3 mb-0">
+                            Buat Berita Acara Secrap Tools lebih Cepat
+                        </p>
+                    </div>
+                    
+                    <div class="card-footer bg-light border-top d-flex justify-content-between align-items-center mt-auto">
+                        <div class="small text-secondary">
+                            <i class="fa-solid fa-file-excel text-success me-1"></i> Sheets
+                        </div>
+                        <a href="https://script.google.com/macros/s/AKfycbwY-gAcEJ77iJUZpjefX2k_hn1EtDzpxaIuXjrrsen3MvBpD4rly7F7jPXjYlM_qYtvgw/exec" target="iframe" class="text-decoration-none small fw-bold">
+                            Buka <i class="fa-solid fa-arrow-right ms-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+          
+
+        </div>
+    </main>
+
+    <!-- IFRAME SECTION -->
+    <div id="spreadsheetSection" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-light flex-column">
+        <div class="iframe-header">
+            <!-- Hanya tombol Back di kiri -->
+            <button class="btn-back-home" onclick="closeSpreadsheet()" title="Kembali ke Dashboard">
+                <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
+            </button>
+            <i class="fa-solid fa-chart-pie icon"></i>
+            <h2 id="iframeTitle">Judul Dashboard</h2>
+        </div>
+        
+        <div class="flex-grow-1 w-100 bg-white position-relative">
+            <div id="iframeLoader" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-white" style="z-index: 9;">
+                <span class="text-secondary d-flex align-items-center" style="font-size: 12px;">
+                    <i class="fa-solid fa-circle-notch fa-spin me-2"></i> Memuat Dashboard...
+                </span>
+            </div>
+            <iframe id="dataIframe" src="" class="w-100 h-100 border-0 position-relative" style="z-index: 10;" onload="document.getElementById('iframeLoader').style.display='none';"></iframe>
+        </div>
+    </div>
+
+    <script>
+        function openSpreadsheet(url, title) {
+            const iframeSection = document.getElementById('spreadsheetSection');
+            const dataIframe = document.getElementById('dataIframe');
+            const loader = document.getElementById('iframeLoader');
+            const titleElement = document.getElementById('iframeTitle');
+            
+            titleElement.textContent = title;
+
+            iframeSection.classList.remove('d-none');
+            iframeSection.classList.add('d-flex');
+            
+            loader.style.display = 'flex';
+            
+            dataIframe.src = url;
+            
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeSpreadsheet() {
+            const iframeSection = document.getElementById('spreadsheetSection');
+            const dataIframe = document.getElementById('dataIframe');
+            
+            iframeSection.classList.add('d-none');
+            iframeSection.classList.remove('d-flex');
+            dataIframe.src = '';
+            
+            document.body.style.overflow = 'auto';
+        }
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
