@@ -114,8 +114,8 @@
         .card-footer .btn-link, .card-footer .small { font-size: 10px !important; color: var(--primary) !important; }
         .card-footer .text-secondary { color: var(--text-sub) !important; }
 
-        /* Iframe Header */
-        .iframe-header {
+        /* _blank Header */
+        ._blank-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
             color: #fff;
             padding: 10px 16px;
@@ -124,10 +124,10 @@
             gap: 10px;
             box-shadow: 0 2px 8px rgba(30, 58, 138, 0.25);
         }
-        .iframe-header h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin: 0; color: #fff; }
-        .iframe-header .icon { color: #fff; font-size: 15px; }
+        ._blank-header h2 { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.4px; margin: 0; color: #fff; }
+        ._blank-header .icon { color: #fff; font-size: 15px; }
 
-        /* Tombol Back to Home di kiri header iframe */
+        /* Tombol Back to Home di kiri header _blank */
         .btn-back-home {
             background: rgba(255,255,255,0.15);
             border: 1px solid rgba(255,255,255,0.28);
@@ -154,8 +154,8 @@
             .navbar { padding: 6px 10px !important; }
             .search-input { height: 32px; font-size: 11px; }
             .breadcrumb-bar { padding: 6px 12px; font-size: 10px; }
-            .iframe-header { padding: 8px 12px; }
-            .iframe-header h2 { font-size: 11px; }
+            ._blank-header { padding: 8px 12px; }
+            ._blank-header h2 { font-size: 11px; }
             .btn-back-home { padding: 5px 9px; font-size: 10px; }
             .btn-back-home span { display: none; }
         }
@@ -196,9 +196,9 @@
 
     <div class="breadcrumb-bar d-flex align-items-center">
         <i class="fa-solid fa-house me-2" style="font-size: 10px; color: var(--primary);"></i>
-        <a href="https://pitservice1.github.io/home_psv1/">Home</a>
+        <a href="index.html">Home</a>
         <span class="mx-2" style="color: var(--text-muted);">/</span>
-        <span class="current">Dashboard Spreadsheet</span>
+        <span class="current">Internal System</span>
     </div>
 
     <main class="container-fluid py-3" style="max-width: 1600px; padding-left: 12px; padding-right: 12px;">
@@ -208,15 +208,15 @@
             <!-- Card 1: Data SQL MIO -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                 <div class="card h-100 card-shadow card-hover border overflow-hidden">
-                    <a href="https://script.google.com/macros/s/AKfycbzxB69D6okn1MY2k90K5nq5V8vL2r4a05VVOs-5dHagMouXFEEsk6QCyPpk0gg-NdCd/exec" target="Iframe" class="img-header" style="background-color: #e3f2fd;">
+                    <a href="https://script.google.com/macros/s/AKfycbzxB69D6okn1MY2k90K5nq5V8vL2r4a05VVOs-5dHagMouXFEEsk6QCyPpk0gg-NdCd/exec" target="_blank" class="img-header" style="background-color: #e3f2fd;">
                         <img src="https://lh3.googleusercontent.com/d/1mHNcv2wRyNdTSKl8wkIB4KQUIGb21gs-=w300" alt="BAS Pelampung">
-                        <span class="badge bg-secondary badge-custom text-uppercase">Report</span>
+                        <span class="badge bg-secondary badge-custom text-uppercase">BAS</span>
                     </a>
                     
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title fw-bold text-dark mb-1 line-clamp-1">Berita Acara Secrap</h5>
                         <p class="card-text text-secondary line-clamp-3 mb-0">
-                            Akses Buat BAS lebih cepat.
+                           Buat Berita Acara Scrap Pelampung lebih mudah
                         </p>
                     </div>
                     
@@ -224,7 +224,7 @@
                         <div class="small text-secondary">
                             <i class="fa-solid fa-database me-1" style="color: var(--primary);"></i> BAS PELAMPUNG
                         </div>
-                        <a href="https://script.google.com/macros/s/AKfycbzxB69D6okn1MY2k90K5nq5V8vL2r4a05VVOs-5dHagMouXFEEsk6QCyPpk0gg-NdCd/exec" target="iframe" class="text-decoration-none small fw-bold">
+                        <a href="https://script.google.com/macros/s/AKfycbzxB69D6okn1MY2k90K5nq5V8vL2r4a05VVOs-5dHagMouXFEEsk6QCyPpk0gg-NdCd/exec" target="_blank" class="text-decoration-none small fw-bold">
                             Buka <i class="fa-solid fa-arrow-right ms-1"></i>
                         </a>
                     </div>
@@ -234,7 +234,7 @@
             <!-- Card 2: Equipment Dewatering 2026 -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
                 <div class="card h-100 card-shadow card-hover border overflow-hidden">
-                    <a href="https://script.google.com/macros/s/AKfycbwY-gAcEJ77iJUZpjefX2k_hn1EtDzpxaIuXjrrsen3MvBpD4rly7F7jPXjYlM_qYtvgw/exec" target="iframe" class="img-header" style="background-color: #e8f5e9;">
+                    <a href="https://script.google.com/macros/s/AKfycbwY-gAcEJ77iJUZpjefX2k_hn1EtDzpxaIuXjrrsen3MvBpD4rly7F7jPXjYlM_qYtvgw/exec" target="_blank" class="img-header" style="background-color: #e8f5e9;">
                         <img src="https://astraotoshop.com/asset/article-aop/Hand-Tools_20240909.webp" alt="Cover Equipment">
                         <span class="badge bg-secondary badge-custom text-uppercase">BAS Tools</span>
                     </a>
@@ -242,7 +242,7 @@
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title fw-bold text-dark mb-1 line-clamp-1">BAS Tools</h5>
                         <p class="card-text text-secondary line-clamp-3 mb-0">
-                            Buat Berita Acara Secrap Tools lebih Cepat
+                            Buat Berita Acara Scrap Tools lebih mudah
                         </p>
                     </div>
                     
@@ -250,7 +250,7 @@
                         <div class="small text-secondary">
                             <i class="fa-solid fa-file-excel text-success me-1"></i> Sheets
                         </div>
-                        <a href="https://script.google.com/macros/s/AKfycbwY-gAcEJ77iJUZpjefX2k_hn1EtDzpxaIuXjrrsen3MvBpD4rly7F7jPXjYlM_qYtvgw/exec" target="iframe" class="text-decoration-none small fw-bold">
+                        <a href="https://script.google.com/macros/s/AKfycbwY-gAcEJ77iJUZpjefX2k_hn1EtDzpxaIuXjrrsen3MvBpD4rly7F7jPXjYlM_qYtvgw/exec" target="_blank" class="text-decoration-none small fw-bold">
                             Buka <i class="fa-solid fa-arrow-right ms-1"></i>
                         </a>
                     </div>
@@ -262,53 +262,53 @@
         </div>
     </main>
 
-    <!-- IFRAME SECTION -->
+    <!-- _blank SECTION -->
     <div id="spreadsheetSection" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-light flex-column">
-        <div class="iframe-header">
+        <div class="_blank-header">
             <!-- Hanya tombol Back di kiri -->
             <button class="btn-back-home" onclick="closeSpreadsheet()" title="Kembali ke Dashboard">
                 <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
             </button>
             <i class="fa-solid fa-chart-pie icon"></i>
-            <h2 id="iframeTitle">Judul Dashboard</h2>
+            <h2 id="_blankTitle">Judul Dashboard</h2>
         </div>
         
         <div class="flex-grow-1 w-100 bg-white position-relative">
-            <div id="iframeLoader" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-white" style="z-index: 9;">
+            <div id="_blankLoader" class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center bg-white" style="z-index: 9;">
                 <span class="text-secondary d-flex align-items-center" style="font-size: 12px;">
                     <i class="fa-solid fa-circle-notch fa-spin me-2"></i> Memuat Dashboard...
                 </span>
             </div>
-            <iframe id="dataIframe" src="" class="w-100 h-100 border-0 position-relative" style="z-index: 10;" onload="document.getElementById('iframeLoader').style.display='none';"></iframe>
+            <_blank id="data_blank" src="" class="w-100 h-100 border-0 position-relative" style="z-index: 10;" onload="document.getElementById('_blankLoader').style.display='none';"></_blank>
         </div>
     </div>
 
     <script>
         function openSpreadsheet(url, title) {
-            const iframeSection = document.getElementById('spreadsheetSection');
-            const dataIframe = document.getElementById('dataIframe');
-            const loader = document.getElementById('iframeLoader');
-            const titleElement = document.getElementById('iframeTitle');
+            const _blankSection = document.getElementById('spreadsheetSection');
+            const data_blank = document.getElementById('data_blank');
+            const loader = document.getElementById('_blankLoader');
+            const titleElement = document.getElementById('_blankTitle');
             
             titleElement.textContent = title;
 
-            iframeSection.classList.remove('d-none');
-            iframeSection.classList.add('d-flex');
+            _blankSection.classList.remove('d-none');
+            _blankSection.classList.add('d-flex');
             
             loader.style.display = 'flex';
             
-            dataIframe.src = url;
+            data_blank.src = url;
             
             document.body.style.overflow = 'hidden';
         }
 
         function closeSpreadsheet() {
-            const iframeSection = document.getElementById('spreadsheetSection');
-            const dataIframe = document.getElementById('dataIframe');
+            const _blankSection = document.getElementById('spreadsheetSection');
+            const data_blank = document.getElementById('data_blank');
             
-            iframeSection.classList.add('d-none');
-            iframeSection.classList.remove('d-flex');
-            dataIframe.src = '';
+            _blankSection.classList.add('d-none');
+            _blankSection.classList.remove('d-flex');
+            data_blank.src = '';
             
             document.body.style.overflow = 'auto';
         }
