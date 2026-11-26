@@ -44,7 +44,7 @@
             transform: translateY(-2px); 
             border-color: var(--primary-light) !important;
         }
-        .card { border-radius: var(--radius) !important; }
+        .card { border-radius: var(--radius) !important; cursor: pointer; }
         
         .img-header { height: 160px; position: relative; overflow: hidden; cursor: pointer; display: block; }
         .img-header img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
@@ -208,13 +208,14 @@
         
         <div class="row g-2">
             
-            <!-- Card 1: Data SQL MIO -->
+            <!-- Card 1: BAS Pelampung -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card h-100 card-shadow card-hover border overflow-hidden">
-                    <a href="https://script.google.com/macros/s/AKfycbzxB69D6okn1MY2k90K5nq5V8vL2r4a05VVOs-5dHagMouXFEEsk6QCyPpk0gg-NdCd/exec" target="_blank" class="img-header" style="background-color: #e3f2fd;">
+                <div class="card h-100 card-shadow card-hover border overflow-hidden"
+                     onclick="openSpreadsheet('https://script.google.com/macros/s/AKfycbzxB69D6okn1MY2k90K5nq5V8vL2r4a05VVOs-5dHagMouXFEEsk6QCyPpk0gg-NdCd/exec', 'Berita Acara Scrap Pelampung')">
+                    <div class="img-header" style="background-color: #e3f2fd;">
                         <img src="https://lh3.googleusercontent.com/d/1mHNcv2wRyNdTSKl8wkIB4KQUIGb21gs-=w300" alt="BAS Pelampung">
                         <span class="badge bg-secondary badge-custom text-uppercase">BAS</span>
-                    </a>
+                    </div>
                     
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title fw-bold text-dark mb-1 line-clamp-1">Berita Acara Secrap</h5>
@@ -227,20 +228,21 @@
                         <div class="small text-secondary">
                             <i class="fa-solid fa-database me-1" style="color: var(--primary);"></i> BAS PELAMPUNG
                         </div>
-                        <a href="https://script.google.com/macros/s/AKfycbzxB69D6okn1MY2k90K5nq5V8vL2r4a05VVOs-5dHagMouXFEEsk6QCyPpk0gg-NdCd/exec" target="_blank" class="text-decoration-none small fw-bold">
+                        <span class="text-decoration-none small fw-bold" style="color: var(--primary);">
                             Buka <i class="fa-solid fa-arrow-right ms-1"></i>
-                        </a>
+                        </span>
                     </div>
                 </div>
             </div>
 
-            <!-- Card 2: Equipment Dewatering 2026 -->
+            <!-- Card 2: BAS Tools -->
             <div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
-                <div class="card h-100 card-shadow card-hover border overflow-hidden">
-                    <a href="https://script.google.com/macros/s/AKfycbwY-gAcEJ77iJUZpjefX2k_hn1EtDzpxaIuXjrrsen3MvBpD4rly7F7jPXjYlM_qYtvgw/exec" target="_blank" class="img-header" style="background-color: #e8f5e9;">
+                <div class="card h-100 card-shadow card-hover border overflow-hidden"
+                     onclick="openSpreadsheet('https://script.google.com/macros/s/AKfycbwY-gAcEJ77iJUZpjefX2k_hn1EtDzpxaIuXjrrsen3MvBpD4rly7F7jPXjYlM_qYtvgw/exec', 'BAS Tools')">
+                    <div class="img-header" style="background-color: #e8f5e9;">
                         <img src="https://astraotoshop.com/asset/article-aop/Hand-Tools_20240909.webp" alt="Cover Equipment">
                         <span class="badge bg-secondary badge-custom text-uppercase">BAS Tools</span>
-                    </a>
+                    </div>
                     
                     <div class="card-body d-flex flex-column">
                         <h5 class="card-title fw-bold text-dark mb-1 line-clamp-1">BAS Tools</h5>
@@ -253,22 +255,19 @@
                         <div class="small text-secondary">
                             <i class="fa-solid fa-database me-1" style="color: var(--primary);"></i> BAS TOOLS
                         </div>
-                        <a href="https://script.google.com/macros/s/AKfycbwY-gAcEJ77iJUZpjefX2k_hn1EtDzpxaIuXjrrsen3MvBpD4rly7F7jPXjYlM_qYtvgw/exec" target="_blank" class="text-decoration-none small fw-bold">
+                        <span class="text-decoration-none small fw-bold" style="color: var(--primary);">
                             Buka <i class="fa-solid fa-arrow-right ms-1"></i>
-                        </a>
+                        </span>
                     </div>
                 </div>
             </div>
 
-          
-
         </div>
     </main>
 
-    <!-- _blank SECTION -->
+    <!-- IFRAME SECTION -->
     <div id="spreadsheetSection" class="d-none position-fixed top-0 start-0 w-100 h-100 bg-light flex-column">
         <div class="_blank-header">
-            <!-- Hanya tombol Back di kiri -->
             <button class="btn-back-home" onclick="closeSpreadsheet()" title="Kembali ke Dashboard">
                 <i class="fa-solid fa-arrow-left"></i> <span>Back</span>
             </button>
@@ -282,7 +281,8 @@
                     <i class="fa-solid fa-circle-notch fa-spin me-2"></i> Memuat Dashboard...
                 </span>
             </div>
-            <_blank id="data_blank" src="" class="w-100 h-100 border-0 position-relative" style="z-index: 10;" onload="document.getElementById('_blankLoader').style.display='none';"></_blank>
+            <!-- GANTI <_blank> MENJADI <iframe> -->
+            <iframe id="data_blank" src="" class="w-100 h-100 border-0 position-relative" style="z-index: 10;" onload="document.getElementById('_blankLoader').style.display='none';"></iframe>
         </div>
     </div>
 
